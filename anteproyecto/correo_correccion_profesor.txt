@@ -1,0 +1,19 @@
+Hola Pedro,
+
+    Muy bien, veo que está ya muy completo. Le he pegado un repaso (adjunto; he utilizado Microsoft Word, espero que no se desarme demasiado el formato al volver a Linux) y he corregido erratas y hecho algunos cambios menores.
+
+    Cambios con algo más de entidad que he hecho son:
+
+    Gestion de restaurantes -> Gestión de comandas; porque la gestión de restaurantes es mucho más amplia de lo que vamos a hacer y sería una carga de trabajo claramente excesiva para un TFG.
+    Facturas -> Recibos/Tickets; porque legalmente las facturas tienen que llevar el NIF, nombre y dirección del facturado.
+    He cambiado de sitio y retocado el párrafo que va en azul en la Intro, haciendolo más general: no solo mencionar previsiones de aprovisionamiento, sino aspectos más de experiencia del cliente (sugerencias, alérgenos, promociones...) que creo que quedan más originales y atractivos, y siempre como lista de posibles cosas que permitiría el sistema (pero que no necesariamente implementará).
+    He mencionando BLE como posible alternativa para acceder a la carta, tal como hablamos, pero de nuevo dejándolo abierto y sin comprometernos. De hecho, he puesto todo ese párrafo en azul en Objetivos como posibles extensiones a considerar a lo largo del desarrollo, de nuevo para no que no te pilles los dedos si al final no se implementan todas, ni para que no parezca demasiado ambiciosos y por ello irrealizable como TFG.
+    En esta sección de Objetivos, he aligerado un poco el texto: no es necesario contar ya todos los requisitos informales del proyecto, ni los flujos de información/trabajo, y detallarlos te comprometerte a hacerlos así o justificar cualquier cambio posterior.
+    Como me sigue pareciendo quizá demasiado amplio, he tratado de agrupar algunas de las fases (creo que he quitado una sola). No obstante, creo que deberías hacer un esfuerzo por recortar/agrupar alguna más, porque la lista es muy exhaustiva y abruma un poco
+    He marcado en rojo lo de realización de pruebas en un restaurante (y tb  las menciones a tablets), por que por un lado no sé si tienes un restaurante donde probarlo (si?), y por otro lado porque los plazos de realización/presentación de un TFG no suelen permitir realizar pruebas de funcionamiento reales. No obstante si fuese posible hacerlas siempre se pueden añadir en la memoria y destacar durante la defensa.
+
+    Echale un vistazo a ver qué te parece, pero yo creo que está prácticamente listo. Buen trabajo.
+
+        Saludos,
+
+                 Carlos
