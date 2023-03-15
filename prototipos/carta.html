@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css"
+    integrity="sha512-6f7HT84a/AplPkpSRSKWqbseRTG4aRrhadjZezYQ0oVk/B+nm/US5KzQkyyOyh0Mn9cyDdChRdS9qaxJRHayww=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     html,
     body {
@@ -45,7 +48,8 @@
       height: 25px;
     }
   </style>
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <script src="js/bulmajs-0.10.4/bulma.js"></script>
 </head>
 
@@ -58,26 +62,26 @@
             <ul>
               <li>
                 <a>
-                  <span class="icon is-large"><i class="fas fa-wine-glass"></i></span>
-                  <span class="is-size-5-touch is-size-4-desktop">Bebidas</span>
+                  <span class="icon is-medium"><img src="./img/secciones/bebidas.png"></span>
+                  <span class="is-size-4-touch is-size-4-desktop">Bebidas</span>
                 </a>
               </li>
               <li class="is-active">
                 <a>
-                  <span class="icon is-large"><i class="fas fa-bowl-food"></i></span>
-                  <span class="is-size-5-touch is-size-4-desktop">Entrantes</span>
+                  <span class="icon is-medium"><img src="./img/secciones/entrantes.png"></i></span>
+                  <span class="is-size-4-touch is-size-4-desktop">Entrantes</span>
                 </a>
               </li>
               <li>
                 <a>
-                  <span class="icon is-large"><i class="fas fa-utensils"></i></span>
-                  <span class="is-size-5-touch is-size-4-desktop">Platos</span>
+                  <span class="icon is-medium"><img src="./img/secciones/platos.png"></span>
+                  <span class="is-size-4-touch is-size-4-desktop">Platos</span>
                 </a>
               </li>
               <li>
                 <a>
-                  <span class="icon is-large"><i class="fas fa-ice-cream"></i></span>
-                  <span class="is-size-5-touch is-size-4-desktop">Postres</span>
+                  <span class="icon is-medium"><img src="./img/secciones/postres.png"></span>
+                  <span class="is-size-4-touch is-size-4-desktop">Postres</span>
                 </a>
               </li>
             </ul>
@@ -102,35 +106,38 @@
             </div>
             <div class="block">
               <p class="has-text-justified">
-                <span class="is-size-5  has-text-weight-bold">Alérgenos:</span>
-                <span class="icon-text is-size-6">
-                  <span class="icon">
-                    <i class="fas fa-wheat-awn"></i>
+                <span class="is-size-4  has-text-weight-bold">Alérgenos:</span>
+                <span class="icon-text is-size-5">
+                  <span class="icon is-medium">
+                    <img src="./img/alergenos/gluten.png"/>
                   </span>
-                  <span class="icon">
-                    <i class="fas fa-shrimp"></i>
+                  <span class="icon is-medium">
+                    <img src="./img/alergenos/moluscos.png"/>
                   </span>
-                  <span class="icon">
-                    <i class="fas fa-cow"></i>
+                  <span class="icon is-medium">
+                    <img src="./img/alergenos/lacteos.png"/>
                   </span>
-                  <span class="icon">
-                    <i class="fas fa-egg"></i>
+                  <span class="icon is-medium">
+                    <img src="./img/alergenos/altramuces.png"/>
+                  </span>
+                  <span class="icon is-medium">
+                    <img src="./img/alergenos/apio.png"/>
                   </span>
                 </span>
               </p>
             </div>
             <div class="block">
               <p class="has-text-justified">
-                <span class="is-size-5  has-text-weight-bold">Descripción:</span>
-                <span class="is-size-6">Un plato muy muy muy muy muy muy rico.</span>
+                <span class="is-size-4  has-text-weight-bold">Descripción:</span>
+                <span class="is-size-5">Un plato muy muy muy muy muy muy rico.</span>
               </p>
             </div>
             <div class="block">
               <div class="columns is-mobile is-multiline">
                 <div class="column">
                   <p class="has-text-justified">
-                    <span class="is-size-5  has-text-weight-bold">Ingredientes:</span>
-                    <span class="is-size-6">Ingrediente, ingrediente, ingrediente, ingrediente, ingrediente, ...</span>
+                    <span class="is-size-4  has-text-weight-bold">Ingredientes:</span>
+                    <span class="is-size-5">Ingrediente, ingrediente, ingrediente, ingrediente, ingrediente, ...</span>
                   </p>
                 </div>
                 <div class="column is-narrow">
@@ -142,58 +149,12 @@
                 </div>
               </div>
             </div>
-            <div id="modalIngredientes" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Modificar ingredientes</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="field">
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalIngredientes.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
             <div class="block">
               <div class="columns is-mobile is-multiline">
                 <div class="column">
                   <p class="has-text-justified">
-                    <span class="is-size-5  has-text-weight-bold">Extras:</span>
-                    <span class="is-size-6">Extra, extra, extra, ...</span>
+                    <span class="is-size-4  has-text-weight-bold">Extras:</span>
+                    <span class="is-size-5">Extra, extra, extra, ...</span>
                   </p>
                 </div>
                 <div class="column is-narrow">
@@ -205,46 +166,10 @@
                 </div>
               </div>
             </div>
-            <div id="modalExtras" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Añadir extras</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="field">
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox"></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox"></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox"></p>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalExtras.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
             <div class="block">
               <div class="columns is-mobile is-multiline">
                 <div class="column">
-                  <span class="is-size-5  has-text-weight-bold">Variaciones:</span>
+                  <span class="is-size-4  has-text-weight-bold">Variaciones:</span>
                 </div>
                 <div class="column is-narrow">
                   <div class="select">
@@ -269,550 +194,196 @@
                 </div>
               </div>
             </div>
-            <div id="modalEliminar" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Eliminar pedido</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Ración, -ingrediente1, -ingrediente2, +extra1</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Media ración, -ingrediente1, +extra1, +extra2</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Ración, completa, sin extras</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalEliminar.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-half-tablet is-one-third-widescreen">
-          <div class="box reveal mx-4">
-            <header class="block">
-              <div class="columns is-mobile">
-                <div class="column">
-                  <strong class="has-text-centered is-size-3">Plato</strong>
-                </div>
-                <div class="column is-narrow">
-                  <p class="is-size-3">_€</p>
-                </div>
-              </div>
-            </header>
-            <div class="block">
-              <figure class="image">
-                <img src="https://bulma.io/images/placeholders/1280x960.png">
-              </figure>
-            </div>
-            <div class="block">
-              <p class="has-text-justified">
-                <span class="is-size-5  has-text-weight-bold">Alérgenos:</span>
-                <span class="icon-text is-size-6">
-                  <span class="icon">
-                    <i class="fas fa-wheat-awn"></i>
-                  </span>
-                  <span class="icon">
-                    <i class="fas fa-shrimp"></i>
-                  </span>
-                  <span class="icon">
-                    <i class="fas fa-cow"></i>
-                  </span>
-                  <span class="icon">
-                    <i class="fas fa-egg"></i>
-                  </span>
-                </span>
-              </p>
-            </div>
-            <div class="block">
-              <p class="has-text-justified">
-                <span class="is-size-5  has-text-weight-bold">Descripción:</span>
-                <span class="is-size-6">Un plato muy muy muy muy muy muy rico.</span>
-              </p>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <p class="has-text-justified">
-                    <span class="is-size-5  has-text-weight-bold">Ingredientes:</span>
-                    <span class="is-size-6">Ingrediente, ingrediente, ingrediente, ingrediente, ingrediente, ...</span>
-                  </p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button" onclick="modalIngredientes.open()">
-                    <span class="icon">
-                      <i class="fas fa-plus-minus"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="modalIngredientes" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Modificar ingredientes</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="field">
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalIngredientes.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <p class="has-text-justified">
-                    <span class="is-size-5  has-text-weight-bold">Extras:</span>
-                    <span class="is-size-6">Extra, extra, extra, ...</span>
-                  </p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-plus-minus"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="modalExtras" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Añadir extras</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="field">
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalExtras.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <span class="is-size-5  has-text-weight-bold">Variaciones:</span>
-                </div>
-                <div class="column is-narrow">
-                  <div class="select">
-                    <select>
-                      <option>_€ Ración</option>
-                      <option>_€ Media Ración</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile">
-                <div class="column">
-                  <button class="button is-danger is-fullwidth" onclick="modalEliminar.open()">Eliminar</button>
-                </div>
-                <div class="column is-narrow">
-                  <p class="button is-rounded is-active is-fullwidth">2</p>
-                </div>
-                <div class="column">
-                  <button class="button is-success is-fullwidth">Añadir</button>
-                </div>
-              </div>
-            </div>
-            <div id="modalEliminar" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Eliminar pedido</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Ración, -ingrediente1, -ingrediente2, +extra1</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Media ración, -ingrediente1, +extra1, +extra2</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Ración, completa, sin extras</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalEliminar.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-half-tablet is-one-third-widescreen">
-          <div class="box reveal mx-4">
-            <header class="block">
-              <div class="columns is-mobile">
-                <div class="column">
-                  <strong class="has-text-centered is-size-3">Plato</strong>
-                </div>
-                <div class="column is-narrow">
-                  <p class="is-size-3">_€</p>
-                </div>
-              </div>
-            </header>
-            <div class="block">
-              <figure class="image">
-                <img src="https://bulma.io/images/placeholders/1280x960.png">
-              </figure>
-            </div>
-            <div class="block">
-              <p class="has-text-justified">
-                <span class="is-size-5  has-text-weight-bold">Alérgenos:</span>
-                <span class="icon-text is-size-6">
-                  <span class="icon">
-                    <i class="fas fa-wheat-awn"></i>
-                  </span>
-                  <span class="icon">
-                    <i class="fas fa-shrimp"></i>
-                  </span>
-                  <span class="icon">
-                    <i class="fas fa-cow"></i>
-                  </span>
-                  <span class="icon">
-                    <i class="fas fa-egg"></i>
-                  </span>
-                </span>
-              </p>
-            </div>
-            <div class="block">
-              <p class="has-text-justified">
-                <span class="is-size-5  has-text-weight-bold">Descripción:</span>
-                <span class="is-size-6">Un plato muy muy muy muy muy muy rico.</span>
-              </p>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <p class="has-text-justified">
-                    <span class="is-size-5  has-text-weight-bold">Ingredientes:</span>
-                    <span class="is-size-6">Ingrediente, ingrediente, ingrediente, ingrediente, ingrediente, ...</span>
-                  </p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button" onclick="modalIngredientes.open()">
-                    <span class="icon">
-                      <i class="fas fa-plus-minus"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="modalIngredientes" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Modificar ingredientes</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="field">
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">Ingrediente <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalIngredientes.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <p class="has-text-justified">
-                    <span class="is-size-5  has-text-weight-bold">Extras:</span>
-                    <span class="is-size-6">Extra, extra, extra, ...</span>
-                  </p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-plus-minus"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div id="modalExtras" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Añadir extras</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="field">
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                        <div class="control">
-                          <label class="checkbox">
-                            <p class="is-size-4">_€ Extra <input type="checkbox" checked></p>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalExtras.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <span class="is-size-5  has-text-weight-bold">Variaciones:</span>
-                </div>
-                <div class="column is-narrow">
-                  <div class="select">
-                    <select>
-                      <option>_€ Ración</option>
-                      <option>_€ Media Ración</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile">
-                <div class="column">
-                  <button class="button is-danger is-fullwidth" onclick="modalEliminar.open()">Eliminar</button>
-                </div>
-                <div class="column is-narrow">
-                  <p class="button is-rounded is-active is-fullwidth">2</p>
-                </div>
-                <div class="column">
-                  <button class="button is-success is-fullwidth">Añadir</button>
-                </div>
-              </div>
-            </div>
-            <div id="modalEliminar" class="modal p-4">
-              <div class="modal-background"></div>
-              <div class="modal-card">
-                <header class="modal-card-head">
-                  <p class="modal-card-title">Eliminar pedido</p>
-                  <button class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                  <div class="columns is-mobile is-centered">
-                    <div class="column is-narrow">
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Ración, -ingrediente1, -ingrediente2, +extra1</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Media ración, -ingrediente1, +extra1, +extra2</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="columns is-mobile is-multiline">
-                        <div class="column">
-                          <p>Ración, completa, sin extras</p>
-                        </div>
-                        <div class="column is-narrow">
-                          <button class="button is-danger" onclick="modalExtras.open()">
-                            <span class="icon">
-                              <i class="fas fa-minus"></i>
-                            </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <footer class="modal-card-foot">
-                  <button class="button is-fullwidth">Restablecer</button>
-                  <button class="button is-primary is-fullwidth" onclick="modalEliminar.close()">Aceptar</button>
-                </footer>
-              </div>
-            </div>
           </div>
         </div>
       </div>
+      <div id="modalIngredientes" class="modal p-4">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Modificar ingredientes</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="columns is-mobile is-centered">
+              <div class="column is-narrow">
+                <div class="level is-mobile">
+                  <div class="level-left mr-3">
+                    <div class="level-item">
+                      <p class="is-size-4">Ingrediente</p>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <input type="checkbox" checked>
+                    </div>
+                  </div>
+                </div>
+                <div class="level is-mobile">
+                  <div class="level-left mr-3">
+                    <div class="level-item">
+                      <p class="is-size-4">Ingrediente largo</p>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <input type="checkbox" checked>
+                    </div>
+                  </div>
+                </div>
+                <div class="level is-mobile">
+                  <div class="level-left mr-3">
+                    <div class="level-item">
+                      <p class="is-size-4">Ingrediente</p>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <input type="checkbox" checked>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-fullwidth">Restablecer</button>
+            <button class="button is-primary is-fullwidth" onclick="modalIngredientes.close()">Aceptar</button>
+          </footer>
+        </div>
+      </div>
+      <div id="modalExtras" class="modal p-4">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Añadir extras</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="columns is-mobile is-centered">
+              <div class="column is-narrow">
+                <div class="level is-mobile">
+                  <div class="level-left mr-3">
+                    <div class="level-item">
+                      <p class="is-size-4">_€ Extra</p>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <input type="checkbox">
+                    </div>
+                  </div>
+                </div>
+                <div class="level is-mobile">
+                  <div class="level-left mr-3">
+                    <div class="level-item">
+                      <p class="is-size-4">_€ Extra largo</p>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <input type="checkbox">
+                    </div>
+                  </div>
+                </div>
+                <div class="level is-mobile">
+                  <div class="level-left mr-3">
+                    <div class="level-item">
+                      <p class="is-size-4">_€ Extra</p>
+                    </div>
+                  </div>
+                  <div class="level-right">
+                    <div class="level-item">
+                      <input type="checkbox">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-fullwidth">Restablecer</button>
+            <button class="button is-primary is-fullwidth" onclick="modalExtras.close()">Aceptar</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <div id="modalEliminar" class="modal p-4">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Eliminar pedido</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="columns is-mobile">
+            <div class="column">
+              <div class="columns is-mobile is-vcentered">
+                <div class="column">
+                  <p>Ración, -ingrediente1, -ingrediente2, +extra1, +extra2</p>
+                </div>
+                <div class="column is-narrow">
+                  <button class="button is-danger" onclick="modalExtras.open()">
+                    <span class="icon">
+                      <i class="fas fa-trash-can"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="column is-narrow">
+                  <button class="button is-info" onclick="modalExtras.open()">
+                    <span class="icon">
+                      <i class="fas fa-clone"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="columns is-mobile is-vcentered">
+                <div class="column">
+                  <p>Media ración, -ingrediente1, +extra1, +extra2</p>
+                </div>
+                <div class="column is-narrow">
+                  <button class="button is-danger" onclick="modalExtras.open()">
+                    <span class="icon">
+                      <i class="fas fa-trash-can"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="column is-narrow">
+                  <button class="button is-info" onclick="modalExtras.open()">
+                    <span class="icon">
+                      <i class="fas fa-clone"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="columns is-mobile is-vcentered">
+                <div class="column">
+                  <p>Ración, completa, sin extras</p>
+                </div>
+                <div class="column is-narrow">
+                  <button class="button is-danger" onclick="modalExtras.open()">
+                    <span class="icon">
+                      <i class="fas fa-trash-can"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="column is-narrow">
+                  <button class="button is-info" onclick="modalExtras.open()">
+                    <span class="icon">
+                      <i class="fas fa-clone"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-fullwidth">Restablecer</button>
+          <button class="button is-primary is-fullwidth" onclick="modalEliminar.close()">Aceptar</button>
+        </footer>
+      </div>
+    </div>
     </div>
   </main>
   <script src="js/scroll.js"></script>
