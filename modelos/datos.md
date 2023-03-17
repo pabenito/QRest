@@ -52,8 +52,91 @@ Las etiquetas pueden tener diversos usos, como marcar un elemento como "vegano/v
 
 La visibilidad podrá ser usada para desactivar secciones y elementos, ya sea por que no queden existencias o para editar como administrador sin que este se muestre.   
 
+### Ejemplos
+
+Bebidas 
+
+``` 
+nombre: Bebidas
+visible: true
+elementos:
+  - 1: 
+    nombre: Agua fría
+    imagen: img/agua_fria.jpg
+    responsable: camareros 
+    variantes: 
+      - pequeña:
+        descripcion: 500mL
+        precio: 1$
+      - grande:
+        descripcion: 1,5L
+        precio: 2$
+   - 2: 
+    nombre: Limonada 
+    imagen: img/agua_fria.jpg
+    descripcion: Limonada de la casa
+    precio: 3$
+    responsable: camareros 
+    visible: true visible: true
+    ingredientes:
+      - Limón
+      - Azúcar
+    extras:
+      - Hierbabuena:
+        descripcion: Hierbabuena
+        precio: 1$
+    etiquetas:
+      - ecológico:
+        nombre: ecológico 
+        icono: img/eco.jpg
+```
+
+```
+{
+  "nombre": "Bebidas",
+  "visible": true,
+  "elementos": [
+    {
+      "nombre": "Agua",
+      "imagen": "https://image.freepik.com/foto-gratis/agua-fria-botella-plastico-tapa-azul-colocada-pasarela-cemento_33789-101.jpg",
+      "responsable": "camareros",
+      "visible": true,
+      "variantes": [
+        {
+          "descripcion": "500mL",
+          "precio": 1
+        },
+        {
+          "descripcion": "1,5L",
+          "precio": 2
+        }
+      ]
+    },
+    {
+      "nombre": "Limonada",
+      "imagen": "https://www.pequerecetas.com/wp-content/uploads/2021/05/limonada-como-se-hace.jpg",
+      "descripcion": "Limonada de la casa",
+      "precio": 3,
+      "responsable": "camareros",
+      "visible": true,
+      "ingredientes": [
+        "Limón",
+        "Azúzar"
+      ],
+      "extras": [
+        {
+          "descripcion": "Hiebabuena",
+          "precio": 1
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## Pedido
 
+```
 pedido:
     mesa
     fecha* = now()
@@ -72,6 +155,33 @@ pedido:
             []extras:
                 descripción
             nota
+```
+
+### Ejemplo
+
+```
+pedido:
+  mesa: 1
+  fecha: 23-3-16 15:06 200ms 
+  estado: pidiendo 
+  total: 5$  
+  comadas:
+    fecha: 23-3-16 15:14 600ms 
+    elementos:
+      - 1:
+        seccion: Bebidas
+        nombre: Agua fría 
+        precio: 1$
+        variante: pequeña 
+        nota: Con hielo 
+      - 2: 
+        seccion: Bebidas
+        nombre: Limonada  
+        precio: 4$
+        extras:
+          - Hierbabuena
+```
+
 
 
 
