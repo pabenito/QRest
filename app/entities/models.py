@@ -40,6 +40,7 @@ class Elemento_carta(ComplexModel):
     precio: float | None
     responsable: str | None
     visible: bool = True
+    nota: str | None
     ingredientes: list[str] | None
     alergenos: list[str] | None
     variantes: list[Variantes] | None

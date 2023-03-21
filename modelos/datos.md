@@ -54,42 +54,7 @@ La visibilidad podrá ser usada para desactivar secciones y elementos, ya sea po
 
 ### Ejemplos
 
-Bebidas 
-
-``` 
-nombre: Bebidas
-visible: true
-elementos:
-  - 1: 
-    nombre: Agua fría
-    imagen: img/agua_fria.jpg
-    responsable: camareros 
-    variantes: 
-      - pequeña:
-        descripcion: 500mL
-        precio: 1$
-      - grande:
-        descripcion: 1,5L
-        precio: 2$
-   - 2: 
-    nombre: Limonada 
-    imagen: img/agua_fria.jpg
-    descripcion: Limonada de la casa
-    precio: 3$
-    responsable: camareros 
-    visible: true visible: true
-    ingredientes:
-      - Limón
-      - Azúcar
-    extras:
-      - Hierbabuena:
-        descripcion: Hierbabuena
-        precio: 1$
-    etiquetas:
-      - ecológico:
-        nombre: ecológico 
-        icono: img/eco.jpg
-```
+Bebidas
 
 ```
 {
@@ -103,12 +68,17 @@ elementos:
       "visible": true,
       "variantes": [
         {
-          "descripcion": "500mL",
-          "precio": 1
-        },
-        {
-          "descripcion": "1,5L",
-          "precio": 2
+          "nombre": "Tamaño",
+          "variantes": [
+            {
+              "descripcion": "500mL",
+              "precio": 1
+            },
+            {
+              "descripcion": "1,5L",
+              "precio": 2
+            }
+          ]
         }
       ]
     },
@@ -127,6 +97,31 @@ elementos:
         {
           "descripcion": "Hiebabuena",
           "precio": 1
+        }
+      ]
+    }
+  ]
+}
+```
+
+``` 
+{
+  "nombre": "Coca-cola",
+  "precio": 2.5,
+  "responsable": "camareros",
+  "visible": true,
+  "variantes": [
+    {
+      "nombre": "Tipo",
+      "variantes": [
+        {
+          "descripcion": "normal"
+        },
+        {
+          "descripcion": "Zero"
+        },
+        {
+          "descripcion": "Zero Zero"
         }
       ]
     }
