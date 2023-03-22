@@ -3,12 +3,8 @@
 ## Syntaxis
 
 ```
-entidad:
-    atributo con tipo (tipo)
-    atributo opcional
-    atributo obligaroio*
-    atributo derivado o inicializdo = valor
-    []lista del atributo
+atributo opcional
+atributo obligaroio*
 ```
 
 El tipo se especificará cuando haya ambigüedad. 
@@ -16,30 +12,46 @@ El tipo se especificará cuando haya ambigüedad.
 ## Carta
 
 ```
-seccion:
-    nombre*
-    visible*
-    []elementos:
-        nombre*
-        imagen
-        descripcion
-        precio
-        responsable*
-        visible* (boolean)
-        []ingredientes:
-            nombre*
-        []alergenos:
-            tipo*
-            icono*
-        []variantes:
-            descripcion*
-            precio
-        []extras:
-            descripcion*
-            precio
-        []etiquetas:
-            nombre*
-            icono
+{
+  name*: str,
+  visible: bool,
+  elements: [
+    {
+      name*: str,
+      image: url,
+      description: str,
+      price: float,
+      manager*: str,
+      visible: bool,
+      ingredients: [str],
+      allergens: [str],
+      variants: [
+        {
+          name*: str,
+          variants*: [
+            {
+              description*: str,
+              image: str,
+              price: float
+            }
+          ]
+        }
+      ],
+      extras: [
+        {
+          description*: str,
+          price: float
+        }
+      ],
+      tags: [
+        {
+          name*: str,
+          icon: str
+        }
+      ]
+    }
+  ]
+}
 ```
 
 El precio será obligatorio si no hay variaciones con precios
@@ -58,45 +70,45 @@ Bebidas
 
 ```
 {
-  "nombre": "Bebidas",
+  "name": "Bebidas",
   "visible": true,
-  "elementos": [
+  "elements": [
     {
-      "nombre": "Agua",
-      "imagen": "https://image.freepik.com/foto-gratis/agua-fria-botella-plastico-tapa-azul-colocada-pasarela-cemento_33789-101.jpg",
-      "responsable": "camareros",
+      "name": "Agua",
+      "image": "https://image.freepik.com/foto-gratis/agua-fria-botella-plastico-tapa-azul-colocada-pasarela-cemento_33789-101.jpg",
+      "manager": "camareros",
       "visible": true,
-      "variantes": [
+      "variants": [
         {
-          "nombre": "Tamaño",
-          "variantes": [
+          "name": "Tamaño",
+          "variants": [
             {
-              "descripcion": "500mL",
-              "precio": 1
+              "description": "500mL",
+              "price": 1
             },
             {
-              "descripcion": "1,5L",
-              "precio": 2
+              "description": "1,5L",
+              "price": 2
             }
           ]
         }
       ]
     },
     {
-      "nombre": "Limonada",
-      "imagen": "https://www.pequerecetas.com/wp-content/uploads/2021/05/limonada-como-se-hace.jpg",
-      "descripcion": "Limonada de la casa",
-      "precio": 3,
-      "responsable": "camareros",
+      "name": "Limonada",
+      "image": "https://www.pequerecetas.com/wp-content/uploads/2021/05/limonada-como-se-hace.jpg",
+      "description": "Limonada de la casa",
+      "price": 3,
+      "manager": "camareros",
       "visible": true,
-      "ingredientes": [
+      "ingredients": [
         "Limón",
         "Azúzar"
       ],
       "extras": [
         {
-          "descripcion": "Hiebabuena",
-          "precio": 1
+          "description": "Hiebabuena",
+          "price": 1
         }
       ]
     }
@@ -106,22 +118,22 @@ Bebidas
 
 ``` 
 {
-  "nombre": "Coca-cola",
-  "precio": 2.5,
-  "responsable": "camareros",
+  "name": "Coca-cola",
+  "price": 2.5,
+  "manager": "camareros",
   "visible": true,
-  "variantes": [
+  "variants": [
     {
-      "nombre": "Tipo",
-      "variantes": [
+      "name": "Tipo",
+      "variants": [
         {
-          "descripcion": "normal"
+          "description": "normal"
         },
         {
-          "descripcion": "Zero"
+          "description": "Zero"
         },
         {
-          "descripcion": "Zero Zero"
+          "description": "Zero Zero"
         }
       ]
     }

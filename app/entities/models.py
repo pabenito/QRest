@@ -1,7 +1,5 @@
 from pydantic import BaseModel, HttpUrl
 
-from pydantic.dataclasses import dataclass
-
 
 class ComplexModel(BaseModel):
     class Config:
@@ -12,43 +10,42 @@ class ComplexModel(BaseModel):
 
 ## Carta
 
-class Variante(ComplexModel):
-    descripcion: str
-    imagen: HttpUrl | None
-    precio: float | None
+class Variant(ComplexModel):
+    description: str
+    image: HttpUrl | None
+    price: float | None
 
 
-class Variantes(ComplexModel):
-    nombre: str
-    variantes: list[Variante]
+class Variants(ComplexModel):
+    name: str
+    variants: list[Variant]
 
 
 class Extra(BaseModel):
-    descripcion: str
-    precio: float | None
+    description: str
+    price: float | None
 
 
-class Etiqueta(ComplexModel):
-    nombre: str
-    icono: HttpUrl | None
+class Tag(ComplexModel):
+    name: str
+    icon: HttpUrl | None
 
 
-class Elemento_carta(ComplexModel):
-    nombre: str
-    imagen: HttpUrl | None
-    descripcion: str | None
-    precio: float | None
-    responsable: str | None
+class Element(ComplexModel):
+    name: str
+    image: HttpUrl | None
+    description: str | None
+    price: float | None
+    manager: str
     visible: bool = True
-    nota: str | None
-    ingredientes: list[str] | None
-    alergenos: list[str] | None
-    variantes: list[Variantes] | None
+    ingredients: list[str] | None
+    allergens: list[str] | None
+    variants: list[Variants] | None
     extras: list[Extra] | None
-    etiquetas: list[Etiqueta] | None
+    tags: list[Tag] | None
 
 
-class Seccion(ComplexModel):
-    nombre: str
+class Section(ComplexModel):
+    name: str
     visible: bool = True
-    elementos: list[Elemento_carta] | None
+    elements: list[Element] | None
