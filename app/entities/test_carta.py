@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from fastapi.exceptions import RequestValidationError, HTTPException
 from bson import ObjectId
 from app.utils import json_lower_encoder
-from .carta import router, menu, check_price
+from .menu import router, menu, check_price
 from .models import Element, Variants, Variant
 
 client = TestClient(router)

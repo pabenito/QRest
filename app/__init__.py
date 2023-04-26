@@ -1,6 +1,8 @@
 from fastapi import FastAPI
-from app import database
-from app import entities
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from app import database, entities, web
 
 app = FastAPI()
 
@@ -10,8 +12,15 @@ app.include_router(
     tags=["entities"]
 )
 
+app.include_router(
+    web.router,
+    tags=["web"]
+)
+
 @app.on_event("startup")
 def startup_db_client():
+    app.mount("/static", StaticFiles(directory="static"), name="static")
+
     app.db_client = database.db_client
     app.db = database.db
     try:

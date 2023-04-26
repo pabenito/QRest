@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>QRest | Carta</title>
-  <link rel="icon" href="/static/img/icon.png" type="image/icon type">
+  <link rel="icon" href="{{ url_for('static', path='/img/icon.png') }}" type="image/icon type">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
@@ -50,7 +50,7 @@
   </style>
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-  <script src="/static/js/bulmajs-0.10.4/bulma.js"></script>
+  <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
 </head>
 
 <body>
@@ -62,25 +62,25 @@
             <ul>
               <li>
                 <a>
-                  <span class="icon is-medium"><img src="/static/img/secciones/bebidas.png"></span>
+                  <span class="icon is-medium"><img src="{{ url_for('static', path='/img/secciones/bebidas.png') }}"></span>
                   <span class="is-size-4-touch is-size-4-desktop">Bebidas</span>
                 </a>
               </li>
               <li class="is-active">
                 <a>
-                  <span class="icon is-medium"><img src="/static/img/secciones/entrantes.png"></i></span>
+                  <span class="icon is-medium"><img src="{{ url_for('static', path='/img/secciones/entrantes.png') }}"></i></span>
                   <span class="is-size-4-touch is-size-4-desktop">Entrantes</span>
                 </a>
               </li>
               <li>
                 <a>
-                  <span class="icon is-medium"><img src="/static/img/secciones/platos.png"></span>
+                  <span class="icon is-medium"><img src="{{ url_for('static', path='/img/secciones/platos.png') }}"></span>
                   <span class="is-size-4-touch is-size-4-desktop">Platos</span>
                 </a>
               </li>
               <li>
                 <a>
-                  <span class="icon is-medium"><img src="/static/img/secciones/postres.png"></span>
+                  <span class="icon is-medium"><img src="{{ url_for('static', path='/img/secciones/postres.png') }}"></span>
                   <span class="is-size-4-touch is-size-4-desktop">Postres</span>
                 </a>
               </li>
@@ -109,19 +109,19 @@
                 <span class="is-size-4  has-text-weight-bold">Alérgenos:</span>
                 <span class="icon-text is-size-5">
                   <span class="icon is-medium">
-                    <img src="/static/img/alergenos/gluten.png"/>
+                    <img src="{{ url_for('static', path='/img/alergenos/gluten.png') }}"/>
                   </span>
                   <span class="icon is-medium">
-                    <img src="/static/img/alergenos/moluscos.png"/>
+                    <img src="{{ url_for('static', path='/img/alergenos/moluscos.png') }}"/>
                   </span>
                   <span class="icon is-medium">
-                    <img src="/static/img/alergenos/lacteos.png"/>
+                    <img src="{{ url_for('static', path='/img/alergenos/lacteos.png') }}"/>
                   </span>
                   <span class="icon is-medium">
-                    <img src="/static/img/alergenos/altramuces.png"/>
+                    <img src="{{ url_for('static', path='/img/alergenos/altramuces.png') }}"/>
                   </span>
                   <span class="icon is-medium">
-                    <img src="/static/img/alergenos/apio.png"/>
+                    <img src="{{ url_for('static', path='/img/alergenos/apio.png') }}"/>
                   </span>
                 </span>
               </p>
@@ -386,7 +386,7 @@
     </div>
     </div>
   </main>
-  <script src="/static/js/scroll.js"></script>
+  <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
   <script>
     var modalIngredientes = Bulma.create('modal', {
       element: document.querySelector('#modalIngredientes')
