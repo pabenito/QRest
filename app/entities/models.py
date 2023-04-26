@@ -6,9 +6,7 @@ class ComplexModel(BaseModel):
         arbitrary_types_allowed = True  # In order to allow ObjectId
 
 
-# Entidades
-
-## Carta
+# Carta
 
 class Variant(ComplexModel):
     description: str

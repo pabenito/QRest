@@ -15,13 +15,13 @@ client = TestClient(router)
 # Check price
 
 def test___check_price___when_price_is_set_and_there_is_not_variants___then_dont_raise_exception():
-    element = Element(name="Nestea")
+    element = Element(name="Nestea", manager="Waiter")
     element.price = 2.5
     check_price(element)
 
 
 def test___check_price___when_price_is_set_and_there_is_at_least_a_variant_with_price___then_raise_exception():
-    element = Element(name="Agua")
+    element = Element(name="Agua", manager="Waiter")
     element.price = 1
     element.variants = [Variants(name="Tamaño", variants=[Variant(description="grande", price=2)])]
 
@@ -30,14 +30,14 @@ def test___check_price___when_price_is_set_and_there_is_at_least_a_variant_with_
 
 
 def test___check_price___when_price_is_not_set_and_there_is_not_variants___then_raise_exception():
-    element = Element(name="Agua")
+    element = Element(name="Agua", manager="Waiter")
 
     with pytest.raises(AttributeError):
         check_price(element)
 
 
 def test___check_price___when_price_is_not_set_and_all_variants_have_price___then_dont_raise_exception():
-    element = Element(name="Agua")
+    element = Element(name="Agua", manager="Waiter")
     element.variants = [Variants(name="Tamaño", variants=[
         Variant(description="pequeña", price=1),
         Variant(description="grande", price=2)])]

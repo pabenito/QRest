@@ -14,7 +14,11 @@ app.include_router(
 def startup_db_client():
     app.db_client = database.db_client
     app.db = database.db
-    print("Connected to the MongoDB database!")
+    try:
+        app.db_client.admin.command('ping')
+        print("Pinged your deployment. You successfully connected to MongoDB!")
+    except Exception as e:
+        print(e)
 
 @app.on_event("shutdown")
 def shutdown_db_client():
