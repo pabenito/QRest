@@ -14,6 +14,7 @@ El tipo se especificará cuando haya ambigüedad.
 ```
 {
   name*: str,
+  icon: str,
   visible: bool,
   elements: [
     {
@@ -62,7 +63,7 @@ Las bebidas no tienen por qué tener definidos ingredientes.
 
 Las etiquetas pueden tener diversos usos, como marcar un elemento como "vegano/vegetariano", "recomendado", "nuevo", "lo más pedido", etc.
 
-La visibilidad podrá ser usada para desactivar secciones y elementos, ya sea por que no queden existencias o para editar como administrador sin que este se muestre.   
+La visibilidad podrá ser usada para desactivar secciones y elementos, ya sea por que no queden existencias o para editar como administrador sin que este se muestre. 
 
 ### Ejemplos
 
@@ -71,6 +72,7 @@ Bebidas
 ```
 {
   "name": "Bebidas",
+  "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504452/sections/bebidas_yvwh0o.png",
   "visible": true,
   "elements": [
     {
@@ -111,29 +113,84 @@ Bebidas
           "price": 1
         }
       ]
+    },
+    {
+      "name": "Coca-cola",
+      "price": 2.5,
+      "manager": "camareros",
+      "visible": true,
+      "variants": [
+        {
+          "name": "Tipo",
+          "variants": [
+            {
+              "description": "normal"
+            },
+            {
+              "description": "Zero"
+            },
+            {
+              "description": "Zero Zero"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
 ```
 
-``` 
+```
 {
-  "name": "Coca-cola",
-  "price": 2.5,
-  "manager": "camareros",
+  "name": "platos",
+  "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504452/sections/platos_rj0urw.png",
   "visible": true,
-  "variants": [
+  "elements": [
     {
-      "name": "Tipo",
+      "name": "pizza margarita",
+      "image": "https://s3.amazonaws.com/images.ecwid.com/images/16648100/1678550965.jpg",
+      "description": "pizza margarita clásica con tomate, mozzarella y albahaca fresca",
+      "manager": "cocina",
+      "visible": true,
+      "ingredients": [
+        "tomate",
+        "mozzarella",
+        "albahaca",
+        "masa de pizza"
+      ],
+      "allergens": [
+        "gluten",
+        "lacteos"
+      ],
       "variants": [
         {
-          "description": "normal"
+          "name": "tamaño",
+          "variants": [
+            {
+              "description": "individual",
+              "price": 8
+            },
+            {
+              "description": "familiar",
+              "price": 14
+            }
+          ]
+        }
+      ],
+      "extras": [
+        {
+          "description": "champiñones",
+          "price": 1.5
         },
         {
-          "description": "Zero"
-        },
+          "description": "aceitunas negras",
+          "price": 1
+        }
+      ],
+      "tags": [
         {
-          "description": "Zero Zero"
+          "name": "vegetariano",
+          "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682613571/tags/vegetarian_f5xmq9.png"
         }
       ]
     }
@@ -187,6 +244,69 @@ pedido:
         precio: 4$
         extras:
           - Hierbabuena
+```
+
+## Alérgenos 
+
+```
+[
+  {
+    "name": "altramuces",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504399/allergens/altramuces_b4jvje.png",
+  },
+  {
+    "name": "apio",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504398/allergens/apio_pl5hsf.png",
+  },
+  {
+    "name": "cacahuetes",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504398/allergens/cacahuetes_wgnv6b.png",
+  },
+  {
+    "name": "crustaceos",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504398/allergens/crustaceos_jbhopr.png",
+  },
+  {
+    "name": "frutos de cascara",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504398/allergens/frutos_de_cascara_vxancr.png",
+  },
+  {
+    "name": "gluten",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504398/allergens/gluten_c6tk3b.png",
+  },
+  {
+    "name": "huevo",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504398/allergens/huevo_v41h5a.png",
+  },
+  {
+    "name": "lacteos",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504398/allergens/lacteos_wxgwnp.png",
+  },
+  {
+    "name": "moluscos",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504397/allergens/moluscos_e9wa3o.png",
+  },
+  {
+    "name": "mostaza",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504397/allergens/mostaza_ib5sik.png",
+  },
+  {
+    "name": "pescado",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504397/allergens/pescado_nwumbp.png",
+  },
+  {
+    "name": "sesamo",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504397/allergens/sesamo_xae3sh.png",
+  },
+  {
+    "name": "soja",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504397/allergens/soja_ictpzn.png",
+  },
+  {
+    "name": "sulfitos",
+    "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504397/allergens/sulfitos_yhraaz.png",
+  },
+]
 ```
 
 

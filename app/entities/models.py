@@ -45,5 +45,14 @@ class Element(ComplexModel):
 
 class Section(ComplexModel):
     name: str
+    icon: HttpUrl | None
     visible: bool = True
+    main: bool = False
     elements: list[Element] | None
+
+
+# Allergens
+
+class Allergen(BaseModel):
+    name: str
+    icon: HttpUrl

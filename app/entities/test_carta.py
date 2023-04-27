@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import pytest
 from fastapi import status
 from fastapi.testclient import TestClient
@@ -36,19 +34,53 @@ def test___check_price___when_price_is_not_set_and_there_is_not_variants___then_
         check_price(element)
 
 
-def test___check_price___when_price_is_not_set_and_all_variants_have_price___then_dont_raise_exception():
+def test___check_price___when_price_is_not_set_and_no_variant_group_has_price___then_raise_exception():
     element = Element(name="Agua", manager="Waiter")
-    element.variants = [Variants(name="Tamaño", variants=[
-        Variant(description="pequeña", price=1),
-        Variant(description="grande", price=2)])]
+    element.variants = [
+        Variants(name="Tamaño", variants=[
+            Variant(description="pequeña"),
+            Variant(description="grande")]),
+        Variants(name="Temperatura", variants=[
+            Variant(description="fría"),
+            Variant(description="del tiempo")]),
+    ]
+
+    with pytest.raises(AttributeError):
+        check_price(element)
+
+def test___check_price___when_price_is_not_set_and_more_than_a_variant_group_have_price___then_raise_exception():
+    element = Element(name="Agua", manager="Waiter")
+    element.variants = [
+        Variants(name="Tamaño", variants=[
+            Variant(description="pequeña", price=1),
+            Variant(description="grande", price=2)]),
+        Variants(name="Temperatura", variants=[
+            Variant(description="fría", price=1),
+            Variant(description="del tiempo", price=2)]),
+    ]
+
+    with pytest.raises(AttributeError):
+        check_price(element)
+
+def test___check_price___when_price_is_not_set_and_only_a_variant_group_has_price___then_dont_raise_exception():
+    element = Element(name="Agua", manager="Waiter")
+    element.variants = [
+        Variants(name="Tamaño", variants=[
+            Variant(description="pequeña", price=1),
+            Variant(description="grande", price=2)]),
+        Variants(name="Temperatura", variants=[
+            Variant(description="fría"),
+            Variant(description="del tiempo")]),
+    ]
+
     check_price(element)
 
 
-# Seccion
+# section
 
 ## Post
 
-def test_carta_post___when_correct___creates_seccion():
+def test_carta_post___when_correct___creates_section():
     try:
         response = client.post("/", json=section_example)
         assert response.status_code == status.HTTP_201_CREATED
@@ -58,7 +90,7 @@ def test_carta_post___when_correct___creates_seccion():
 
 
 
-def test_carta_post___when_insert_seccion_with_same_name___raises_exception():
+def test_carta_post___when_insert_section_with_same_name___raises_exception():
     client.post("/", json=section_example)
     with pytest.raises(HTTPException) as err:
         client.post("/", json=section_example)
@@ -85,7 +117,7 @@ def test_carta_get___when_post___then_get_has_one_more_document():
 
 
 
-def test_carta_get___when_post___then_can_get_seccion():
+def test_carta_get___when_post___then_can_get_section():
     try:
         client.post("/", json=section_example)
         response = client.get("/" + section_example["name"])
@@ -93,18 +125,35 @@ def test_carta_get___when_post___then_can_get_seccion():
         assert response.json() == section_example
     finally:
         client.delete("/" + section_example["name"])
+        
+
+def test_carta_get_sections___when_post___then_can_get_sections_without_elements():
+    section_1 = section_example.copy()
+    section_1["name"] = "section1"
+    section_2 = section_example.copy()
+    section_2["name"] = "section2"
+    try:
+        client.post("/", json=section_1)
+        client.post("/", json=section_2)
+        response = client.get("/sections")
+        assert response.status_code == status.HTTP_200_OK
+        for section in response.json():
+            if "elements" in section:
+                raise AssertionError(f"/sections call should not include 'elements':\n{response.json()}")
+    finally:
+        client.delete("/" + section_1["name"])
+        client.delete("/" + section_2["name"])
 
 
-
-def test_carta_get___when_get_with_invalid_seccion_name___then_raises_exception():
+def test_carta_get___when_get_with_invalid_section_name___then_raises_exception():
     with pytest.raises(HTTPException) as err:
-        client.get("/not_a_seccion")
+        client.get("/not_a_section")
     assert err.value.status_code == status.HTTP_404_NOT_FOUND
 
 
 ## Delete
 
-def test_carta_delete___when_section_exists___delete_seccion():
+def test_carta_delete___when_section_exists___delete_section():
     response = client.post("/", json=section_example)
     response = client.delete("/" + section_example["name"])
     assert response.status_code == status.HTTP_200_OK
@@ -112,17 +161,17 @@ def test_carta_delete___when_section_exists___delete_seccion():
 
 
 
-def test_carta_delete___when_delete_with_invalid_seccion_name___then_raises_exception():
+def test_carta_delete___when_delete_with_invalid_section_name___then_raises_exception():
     with pytest.raises(HTTPException) as err:
-        client.delete("/not_a_seccion")
+        client.delete("/not_a_section")
     assert err.value.status_code == status.HTTP_404_NOT_FOUND
 
 
 ## Put
 
-def test_carta_put___when_put_with_invalid_seccion_name___then_raises_exception():
+def test_carta_put___when_put_with_invalid_section_name___then_raises_exception():
     with pytest.raises(HTTPException) as err:
-        client.put("/not_a_seccion", json={"name": "x"})
+        client.put("/not_a_section", json={"name": "x"})
     assert err.value.status_code == status.HTTP_404_NOT_FOUND
 
 
@@ -208,7 +257,7 @@ def test_elements_put___when_set_another_name_that_exists___then_raise_exception
 
 def test_elements_put___when_section_dont_exists___then_raise_exception():
     with pytest.raises(HTTPException) as err:
-        client.put("/not_a_seccion/not_an_element", json=element_example.copy())
+        client.put("/not_a_section/not_an_element", json=element_example.copy())
     assert err.value.status_code == status.HTTP_404_NOT_FOUND
 
 
@@ -255,7 +304,7 @@ def test_elements_delete___when_element_dont_exists___then_raise_exception():
 base_section = {"name": "test_base_section"}
 
 section_example = {
-    "name": "bebidas",
+    "name": "test_bebidas",
     "elements": [
         {
             "name": "agua",

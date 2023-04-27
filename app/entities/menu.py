@@ -33,6 +33,14 @@ def create_section(section: Section):
 def get_carta():
     return list(menu.find({}))
 
+@router.get("/sections", response_model=list[Section], response_model_exclude_unset=True)
+def get_sections():
+    return list(menu.find({}, {"elements": False}))
+
+@router.get("/active", response_model=list[Section], response_model_exclude_unset=True)
+def get_active():
+    return list(menu.find_one({""}, {"elements": False}))
+
 
 @router.get("/{section}", response_model=Section, response_model_exclude_unset=True)
 def get_section(section: str):
@@ -59,7 +67,7 @@ def update_section(section: str, section_body: Section):
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"La sección '{section.name}', ya existe.")
 
     if section_body.elements is not None:
-        for element in section.elements:
+        for element in section_body.elements:
             check_price(element)
 
     new_section = json_lower_encoder(section_body)
@@ -141,24 +149,44 @@ def check_element_exists(section: str, element: str):
 
 
 def check_price(element: Element):
-    if element.price is None:
-        if element.variants is None:
-            raise AttributeError("Si el precio no está definido, debe haber variantes con precios")
-        else:
-            for variants in element.variants:
-                for variant in variants.variants:
-                    if variant.price is None:
-                        raise AttributeError(
-                            f"Si el precio no está definido, todas las variantes deben tener precio.\nLa variante '{variant.description}' no lo tiene definido")
-                    elif variant.price <= 0:
-                        raise AttributeError(
-                            f"El precio debe ser positivo.\nLa variante '{variant.description}' tiene de precio: {variant.price}")
-    elif element.price <= 0:
-        raise AttributeError(f"El precio debe ser positivo. El precio es: {element.price}")
-    else:
+    if element.price is not None:
+        if element.price <= 0:
+            raise AttributeError(f"Element price must be positive: {element.price}.")
+
+        # If the Element price is defined, no Variant should have a price
         if element.variants is not None:
-            for variants in element.variants:
-                for variant in variants.variants:
+            for variant_group in element.variants:
+                for variant in variant_group.variants:
                     if variant.price is not None:
                         raise AttributeError(
-                            f"Si el precio está definido, ninguna variante puede tener precio.\nLa variante '{variant.description}' tiene de precio: {element.price}.")
+                            f"Element price is defined, "
+                            f"but in {variant_group.name} {variant.description} has a price: {variant.price}.")
+    else:
+        # If the Element price is not defined,
+        # there should be at least one Variants with all its Variant having prices defined
+        if element.variants is not None:
+            price_defined_variants_group = 0
+            for variant_group in element.variants:
+                variants_with_price = 0
+                total_variants = len(variant_group.variants)
+                for variant in variant_group.variants:
+                    if variant.price is not None:
+                        if variant.price <= 0:
+                            raise AttributeError(
+                                f"Variant price must be positive, "
+                                f"but in {variant_group.name} {variant.description} has a price: {variant.price}.")
+                        variants_with_price += 1
+
+                if variants_with_price == total_variants:
+                    price_defined_variants_group += 1
+                elif variants_with_price > 0:
+                    raise AttributeError(
+                        f"In a Variants group, either all Variants must have a price or none should have a price, "
+                        f"but in {variant_group.name} there are some variants with price, but others that do not")
+
+            if price_defined_variants_group != 1:
+                raise AttributeError(
+                    "There must be exactly one Variants group with all its Variants having prices defined.")
+        else:
+            raise AttributeError("Element price is not defined and there are no Variants.")
+

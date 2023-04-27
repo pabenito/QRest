@@ -1,21 +1,19 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from app import database, entities, web
 
 app = FastAPI()
 
 app.include_router(
     entities.router,
-    prefix="/entities",
-    tags=["entities"]
+    prefix="/entities"
 )
 
 app.include_router(
     web.router,
     tags=["web"]
 )
+
 
 @app.on_event("startup")
 def startup_db_client():
@@ -28,6 +26,7 @@ def startup_db_client():
         print("Pinged your deployment. You successfully connected to MongoDB!")
     except Exception as e:
         print(e)
+
 
 @app.on_event("shutdown")
 def shutdown_db_client():

@@ -13,41 +13,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css"
     integrity="sha512-6f7HT84a/AplPkpSRSKWqbseRTG4aRrhadjZezYQ0oVk/B+nm/US5KzQkyyOyh0Mn9cyDdChRdS9qaxJRHayww=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0px;
-      padding: 0px;
-      overflow-x: hidden;
-    }
-
-    .box {
-      box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    }
-
-    .reveal {
-      position: relative;
-      transform: translateY(150px);
-      opacity: 0;
-      transition: 1s all ease;
-    }
-
-    .reveal.active {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .modal-card-foot {
-      justify-content: space-between;
-    }
-
-    input[type=checkbox] {
-      width: 25px;
-      height: 25px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/scroll.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/body.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}">
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
@@ -60,88 +28,98 @@
         <div class="column is-full">
           <div class="tabs is-centered is-boxed">
             <ul>
-              <li>
-                <a>
-                  <span class="icon is-medium"><img src="{{ url_for('static', path='/img/secciones/bebidas.png') }}"></span>
-                  <span class="is-size-4-touch is-size-4-desktop">Bebidas</span>
+              {% for section_meta in sections %}
+              <li {% if section_meta.name == section.name %} class="is-active" {% endif %}>
+                <a href="/{{ section_meta.name }}">
+                  <span class="icon is-medium"><img src="{{ section_meta.icon }}"></span>
+                  <span class="is-size-4-touch is-size-4-desktop is-capitalized">{{ section_meta.name }}</span>
                 </a>
               </li>
-              <li class="is-active">
-                <a>
-                  <span class="icon is-medium"><img src="{{ url_for('static', path='/img/secciones/entrantes.png') }}"></i></span>
-                  <span class="is-size-4-touch is-size-4-desktop">Entrantes</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="icon is-medium"><img src="{{ url_for('static', path='/img/secciones/platos.png') }}"></span>
-                  <span class="is-size-4-touch is-size-4-desktop">Platos</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="icon is-medium"><img src="{{ url_for('static', path='/img/secciones/postres.png') }}"></span>
-                  <span class="is-size-4-touch is-size-4-desktop">Postres</span>
-                </a>
-              </li>
+              {% endfor %}
             </ul>
           </div>
         </div>
+
+        {% for element in section.elements %}
         <div class="column is-half-tablet is-one-third-widescreen">
           <div class="box reveal mx-4">
             <header class="block">
-              <div class="columns is-mobile">
+              <div class="columns is-mobile is-multiline is-vcentered">
                 <div class="column">
-                  <strong class="has-text-centered is-size-3">Plato</strong>
+                  <strong class="has-text-centered is-size-3 is-capitalized">{{ element.name }}</strong>
                 </div>
+                {% if element.price is defined %}
                 <div class="column is-narrow">
-                  <p class="is-size-3">_€</p>
+                  <p class="is-size-3">{{ element.price }}€</p>
                 </div>
+                {% elif element.tags is defined %}
+                  {% for tag in element.tags %}
+                  <div class="column is-narrow">
+                    <span class="tag is-rounded is-medium">
+                      <span class="icon">
+                        <img src="{{ tag.icon }}"/>
+                      </span>
+                      <span class="is-size-5 is-capitalized ml-1">{{ tag.name }}</span>
+                    </span>
+                  </div>
+                  {% endfor %}
+                {% endif %}
               </div>
+              {% if element.tags is defined and element.price is defined %}
+              <div class="columns is-mobile">
+                {% for tag in element.tags %}
+                <div class="column is-narrow">
+                  <span class="tag is-rounded is-medium">
+                    <span class="icon">
+                      <img src="{{ tag.icon }}"/>
+                    </span>
+                    <span class="is-size-5 is-capitalized">{{ tag.name }}</span>
+                  </span>
+                </div>
+                {% endfor %}
+              </div>               
+              {% endif %}
             </header>
+            {% if element.image is defined %}
             <div class="block">
               <figure class="image">
-                <img src="https://bulma.io/images/placeholders/1280x960.png">
+                <img src="{{ element.image }}">
               </figure>
             </div>
+            {% endif %}
+            {% if element.allergens is defined %}
             <div class="block">
               <p class="has-text-justified">
                 <span class="is-size-4  has-text-weight-bold">Alérgenos:</span>
                 <span class="icon-text is-size-5">
+                  {% for allergen in element.allergens %}
                   <span class="icon is-medium">
-                    <img src="{{ url_for('static', path='/img/alergenos/gluten.png') }}"/>
+                    <img src="{{ allergens[allergen] }}"/>
                   </span>
-                  <span class="icon is-medium">
-                    <img src="{{ url_for('static', path='/img/alergenos/moluscos.png') }}"/>
-                  </span>
-                  <span class="icon is-medium">
-                    <img src="{{ url_for('static', path='/img/alergenos/lacteos.png') }}"/>
-                  </span>
-                  <span class="icon is-medium">
-                    <img src="{{ url_for('static', path='/img/alergenos/altramuces.png') }}"/>
-                  </span>
-                  <span class="icon is-medium">
-                    <img src="{{ url_for('static', path='/img/alergenos/apio.png') }}"/>
-                  </span>
+                  {% endfor %}
                 </span>
               </p>
             </div>
+            {% endif %}
+            {% if element.description is defined %}
             <div class="block">
               <p class="has-text-justified">
                 <span class="is-size-4  has-text-weight-bold">Descripción:</span>
-                <span class="is-size-5">Un plato muy muy muy muy muy muy rico.</span>
+                <span class="is-size-5">{{ element.description }}.</span>
               </p>
             </div>
+            {% endif %}
+            {% if element.ingredients is defined %}
             <div class="block">
               <div class="columns is-mobile is-multiline">
                 <div class="column">
                   <p class="has-text-justified">
                     <span class="is-size-4  has-text-weight-bold">Ingredientes:</span>
-                    <span class="is-size-5">Ingrediente, ingrediente, ingrediente, ingrediente, ingrediente, ...</span>
+                    <span class="is-size-5">{% for ingredient in element.ingredients %}{{ ingredient }}{% if not loop.last %},{% endif %} {% endfor %}</span>
                   </p>
                 </div>
                 <div class="column is-narrow">
-                  <button class="button" onclick="modalIngredientes.open()">
+                  <button class="button" onclick="{{ element.name }}_modal_ingredients.open()">
                     <span class="icon">
                       <i class="fas fa-plus-minus"></i>
                     </span>
@@ -149,16 +127,18 @@
                 </div>
               </div>
             </div>
+            {% endif %}
+            {% if element.extras is defined %}
             <div class="block">
               <div class="columns is-mobile is-multiline">
                 <div class="column">
                   <p class="has-text-justified">
                     <span class="is-size-4  has-text-weight-bold">Extras:</span>
-                    <span class="is-size-5">Extra, extra, extra, ...</span>
+                    <span class="is-size-5">{% for extra in element.extras %}{{ extra.description }}{% if not loop.last %},{% endif %} {% endfor %}</span>
                   </p>
                 </div>
                 <div class="column is-narrow">
-                  <button class="button" onclick="modalExtras.open()">
+                  <button class="button" onclick="{{ element.name }}_modal_extras.open()">
                     <span class="icon">
                       <i class="fas fa-plus-minus"></i>
                     </span>
@@ -166,28 +146,34 @@
                 </div>
               </div>
             </div>
+            {% endif %}
+            {% if element.variants is defined %}
+              {% for variant_group in element.variants %}
             <div class="block">
               <div class="columns is-mobile is-multiline">
                 <div class="column">
-                  <span class="is-size-4  has-text-weight-bold">Variaciones:</span>
+                  <span class="is-size-4  has-text-weight-bold is-capitalized">{{ variant_group.name }}:</span>
                 </div>
                 <div class="column is-narrow">
                   <div class="select">
                     <select>
-                      <option>_€ Ración</option>
-                      <option>_€ Media Ración</option>
+                      {% for variant in variant_group.variants %}
+                      <option>{% if variant.price is defined %}{{ variant.price }}€{% endif %} | {{ variant.description }}</option>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
               </div>
             </div>
+              {% endfor %}
+            {% endif %}
             <div class="block">
               <div class="columns is-mobile">
                 <div class="column">
-                  <button class="button is-danger is-fullwidth" onclick="modalEliminar.open()">Eliminar</button>
+                  <button class="button is-danger is-fullwidth" onclick="{{ element.name }}_modal_delete.open()">Eliminar</button>
                 </div>
                 <div class="column is-narrow">
-                  <p class="button is-rounded is-active is-fullwidth" onclick="modalEliminar.open()">3</p>
+                  <p class="button is-rounded is-active is-fullwidth" onclick="{{ element.name }}_modal_delete.open()">3</p>
                 </div>
                 <div class="column">
                   <button class="button is-success is-fullwidth">Añadir</button>
@@ -197,7 +183,10 @@
           </div>
         </div>
       </div>
-      <div id="modalIngredientes" class="modal p-4">
+      {% endfor %}
+      {% for element in section.elements%}
+        {% if element.ingredients is defined %}
+      <div id="{{ element.name }}_modal_ingredients" class="modal p-4">
         <div class="modal-background"></div>
         <div class="modal-card">
           <header class="modal-card-head">
@@ -207,10 +196,11 @@
           <section class="modal-card-body">
             <div class="columns is-mobile is-centered">
               <div class="column is-narrow">
+                {% for ingredient in element.ingredients %}
                 <div class="level is-mobile">
                   <div class="level-left mr-3">
                     <div class="level-item">
-                      <p class="is-size-4">Ingrediente</p>
+                      <p class="is-size-4">{{ ingredient }}</p>
                     </div>
                   </div>
                   <div class="level-right">
@@ -219,40 +209,19 @@
                     </div>
                   </div>
                 </div>
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">Ingrediente largo</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox" checked>
-                    </div>
-                  </div>
-                </div>
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">Ingrediente</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox" checked>
-                    </div>
-                  </div>
-                </div>
+                {% endfor %}
               </div>
             </div>
           </section>
           <footer class="modal-card-foot">
             <button class="button is-fullwidth">Restablecer</button>
-            <button class="button is-primary is-fullwidth" onclick="modalIngredientes.close()">Aceptar</button>
+            <button class="button is-primary is-fullwidth" onclick="{{ element.name }}_modal_ingredients.close()">Aceptar</button>
           </footer>
         </div>
       </div>
-      <div id="modalExtras" class="modal p-4">
+        {% endif %}
+        {% if element.extras is defined %}
+      <div id="{{ element.name }}_modal_extras" class="modal p-4">
         <div class="modal-background"></div>
         <div class="modal-card">
           <header class="modal-card-head">
@@ -262,10 +231,11 @@
           <section class="modal-card-body">
             <div class="columns is-mobile is-centered">
               <div class="column is-narrow">
+                {% for extra in element.extras %}
                 <div class="level is-mobile">
                   <div class="level-left mr-3">
                     <div class="level-item">
-                      <p class="is-size-4">_€ Extra</p>
+                      <p class="is-size-4">{{ extra.price }}€ {{ extra.description }}</p>
                     </div>
                   </div>
                   <div class="level-right">
@@ -274,28 +244,44 @@
                     </div>
                   </div>
                 </div>
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">_€ Extra largo</p>
-                    </div>
+                {% endfor %}
+              </div>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-fullwidth">Restablecer</button>
+            <button class="button is-primary is-fullwidth" onclick="{{ element.name }}_modal_extras.close()">Aceptar</button>
+          </footer>
+        </div>
+      </div>
+        {% endif %}
+      <div id="{{ element.name }}_modal_delete" class="modal p-4">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Eliminar pedido</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="columns is-mobile">
+              <div class="column">
+                <div class="columns is-mobile is-vcentered">
+                  <div class="column">
+                    <p>Ración, -ingrediente1, -ingrediente2, +extra1, +extra2</p>
                   </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox">
-                    </div>
+                  <div class="column is-narrow">
+                    <button class="button is-danger">
+                      <span class="icon">
+                        <i class="fas fa-trash-can"></i>
+                      </span>
+                    </button>
                   </div>
-                </div>
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">_€ Extra</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox">
-                    </div>
+                  <div class="column is-narrow">
+                    <button class="button is-info">
+                      <span class="icon">
+                        <i class="fas fa-clone"></i>
+                      </span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -303,99 +289,25 @@
           </section>
           <footer class="modal-card-foot">
             <button class="button is-fullwidth">Restablecer</button>
-            <button class="button is-primary is-fullwidth" onclick="modalExtras.close()">Aceptar</button>
+            <button class="button is-primary is-fullwidth" onclick="{{ element.name }}_modal_delete.close()">Aceptar</button>
           </footer>
         </div>
       </div>
-    </div>
-    <div id="modalEliminar" class="modal p-4">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Eliminar pedido</p>
-          <button class="delete" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="columns is-mobile">
-            <div class="column">
-              <div class="columns is-mobile is-vcentered">
-                <div class="column">
-                  <p>Ración, -ingrediente1, -ingrediente2, +extra1, +extra2</p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-danger" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-trash-can"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-info" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-clone"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-              <div class="columns is-mobile is-vcentered">
-                <div class="column">
-                  <p>Media ración, -ingrediente1, +extra1, +extra2</p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-danger" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-trash-can"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-info" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-clone"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-              <div class="columns is-mobile is-vcentered">
-                <div class="column">
-                  <p>Ración, completa, sin extras</p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-danger" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-trash-can"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-info" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-clone"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button is-fullwidth">Restablecer</button>
-          <button class="button is-primary is-fullwidth" onclick="modalEliminar.close()">Aceptar</button>
-        </footer>
-      </div>
-    </div>
+      {% endfor %}
     </div>
   </main>
   <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
   <script>
-    var modalIngredientes = Bulma.create('modal', {
-      element: document.querySelector('#modalIngredientes')
+  {% for element in section.elements %}
+    var {{ element.name }}_modal_ingredients = Bulma.create('modal', {
+      element: document.querySelector('#{{ element.name }}_modal_ingredients')
     });
-    var modalExtras = Bulma.create('modal', {
-      element: document.querySelector('#modalExtras')
+    var {{ element.name }}_modal_extras = Bulma.create('modal', {
+      element: document.querySelector('#{{ element.name }}_modal_extras')
     });
-    var modalEliminar = Bulma.create('modal', {
-      element: document.querySelector('#modalEliminar')
+    var {{ element.name }}_modal_delete = Bulma.create('modal', {
+      element: document.querySelector('#{{ element.name }}_modal_delete')
     });
+  {% endfor %}
   </script>
 </body>
