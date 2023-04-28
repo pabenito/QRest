@@ -1,4 +1,4 @@
-import json
+import json, re
 from fastapi.encoders import jsonable_encoder
 
 
@@ -12,3 +12,9 @@ def json_encoder(obj) -> dict:
 
 def json_lower_encoder(obj) -> dict:
     return dict_to_lower(json_encoder(obj))
+
+def remove_non_letters_and_replace_spaces(value):
+    filtered_str = re.sub(r"[^a-zA-Z\s]", "", value)
+    result = re.sub(r"\s+", "_", filtered_str)
+    return result
+

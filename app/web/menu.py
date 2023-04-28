@@ -38,8 +38,8 @@ def get():
 @router.get("/{section}", response_class=HTMLResponse)
 def get(request: Request, section: str):
     pprint.pprint(menu.get(f"/{section}"))
-    return templates.TemplateResponse("menu.j2", {
+    return templates.TemplateResponse("menu.html.j2", {
         "request": request,
         "sections": menu.get("/sections").json(),
-        "section": menu.get(f"/{section}").json(),
+        "section": menu.get(f"/{section}", params={"ids": True}).json(),
         "allergens": allergens.get("/dict").json()})

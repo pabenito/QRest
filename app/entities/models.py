@@ -31,6 +31,7 @@ class Tag(ComplexModel):
 
 class Element(ComplexModel):
     name: str
+    id: str | None
     image: HttpUrl | None
     description: str | None
     price: float | None

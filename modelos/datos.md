@@ -115,7 +115,7 @@ Bebidas
       ]
     },
     {
-      "name": "Coca-cola",
+      "name": "coca-cola",
       "price": 2.5,
       "manager": "camareros",
       "visible": true,

@@ -3,7 +3,7 @@
 from fastapi import APIRouter, status, HTTPException
 from app.database import db
 from app.entities.models import Section, Element
-from app.utils import json_lower_encoder
+from app.utils import json_lower_encoder, remove_non_letters_and_replace_spaces
 
 # Create router
 router = APIRouter()
@@ -33,9 +33,11 @@ def create_section(section: Section):
 def get_carta():
     return list(menu.find({}))
 
+
 @router.get("/sections", response_model=list[Section], response_model_exclude_unset=True)
 def get_sections():
     return list(menu.find({}, {"elements": False}))
+
 
 @router.get("/active", response_model=list[Section], response_model_exclude_unset=True)
 def get_active():
@@ -43,8 +45,12 @@ def get_active():
 
 
 @router.get("/{section}", response_model=Section, response_model_exclude_unset=True)
-def get_section(section: str):
-    return get_section(section)
+def get_section(section: str, ids: bool = False):
+    section_obj = get_section(section)
+    if ids:
+        for element in section_obj.elements:
+            add_element_id(element)
+    return section_obj
 
 
 @router.get("/{section}/id")
@@ -90,7 +96,9 @@ def delete_section(section: str):
 @router.post("/{section}", response_model=Section, response_model_exclude_unset=True)
 def add_element_section(section: str, element: Element):
     check_section_exists(section)
+    check_element_not_exists(section, element.name)
     check_price(element)
+
     menu.find_one_and_update({"name": section.lower()}, {"$push": {"elements": json_lower_encoder(element)}})
     return menu.find_one({"name": section})
 
@@ -145,7 +153,18 @@ def check_element_exists(section: str, element: str):
     if menu.count_documents({"name": section.lower(), "elements.name": element.lower()}) == 0:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"El element '{section}/{element}', no existe.")
+            detail=f"El elemento '{section}/{element}', no existe.")
+
+
+def check_element_not_exists(section: str, element: str):
+    if menu.count_documents({"name": section.lower(), "elements.name": element.lower()}) > 0:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"El elemento '{section}/{element}', ya existe.")
+
+
+def add_element_id(element: Element):
+    element.id = remove_non_letters_and_replace_spaces(element.name)
 
 
 def check_price(element: Element):
@@ -189,4 +208,3 @@ def check_price(element: Element):
                     "There must be exactly one Variants group with all its Variants having prices defined.")
         else:
             raise AttributeError("Element price is not defined and there are no Variants.")
-
