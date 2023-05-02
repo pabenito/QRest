@@ -219,36 +219,36 @@
                     <div class="level is-mobile">
                       <div class="level-left mr-3">
                         <div class="level-item">
-                          <p class="is-size-5">Extra 1</p>
+                          <p class="is-size-5">1€ Extra 1</p>
                         </div>
                       </div>
                       <div class="level-right">
                         <div class="level-item">
-                          <input id="extraCheckbox1" type="checkbox" checked onclick="updateExtrasList()">
+                          <input id="extraCheckbox1" type="checkbox" onclick="updateExtrasList()">
                         </div>
                       </div>
                     </div>
                     <div class="level is-mobile">
                       <div class="level-left mr-3">
                         <div class="level-item">
-                          <p class="is-size-5">Extra 2</p>
+                          <p class="is-size-5">2€ Extra 2</p>
                         </div>
                       </div>
                       <div class="level-right">
                         <div class="level-item">
-                          <input id="extraCheckbox2" type="checkbox" checked onclick="updateExtrasList()">
+                          <input id="extraCheckbox2" type="checkbox" onclick="updateExtrasList()">
                         </div>
                       </div>
                     </div>
                     <div class="level is-mobile">
                       <div class="level-left mr-3">
                         <div class="level-item">
-                          <p class="is-size-5">Extra 3</p>
+                          <p class="is-size-5">1€ Extra 3</p>
                         </div>
                       </div>
                       <div class="level-right">
                         <div class="level-item">
-                          <input id="extraCheckbox3" type="checkbox" checked onclick="updateExtrasList()">
+                          <input id="extraCheckbox3" type="checkbox" onclick="updateExtrasList()">
                         </div>
                       </div>
                     </div>
@@ -512,7 +512,7 @@
     'Extra 3'
   ];
 
-  function updateExtrasList() {
+  function updateExtrasList(includeAll = false) {
     const extrasList = document.getElementById("extrasList");
     const extraCheckbox1 = document.getElementById("extraCheckbox1");
     const extraCheckbox2 = document.getElementById("extraCheckbox2");
@@ -520,30 +520,34 @@
 
     const visibleExtras = [];
 
-    if (extraCheckbox1.checked) {
-      visibleExtras.push(extras[0]);
-    }
-    if (extraCheckbox2.checked) {
-      visibleExtras.push(extras[1]);
-    }
-    if (extraCheckbox3.checked) {
-      visibleExtras.push(extras[2]);
+    if (includeAll) {
+      visibleExtras.push(extras);
+    } else {
+      if (extraCheckbox1.checked) {
+        visibleExtras.push(extras[0]);
+      }
+      if (extraCheckbox2.checked) {
+        visibleExtras.push(extras[1]);
+      }
+      if (extraCheckbox3.checked) {
+        visibleExtras.push(extras[2]);
+      }
     }
 
     extrasList.textContent = visibleExtras.join(", ");
   }
 
   // Inicializar la lista de ingredientes al cargar la página
-  document.addEventListener("DOMContentLoaded", updateExtrasList());
+  document.addEventListener("DOMContentLoaded", updateExtrasList(includeAll=true));
 
   // Resetea los ingredientes
   const extrasResetBtn = document.getElementById("extrasResetBtn");
   extrasResetBtn.addEventListener("click", () => {
     const checkboxes = document.querySelectorAll("#extrasChecklist input[type=checkbox]");
     checkboxes.forEach(checkbox => {
-      checkbox.checked = true;
+      checkbox.checked = false;
     });
-    updateExtrasList();
+    updateExtrasList(includeAll=true);
   });
 </script>
 <script>
