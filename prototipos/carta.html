@@ -10,15 +10,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css"
-    integrity="sha512-6f7HT84a/AplPkpSRSKWqbseRTG4aRrhadjZezYQ0oVk/B+nm/US5KzQkyyOyh0Mn9cyDdChRdS9qaxJRHayww=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" href="/static/css/scroll.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/scroll.css">
   <link rel="stylesheet" type="text/css" href="/static/css/body.css">
   <link rel="stylesheet" type="text/css" href="/static/css/bulma.css">
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
   <script src="/static/js/bulmajs-0.10.4/bulma.js"></script>
+  <style>
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+      text-align: center;
+    }
+
+    textarea {
+      height: auto;
+      resize: vertical;
+    }
+  </style>
 </head>
 
 <body>
@@ -57,7 +71,7 @@
         </div>
         <div class="column is-half-tablet is-one-third-widescreen">
           <div class="box reveal mx-4">
-            <header class="block">
+            <header class="block" id="elementHeader" onclick="toggleBody()">
               <div class="columns is-mobile">
                 <div class="column">
                   <strong class="has-text-centered is-size-3">Plato</strong>
@@ -66,149 +80,298 @@
                   <p class="is-size-3">_€</p>
                 </div>
               </div>
-            </header>
-            <div class="block">
               <figure class="image">
                 <img src="https://bulma.io/images/placeholders/1280x960.png">
               </figure>
-            </div>
-            <div class="block">
-              <p class="has-text-justified">
-                <span class="is-size-4  has-text-weight-bold">Alérgenos:</span>
-                <span class="icon-text is-size-5">
-                  <span class="icon is-medium">
-                    <img src="/static/img/alergenos/gluten.png"/>
-                  </span>
-                  <span class="icon is-medium">
-                    <img src="/static/img/alergenos/moluscos.png"/>
-                  </span>
-                  <span class="icon is-medium">
-                    <img src="/static/img/alergenos/lacteos.png"/>
-                  </span>
-                  <span class="icon is-medium">
-                    <img src="/static/img/alergenos/altramuces.png"/>
-                  </span>
-                  <span class="icon is-medium">
-                    <img src="/static/img/alergenos/apio.png"/>
-                  </span>
-                </span>
-              </p>
-            </div>
-            <div class="block">
-              <p class="has-text-justified">
-                <span class="is-size-4  has-text-weight-bold">Descripción:</span>
-                <span class="is-size-5">Un plato muy muy muy muy muy muy rico.</span>
-              </p>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <p class="has-text-justified">
-                    <span class="is-size-4  has-text-weight-bold">Ingredientes:</span>
-                    <span class="is-size-5">Ingrediente, ingrediente, ingrediente, ingrediente, ingrediente, ...</span>
-                  </p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button" onclick="modalIngredientes.open()">
-                    <span class="icon">
-                      <i class="fas fa-plus-minus"></i>
+            </header>
+            <div class="is-hidden" id="elementBody">
+              <div class="block">
+                <p class="has-text-justified">
+                  <span class="is-size-4  has-text-weight-bold">Alérgenos:</span>
+                  <span class="icon-text is-size-5">
+                    <span class="icon is-medium">
+                      <img src="/static/img/alergenos/gluten.png" />
                     </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <p class="has-text-justified">
-                    <span class="is-size-4  has-text-weight-bold">Extras:</span>
-                    <span class="is-size-5">Extra, extra, extra, ...</span>
-                  </p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-plus-minus"></i>
+                    <span class="icon is-medium">
+                      <img src="/static/img/alergenos/moluscos.png" />
                     </span>
-                  </button>
-                </div>
+                    <span class="icon is-medium">
+                      <img src="/static/img/alergenos/lacteos.png" />
+                    </span>
+                    <span class="icon is-medium">
+                      <img src="/static/img/alergenos/altramuces.png" />
+                    </span>
+                    <span class="icon is-medium">
+                      <img src="/static/img/alergenos/apio.png" />
+                    </span>
+                  </span>
+                </p>
               </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <span class="is-size-4  has-text-weight-bold">Variaciones:</span>
+              <div class="block">
+                <p class="has-text-justified">
+                  <span class="is-size-4  has-text-weight-bold">Descripción:</span>
+                  <span class="is-size-5">Un plato muy muy muy muy muy muy rico.</span>
+                </p>
+              </div>
+              <div class="block">
+                <div class="columns is-mobile is-multiline">
+                  <div class="column">
+                    <p class="has-text-justified">
+                      <span class="is-size-4 has-text-weight-bold">Ingredientes:</span>
+                      <span class="is-size-5" id="ingredientsList"></span>
+                    </p>
+                  </div>
+                  <div class="column is-narrow">
+                    <button class="button is-warning" id="ingredientsResetBtn">
+                      <span class="icon">
+                        <i class="fas fa-rotate-left"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="column is-narrow" id="ingredientsPlus">
+                    <button class="button is-info" id="ingredientsPlusButton">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="column is-narrow is-hidden" id="ingredientsMinus">
+                    <button class="button is-info" id="ingredientsMinusButton">
+                      <span class="icon">
+                        <i class="fas fa-minus"></i>
+                      </span>
+                    </button>
+                  </div>
                 </div>
-                <div class="column is-narrow">
-                  <div class="select">
-                    <select>
-                      <option>_€ Ración</option>
-                      <option>_€ Media Ración</option>
-                    </select>
+                <div class="columns is-mobile is-centered is-hidden" id="ingredientsChecklist">
+                  <div class="column is-narrow">
+                    <div class="level is-mobile">
+                      <div class="level-left mr-3">
+                        <div class="level-item">
+                          <p class="is-size-5">Ingrediente 1</p>
+                        </div>
+                      </div>
+                      <div class="level-right">
+                        <div class="level-item">
+                          <input id="ingredientCheckbox1" type="checkbox" checked onclick="updateIngredientList()">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="level is-mobile">
+                      <div class="level-left mr-3">
+                        <div class="level-item">
+                          <p class="is-size-5">Ingrediente 2</p>
+                        </div>
+                      </div>
+                      <div class="level-right">
+                        <div class="level-item">
+                          <input id="ingredientCheckbox2" type="checkbox" checked onclick="updateIngredientList()">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="level is-mobile">
+                      <div class="level-left mr-3">
+                        <div class="level-item">
+                          <p class="is-size-5">Ingrediente 3</p>
+                        </div>
+                      </div>
+                      <div class="level-right">
+                        <div class="level-item">
+                          <input id="ingredientCheckbox3" type="checkbox" checked onclick="updateIngredientList()">
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="block">
-              <div class="columns is-mobile">
-                <div class="column">
-                  <button class="button is-danger is-fullwidth" onclick="modalEliminar.open()">Eliminar</button>
+              <div class="block">
+                <div class="columns is-mobile is-multiline">
+                  <div class="column">
+                    <p class="has-text-justified">
+                      <span class="is-size-4 has-text-weight-bold">Extras:</span>
+                      <span class="is-size-5" id="extrasList"></span>
+                    </p>
+                  </div>
+                  <div class="column is-narrow">
+                    <button class="button is-warning" id="extrasResetBtn">
+                      <span class="icon">
+                        <i class="fas fa-rotate-left"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="column is-narrow" id="extrasPlus">
+                    <button class="button is-info" id="extrasPlusButton">
+                      <span class="icon">
+                        <i class="fas fa-plus"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="column is-narrow is-hidden" id="extrasMinus">
+                    <button class="button is-info" id="extrasMinusButton">
+                      <span class="icon">
+                        <i class="fas fa-minus"></i>
+                      </span>
+                    </button>
+                  </div>
                 </div>
-                <div class="column is-narrow">
-                  <p class="button is-rounded is-active is-fullwidth" onclick="modalEliminar.open()">3</p>
+                <div class="columns is-mobile is-centered is-hidden" id="extrasChecklist">
+                  <div class="column is-narrow">
+                    <div class="level is-mobile">
+                      <div class="level-left mr-3">
+                        <div class="level-item">
+                          <p class="is-size-5">Extra 1</p>
+                        </div>
+                      </div>
+                      <div class="level-right">
+                        <div class="level-item">
+                          <input id="extraCheckbox1" type="checkbox" checked onclick="updateExtrasList()">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="level is-mobile">
+                      <div class="level-left mr-3">
+                        <div class="level-item">
+                          <p class="is-size-5">Extra 2</p>
+                        </div>
+                      </div>
+                      <div class="level-right">
+                        <div class="level-item">
+                          <input id="extraCheckbox2" type="checkbox" checked onclick="updateExtrasList()">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="level is-mobile">
+                      <div class="level-left mr-3">
+                        <div class="level-item">
+                          <p class="is-size-5">Extra 3</p>
+                        </div>
+                      </div>
+                      <div class="level-right">
+                        <div class="level-item">
+                          <input id="extraCheckbox3" type="checkbox" checked onclick="updateExtrasList()">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="column">
-                  <button class="button is-success is-fullwidth">Añadir</button>
+              </div>
+              <div class="block">
+                <div class="columns is-mobile is-multiline">
+                  <div class="column">
+                    <span class="is-size-4  has-text-weight-bold">Variaciones:</span>
+                  </div>
+                  <div class="column is-narrow">
+                    <div class="select">
+                      <select>
+                        <option>_€ Ración</option>
+                        <option>_€ Media Ración</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="block">
+                <div class="columns is-mobile">
+                  <div class="column">
+                    <button class="button is-danger is-fullwidth" onclick="modalEliminar.open()">Eliminar</button>
+                  </div>
+                  <div class="column is-narrow">
+                    <p class="button is-rounded is-active is-fullwidth" onclick="modalEliminar.open()">3</p>
+                  </div>
+                  <div class="column">
+                    <button class="button is-success is-fullwidth">Añadir</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div id="modalIngredientes" class="modal p-4">
+      <div id="modalEliminar" class="modal p-4">
         <div class="modal-background"></div>
         <div class="modal-card">
           <header class="modal-card-head">
-            <p class="modal-card-title">Modificar ingredientes</p>
+            <p class="modal-card-title">Pedido</p>
             <button class="delete" aria-label="close"></button>
           </header>
           <section class="modal-card-body">
-            <div class="columns is-mobile is-centered">
-              <div class="column is-narrow">
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">Ingrediente</p>
-                    </div>
+            <div class="columns is-mobile">
+              <div class="column">
+                <div class="columns is-mobile is-vcentered" id="pedido">
+                  <div class="column">
+                    <p>Ración, -ingrediente1, -ingrediente2, +extra1, +extra2</p>
                   </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox" checked>
+                  <div class="column is-narrow">
+                    <button class="button is-info" id="noteBtn">
+                      <span class="icon">
+                        <i class="fas fa-pen-to-square"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="column is-narrow">
+                    <div class="field has-addons">
+                      <div class="control">
+                        <button class="button is-danger" id="minusBtn">
+                          <span class="icon">
+                            <i class="fas fa-minus"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="control">
+                        <input id="cantidad" class="input" type="number" min="1" max="9" value="1"
+                          style="width:min-content" readonly>
+                      </div>
+                      <div class="control">
+                        <button class="button is-success" id="plusBtn">
+                          <span class="icon">
+                            <i class="fas fa-plus"></i>
+                          </span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">Ingrediente largo</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox" checked>
-                    </div>
+                <div class="field" id="note" hidden>
+                  <div class="control">
+                    <input class="input" type="text" placeholder="Escribe aquí tu nota" />
                   </div>
                 </div>
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">Ingrediente</p>
-                    </div>
+                <div class="columns is-mobile is-vcentered">
+                  <div class="column">
+                    <p>Media ración, -ingrediente1, +extra1, +extra2</p>
                   </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox" checked>
-                    </div>
+                  <div class="column is-narrow">
+                    <button class="button is-danger" onclick="modalExtras.open()">
+                      <span class="icon">
+                        <i class="fas fa-trash-can"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="column is-narrow">
+                    <button class="button is-info" onclick="modalExtras.open()">
+                      <span class="icon">
+                        <i class="fas fa-clone"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div class="columns is-mobile is-vcentered">
+                  <div class="column">
+                    <p>Ración, completa, sin extras</p>
+                  </div>
+                  <div class="column is-narrow">
+                    <button class="button is-danger" onclick="modalExtras.open()">
+                      <span class="icon">
+                        <i class="fas fa-trash-can"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="column is-narrow">
+                    <button class="button is-info" onclick="modalExtras.open()">
+                      <span class="icon">
+                        <i class="fas fa-clone"></i>
+                      </span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -216,154 +379,187 @@
           </section>
           <footer class="modal-card-foot">
             <button class="button is-fullwidth">Restablecer</button>
-            <button class="button is-primary is-fullwidth" onclick="modalIngredientes.close()">Aceptar</button>
+            <button class="button is-primary is-fullwidth" onclick="modalEliminar.close()">Aceptar</button>
           </footer>
         </div>
       </div>
-      <div id="modalExtras" class="modal p-4">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Añadir extras</p>
-            <button class="delete" aria-label="close"></button>
-          </header>
-          <section class="modal-card-body">
-            <div class="columns is-mobile is-centered">
-              <div class="column is-narrow">
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">_€ Extra</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox">
-                    </div>
-                  </div>
-                </div>
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">_€ Extra largo</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox">
-                    </div>
-                  </div>
-                </div>
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">_€ Extra</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button is-fullwidth">Restablecer</button>
-            <button class="button is-primary is-fullwidth" onclick="modalExtras.close()">Aceptar</button>
-          </footer>
-        </div>
-      </div>
-    </div>
-    <div id="modalEliminar" class="modal p-4">
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Eliminar pedido</p>
-          <button class="delete" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="columns is-mobile">
-            <div class="column">
-              <div class="columns is-mobile is-vcentered">
-                <div class="column">
-                  <p>Ración, -ingrediente1, -ingrediente2, +extra1, +extra2</p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-danger" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-trash-can"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-info" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-clone"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-              <div class="columns is-mobile is-vcentered">
-                <div class="column">
-                  <p>Media ración, -ingrediente1, +extra1, +extra2</p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-danger" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-trash-can"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-info" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-clone"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-              <div class="columns is-mobile is-vcentered">
-                <div class="column">
-                  <p>Ración, completa, sin extras</p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-danger" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-trash-can"></i>
-                    </span>
-                  </button>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button is-info" onclick="modalExtras.open()">
-                    <span class="icon">
-                      <i class="fas fa-clone"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button is-fullwidth">Restablecer</button>
-          <button class="button is-primary is-fullwidth" onclick="modalEliminar.close()">Aceptar</button>
-        </footer>
-      </div>
-    </div>
     </div>
   </main>
-  <script src="/static/js/scroll.js"></script>
-  <script>
-    var modalIngredientes = Bulma.create('modal', {
-      element: document.querySelector('#modalIngredientes')
-    });
-    var modalExtras = Bulma.create('modal', {
-      element: document.querySelector('#modalExtras')
-    });
-    var modalEliminar = Bulma.create('modal', {
-      element: document.querySelector('#modalEliminar')
-    });
-  </script>
 </body>
+
+<script src="/static/js/scroll.js"></script>
+
+<script>
+  function toggleBody() {
+    var elementBody = document.getElementById("elementBody");
+    elementBody.classList.toggle("is-hidden");
+  }
+</script>
+
+<script>
+  var modalIngredientes = Bulma.create('modal', {
+    element: document.querySelector('#modalIngredientes')
+  });
+  var modalExtras = Bulma.create('modal', {
+    element: document.querySelector('#modalExtras')
+  });
+  var modalEliminar = Bulma.create('modal', {
+    element: document.querySelector('#modalEliminar')
+  });
+</script>
+
+<script>
+  // Obtener los elementos HTML relevantes
+  const minusBtn = document.getElementById("minusBtn");
+  const plusBtn = document.getElementById("plusBtn");
+  const cantidad = document.getElementById("cantidad");
+  const pedido = document.getElementById("pedido");
+
+  // Establecer los manejadores de eventos para los botones
+  minusBtn.addEventListener("click", decrementValue);
+  plusBtn.addEventListener("click", incrementValue);
+
+  // Función para disminuir el valor numérico en 1
+  function decrementValue() {
+    const currentValue = parseInt(cantidad.value);
+    if (currentValue > 1) {
+      cantidad.value = currentValue - 1;
+    } else {
+      pedido.remove();
+    }
+  }
+
+  // Función para incrementar el valor numérico en 1
+  function incrementValue() {
+    const currentValue = parseInt(cantidad.value);
+    if (currentValue < 9) {
+      cantidad.value = currentValue + 1;
+    }
+  }
+</script>
+
+<script>
+  const button = document.getElementById("noteBtn");
+  const field = document.getElementById("note");
+
+  button.addEventListener("click", () => {
+    field.hidden = !field.hidden;
+  });
+</script>
+
+<script>
+  const ingredientes = [
+    'Ingrediente 1',
+    'Ingrediente 2',
+    'Ingrediente 3'
+  ];
+
+  function updateIngredientList() {
+    const ingredientsList = document.getElementById("ingredientsList");
+    const ingredientCheckbox1 = document.getElementById("ingredientCheckbox1");
+    const ingredientCheckbox2 = document.getElementById("ingredientCheckbox2");
+    const ingredientCheckbox3 = document.getElementById("ingredientCheckbox3");
+
+    const visibleIngredients = [];
+
+    if (ingredientCheckbox1.checked) {
+      visibleIngredients.push(ingredientes[0]);
+    }
+    if (ingredientCheckbox2.checked) {
+      visibleIngredients.push(ingredientes[1]);
+    }
+    if (ingredientCheckbox3.checked) {
+      visibleIngredients.push(ingredientes[2]);
+    }
+
+    ingredientsList.textContent = visibleIngredients.join(", ");
+  }
+
+  // Inicializar la lista de ingredientes al cargar la página
+  document.addEventListener("DOMContentLoaded", updateIngredientList());
+
+  // Resetea los ingredientes
+  const ingredientsResetBtn = document.getElementById("ingredientsResetBtn");
+  ingredientsResetBtn.addEventListener("click", () => {
+    const checkboxes = document.querySelectorAll("#ingredientsChecklist input[type=checkbox]");
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = true;
+    });
+    updateIngredientList();
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    $('#ingredientsPlusButton').click(function () {
+      $('#ingredientsList').addClass('is-hidden');
+      $('#ingredientsPlus').addClass('is-hidden');
+      $('#ingredientsMinus').removeClass('is-hidden');
+      $('#ingredientsChecklist').removeClass('is-hidden');
+    });
+
+    $('#ingredientsMinusButton').click(function () {
+      $('#ingredientsMinus').addClass('is-hidden');
+      $('#ingredientsChecklist').addClass('is-hidden');
+      $('#ingredientsList').removeClass('is-hidden');
+      $('#ingredientsPlus').removeClass('is-hidden');
+    });
+  });
+</script>
+<script>
+  const extras = [
+    'Extra 1',
+    'Extra 2',
+    'Extra 3'
+  ];
+
+  function updateExtrasList() {
+    const extrasList = document.getElementById("extrasList");
+    const extraCheckbox1 = document.getElementById("extraCheckbox1");
+    const extraCheckbox2 = document.getElementById("extraCheckbox2");
+    const extraCheckbox3 = document.getElementById("extraCheckbox3");
+
+    const visibleExtras = [];
+
+    if (extraCheckbox1.checked) {
+      visibleExtras.push(extras[0]);
+    }
+    if (extraCheckbox2.checked) {
+      visibleExtras.push(extras[1]);
+    }
+    if (extraCheckbox3.checked) {
+      visibleExtras.push(extras[2]);
+    }
+
+    extrasList.textContent = visibleExtras.join(", ");
+  }
+
+  // Inicializar la lista de ingredientes al cargar la página
+  document.addEventListener("DOMContentLoaded", updateExtrasList());
+
+  // Resetea los ingredientes
+  const extrasResetBtn = document.getElementById("extrasResetBtn");
+  extrasResetBtn.addEventListener("click", () => {
+    const checkboxes = document.querySelectorAll("#extrasChecklist input[type=checkbox]");
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = true;
+    });
+    updateExtrasList();
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    $('#extrasPlusButton').click(function () {
+      $('#extrasList').addClass('is-hidden');
+      $('#extrasPlus').addClass('is-hidden');
+      $('#extrasMinus').removeClass('is-hidden');
+      $('#extrasChecklist').removeClass('is-hidden');
+    });
+
+    $('#extrasMinusButton').click(function () {
+      $('#extrasMinus').addClass('is-hidden');
+      $('#extrasChecklist').addClass('is-hidden');
+      $('#extrasList').removeClass('is-hidden');
+      $('#extrasPlus').removeClass('is-hidden');
+    });
+  });
+</script>

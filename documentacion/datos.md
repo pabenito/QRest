@@ -202,23 +202,32 @@ Bebidas
 
 ```
 pedido:
+    id
+    zona
     mesa
     fecha* = now()
     estado* = creado // creado -> pidiendo -> cerrado -> pagado
     total = sum(comandas.elementos.precios)
     factura = total + IVA 
     []comandas:
-        fecha*
-        []elementos:
-            seccion*
+        []secciones:
             nombre*
-            precio*
-            variante
-            []ingredientes:
-                nombre
-            []extras:
-                descripción
-            nota
+            []elementos:
+                nombre*
+                manager*
+                []pedidos:
+                    fecha* = now()
+                    cantidad = usuarios.length
+                    []usuarios:
+                      usuario
+                      nota
+                    precio
+                    []notas
+                    []variantes:
+                        nombre
+                        variante
+                    []extras
+                    []ingredientes
 ```
 
 ### Ejemplo
