@@ -35,42 +35,42 @@
   </style>
 </head>
 
-<body>
+<body class="has-navbar-fixed-top">
+  <nav class="navbar is-fixed-top">
+    <div class="tabs is-centered is-boxed">
+      <ul>
+        <li>
+          <a>
+            <span class="icon is-medium"><img src="/static/img/secciones/bebidas.png"></span>
+            <span class="is-size-4-touch is-size-4-desktop">Bebidas</span>
+          </a>
+        </li>
+        <li class="is-active">
+          <a>
+            <span class="icon is-medium"><img src="/static/img/secciones/entrantes.png"></i></span>
+            <span class="is-size-4-touch is-size-4-desktop">Entrantes</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-medium"><img src="/static/img/secciones/platos.png"></span>
+            <span class="is-size-4-touch is-size-4-desktop">Platos</span>
+          </a>
+        </li>
+        <li>
+          <a>
+            <span class="icon is-medium"><img src="/static/img/secciones/postres.png"></span>
+            <span class="is-size-4-touch is-size-4-desktop">Postres</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
   <main class="section p-0">
     <div class="containter">
       <div class="columns is-multiline">
-        <div class="column is-full">
-          <div class="tabs is-centered is-boxed">
-            <ul>
-              <li>
-                <a>
-                  <span class="icon is-medium"><img src="/static/img/secciones/bebidas.png"></span>
-                  <span class="is-size-4-touch is-size-4-desktop">Bebidas</span>
-                </a>
-              </li>
-              <li class="is-active">
-                <a>
-                  <span class="icon is-medium"><img src="/static/img/secciones/entrantes.png"></i></span>
-                  <span class="is-size-4-touch is-size-4-desktop">Entrantes</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="icon is-medium"><img src="/static/img/secciones/platos.png"></span>
-                  <span class="is-size-4-touch is-size-4-desktop">Platos</span>
-                </a>
-              </li>
-              <li>
-                <a>
-                  <span class="icon is-medium"><img src="/static/img/secciones/postres.png"></span>
-                  <span class="is-size-4-touch is-size-4-desktop">Postres</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
         <div class="column is-half-tablet is-one-third-widescreen">
-          <div class="box reveal mx-4">
+          <div class="box reveal m-4">
             <header class="block" id="elementHeader" onclick="toggleBody()">
               <div class="columns is-mobile">
                 <div class="column">
@@ -538,7 +538,7 @@
   }
 
   // Inicializar la lista de ingredientes al cargar la página
-  document.addEventListener("DOMContentLoaded", updateExtrasList(includeAll=true));
+  document.addEventListener("DOMContentLoaded", updateExtrasList(includeAll = true));
 
   // Resetea los ingredientes
   const extrasResetBtn = document.getElementById("extrasResetBtn");
@@ -547,7 +547,7 @@
     checkboxes.forEach(checkbox => {
       checkbox.checked = false;
     });
-    updateExtrasList(includeAll=true);
+    updateExtrasList(includeAll = true);
   });
 </script>
 <script>
