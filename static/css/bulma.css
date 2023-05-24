@@ -2,6 +2,10 @@
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
+.modal-card-foot {
+    justify-content: space-between;
+}
+
 input[type=checkbox] {
     width: 20px;
     height: 20px;
@@ -14,14 +18,4 @@ input[type=radio] {
 
 .has-rounded-border {
     border-radius: 5%;
-}
-
-.custom-level {
-    display: inline-flex;
-    width: auto;
-    justify-content: flex-start;
-}
-
-.custom-level .level-item {
-    flex-grow: 0;
 }
