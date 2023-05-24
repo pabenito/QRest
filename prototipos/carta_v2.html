@@ -63,7 +63,7 @@
           <p class="subtitle">10€</p>
         </div>
         <div class="column is-narrow">
-          <button class="button" id="addBtn">
+          <button class="button" id="addBtn" onclick="modalAdd.open()">
             <span class="icon">
               <i class="fas fa-plus"></i>
             </span>
@@ -105,7 +105,7 @@
         </div>
       </div>
     </div>
-    <div id="modalAdd" class="modal p-4 is-active">
+    <div id="modalAdd" class="modal p-4">
       <div class="modal-background"></div>
       <form class="modal-card">
         <header class="modal-card-head">
@@ -237,23 +237,23 @@
           <div class="container">
             <div class="columns is-mobile is-multiline">
               <div class="column">
-                <button class="button is-fullwidth is-danger">Cancelar</button>
+                <button class="button is-fullwidth is-danger" onclick="modalAdd.close()">Cancelar</button>
               </div>
               <div class="column is-narrow">
                 <div class="field has-addons">
                   <div class="control">
-                    <button class="button is-danger" id="minusBtn">
+                    <button class="button is-danger" id="minusBtnModal">
                       <span class="icon">
                         <i class="fas fa-minus"></i>
                       </span>
                     </button>
                   </div>
                   <div class="control">
-                    <input id="cantidad" class="input" type="number" min="1" max="9" value="1" style="width:min-content"
+                    <input id="cantidadModal" class="input" type="number" min="1" max="9" value="1" style="width:min-content"
                       readonly>
                   </div>
                   <div class="control">
-                    <button class="button is-success" id="plusBtn">
+                    <button class="button is-success" id="plusBtnModal">
                       <span class="icon">
                         <i class="fas fa-plus"></i>
                       </span>
@@ -272,6 +272,11 @@
 </body>
 
 <script src="/static/js/scroll.js"></script>
+<script>
+  var modalAdd = Bulma.create('modal', {
+    element: document.querySelector('#modalAdd')
+  });
+</script>
 <script>
   // Obtener los elementos HTML relevantes
   const minusBtn = document.getElementById("minusBtn");
@@ -297,5 +302,32 @@
   function incrementValue() {
     const currentValue = parseInt(cantidad.value);
     cantidad.value = currentValue + 1;
+  }
+</script>
+<script>
+  // Obtener los elementos HTML relevantes
+  const minusBtnModal = document.getElementById("minusBtnModal");
+  const plusBtnModal = document.getElementById("plusBtnModal");
+  const cantidadModal = document.getElementById("cantidadModal");
+  const pedidoModal = document.getElementById("pedidoModal");
+
+  // Establecer los manejadores de eventos para los botones
+  minusBtnModal.addEventListener("click", decrementValue);
+  plusBtnModal.addEventListener("click", incrementValue);
+
+  // Función para disminuir el valor numérico en 1
+  function decrementValue() {
+    const currentValue = parseInt(cantidadModal.value);
+    if (currentValue > 1) {
+      cantidadModal.value = currentValue - 1;
+    } else {
+      pedidoModal.remove();
+    }
+  }
+
+  // Función para incrementar el valor numérico en 1
+  function incrementValue() {
+    const currentValue = parseInt(cantidadModal.value);
+    cantidadModal.value = currentValue + 1;
   }
 </script>
