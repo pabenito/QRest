@@ -40,14 +40,14 @@
     <div class="containter p-4 has-background-light">
       <div class="columns is-mobile is-vcentered">
         <div class="column is-narrow">
-          <button class="button">
+          <button class="button" onclick="modalSecciones.open()">
             <span class="icon">
               <i class="fas fa-bars"></i>
             </span>
           </button>
         </div>
         <div class="column">
-          <h2 class="title is-4">Sección</h1>
+          <h2 class="title is-4">Sección 1</h1>
         </div>
       </div>
     </div>
@@ -63,11 +63,31 @@
           <p class="subtitle">10€</p>
         </div>
         <div class="column is-narrow">
-          <button class="button" id="addBtn" onclick="modalAdd.open()">
+          <button id="addElementComplex" class="button" onclick="modalAdd.open()">
             <span class="icon">
-              <i class="fas fa-plus"></i>
+              <i class="fas fa-square-plus"></i>
             </span>
           </button>
+          <div id="counterSeccionComplex" class="field has-addons is-hidden">
+            <div class="control">
+              <button class="button is-danger" onclick="modalTakeOff.open()">
+                <span class="icon">
+                  <i class="fas fa-minus"></i>
+                </span>
+              </button>
+            </div>
+            <div class="control">
+              <input id="cantidadSeccionComplex" class="input" type="number" min="0" value="0" style="width:min-content"
+                readonly>
+            </div>
+            <div class="control">
+              <button class="button is-success" onclick="modalAdd.open()">
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <hr class="m-2" />
@@ -82,20 +102,25 @@
           <p class="subtitle">10€</p>
         </div>
         <div class="column is-narrow">
-          <div class="field has-addons">
+          <button id="addElement" class="button" id="addBtn" onclick="incrementValue(event); hide(event); show(event)" to="cantidadSeccion" show="counterSeccion" hide="addElement">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+          </button>
+          <div id="counterSeccion" class="field has-addons is-hidden">
             <div class="control">
-              <button class="button is-danger" id="minusBtn">
+              <button class="button is-danger" onclick="decrementValue(event)" to="cantidadSeccion" show="addElement" hide="counterSeccion">
                 <span class="icon">
                   <i class="fas fa-minus"></i>
                 </span>
               </button>
             </div>
             <div class="control">
-              <input id="cantidad" class="input" type="number" min="1" max="9" value="1" style="width:min-content"
+              <input id="cantidadSeccion" class="input" type="number" min="0" value="0" style="width:min-content"
                 readonly>
             </div>
             <div class="control">
-              <button class="button is-success" id="plusBtn">
+              <button class="button is-success" onclick="incrementValue(event)" to="cantidadSeccion">
                 <span class="icon">
                   <i class="fas fa-plus"></i>
                 </span>
@@ -105,155 +130,223 @@
         </div>
       </div>
     </div>
-    <div id="modalAdd" class="modal p-4">
-      <div class="modal-background"></div>
-      <form class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Plato</p>
-          <button class="delete" aria-label="close"></button>
-        </header>
-        <div class="modal-card-body p-3 has-background-light">
-          <div class="box">
-            <p class="has-text-justified">
-            <p class="is-size-5 has-text-weight-bold">Descripción</p>
-            <hr class="m-2">
-            <p class="is-size-6">Un plato muy muy muy muy muy muy muy muy muy muy muy muy muy muy muy muy
-              rioco.</p>
-            </p>
-          </div>
-          <div class="box">
-            <p class="has-text-justified">
-            <p class="is-size-5 has-text-weight-bold">Alérgenos</p>
-            <hr class="m-2">
-            <span class="icon-text is-size-5">
-              <span class="icon is-medium">
-                <img src="/static/img/alergenos/gluten.png" />
-              </span>
-              <span class="icon is-medium">
-                <img src="/static/img/alergenos/moluscos.png" />
-              </span>
-              <span class="icon is-medium">
-                <img src="/static/img/alergenos/lacteos.png" />
-              </span>
-              <span class="icon is-medium">
-                <img src="/static/img/alergenos/altramuces.png" />
-              </span>
-              <span class="icon is-medium">
-                <img src="/static/img/alergenos/apio.png" />
-              </span>
+  </section>
+  <section id="section2" class="section p-0">
+    <div class="containter p-4 has-background-light">
+      <div class="columns is-mobile is-vcentered">
+        <div class="column is-narrow">
+          <button class="button" onclick="modalSecciones.open()">
+            <span class="icon">
+              <i class="fas fa-bars"></i>
             </span>
-            </p>
-          </div>
-          <div class="box">
-            <p class="has-text-justified">
-            <p class="is-size-5 has-text-weight-bold">Variante con precio</p>
-            <hr class="m-2">
-            <div class="columns is-mobile">
-              <div class="column is-one-third has-text-centered">
-                <p class="is-size-5">Variante</p>
-              </div>
-              <div class="column is-one-third has-text-centered">
-                <p class="is-size-5">_€</p>
-              </div>
-              <div class="column is-one-third has-text-centered">
-                <input type="radio" name="variante1" value="opcion2">
-              </div>
-            </div>
-            <hr class="m-2">
-            <div class="columns is-mobile">
-              <div class="column is-one-third has-text-centered">
-                <p class="is-size-5">Variante</p>
-              </div>
-              <div class="column is-one-third has-text-centered">
-                <p class="is-size-5">_€</p>
-              </div>
-              <div class="column is-one-third has-text-centered">
-                <input type="radio" name="variante1" value="opcion1">
-              </div>
-            </div>
-          </div>
-          <div class="box">
-            <p class="has-text-justified">
-            <p class="is-size-5 has-text-weight-bold">Ingredientes</p>
-            <hr class="m-2">
-            <div class="columns is-mobile">
-              <div class="column is-half has-text-centered">
-                <p class="is-size-5">Ingrediente</p>
-              </div>
-              <div class="column is-half has-text-centered">
-                <input type="checkbox" checked>
-              </div>
-            </div>
-            <hr class="m-2">
-            <div class="columns is-mobile">
-              <div class="column is-half has-text-centered">
-                <p class="is-size-5">Ingrediente</p>
-              </div>
-              <div class="column is-half has-text-centered">
-                <input type="checkbox" checked>
-              </div>
-            </div>
-            <hr class="m-2">
-            <div class="columns is-mobile">
-              <div class="column is-half has-text-centered">
-                <p class="is-size-5">Ingrediente</p>
-              </div>
-              <div class="column is-half has-text-centered">
-                <input type="checkbox" checked>
-              </div>
-            </div>
-          </div>
-          <div class="box">
-            <p class="has-text-justified">
-            <p class="is-size-5 has-text-weight-bold">Extras</p>
-            <hr class="m-2">
-            <div class="columns is-mobile">
-              <div class="column is-one-third has-text-centered">
-                <p class="is-size-5">Extra</p>
-              </div>
-              <div class="column is-one-third has-text-centered">
-                <p class="is-size-5">_€</p>
-              </div>
-              <div class="column is-one-third has-text-centered">
-                <input type="checkbox">
-              </div>
-            </div>
-            <hr class="m-2">
-            <div class="columns is-mobile">
-              <div class="column is-one-third has-text-centered">
-                <p class="is-size-5">Extra</p>
-              </div>
-              <div class="column is-one-third has-text-centered">
-                <p class="is-size-5">_€</p>
-              </div>
-              <div class="column is-one-third has-text-centered">
-                <input type="checkbox">
-              </div>
-            </div>
-          </div>
+          </button>
+        </div>
+        <div class="column">
+          <h2 class="title is-4">Sección 2</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div id="modalAdd" class="modal p-4">
+    <div class="modal-background"></div>
+    <form class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Plato</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <div class="modal-card-body p-3 has-background-light">
+        <div class="box">
+          <p class="has-text-justified">
+          <p class="is-size-5 has-text-weight-bold">Descripción</p>
+          <hr class="m-2">
+          <p class="is-size-6">Un plato muy muy muy muy muy muy muy muy muy muy muy muy muy muy muy muy
+            rioco.</p>
           </p>
         </div>
-        <footer class="modal-card-foot">
-          <div class="container">
-            <div class="columns is-mobile is-multiline">
+        <div class="box">
+          <p class="has-text-justified">
+          <p class="is-size-5 has-text-weight-bold">Alérgenos</p>
+          <hr class="m-2">
+          <span class="icon-text is-size-5">
+            <span class="icon is-medium">
+              <img src="/static/img/alergenos/gluten.png" />
+            </span>
+            <span class="icon is-medium">
+              <img src="/static/img/alergenos/moluscos.png" />
+            </span>
+            <span class="icon is-medium">
+              <img src="/static/img/alergenos/lacteos.png" />
+            </span>
+            <span class="icon is-medium">
+              <img src="/static/img/alergenos/altramuces.png" />
+            </span>
+            <span class="icon is-medium">
+              <img src="/static/img/alergenos/apio.png" />
+            </span>
+          </span>
+          </p>
+        </div>
+        <div class="box">
+          <p class="has-text-justified">
+          <p class="is-size-5 has-text-weight-bold">Variante con precio</p>
+          <hr class="m-2">
+          <div class="columns is-mobile">
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">Variante</p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">_€</p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <input type="radio" name="variante1" value="opcion2">
+            </div>
+          </div>
+          <hr class="m-2">
+          <div class="columns is-mobile">
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">Variante</p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">_€</p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <input type="radio" name="variante1" value="opcion1">
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <p class="has-text-justified">
+          <p class="is-size-5 has-text-weight-bold">Ingredientes</p>
+          <hr class="m-2">
+          <div class="columns is-mobile">
+            <div class="column is-half has-text-centered">
+              <p class="is-size-5">Ingrediente</p>
+            </div>
+            <div class="column is-half has-text-centered">
+              <input type="checkbox" checked>
+            </div>
+          </div>
+          <hr class="m-2">
+          <div class="columns is-mobile">
+            <div class="column is-half has-text-centered">
+              <p class="is-size-5">Ingrediente</p>
+            </div>
+            <div class="column is-half has-text-centered">
+              <input type="checkbox" checked>
+            </div>
+          </div>
+          <hr class="m-2">
+          <div class="columns is-mobile">
+            <div class="column is-half has-text-centered">
+              <p class="is-size-5">Ingrediente</p>
+            </div>
+            <div class="column is-half has-text-centered">
+              <input type="checkbox" checked>
+            </div>
+          </div>
+        </div>
+        <div class="box">
+          <p class="has-text-justified">
+          <p class="is-size-5 has-text-weight-bold">Extras</p>
+          <hr class="m-2">
+          <div class="columns is-mobile">
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">Extra</p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">_€</p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <input type="checkbox">
+            </div>
+          </div>
+          <hr class="m-2">
+          <div class="columns is-mobile">
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">Extra</p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">_€</p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <input type="checkbox">
+            </div>
+          </div>
+        </div>
+        </p>
+      </div>
+      <footer class="modal-card-foot">
+        <div class="container">
+          <div class="columns is-mobile is-multiline">
+            <div class="column">
+              <button class="button is-fullwidth is-danger" onclick="modalAdd.close()">Cancelar</button>
+            </div>
+            <div class="column is-narrow">
+              <div class="field has-addons">
+                <div class="control">
+                  <button type="button" class="button is-danger" onclick="decrementValue(event)" to="cantidadModal">
+                    <span class="icon">
+                      <i class="fas fa-minus"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="control">
+                  <input id="cantidadModal" class="input" type="number" min="1" value="1" style="width:min-content"
+                    readonly>
+                </div>
+                <div class="control">
+                  <button type="button" class="button is-success" onclick="incrementValue(event)" to="cantidadModal">
+                    <span class="icon">
+                      <i class="fas fa-plus"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <button type="button" class="button is-fullwidth is-success" onclick="modalAdd.close()" >Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </form>
+  </div>
+  <div id="modalTakeOff" class="modal p-4">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Pedido</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <div class="columns is-mobile">
+          <div class="column">
+            <div class="columns is-mobile is-vcentered" id="pedido">
               <div class="column">
-                <button class="button is-fullwidth is-danger" onclick="modalAdd.close()">Cancelar</button>
+                <p>Ración, -ingrediente1, -ingrediente2, +extra1, +extra2</p>
+              </div>
+              <div class="column is-narrow">
+                <button class="button is-info" id="noteBtn">
+                  <span class="icon">
+                    <i class="fas fa-pen-to-square"></i>
+                  </span>
+                </button>
               </div>
               <div class="column is-narrow">
                 <div class="field has-addons">
                   <div class="control">
-                    <button class="button is-danger" id="minusBtnModal">
+                    <button class="button is-danger" id="minusBtn">
                       <span class="icon">
                         <i class="fas fa-minus"></i>
                       </span>
                     </button>
                   </div>
                   <div class="control">
-                    <input id="cantidadModal" class="input" type="number" min="1" max="9" value="1" style="width:min-content"
-                      readonly>
+                    <input id="cantidad" class="input" type="number" min="1" max="9" value="1"
+                      style="width:min-content" readonly>
                   </div>
                   <div class="control">
-                    <button class="button is-success" id="plusBtnModal">
+                    <button class="button is-success" id="plusBtn">
                       <span class="icon">
                         <i class="fas fa-plus"></i>
                       </span>
@@ -261,73 +354,170 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="field" id="note" hidden>
+              <div class="control">
+                <input class="input" type="text" placeholder="Escribe aquí tu nota" />
+              </div>
+            </div>
+            <div class="columns is-mobile is-vcentered">
               <div class="column">
-                <button class="button is-fullwidth is-success" onclick="modalAdd.close()">Aceptar</button>
+                <p>Media ración, -ingrediente1, +extra1, +extra2</p>
+              </div>
+              <div class="column is-narrow">
+                <button class="button is-danger" onclick="modalExtras.open()">
+                  <span class="icon">
+                    <i class="fas fa-trash-can"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="column is-narrow">
+                <button class="button is-info" onclick="modalExtras.open()">
+                  <span class="icon">
+                    <i class="fas fa-clone"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div class="columns is-mobile is-vcentered">
+              <div class="column">
+                <p>Ración, completa, sin extras</p>
+              </div>
+              <div class="column is-narrow">
+                <button class="button is-danger" onclick="modalExtras.open()">
+                  <span class="icon">
+                    <i class="fas fa-trash-can"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="column is-narrow">
+                <button class="button is-info" onclick="modalExtras.open()">
+                  <span class="icon">
+                    <i class="fas fa-clone"></i>
+                  </span>
+                </button>
               </div>
             </div>
           </div>
-        </footer>
-      </form>
-  </section>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-fullwidth">Restablecer</button>
+        <button class="button is-primary is-fullwidth" onclick="modalTakeOff.close()">Aceptar</button>
+      </footer>
+    </div>
+  </div>
+  <div id="modalSecciones" class="modal p-4">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Secciones</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <nav class="modal-card-body p-5">
+        <a class="is-size-4 has-text-black" onclick="hacerScroll(event)" to="section1">
+          Sección 1
+        </a>
+        <hr class="m-2">
+        <div class="pl-6">
+          <a class="is-size-5 has-text-black" onclick="hacerScroll(event)" to="section11">
+            Subsección 1.1
+          </a>
+          <hr class="m-2">
+          <a class="is-size-5 has-text-black" onclick="hacerScroll(event)" to="section12">
+            Subsección 1.2
+          </a>
+        </div>
+        <hr class="m-2">
+        <a class="is-size-4 has-text-black" onclick="hacerScroll(event)" to="section2">
+          Sección 2
+        </a>
+      </nav>
+      <footer class="modal-card-foot">
+        <button class="button is-fullwidth" onclick="modalSecciones.close()">Cerrar</button>
+      </footer>
+    </div>
+  </div>
 </body>
 
 <script src="/static/js/scroll.js"></script>
 <script>
-  var modalAdd = Bulma.create('modal', {
-    element: document.querySelector('#modalAdd')
-  });
-</script>
-<script>
-  // Obtener los elementos HTML relevantes
-  const minusBtn = document.getElementById("minusBtn");
-  const plusBtn = document.getElementById("plusBtn");
-  const cantidad = document.getElementById("cantidad");
-  const pedido = document.getElementById("pedido");
-
-  // Establecer los manejadores de eventos para los botones
-  minusBtn.addEventListener("click", decrementValue);
-  plusBtn.addEventListener("click", incrementValue);
-
-  // Función para disminuir el valor numérico en 1
-  function decrementValue() {
-    const currentValue = parseInt(cantidad.value);
-    if (currentValue > 1) {
-      cantidad.value = currentValue - 1;
-    } else {
-      pedido.remove();
-    }
+  // Función que acepta el ID del elemento como argumento
+  function createModal(modalId) {
+    return Bulma.create('modal', {
+      element: document.querySelector(`#${modalId}`)
+    });
   }
 
-  // Función para incrementar el valor numérico en 1
-  function incrementValue() {
-    const currentValue = parseInt(cantidad.value);
-    cantidad.value = currentValue + 1;
+  // Llamando a la función para los dos modales
+  var modalAdd = createModal('modalAdd');
+  var modalTakeOff = createModal('modalTakeOff');
+  var modalSecciones = createModal('modalSecciones');
+
+  function hacerScroll(event) {
+    event.preventDefault(); // Evita que se produzca el comportamiento de enlace predeterminado
+
+    var toValue = event.target.getAttribute("to"); // Obtiene el valor del atributo "to"
+    var elementoDestino = document.getElementById(toValue); // Selecciona el elemento destino
+
+    if (elementoDestino) {
+      elementoDestino.scrollIntoView({ behavior: "smooth" }); // Hace scroll al elemento destino
+    }
   }
 </script>
 <script>
-  // Obtener los elementos HTML relevantes
-  const minusBtnModal = document.getElementById("minusBtnModal");
-  const plusBtnModal = document.getElementById("plusBtnModal");
-  const cantidadModal = document.getElementById("cantidadModal");
-  const pedidoModal = document.getElementById("pedidoModal");
+  function show(event) {
+      event.preventDefault();
+      let buttonElement = event.currentTarget;
+      let showId = buttonElement.getAttribute('show');
 
-  // Establecer los manejadores de eventos para los botones
-  minusBtnModal.addEventListener("click", decrementValue);
-  plusBtnModal.addEventListener("click", incrementValue);
+      let showElement = document.getElementById(showId);
+      showElement.classList.remove("is-hidden");
 
-  // Función para disminuir el valor numérico en 1
-  function decrementValue() {
-    const currentValue = parseInt(cantidadModal.value);
-    if (currentValue > 1) {
-      cantidadModal.value = currentValue - 1;
-    } else {
-      pedidoModal.remove();
-    }
+      // Automatically increase the value to 1 upon showing the counter
+      let targetInput = buttonElement.getAttribute('to');
+      let inputElement = document.getElementById(targetInput);
+      inputElement.value = 1;
   }
 
-  // Función para incrementar el valor numérico en 1
-  function incrementValue() {
-    const currentValue = parseInt(cantidadModal.value);
-    cantidadModal.value = currentValue + 1;
+  function hide(event) {
+      event.preventDefault();
+      let buttonElement = event.currentTarget;
+      let hideId = buttonElement.getAttribute('hide');
+
+      let hideElement = document.getElementById(hideId);
+      hideElement.classList.add("is-hidden");
+  }
+
+  function decrementValue(event) {
+      event.preventDefault();
+      let buttonElement = event.currentTarget;
+      let targetInput = buttonElement.getAttribute('to');
+      
+      let inputElement = document.getElementById(targetInput);
+      let inputValue = Number(inputElement.value);
+      
+      if(inputValue > 0) {
+          inputElement.value = inputValue - 1;
+
+          // Hide counter and show addElement when value reaches 0
+          if(inputElement.value == 0) {
+              hide(event);
+              show(event);
+          }
+      }
+  }
+
+  function incrementValue(event) {
+      event.preventDefault();
+      let buttonElement = event.currentTarget;
+      let targetInput = buttonElement.getAttribute('to');
+
+      let inputElement = document.getElementById(targetInput);
+      let inputValue = Number(inputElement.value);
+      
+      inputElement.value = inputValue + 1;
   }
 </script>
+
+

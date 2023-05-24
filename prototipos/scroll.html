@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QRest | Carta</title>
+    <link rel="icon" href="/static/img/icon.png" type="image/icon type">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="/static/js/bulmajs-0.10.4/bulma.js"></script>
+</head>
+
+<body>
+    <button class="button is-fullwidth" onclick="hacerScroll(event)">
+        <p class="is-size-5 has-text-weight-bold">Scroll</p>
+    </button>
+    <section class="section p-0">
+        <div class="containter p-4 has-background-light">
+            <div class="columns is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <button class="button" onclick="modalSecciones.open()">
+                        <span class="icon">
+                            <i class="fas fa-bars"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="column">
+                    <h2 class="title is-4">Sección 1</h1>
+                </div>
+            </div>
+        </div>
+        <div class="containter p-2">
+            <div class="columns m-0 is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image image is-128x128">
+                        <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+            </div>
+            <div class="columns m-0 is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image image is-128x128">
+                        <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="containter p-2">
+            <div class="columns m-0 is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image image is-128x128">
+                        <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+            </div>
+            <div class="columns m-0 is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image image is-128x128">
+                        <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div class="containter p-2">
+            <div class="columns m-0 is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image image is-128x128">
+                        <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+            </div>
+            <div class="columns m-0 is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image image is-128x128">
+                        <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="elementoDestino" class="section p-0">
+        <div class="containter p-4 has-background-light">
+            <div class="columns is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <button class="button" onclick="modalSecciones.open()">
+                        <span class="icon">
+                            <i class="fas fa-bars"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="column">
+                    <h2 class="title is-4">Sección 2</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="modalSecciones" class="modal p-4">
+        <div class="modal-background"></div>
+        <form class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Secciones</p>
+                <button class="delete" aria-label="close" onclick="modalSecciones.close()"></button>
+            </header>
+            <div class="modal-card-body p-3 has-background-light">
+                <button class="button is-fullwidth" onclick="hacerScroll(event)">
+                    <p class="is-size-5 has-text-weight-bold">Sección 1</p>
+                </button>
+                <hr class="m-2">
+                <button class="button is-fullwidth" onclick="hacerScroll(event)">
+                    <p class="is-size-5 has-text-weight-bold">Sección 2</p>
+                </button>
+            </div>
+            <footer class="modal-card-foot">
+                <button class="button is-fullwidth" onclick="modalSecciones.close()">Cerrar</button>
+            </footer>
+        </form>
+    </div>
+</body>
+
+<script>
+    var modalSecciones = Bulma.create('modal', {
+        element: document.querySelector('#modalSecciones')
+    });
+    function hacerScroll(event) {
+        event.preventDefault();
+        modalSecciones.close();
+        document.getElementById("elementoDestino").scrollIntoView({ behavior: "smooth" });
+    }
+</script>
