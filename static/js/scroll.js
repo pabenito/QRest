@@ -1,16 +1,10 @@
+function doScroll(event) {
+    event.preventDefault(); // Evita que se produzca el comportamiento de enlace predeterminado
 
-function reveal() {
-    var reveals = document.querySelectorAll(".reveal");
-    for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 150;
-        if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add("active");
-        } else {
-            reveals[i].classList.remove("active");
-        }
+    var toValue = event.target.getAttribute("to"); // Obtiene el valor del atributo "to"
+    var elementoDestino = document.getElementById(toValue); // Selecciona el elemento destino
+
+    if (elementoDestino) {
+        elementoDestino.scrollIntoView({ behavior: "smooth" }); // Hace scroll al elemento destino
     }
 }
-reveal();
-$('body').on('scroll', reveal);

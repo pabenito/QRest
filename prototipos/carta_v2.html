@@ -53,8 +53,8 @@
         </button>
       </div>
       <div class="column">
-        <h2 id="section" class="title is-size-5">Sección 1</h2>
-        <h3 id="subsection" class="subtitle is-size-6 is-invisible">Sección 1.1</h3>
+        <h2 id="section" class="title is-size-5"></h2>
+        <h3 id="subsection" class="subtitle is-size-6 is-invisible"></h3>
       </div>
     </div>
   </nav>
@@ -149,324 +149,38 @@
       <p class="subtitle is-size-6">Sección 1.1</p>
     </section>
 
-    <div class="containter p-2">
-      <div class="columns m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image is-96x96">
-            <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5">Plato</p>
-          <p class="subtitle is-size-5">10€</p>
-        </div>
-        <div class="column is-narrow">
-          <button id="addElementComplex" class="button" onclick="modalAdd.open()">
-            <span class="icon">
-              <i class="fas fa-square-plus"></i>
-            </span>
-          </button>
-          <div id="counterSeccionComplex" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="modalTakeOff.open()">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="cantidadSeccionComplex" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="modalAdd.open()">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr class="m-2" />
-      <div class="columns m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image image is-96x96">
-            <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5">Plato</p>
-          <p class="subtitle is-size-5">10€</p>
-        </div>
-        <div class="column is-narrow">
-          <button id="addElement" class="button" id="addBtn" onclick="incrementValue(event); hide(event); show(event)"
-            to="cantidadSeccion" show="counterSeccion" hide="addElement">
-            <span class="icon">
-              <i class="fas fa-plus"></i>
-            </span>
-          </button>
-          <div id="counterSeccion" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="decrementValue(event)" to="cantidadSeccion" show="addElement"
-                hide="counterSeccion">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="cantidadSeccion" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="incrementValue(event)" to="cantidadSeccion">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="containter p-2">
-      <div class="columns m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image is-96x96">
-            <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5">Plato</p>
-          <p class="subtitle is-size-5">10€</p>
-        </div>
-        <div class="column is-narrow">
-          <button id="addElementComplex" class="button" onclick="modalAdd.open()">
-            <span class="icon">
-              <i class="fas fa-square-plus"></i>
-            </span>
-          </button>
-          <div id="counterSeccionComplex" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="modalTakeOff.open()">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="cantidadSeccionComplex" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="modalAdd.open()">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr class="m-2" />
-      <div class="columns m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image image is-96x96">
-            <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5">Plato</p>
-          <p class="subtitle is-size-5">10€</p>
-        </div>
-        <div class="column is-narrow">
-          <button id="addElement" class="button" id="addBtn" onclick="incrementValue(event); hide(event); show(event)"
-            to="cantidadSeccion" show="counterSeccion" hide="addElement">
-            <span class="icon">
-              <i class="fas fa-plus"></i>
-            </span>
-          </button>
-          <div id="counterSeccion" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="decrementValue(event)" to="cantidadSeccion" show="addElement"
-                hide="counterSeccion">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="cantidadSeccion" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="incrementValue(event)" to="cantidadSeccion">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="containter p-2">
-      <div class="columns m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image is-96x96">
-            <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5">Plato</p>
-          <p class="subtitle is-size-5">10€</p>
-        </div>
-        <div class="column is-narrow">
-          <button id="addElementComplex" class="button" onclick="modalAdd.open()">
-            <span class="icon">
-              <i class="fas fa-square-plus"></i>
-            </span>
-          </button>
-          <div id="counterSeccionComplex" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="modalTakeOff.open()">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="cantidadSeccionComplex" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="modalAdd.open()">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr class="m-2" />
-      <div class="columns m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image image is-96x96">
-            <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5">Plato</p>
-          <p class="subtitle is-size-5">10€</p>
-        </div>
-        <div class="column is-narrow">
-          <button id="addElement" class="button" id="addBtn" onclick="incrementValue(event); hide(event); show(event)"
-            to="cantidadSeccion" show="counterSeccion" hide="addElement">
-            <span class="icon">
-              <i class="fas fa-plus"></i>
-            </span>
-          </button>
-          <div id="counterSeccion" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="decrementValue(event)" to="cantidadSeccion" show="addElement"
-                hide="counterSeccion">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="cantidadSeccion" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="incrementValue(event)" to="cantidadSeccion">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="containter p-2">
-      <div class="columns m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image is-96x96">
-            <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5">Plato</p>
-          <p class="subtitle is-size-5">10€</p>
-        </div>
-        <div class="column is-narrow">
-          <button id="addElementComplex" class="button" onclick="modalAdd.open()">
-            <span class="icon">
-              <i class="fas fa-square-plus"></i>
-            </span>
-          </button>
-          <div id="counterSeccionComplex" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="modalTakeOff.open()">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="cantidadSeccionComplex" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="modalAdd.open()">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr class="m-2" />
-      <div class="columns m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image image is-96x96">
-            <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5">Plato</p>
-          <p class="subtitle is-size-5">10€</p>
-        </div>
-        <div class="column is-narrow">
-          <button id="addElement" class="button" id="addBtn" onclick="incrementValue(event); hide(event); show(event)"
-            to="cantidadSeccion" show="counterSeccion" hide="addElement">
-            <span class="icon">
-              <i class="fas fa-plus"></i>
-            </span>
-          </button>
-          <div id="counterSeccion" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="decrementValue(event)" to="cantidadSeccion" show="addElement"
-                hide="counterSeccion">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="cantidadSeccion" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="incrementValue(event)" to="cantidadSeccion">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </main>
+  <div id="modalSecciones" class="modal p-4">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Secciones</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <nav class="modal-card-body p-5">
+        <a class="is-size-4 has-text-black" onclick="doScroll(event)" to="section1">
+          Sección 1
+        </a>
+        <hr class="m-2">
+        <div class="pl-6">
+          <a class="is-size-5 has-text-black" onclick="doScroll(event)" to="section11">
+            Subsección 1.1
+          </a>
+          <hr class="m-2">
+          <a class="is-size-5 has-text-black" onclick="doScroll(event)" to="section12">
+            Subsección 1.2
+          </a>
+        </div>
+        <hr class="m-2">
+        <a class="is-size-4 has-text-black" onclick="doScroll(event)" to="section2">
+          Sección 2
+        </a>
+      </nav>
+      <footer class="modal-card-foot">
+        <button class="button is-fullwidth" onclick="modalSecciones.close()">Cerrar</button>
+      </footer>
+    </div>
+  </div>
   <div id="modalAdd" class="modal p-4">
     <div class="modal-background"></div>
     <form class="modal-card">
@@ -725,152 +439,8 @@
       </footer>
     </div>
   </div>
-  <div id="modalSecciones" class="modal p-4">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Secciones</p>
-        <button class="delete" aria-label="close"></button>
-      </header>
-      <nav class="modal-card-body p-5">
-        <a class="is-size-4 has-text-black" onclick="hacerScroll(event)" to="section1">
-          Sección 1
-        </a>
-        <hr class="m-2">
-        <div class="pl-6">
-          <a class="is-size-5 has-text-black" onclick="hacerScroll(event)" to="section11">
-            Subsección 1.1
-          </a>
-          <hr class="m-2">
-          <a class="is-size-5 has-text-black" onclick="hacerScroll(event)" to="section12">
-            Subsección 1.2
-          </a>
-        </div>
-        <hr class="m-2">
-        <a class="is-size-4 has-text-black" onclick="hacerScroll(event)" to="section2">
-          Sección 2
-        </a>
-      </nav>
-      <footer class="modal-card-foot">
-        <button class="button is-fullwidth" onclick="modalSecciones.close()">Cerrar</button>
-      </footer>
-    </div>
-  </div>
 </body>
-
-<script>
-  // Función que acepta el ID del elemento como argumento
-  function createModal(modalId) {
-    return Bulma.create('modal', {
-      element: document.querySelector(`#${modalId}`)
-    });
-  }
-
-  // Llamando a la función para los dos modales
-  var modalAdd = createModal('modalAdd');
-  var modalTakeOff = createModal('modalTakeOff');
-  var modalSecciones = createModal('modalSecciones');
-
-  function hacerScroll(event) {
-    event.preventDefault(); // Evita que se produzca el comportamiento de enlace predeterminado
-
-    var toValue = event.target.getAttribute("to"); // Obtiene el valor del atributo "to"
-    var elementoDestino = document.getElementById(toValue); // Selecciona el elemento destino
-
-    if (elementoDestino) {
-      elementoDestino.scrollIntoView({ behavior: "smooth" }); // Hace scroll al elemento destino
-    }
-  }
-</script>
-<script>
-  function show(event) {
-    event.preventDefault();
-    let buttonElement = event.currentTarget;
-    let showId = buttonElement.getAttribute('show');
-
-    let showElement = document.getElementById(showId);
-    showElement.classList.remove("is-hidden");
-
-    // Automatically increase the value to 1 upon showing the counter
-    let targetInput = buttonElement.getAttribute('to');
-    let inputElement = document.getElementById(targetInput);
-    inputElement.value = 1;
-  }
-
-  function hide(event) {
-    event.preventDefault();
-    let buttonElement = event.currentTarget;
-    let hideId = buttonElement.getAttribute('hide');
-
-    let hideElement = document.getElementById(hideId);
-    hideElement.classList.add("is-hidden");
-  }
-
-  function decrementValue(event) {
-    event.preventDefault();
-    let buttonElement = event.currentTarget;
-    let targetInput = buttonElement.getAttribute('to');
-
-    let inputElement = document.getElementById(targetInput);
-    let inputValue = Number(inputElement.value);
-
-    if (inputValue > 0) {
-      inputElement.value = inputValue - 1;
-
-      // Hide counter and show addElement when value reaches 0
-      if (inputElement.value == 0) {
-        hide(event);
-        show(event);
-      }
-    }
-  }
-
-  function incrementValue(event) {
-    event.preventDefault();
-    let buttonElement = event.currentTarget;
-    let targetInput = buttonElement.getAttribute('to');
-
-    let inputElement = document.getElementById(targetInput);
-    let inputValue = Number(inputElement.value);
-
-    inputElement.value = inputValue + 1;
-  }
-</script>
-<script>
-  // Obtiene los elementos que se necesitan actualizar
-  let navbarSection = document.getElementById('section');
-  let navbarSubsection = document.getElementById('subsection');
-
-  // Obtiene las secciones
-  let sections = document.querySelectorAll('section');
-
-  // Función para actualizar el título y subtítulo en el navbar
-  function updateNavbarTitle(section) {
-    let title = section.getAttribute('title');
-    let subtitle = section.getAttribute('subtitle');
-
-    navbarSection.innerText = title;
-
-    if (subtitle) {
-      navbarSubsection.innerText = subtitle;
-      navbarSubsection.classList.remove('is-invisible');
-    } else {
-      navbarSubsection.classList.add('is-invisible');
-    }
-  }
-
-  // Actualizar el título y subtítulo al cargar la página
-  updateNavbarTitle(sections[0]);
-
-  // Evento de scroll
-  document.body.addEventListener('scroll', function () {
-    for (let section of sections) {
-      let rect = section.getBoundingClientRect();
-
-      if (rect.top <= 50 && rect.bottom > 50) {
-        updateNavbarTitle(section);
-        break;
-      }
-    }
-  });
-</script>
+<script src="/static/js/counter.js"></script>
+<script src="/static/js/scroll.js"></script>
+<script src="/static/js/modal.js"></script>
+<script src="/static/js/sections.js"></script>
