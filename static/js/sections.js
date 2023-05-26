@@ -14,9 +14,8 @@ function updateNavbarTitle(section) {
 
     if (subtitle) {
         navbarSubsection.innerText = subtitle;
-        navbarSubsection.classList.remove('is-invisible');
     } else {
-        navbarSubsection.classList.add('is-invisible');
+        navbarSubsection.innerText = ""
     }
 }
 

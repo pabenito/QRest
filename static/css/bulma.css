@@ -6,16 +6,6 @@
     justify-content: space-between;
 }
 
-input[type=checkbox] {
-    width: 20px;
-    height: 20px;
-}
-
-input[type=radio] {
-    width: 20px;
-    height: 20px;
-}
-
 .has-rounded-border {
     border-radius: 5%;
 }
