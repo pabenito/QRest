@@ -45,7 +45,7 @@ class Element(ComplexModel):
 
 
 class Section(ComplexModel):
-    name: str
+    title: str
     icon: HttpUrl | None
     visible: bool = True
     main: bool = False
