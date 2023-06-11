@@ -48,6 +48,7 @@ def test___check_price___when_price_is_not_set_and_no_variant_group_has_price___
     with pytest.raises(AttributeError):
         check_price(element)
 
+
 def test___check_price___when_price_is_not_set_and_more_than_a_variant_group_have_price___then_raise_exception():
     element = Element(name="Agua", manager="Waiter")
     element.variants = [
@@ -61,6 +62,7 @@ def test___check_price___when_price_is_not_set_and_more_than_a_variant_group_hav
 
     with pytest.raises(AttributeError):
         check_price(element)
+
 
 def test___check_price___when_price_is_not_set_and_only_a_variant_group_has_price___then_dont_raise_exception():
     element = Element(name="Agua", manager="Waiter")
@@ -80,7 +82,7 @@ def test___check_price___when_price_is_not_set_and_only_a_variant_group_has_pric
 
 ## Post
 
-def test_carta_post___when_correct___creates_section():
+def test_carta_post_section___when_correct___creates_section():
     try:
         response = client.post("/", json=section_example)
         assert response.status_code == status.HTTP_201_CREATED
@@ -89,8 +91,7 @@ def test_carta_post___when_correct___creates_section():
         client.delete("/" + section_example["name"])
 
 
-
-def test_carta_post___when_insert_section_with_same_name___raises_exception():
+def test_carta_post_section___when_insert_section_with_same_name___raises_exception():
     client.post("/", json=section_example)
     with pytest.raises(HTTPException) as err:
         client.post("/", json=section_example)
@@ -98,16 +99,15 @@ def test_carta_post___when_insert_section_with_same_name___raises_exception():
     client.delete("/" + section_example["name"])
 
 
-
-def test_carta_post___when_not_requiered_field___raises_exception():
-    post = {"visible": False}
+def test_carta_post_section___when_a_requiered_field_is_missing___raises_exception():
+    post = {"visible": True}
     with pytest.raises(RequestValidationError):
-        client.post("/", json=post)
+        client.post("/", json=post) # name is missing
 
 
 ## Get
 
-def test_carta_get___when_post___then_get_has_one_more_document():
+def test_carta_get_section___when_post___then_get_has_one_more_document():
     try:
         count_before = menu.count_documents({})
         client.post("/", json=section_example)
@@ -116,8 +116,7 @@ def test_carta_get___when_post___then_get_has_one_more_document():
         client.delete("/" + section_example["name"])
 
 
-
-def test_carta_get___when_post___then_can_get_section():
+def test_carta_get_section___when_post___then_can_get_section():
     try:
         client.post("/", json=section_example)
         response = client.get("/" + section_example["name"])
@@ -125,9 +124,9 @@ def test_carta_get___when_post___then_can_get_section():
         assert response.json() == section_example
     finally:
         client.delete("/" + section_example["name"])
-        
 
-def test_carta_get_sections___when_post___then_can_get_sections_without_elements():
+
+def test_carta_get_section_sections___when_post___then_can_get_sections_without_elements():
     section_1 = section_example.copy()
     section_1["name"] = "section1"
     section_2 = section_example.copy()
@@ -145,7 +144,7 @@ def test_carta_get_sections___when_post___then_can_get_sections_without_elements
         client.delete("/" + section_2["name"])
 
 
-def test_carta_get___when_get_with_invalid_section_name___then_raises_exception():
+def test_carta_get_section___when_get_with_invalid_section_name___then_raises_exception():
     with pytest.raises(HTTPException) as err:
         client.get("/not_a_section")
     assert err.value.status_code == status.HTTP_404_NOT_FOUND
@@ -153,15 +152,14 @@ def test_carta_get___when_get_with_invalid_section_name___then_raises_exception(
 
 ## Delete
 
-def test_carta_delete___when_section_exists___delete_section():
+def test_carta_delete_section___when_section_exists___delete_section():
     response = client.post("/", json=section_example)
     response = client.delete("/" + section_example["name"])
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == section_example
 
 
-
-def test_carta_delete___when_delete_with_invalid_section_name___then_raises_exception():
+def test_carta_delete_section___when_delete_with_invalid_section_name___then_raises_exception():
     with pytest.raises(HTTPException) as err:
         client.delete("/not_a_section")
     assert err.value.status_code == status.HTTP_404_NOT_FOUND
@@ -169,14 +167,13 @@ def test_carta_delete___when_delete_with_invalid_section_name___then_raises_exce
 
 ## Put
 
-def test_carta_put___when_put_with_invalid_section_name___then_raises_exception():
+def test_carta_put_section___when_put_with_invalid_section_name___then_raises_exception():
     with pytest.raises(HTTPException) as err:
         client.put("/not_a_section", json={"name": "x"})
     assert err.value.status_code == status.HTTP_404_NOT_FOUND
 
 
-
-def test_carta_put___when_put_another_name___then_replaces_name():
+def test_carta_put_section___when_put_another_name___then_replaces_name():
     try:
         new_name = "new_name"
         post_correct_output_with_new_name = section_example.copy()
@@ -184,6 +181,148 @@ def test_carta_put___when_put_another_name___then_replaces_name():
         client.post("/", json=section_example)
         id = client.get("/" + section_example["name"] + "/id").json()["_id"]
         response = client.put("/" + section_example["name"], json={"name": new_name})
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == post_correct_output_with_new_name
+    finally:
+        menu.delete_one({"_id": ObjectId(id)})
+
+
+# subsection
+
+## Post
+
+def test_carta_post_subsection___when_correct___creates_subsection():
+    try:
+        response = client.post("/", json=base_section)
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.json() == base_section
+        response = client.post(f"/{base_section['name']}/subsections", json=section_example)
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.json() == section_example
+    finally:
+        client.delete("/" + base_section["name"])
+
+
+def test_carta_post_subsection___when_insert_subsection_with_same_name___raises_exception():
+    client.post("/", json=base_section)
+    with pytest.raises(HTTPException) as err:
+        response = client.post(f"/{base_section['name']}/subsection", json=section_example)
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.json() == section_example
+        client.post(f"/{base_section['name']}/subsections", json=section_example)
+    assert err.value.status_code == status.HTTP_409_CONFLICT
+    client.delete("/" + base_section["name"])
+
+
+def test_carta_post_subsection___when_a_requiered_field_is_missing___raises_exception():
+    client.post("/", json=base_section)
+    with pytest.raises(RequestValidationError):
+        subsection = {"visible": True}  # name is missing
+        client.post(f"/{base_section['name']}/subsections", json=subsection)
+    client.delete("/" + base_section["name"])
+
+## Get
+
+
+def test_carta_get_subsection___when_post___then_can_get_section():
+    try:
+        response = client.post("/", json=base_section)
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.json() == base_section
+        response = client.post(f"/{base_section['name']}/subsections", json=section_example)
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.json() == section_example
+        response = client.get(f"/{base_section['name']}/{section_example['name']}")
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == section_example
+    finally:
+        client.delete("/" + base_section["name"])
+
+
+def test_carta_get_subsections___when_post___then_can_get_sections_without_elements():
+    section_1 = section_example.copy()
+    section_1["name"] = "section1"
+    section_2 = section_example.copy()
+    section_2["name"] = "section2"
+    try:
+        client.post("/", json=base_section)
+        client.post(f"/{base_section['name']}/subsections", json=section_1)
+        client.post(f"/{base_section['name']}/subsections", json=section_2)
+        response = client.get("/sections")
+        assert response.status_code == status.HTTP_200_OK
+        for section in response.json():
+            if "elements" in section:
+                raise AssertionError(f"/sections call should not include 'elements':\n{response.json()}")
+            if "subsections" in section:
+                for subsection in section.subsections:
+                    if "elements" in subsection:
+                        raise AssertionError(f"/sections call should not include 'elements':\n{response.json()}")
+    finally:
+        client.delete("/" + base_section["name"])
+
+def test_carta_get_subsections___when_post___then_can_get_sections():
+    section_1 = section_example.copy()
+    section_1["name"] = "section1"
+    section_2 = section_example.copy()
+    section_2["name"] = "section2"
+    try:
+        client.post("/", json=base_section)
+        client.post(f"/{base_section['name']}/subsection", json=section_1)
+        client.post(f"/{base_section['name']}/subsection", json=section_2)
+        response = client.get(f"{base_section['name']}/sections")
+        assert response.status_code == status.HTTP_200_OK
+        response.json() == [section_1, section_2]
+    finally:
+        client.delete("/" + base_section["name"])
+
+
+def test_carta_get_subsection___when_get_with_invalid_section_name___then_raises_exception():
+    with pytest.raises(HTTPException) as err:
+        client.post("/", json=base_section)
+        client.get(f"/{base_section['name']}/not_a_section")
+    assert err.value.status_code == status.HTTP_404_NOT_FOUND
+
+
+## Delete
+
+def test_carta_delete_subsection___when_subsection_exists___delete_subsection():
+    try:
+        client.post("/", json=base_section)
+        client.post(f"/{base_section['name']}/subsection", json=section_example)
+        response = client.delete(f"/{base_section['name']}/{section_example['name']}")
+        assert response.status_code == status.HTTP_200_OK
+        assert response.json() == section_example
+    finally:
+        client.delete("/" + base_section["name"])
+
+
+def test_carta_delete_subsection___when_delete_with_invalid_section_name___then_raises_exception():
+    with pytest.raises(HTTPException) as err:
+        client.post("/", json=base_section)
+        client.delete(f"/{base_section['name']}/not_a_section")
+    assert err.value.status_code == status.HTTP_404_NOT_FOUND
+    client.delete("/" + base_section["name"])
+
+
+## Put
+
+def test_carta_put_subsection___when_put_with_invalid_subsection_name___then_raises_exception():
+    with pytest.raises(HTTPException) as err:
+        client.post("/", json=base_section)
+        client.put(f"/{base_section['name']}/not_a_section", json=section_example)
+    assert err.value.status_code == status.HTTP_404_NOT_FOUND
+    client.delete("/" + base_section["name"])
+
+
+def test_carta_put_subsection___when_put_another_name___then_replaces_name():
+    try:
+        new_name = "new_name"
+        post_correct_output_with_new_name = section_example.copy()
+        post_correct_output_with_new_name["name"] = new_name
+        client.post("/", json=base_section)
+        client.post(f"/{base_section['name']}/subsection", json=section_example)
+        id = client.get(f"/{base_section['name']}/{section_example['name']}/id").json()["_id"]
+        response = client.put(f"/{base_section['name']}/{section_example['name']}", json={"name": new_name})
         assert response.status_code == status.HTTP_200_OK
         assert response.json() == post_correct_output_with_new_name
     finally:
@@ -221,7 +360,6 @@ def test_elements_put___when_correct___then_update_element():
         client.delete("/" + section["name"])
 
 
-
 def test_elements_put___when_set_another_name___then_rename_element():
     try:
         section = base_section.copy()
@@ -234,7 +372,6 @@ def test_elements_put___when_set_another_name___then_rename_element():
         assert response.json() == json_lower_encoder(section)
     finally:
         client.delete("/" + section["name"])
-
 
 
 def test_elements_put___when_set_another_name_that_exists___then_raise_exception():
@@ -254,12 +391,10 @@ def test_elements_put___when_set_another_name_that_exists___then_raise_exception
         client.delete("/" + section["name"])
 
 
-
 def test_elements_put___when_section_dont_exists___then_raise_exception():
     with pytest.raises(HTTPException) as err:
         client.put("/not_a_section/not_an_element", json=element_example.copy())
     assert err.value.status_code == status.HTTP_404_NOT_FOUND
-
 
 
 def test_elements_put___when_element_dont_exists_in_section___then_raise_exception():
@@ -288,7 +423,6 @@ def test_elements_delete___when_element_exists___then_delete_it():
         assert respose.json() == section
     finally:
         client.delete(f"/{section['name']}")
-
 
 
 def test_elements_delete___when_element_dont_exists___then_raise_exception():
