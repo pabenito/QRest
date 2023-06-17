@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, status, HTTPException
 from app.database import db
-from app.entities.models import Section, Element, Subsection
+from app.entities.models import Section, Element
 from app.utils import json_lower_encoder, remove_non_letters_and_replace_spaces
 
 # Create router
@@ -14,7 +14,7 @@ menu = db["menu"]
 
 # section
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=Section, response_model_exclude_unset=True)
-def create_section(section: Subsection):
+def create_section(section: Section):
     if menu.find_one({"name": section.name}) is not None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"La sección '{section.name}', ya existe.")
 
@@ -29,25 +29,6 @@ def create_section(section: Subsection):
     return created_section
 
 
-@router.post("/{section}/subsections", status_code=status.HTTP_201_CREATED, response_model=Section, response_model_exclude_unset=True)
-def create_subsection(section: str, subsection: Subsection):
-    if menu.find_one({"name": section}) is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"La sección '{section}', no existe.")
-
-    if menu.find_one({"name": section, "subsections.name": subsection.name}) is not None:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=f"La subsección '{subsection.name}', ya existe.")
-
-    if subsection.elements is not None:
-        for element in subsection.elements:
-            check_price(element)
-
-    subsection_dict = json_lower_encoder(subsection)
-    menu.update_one({"name": section}, {"$push": {"subsections": subsection_dict}})
-
-    created_subsection = menu.find_one({"name": section, "subsections.name": subsection.name})
-    return created_subsection["subsections"][0]
-
-
 @router.get("/", response_model=list[Section], response_model_exclude_unset=True)
 def get_carta():
     return list(menu.find({}))
@@ -55,17 +36,20 @@ def get_carta():
 
 @router.get("/sections", response_model=list[Section], response_model_exclude_unset=True)
 def get_sections():
-    return list(menu.find({}, {"elements": False, "subsections.elements": False}))
+    return list(menu.find({}, {"elements": False}))
+
+
+@router.get("/active", response_model=list[Section], response_model_exclude_unset=True)
+def get_active():
+    return list(menu.find_one({""}, {"elements": False}))
 
 
 @router.get("/{section}", response_model=Section, response_model_exclude_unset=True)
 def get_section(section: str, ids: bool = False):
     section_obj = get_section(section)
     if ids:
-        add_element_ids_section(section_obj)
-        if section_obj.subsections is not None:
-            for subsection in section_obj.subsections:
-                add_element_ids_section(subsection)
+        for element in section_obj.elements:
+            add_element_id(element)
     return section_obj
 
 
@@ -178,10 +162,6 @@ def check_element_not_exists(section: str, element: str):
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"El elemento '{section}/{element}', ya existe.")
 
-
-def add_element_ids_section(section: Subsection):
-    for element in section.elements:
-        add_element_id(element)
 
 def add_element_id(element: Element):
     element.id = remove_non_letters_and_replace_spaces(element.name)

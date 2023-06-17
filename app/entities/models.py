@@ -44,16 +44,12 @@ class Element(ComplexModel):
     tags: list[Tag] | None
 
 
-class Subsection(ComplexModel):
+class Section(ComplexModel):
     name: str
     icon: HttpUrl | None
     visible: bool = True
     main: bool = False
     elements: list[Element] | None
-
-
-class Section(Subsection):
-    subsections: list[Subsection] | None
 
 
 # Allergens
