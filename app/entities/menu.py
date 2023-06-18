@@ -31,17 +31,14 @@ def create_section(section: Section):
 
 @router.get("/", response_model=list[Section], response_model_exclude_unset=True)
 def get_carta():
-    return list(menu.find({}))
+    sections = list(menu.find({"parent": {"$exists": False}}).sort("name"))
+    subsections = list(menu.find({"parent": {"$exists": True}}).sort("name"))
+    return sort_menu(sections, subsections)
 
 
 @router.get("/sections", response_model=list[Section], response_model_exclude_unset=True)
 def get_sections():
     return list(menu.find({}, {"elements": False}))
-
-
-@router.get("/active", response_model=list[Section], response_model_exclude_unset=True)
-def get_active():
-    return list(menu.find_one({""}, {"elements": False}))
 
 
 @router.get("/{section}", response_model=Section, response_model_exclude_unset=True)
@@ -167,44 +164,70 @@ def add_element_id(element: Element):
     element.id = remove_non_letters_and_replace_spaces(element.name)
 
 
+def check_positive_price(price: float, message: str):
+    if price <= 0:
+        raise AttributeError(message)
+
+
+def check_no_variant_price(variant_group):
+    for variant in variant_group.variants:
+        if variant.price is not None:
+            raise AttributeError(
+                f"Element price is defined, but in {variant_group.name} "
+                f"{variant.description} has a price: {variant.price}.")
+
+
+def check_all_variants_price_defined(variant_group):
+    variants_with_price = sum(variant.price is not None for variant in variant_group.variants)
+    total_variants = len(variant_group.variants)
+
+    if variants_with_price == total_variants:
+        return True
+    elif variants_with_price > 0:
+        raise AttributeError(
+            f"In a Variants group, either all Variants must have a price or none should have a price, "
+            f"but in {variant_group.name} there are some variants with price, but others that do not")
+    return False
+
+
 def check_price(element: Element):
-    if element.price is not None:
-        if element.price <= 0:
-            raise AttributeError(f"Element price must be positive: {element.price}.")
-
-        # If the Element price is defined, no Variant should have a price
-        if element.variants is not None:
-            for variant_group in element.variants:
-                for variant in variant_group.variants:
-                    if variant.price is not None:
-                        raise AttributeError(
-                            f"Element price is defined, "
-                            f"but in {variant_group.name} {variant.description} has a price: {variant.price}.")
-    else:
-        # If the Element price is not defined,
-        # there should be at least one Variants with all its Variant having prices defined
-        if element.variants is not None:
-            price_defined_variants_group = 0
-            for variant_group in element.variants:
-                variants_with_price = 0
-                total_variants = len(variant_group.variants)
-                for variant in variant_group.variants:
-                    if variant.price is not None:
-                        if variant.price <= 0:
-                            raise AttributeError(
-                                f"Variant price must be positive, "
-                                f"but in {variant_group.name} {variant.description} has a price: {variant.price}.")
-                        variants_with_price += 1
-
-                if variants_with_price == total_variants:
-                    price_defined_variants_group += 1
-                elif variants_with_price > 0:
-                    raise AttributeError(
-                        f"In a Variants group, either all Variants must have a price or none should have a price, "
-                        f"but in {variant_group.name} there are some variants with price, but others that do not")
-
-            if price_defined_variants_group != 1:
-                raise AttributeError(
-                    "There must be exactly one Variants group with all its Variants having prices defined.")
-        else:
+    if element.price is None:
+        if element.variants is None:
             raise AttributeError("Element price is not defined and there are no Variants.")
+
+        price_defined_variants_group = sum(check_all_variants_price_defined(variant_group)
+                                           for variant_group in element.variants)
+
+        if price_defined_variants_group != 1:
+            raise AttributeError(
+                "There must be exactly one Variants group with all its Variants having prices defined.")
+        return
+
+    check_positive_price(element.price, f"Element price must be positive: {element.price}.")
+    if element.variants is None:
+        return
+
+    for variant_group in element.variants:
+        check_no_variant_price(variant_group)
+
+
+def sort_menu(sections, subsections):
+    # Create a dictionary where the key is the section name and the value is a list of subsections
+    sections_with_subsections = {section["name"]: [] for section in sections}
+
+    # Populate the dictionary with the corresponding subsections
+    for subsection in subsections:
+        parent_section = subsection["parent"]
+        if parent_section in sections_with_subsections:
+            sections_with_subsections[parent_section].append(subsection)
+        else:
+            print(f"Warning: Subsection {subsection['name']} has a non-existent parent section: {parent_section}")
+
+    # Create an ordered list where for each section the section and its subsections are added
+    ordered_menu = []
+    for section in sections:
+        ordered_menu.append(section)
+        ordered_menu.extend(sections_with_subsections[section["name"]])
+
+    return ordered_menu
+

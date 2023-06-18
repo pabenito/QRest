@@ -18,3 +18,12 @@ def remove_non_letters_and_replace_spaces(value):
     result = re.sub(r"\s+", "_", filtered_str)
     return result
 
+def same_elements_in_dict_lists(list1, list2):
+    # Check if the lists have the same length
+    if len(list1) != len(list2):
+        return False
+
+    # Check if all elements in list1 are in list2
+    return all(element in list2 for element in list1)
+
+

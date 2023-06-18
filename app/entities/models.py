@@ -31,7 +31,6 @@ class Tag(ComplexModel):
 
 class Element(ComplexModel):
     name: str
-    id: str | None
     image: HttpUrl | None
     description: str | None
     price: float | None
@@ -46,9 +45,8 @@ class Element(ComplexModel):
 
 class Section(ComplexModel):
     name: str
-    icon: HttpUrl | None
     visible: bool = True
-    main: bool = False
+    parent: str | None
     elements: list[Element] | None
 
 

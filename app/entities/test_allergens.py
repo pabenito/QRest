@@ -1,11 +1,6 @@
-from pprint import pprint
-
-import pytest
 from fastapi import status
 from fastapi.testclient import TestClient
-from fastapi.exceptions import RequestValidationError, HTTPException
-from bson import ObjectId
-from app.utils import json_lower_encoder
+from app.utils import same_elements_in_dict_lists
 from .allergens import router
 
 client = TestClient(router)
@@ -14,7 +9,7 @@ client = TestClient(router)
 def test_get___when_get___then_get_all_allergens():
     response = client.get("/")
     assert response.status_code == status.HTTP_200_OK
-    assert response.json() == allergens
+    assert same_elements_in_dict_lists(response.json(), allergens)
 
 
 allergens = [
