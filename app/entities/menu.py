@@ -36,11 +36,6 @@ def get_carta():
     return sort_menu(sections, subsections)
 
 
-@router.get("/sections", response_model=list[Section], response_model_exclude_unset=True)
-def get_sections():
-    return list(menu.find({}, {"elements": False}))
-
-
 @router.get("/{section}", response_model=Section, response_model_exclude_unset=True)
 def get_section(section: str, ids: bool = False):
     section_obj = get_section(section)

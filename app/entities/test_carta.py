@@ -125,24 +125,6 @@ def test_carta_get___when_post___then_can_get_section():
         assert response.json() == section_example
     finally:
         client.delete("/" + section_example["name"])
-        
-
-def test_carta_get_sections___when_post___then_can_get_sections_without_elements():
-    section_1 = section_example.copy()
-    section_1["name"] = "section1"
-    section_2 = section_example.copy()
-    section_2["name"] = "section2"
-    try:
-        client.post("/", json=section_1)
-        client.post("/", json=section_2)
-        response = client.get("/sections")
-        assert response.status_code == status.HTTP_200_OK
-        for section in response.json():
-            if "elements" in section:
-                raise AssertionError(f"/sections call should not include 'elements':\n{response.json()}")
-    finally:
-        client.delete("/" + section_1["name"])
-        client.delete("/" + section_2["name"])
 
 
 def test_carta_get___when_get_with_invalid_section_name___then_raises_exception():
