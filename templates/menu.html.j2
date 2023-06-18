@@ -10,309 +10,351 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
     integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css"
-    integrity="sha512-6f7HT84a/AplPkpSRSKWqbseRTG4aRrhadjZezYQ0oVk/B+nm/US5KzQkyyOyh0Mn9cyDdChRdS9qaxJRHayww=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/scroll.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/body.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}">
+  <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-  <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
 </head>
 
-<body>
-  <main class="section p-0">
-    <div class="containter">
-      <div class="columns is-multiline">
-        <div class="column is-full">
-          <div class="tabs is-centered is-boxed">
-            <ul>
-              {% for section_meta in sections %}
-              <li {% if section_meta.name == section.name %} class="is-active" {% endif %}>
-                <a href="/{{ section_meta.name }}">
-                  <span class="icon is-medium"><img src="{{ section_meta.icon }}"></span>
-                  <span class="is-size-4-touch is-size-4-desktop is-capitalized">{{ section_meta.name }}</span>
-                </a>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-
-        {% for element in section.elements %}
-        <div class="column is-half-tablet is-one-third-widescreen">
-          <div class="box reveal mx-4">
-            <header class="block">
-              <div class="columns is-mobile is-multiline is-vcentered">
-                <div class="column">
-                  <strong class="has-text-centered is-size-3 is-capitalized">{{ element.name }}</strong>
-                </div>
-                {% if element.price is defined %}
-                <div class="column is-narrow">
-                  <p class="is-size-3">{{ element.price }}€</p>
-                </div>
-                {% elif element.tags is defined %}
-                  {% for tag in element.tags %}
-                  <div class="column is-narrow">
-                    <span class="tag is-rounded is-medium">
-                      <span class="icon">
-                        <img src="{{ tag.icon }}"/>
-                      </span>
-                      <span class="is-size-5 is-capitalized ml-1">{{ tag.name }}</span>
-                    </span>
-                  </div>
-                  {% endfor %}
-                {% endif %}
-              </div>
-              {% if element.tags is defined and element.price is defined %}
-              <div class="columns is-mobile">
-                {% for tag in element.tags %}
-                <div class="column is-narrow">
-                  <span class="tag is-rounded is-medium">
-                    <span class="icon">
-                      <img src="{{ tag.icon }}"/>
-                    </span>
-                    <span class="is-size-5 is-capitalized">{{ tag.name }}</span>
-                  </span>
-                </div>
-                {% endfor %}
-              </div>               
-              {% endif %}
-            </header>
-            {% if element.image is defined %}
-            <div class="block">
-              <figure class="image">
-                <img src="{{ element.image }}">
-              </figure>
-            </div>
-            {% endif %}
-            {% if element.allergens is defined %}
-            <div class="block">
-              <p class="has-text-justified">
-                <span class="is-size-4  has-text-weight-bold">Alérgenos:</span>
-                <span class="icon-text is-size-5">
-                  {% for allergen in element.allergens %}
-                  <span class="icon is-medium">
-                    <img src="{{ allergens[allergen] }}"/>
-                  </span>
-                  {% endfor %}
-                </span>
-              </p>
-            </div>
-            {% endif %}
-            {% if element.description is defined %}
-            <div class="block">
-              <p class="has-text-justified">
-                <span class="is-size-4  has-text-weight-bold">Descripción:</span>
-                <span class="is-size-5">{{ element.description }}.</span>
-              </p>
-            </div>
-            {% endif %}
-            {% if element.ingredients is defined %}
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <p class="has-text-justified">
-                    <span class="is-size-4  has-text-weight-bold">Ingredientes:</span>
-                    <span class="is-size-5">{% for ingredient in element.ingredients %}{{ ingredient }}{% if not loop.last %},{% endif %} {% endfor %}</span>
-                  </p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button" onclick="{{ element.id }}_modal_ingredients.open()">
-                    <span class="icon">
-                      <i class="fas fa-plus-minus"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-            {% if element.extras is defined %}
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <p class="has-text-justified">
-                    <span class="is-size-4  has-text-weight-bold">Extras:</span>
-                    <span class="is-size-5">{% for extra in element.extras %}{{ extra.description }}{% if not loop.last %},{% endif %} {% endfor %}</span>
-                  </p>
-                </div>
-                <div class="column is-narrow">
-                  <button class="button" onclick="{{ element.id }}_modal_extras.open()">
-                    <span class="icon">
-                      <i class="fas fa-plus-minus"></i>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-            {% if element.variants is defined %}
-              {% for variant_group in element.variants %}
-            <div class="block">
-              <div class="columns is-mobile is-multiline">
-                <div class="column">
-                  <span class="is-size-4  has-text-weight-bold is-capitalized">{{ variant_group.name }}:</span>
-                </div>
-                <div class="column is-narrow">
-                  <div class="select">
-                    <select>
-                      {% for variant in variant_group.variants %}
-                      <option>{% if variant.price is defined %}{{ variant.price }}€ | {% endif %}{{ variant.description }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-              {% endfor %}
-            {% endif %}
-            <div class="block">
-              <div class="columns is-mobile">
-                <div class="column">
-                  <button class="button is-danger is-fullwidth" onclick="{{ element.id }}_modal_delete.open()">Eliminar</button>
-                </div>
-                <div class="column is-narrow">
-                  <p class="button is-rounded is-active is-fullwidth" onclick="{{ element.id }}_modal_delete.open()">3</p>
-                </div>
-                <div class="column">
-                  <button class="button is-success is-fullwidth">Añadir</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+<body class="has-navbar-fixed-top">
+  <nav class="navbar is-fixed-top has-background-black">
+    <div class="columns is-mobile is-vcentered p-2">
+      <div class="column is-narrow">
+        <button class="button" onclick="modalSecciones.open()">
+          <span class="icon">
+            <i class="fas fa-bars"></i>
+          </span>
+        </button>
       </div>
-      {% endfor %}
-      {% for element in section.elements%}
-        {% if element.ingredients is defined %}
-      <div id="{{ element.name }}_modal_ingredients" class="modal p-4">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Modificar ingredientes</p>
-            <button class="delete" aria-label="close"></button>
-          </header>
-          <section class="modal-card-body">
-            <div class="columns is-mobile is-centered">
-              <div class="column is-narrow">
-                {% for ingredient in element.ingredients %}
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">{{ ingredient }}</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox" checked>
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button is-fullwidth">Restablecer</button>
-            <button class="button is-primary is-fullwidth" onclick="{{ element.id }}_modal_ingredients.close()">Aceptar</button>
-          </footer>
-        </div>
+      <div class="column">
+        <h2 id="section" class="title is-size-5 has-text-white"></h2>
+        <h3 id="subsection" class="subtitle is-size-6 has-text-white"></h3>
       </div>
-        {% endif %}
-        {% if element.extras is defined %}
-      <div id="{{ element.name }}_modal_extras" class="modal p-4">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Añadir extras</p>
-            <button class="delete" aria-label="close"></button>
-          </header>
-          <section class="modal-card-body">
-            <div class="columns is-mobile is-centered">
-              <div class="column is-narrow">
-                {% for extra in element.extras %}
-                <div class="level is-mobile">
-                  <div class="level-left mr-3">
-                    <div class="level-item">
-                      <p class="is-size-4">{{ extra.price }}€ {{ extra.description }}</p>
-                    </div>
-                  </div>
-                  <div class="level-right">
-                    <div class="level-item">
-                      <input type="checkbox">
-                    </div>
-                  </div>
-                </div>
-                {% endfor %}
-              </div>
-            </div>
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button is-fullwidth">Restablecer</button>
-            <button class="button is-primary is-fullwidth" onclick="{{ element.id }}_modal_extras.close()">Aceptar</button>
-          </footer>
-        </div>
-      </div>
-        {% endif %}
-      <div id="{{ element.name }}_modal_delete" class="modal p-4">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Eliminar pedido</p>
-            <button class="delete" aria-label="close"></button>
-          </header>
-          <section class="modal-card-body">
-            <div class="columns is-mobile">
-              <div class="column">
-                <div class="columns is-mobile is-vcentered">
-                  <div class="column">
-                    <p>Ración, -ingrediente1, -ingrediente2, +extra1, +extra2</p>
-                  </div>
-                  <div class="column is-narrow">
-                    <button class="button is-danger">
-                      <span class="icon">
-                        <i class="fas fa-trash-can"></i>
-                      </span>
-                    </button>
-                  </div>
-                  <div class="column is-narrow">
-                    <button class="button is-info">
-                      <span class="icon">
-                        <i class="fas fa-clone"></i>
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button is-fullwidth">Restablecer</button>
-            <button class="button is-primary is-fullwidth" onclick="{{ element.id }}_modal_delete.close()">Aceptar</button>
-          </footer>
-        </div>
-      </div>
-      {% endfor %}
     </div>
+  </nav>
+
+  <main>
+{% for section in sections %}
+  {% if not section.visible is defined%}
+    {% set section_index = loop.index %}
+    {% set section_id = "section" ~ section_index %}
+    {% set is_subsection = section.parent is defined %}
+    {% if is_subsection %}
+    <section id="{{ section_id }}" title="{{ section.parent }}" subtitle="{{ section.name }}" class="p-3 has-background-light">
+      <p class="title is-size-5">{{ section.parent }}</p>
+      <p class="subtitle is-size-6">{{ section.name }}</p>
+    </section>
+    {% else %}
+    <section id="{{ section_id }}" title="{{ section.name }}" class="p-3 has-background-light">
+      <p class="title is-size-5">{{ section.name }}</p>
+    </section>
+    {% endif %}
+
+    <div class="containter p-2">
+    {% for element in section.elements %}
+      {% if not element.visible is defined %}
+        {% set element_index = loop.index %}
+        {% set element_id = section_id ~ "_element" ~ element_index %}
+        {% set element_is_complex = element.variantes is defined or element.extras is defined %}
+      <div class="columns m-0 is-mobile is-vcentered">
+        {% if section.image is defined %}
+        <div class="column is-narrow">
+          <figure class="image is-96x96">
+            <img class="has-rounded-border" src="{{ section.image }}">
+          </figure>
+        </div>
+        {% endif %}
+        <div class="column">
+        {% if element.tags is defined%}
+          <div class="tags m-0">
+          {% for tag in element.tags %}
+            <span class="tag is-rounded">
+            {% if tag.icon is defined %}
+              <span class="icon">
+                <img src="{{ tag.icon }}" />
+              </span>
+            {% endif %}
+              <span class="is-size-7 is-capitalized ml-1">{{ tag.name }}</span>
+            </span>
+          {% endfor %}
+          </div>
+        {% endif %}
+          <p class="title is-size-5 m-0">{{ element.name }}</p>
+        {% if element.price is defined %}
+          <p class="subtitle is-size-5 m-0">{{ element.price }}€</p>
+        {% endif %}
+        </div>
+        {% if element_is_complex %}
+        <div class="column is-narrow">
+          <button id="{{ element_id ~ '_add_btn' }}" class="button" onclick="{{ element_id ~ '_add_modal' }}.open()">
+            <span class="icon">
+              <i class="fas fa-square-plus"></i>
+            </span>
+          </button>
+          <div id="{{ element_id ~ '_counter' }}" class="field has-addons is-hidden">
+            <div class="control">
+              <button class="button is-danger" onclick="{{ element_id ~ '_takeOff_modal' }}.open()">
+                <span class="icon">
+                  <i class="fas fa-minus"></i>
+                </span>
+              </button>
+            </div>
+            <div class="control">
+              <input id="{{ element_id ~ '_quantity_input' }}" class="input" type="number" min="0" value="0" readonly>
+            </div>
+            <div class="control">
+              <button class="button is-success" onclick="{{ element_id ~ '_add_modal' }}.open()">
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="column is-narrow">
+          <button id="{{ element_id ~ '_add_btn' }}" class="button" onclick="incrementValue(event); hide(event); show(event)"
+            to="{{ element_id ~ '_quantity_input' }}" show="{{ element_id ~ '_counter' }}" hide="{{ element_id ~ '_add_btn' }}">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+          </button>
+          <div id="{{ element_id ~ '_counter' }}" class="field has-addons is-hidden">
+            <div class="control">
+              <button class="button is-danger" onclick="decrementValue(event)" to="{{ element_id ~ '_quantity_input' }}" show="{{ element_id ~ '_add_btn' }}"
+                hide="{{ element_id ~ '_counter' }}">
+                <span class="icon">
+                  <i class="fas fa-minus"></i>
+                </span>
+              </button>
+            </div>
+            <div class="control">
+              <input id="{{ element_id ~ '_quantity_input' }}" class="input" type="number" min="0" value="0" readonly>
+            </div>
+            <div class="control">
+              <button class="button is-success" onclick="incrementValue(event)" to="{{ element_id ~ '_quantity_input' }}">
+                <span class="icon">
+                  <i class="fas fa-plus"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+        {% if not loop.last %}
+      <hr class="m-2" />
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endfor %}
   </main>
-  <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
-  
-  <script>
-  {% for element in section.elements %}
-    {% if element.ingredients is defined %}
-    var {{ element.id }}_modal_ingredients = Bulma.create('modal', {
-      element: document.querySelector('#{{ element.id }}_modal_ingredients')
-    });
+  <div id="modalSecciones" class="modal p-4">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Secciones</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <nav class="modal-card-body p-5">
+{% for section in sections %}
+  {% if not section.visible is defined %}
+    {% set section_index = loop.index0 %}
+    {% set section_id = "section" ~ section_index %}
+    {% set is_subsection = section.parent is defined %}
+    {% if not loop.last %}
+      {% set next_section = sections[section_index + 1] %}
+      {% set next_is_subsection = next_section.parent is defined %}
     {% endif %}
-    {% if element.extras is defined %}
-    var {{ element.id }}_modal_extras = Bulma.create('modal', {
-      element: document.querySelector('#{{ element.id }}_modal_extras')
-    });
+    {% if not is_subsection %}
+        <a class="is-size-4 has-text-black" onclick="doScroll(event)" to="{{ section_id }}">
+          {{ section.name }}
+        </a>
+      {% if not loop.last %}
+        <hr class="m-2">
+        {% if next_is_subsection %}
+        <div class="pl-6">
+        {% endif %}
+      {% endif %}
+    {% else %}
+          <a class="is-size-5 has-text-black" onclick="doScroll(event)" to="{{ section_id }}">
+            {{ section.name }}
+          </a>
+      {% if not loop.last %}
+        {% if next_is_subsection %}
+          <hr class="m-2">
+        {% else %}
+        </div>
+        <hr class="m-2">
+        {% endif %}
+      {% endif %}
     {% endif %}
-    var {{ element.id }}_modal_delete = Bulma.create('modal', {
-      element: document.querySelector('#{{ element.id }}_modal_delete')
-    });
-  {% endfor %}
-  </script>
+  {% endif %}
+{% endfor %}
+      </nav>
+      <footer class="modal-card-foot">
+        <button class="button is-fullwidth" onclick="modalSecciones.close()">Cerrar</button>
+      </footer>
+    </div>
+  </div>
+{% for section in sections %}
+  {% if not section.visible is defined %}
+    {% set section_index = loop.index %}
+    {% set section_id = "section" ~ section_index %}
+    {% set is_subsection = section.parent is defined %}
+    {% for element in section.elements %}
+      {% if not element.visible is defined %}
+        {% set element_index = loop.index %}
+        {% set element_id = section_id ~ "_element" ~ element_index %}
+        {% set element_is_complex = element.variantes is defined or element.extras is defined %}
+  <div id="{{ element_id ~ '_add_modal' }}" class="modal p-4">
+    <div class="modal-background"></div>
+    <form class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">{{ element.name }}</p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <div class="modal-card-body p-3 has-background-light">
+          {% if element.description is defined %}
+        <div class="box">
+          <p class="has-text-justified">
+            <p class="is-size-5 has-text-weight-bold">Descripción</p>
+            <hr class="m-2">
+            <p class="is-size-6">{{ element.description }}</p>
+          </p>
+        </div>
+          {% endif %}
+          {% if element.allergens is defined %}
+        <div class="box">
+          <p class="is-size-5 has-text-weight-bold">Alérgenos</p>
+          <hr class="m-2">
+          <span class="icon-text is-size-5">
+            {% for allergen in element.allergens %}
+            <span class="icon is-medium">
+              <img src="{{ allergens[allergen] }}" />
+            </span>
+            {% endfor %}
+          </span>
+        </div>
+          {% endif %}
+          {% if element.variants is defined %}
+            {% for variant_group in element.variants %}
+        <div class="box">
+          <p class="is-size-5 has-text-weight-bold">{{ variant_group.name }}</p>
+          <hr class="m-2">
+              {% for variant in variant_group.variants %}
+                {% set variant_index = loop.index %}
+                {% set variant_id = "variant" ~ variant_index %}
+          <div class="columns is-mobile">
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">{{ variant.name }}</p>
+            </div>
+                {% if variant.price is defined %}
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">{{ variant.price }}€</p>
+            </div>
+                {% endif %}
+            <div class="column is-one-third has-text-centered">
+              <input type="radio" name="{{ variant_group.name }}" value="{{ variant.name }}">
+            </div>
+          </div>
+                {% if not loop.last %}
+          <hr class="m-2">
+                {% endif %}
+              {% endfor %}
+        </div>
+            {% endfor %}
+          {% endif %}
+          {% if element.ingredients is defined %}
+        <div class="box">
+          <p class="is-size-5 has-text-weight-bold">Ingredientes</p>
+          <hr class="m-2">
+            {% for ingredient in element.ingredients %}
+          <div class="columns is-mobile">
+            <div class="column is-half has-text-centered">
+              <p class="is-size-5">{{ ingredient }}</p>
+            </div>
+            <div class="column is-half has-text-centered">
+              <input type="checkbox" name="ingredients" value="{{ ingredient }}" checked>
+            </div>
+          </div>
+              {% if not loop.last %}
+          <hr class="m-2">
+              {% endif %}
+            {% endfor %}
+        </div>
+          {% endif %}
+          {% if element.extras is defined %}
+        <div class="box">
+          <p class="is-size-5 has-text-weight-bold">Extras</p>
+          <hr class="m-2">
+            {% for extra in element.extras %}
+          <div class="columns is-mobile">
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">{{ extra.name }}</p>
+            </div>
+              {% if extra.price is defined %}
+            <div class="column is-one-third has-text-centered">
+              <p class="is-size-5">{{ extra.price }}€</p>
+            </div>
+              {% endif %}
+            <div class="column is-one-third has-text-centered">
+              <input type="checkbox" name="extras" value="{{ extra.name }}">
+            </div>
+          </div>
+              {% if not loop.last %}
+          <hr class="m-2">
+              {% endif %}
+            {% endfor %}
+        </div>
+          {% endif %}
+      </div>
+      <footer class="modal-card-foot">
+        <div class="container">
+          <div class="columns is-mobile is-multiline">
+            <div class="column">
+              <button class="button is-fullwidth is-danger" onclick="{{ element_id ~ '_add_modal' }}.close()">Cancelar</button>
+            </div>
+            <div class="column is-narrow">
+              <div class="field has-addons">
+                <div class="control">
+                  <button type="button" class="button is-danger" onclick="decrementValue(event)" to="{{ element_id ~ '_add_modal_quantity_input' }}">
+                    <span class="icon">
+                      <i class="fas fa-minus"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="control">
+                  <input id="{{ element_id ~ '_add_modal_quantity_input' }}" class="input" type="number" min="1" value="1" readonly>
+                </div>
+                <div class="control">
+                  <button type="button" class="button is-success" onclick="incrementValue(event)" to="{{ element_id ~ '_add_modal_quantity_input' }}">
+                    <span class="icon">
+                      <i class="fas fa-plus"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <button type="button" class="button is-fullwidth is-success" onclick="{{ element_id ~ '_add_modal' }}.close()">Aceptar</button>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </form>
+  </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
 </body>
+
+<script src="{{ url_for('static', path='/js/counter.js') }}"></script>
+<script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
+<script src="{{ url_for('static', path='/js/modal.js') }}"></script>
+<script src="{{ url_for('static', path='/js/sections.js') }}"></script>

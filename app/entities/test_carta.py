@@ -21,7 +21,7 @@ def test___check_price___when_price_is_set_and_there_is_not_variants___then_dont
 def test___check_price___when_price_is_set_and_there_is_at_least_a_variant_with_price___then_raise_exception():
     element = Element(name="Agua", manager="Waiter")
     element.price = 1
-    element.variants = [Variants(name="Tamaño", variants=[Variant(description="grande", price=2)])]
+    element.variants = [Variants(name="Tamaño", variants=[Variant(name="grande", price=2)])]
 
     with pytest.raises(AttributeError):
         check_price(element)
@@ -38,11 +38,11 @@ def test___check_price___when_price_is_not_set_and_no_variant_group_has_price___
     element = Element(name="Agua", manager="Waiter")
     element.variants = [
         Variants(name="Tamaño", variants=[
-            Variant(description="pequeña"),
-            Variant(description="grande")]),
+            Variant(name="pequeña"),
+            Variant(name="grande")]),
         Variants(name="Temperatura", variants=[
-            Variant(description="fría"),
-            Variant(description="del tiempo")]),
+            Variant(name="fría"),
+            Variant(name="del tiempo")]),
     ]
 
     with pytest.raises(AttributeError):
@@ -52,11 +52,11 @@ def test___check_price___when_price_is_not_set_and_more_than_a_variant_group_hav
     element = Element(name="Agua", manager="Waiter")
     element.variants = [
         Variants(name="Tamaño", variants=[
-            Variant(description="pequeña", price=1),
-            Variant(description="grande", price=2)]),
+            Variant(name="pequeña", price=1),
+            Variant(name="grande", price=2)]),
         Variants(name="Temperatura", variants=[
-            Variant(description="fría", price=1),
-            Variant(description="del tiempo", price=2)]),
+            Variant(name="fría", price=1),
+            Variant(name="del tiempo", price=2)]),
     ]
 
     with pytest.raises(AttributeError):
@@ -66,11 +66,11 @@ def test___check_price___when_price_is_not_set_and_only_a_variant_group_has_pric
     element = Element(name="Agua", manager="Waiter")
     element.variants = [
         Variants(name="Tamaño", variants=[
-            Variant(description="pequeña", price=1),
-            Variant(description="grande", price=2)]),
+            Variant(name="pequeña", price=1),
+            Variant(name="grande", price=2)]),
         Variants(name="Temperatura", variants=[
-            Variant(description="fría"),
-            Variant(description="del tiempo")]),
+            Variant(name="fría"),
+            Variant(name="del tiempo")]),
     ]
 
     check_price(element)
@@ -297,11 +297,11 @@ section_example = {
                     "name": "tamaño",
                     "variants": [
                         {
-                            "description": "500ml",
+                            "name": "500ml",
                             "price": 1
                         },
                         {
-                            "description": "1,5l",
+                            "name": "1,5l",
                             "price": 2
                         }
                     ]
@@ -320,7 +320,7 @@ section_example = {
             ],
             "extras": [
                 {
-                    "description": "hiebabuena",
+                    "name": "hiebabuena",
                     "price": 1
                 }
             ]
@@ -337,13 +337,13 @@ element_example = {
             "name": "tipo",
             "variants": [
                 {
-                    "description": "normal"
+                    "name": "normal"
                 },
                 {
-                    "description": "zero"
+                    "name": "zero"
                 },
                 {
-                    "description": "zero zero"
+                    "name": "zero zero"
                 }
             ]
         }

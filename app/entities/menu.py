@@ -169,7 +169,7 @@ def check_no_variant_price(variant_group):
         if variant.price is not None:
             raise AttributeError(
                 f"Element price is defined, but in {variant_group.name} "
-                f"{variant.description} has a price: {variant.price}.")
+                f"{variant.name} has a price: {variant.price}.")
 
 
 def check_all_variants_price_defined(variant_group):

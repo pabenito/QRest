@@ -9,7 +9,7 @@ class ComplexModel(BaseModel):
 # Carta
 
 class Variant(ComplexModel):
-    description: str
+    name: str
     image: HttpUrl | None
     price: float | None
 
@@ -20,7 +20,7 @@ class Variants(ComplexModel):
 
 
 class Extra(BaseModel):
-    description: str
+    name: str
     price: float | None
 
 
