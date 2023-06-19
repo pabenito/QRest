@@ -202,32 +202,49 @@ Bebidas
 
 ```
 pedido:
-    id
-    zona
-    mesa
-    fecha* = now()
-    estado* = creado // creado -> pidiendo -> cerrado -> pagado
-    total = sum(comandas.elementos.precios)
-    factura = total + IVA 
-    []comandas:
-        []secciones:
-            nombre*
-            []elementos:
-                nombre*
-                manager*
-                []pedidos:
-                    fecha* = now()
-                    cantidad = usuarios.length
-                    []usuarios:
-                      usuario
-                      nota
-                    precio
-                    []notas
-                    []variantes:
-                        nombre
-                        variante
-                    []extras
-                    []ingredientes
+    id*: str 
+    zona: str
+    mesa: str
+    fechaCreacion: date 
+    fechaCerrado: date 
+    total: float = sum(comandas.peticiones.precio)
+    peticiones: []
+        fecha*: date 
+        clienteId*: str
+        pedidoId*: str 
+        type*: str // añadir | eliminar 
+        sección*: str 
+        elemento*: str 
+        precio: float    
+        variants: []
+            name: str 
+            value: str
+        extras: [str]
+        ingredients: [str]
+    comandas: []
+        fecha*: date
+        peticiones*: [peticion]
+        recibo*: []
+            total: float
+            elementos: []
+                sección: str
+                elemento: str 
+                cantidad: int 
+                precio: float
+                encargado: str
+                variants: []
+                    name: str 
+                    value: str
+                extras: [str]
+                ingredients: [str]
+    recibo:
+        total*: 
+            pagado: date
+            recibo*: recibo 
+        individual: []
+            pagado: date
+            clienteId* : str
+            recibo*: recibo 
 ```
 
 ### Ejemplo
