@@ -201,50 +201,50 @@ Bebidas
 ## Pedido
 
 ```
-pedido:
+order:
     id*: str 
-    zona: str
-    mesa: str
-    fechaCreacion: date 
-    fechaCerrado: date 
-    total: float = sum(comandas.peticiones.precio)
-    peticiones: []
-        fecha*: date 
-        clienteId*: str
-        pedidoId*: str 
-        type*: str // añadir | eliminar 
-        sección*: str 
-        elemento*: str 
-        precio: float    
+    zone: str
+    table: str
+    creationDate: date 
+    closingDate: date 
+    total: float = sum(requests.orders.price)
+    requests: []
+        date*: date 
+        clientId*: str
+        orderId*: str 
+        type*: str // add | remove 
+        section*: str 
+        item*: str 
+        price: float    
         variants: []
             name: str 
             value: str
         extras: [str]
         ingredients: [str]
-    comandas: []
-        fecha*: date
-        peticiones*: [peticion]
-        recibo*: []
+    commands: []
+        date*: date
+        requests*: [request]
+        receipt*: []
             total: float
-            elementos: []
-                sección: str
-                elemento: str 
-                cantidad: int 
-                precio: float
-                encargado: str
+            items: []
+                section: str
+                item: str 
+                quantity: int 
+                price: float
+                responsible: str
                 variants: []
                     name: str 
                     value: str
                 extras: [str]
                 ingredients: [str]
-    recibo:
+    receipt:
         total*: 
-            pagado: date
-            recibo*: recibo 
+            paid: date
+            receipt*: receipt 
         individual: []
-            pagado: date
-            clienteId* : str
-            recibo*: recibo 
+            paid: date
+            clientId* : str
+            receipt*: receipt 
 ```
 
 ### Ejemplo

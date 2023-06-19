@@ -1,10 +1,11 @@
+from datetime import datetime
+
 from pydantic import BaseModel, HttpUrl
 
 
 class ComplexModel(BaseModel):
     class Config:
         arbitrary_types_allowed = True  # In order to allow ObjectId
-
 
 # Carta
 
@@ -48,6 +49,66 @@ class Section(ComplexModel):
     visible: bool = True
     parent: str | None
     elements: list[Element] | None
+
+
+# Pedidos
+
+class OrderVariant(BaseModel):
+    name: str
+    value: str
+
+class OrderElement(ComplexModel):
+    section: str
+    element: str
+    quantity: int
+    price: float
+    manager: str
+    variants: list[OrderVariant] | None
+    extras: list[str] | None
+    ingredients: list[str] | None
+
+class Receipt(ComplexModel):
+    total: float
+    elements: list[OrderElement]
+
+class TotalReceipt(ComplexModel):
+    paid: datetime | None
+    receipt: Receipt
+
+class IndividualReceipt(ComplexModel):
+    paid: datetime | None
+    client: str
+    receipt: Receipt
+
+class FinalReceipt(ComplexModel):
+    total: TotalReceipt
+    individual: list[IndividualReceipt] | None
+
+class Request(ComplexModel):
+    timestamp: datetime
+    client: str
+    order: str
+    type: str
+    section: str
+    element: str
+    price: float
+    variants: list[OrderVariant] | None
+    extras: list[str] | None
+    ingredients: list[str] | None
+
+class Command(ComplexModel):
+    timestamp: datetime
+    requests: list[Request]
+    receipts: list[Receipt]
+
+class Order(ComplexModel):
+    zone: str
+    table: str
+    created: datetime
+    closed: datetime | None
+    requests: list[Request] | None
+    commands: list[Command] | None
+    receipt: FinalReceipt | None
 
 
 # Allergens
