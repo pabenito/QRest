@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alérgenos</title>
+</head>
+<body>
+
+<h1>Por favor, selecciona tus alérgenos:</h1>
+
+<form id="alergenosForm">
+  <input type="checkbox" id="celery" name="celery"> Apio<br>
+  <input type="checkbox" id="gluten" name="gluten"> Gluten<br>
+  <input type="checkbox" id="crustaceans" name="crustaceans"> Crustáceos<br>
+  <input type="checkbox" id="eggs" name="eggs"> Huevos<br>
+  <input type="checkbox" id="fish" name="fish"> Pescado<br>
+  <input type="checkbox" id="lupin" name="lupin"> Altramuz<br>
+  <input type="checkbox" id="milk" name="milk"> Leche<br>
+  <input type="checkbox" id="molluscs" name="molluscs"> Moluscos<br>
+  <input type="checkbox" id="mustard" name="mustard"> Mostaza<br>
+  <input type="checkbox" id="nuts" name="nuts"> Frutos secos<br>
+  <input type="checkbox" id="peanuts" name="peanuts"> Cacahuetes<br>
+  <input type="checkbox" id="sesame" name="sesame"> Sésamo<br>
+  <input type="checkbox" id="soybeans" name="soybeans"> Soja<br>
+  <input type="checkbox" id="sulphur" name="sulphur"> Dióxido de azufre y sulfitos<br>
+</form>
+
+<script>
+  // Lista de todos los posibles alérgenos
+  const allergens = [
+    "celery", "gluten", "crustaceans", "eggs", "fish", 
+    "lupin", "milk", "molluscs", "mustard", "nuts", 
+    "peanuts", "sesame", "soybeans", "sulphur"
+  ];
+
+  // Comprueba el localStorage al cargar la página
+  document.addEventListener("DOMContentLoaded", function() {
+    allergens.forEach(function(allergen) {
+      const savedAllergen = JSON.parse(localStorage.getItem(allergen));
+      
+      if(savedAllergen) {
+        document.getElementById(allergen).checked = true;
+      }
+    });
+  });
+
+  // Añade un controlador de eventos a cada checkbox para guardar los cambios
+  allergens.forEach(function(allergen) {
+    const checkbox = document.getElementById(allergen);
+    
+    checkbox.addEventListener('change', function() {
+      localStorage.setItem(allergen, JSON.stringify(checkbox.checked));
+    });
+  });
+</script>
+
+</body>
+</html>
