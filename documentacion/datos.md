@@ -202,19 +202,17 @@ Bebidas
 
 ```
 order:
-    id*: str 
     zone: str
     table: str
-    creationDate: date 
-    closingDate: date 
-    total: float = sum(requests.orders.price)
+    created*: datetime 
+    closed: datetime
     requests: []
-        date*: date 
-        clientId*: str
-        orderId*: str 
+        timestamp*: datetime
+        client*: str // ID
+        order*: str // ID 
         type*: str // add | remove 
-        section*: str 
-        item*: str 
+        section*: str // name
+        element*: str // name
         price: float    
         variants: []
             name: str 
@@ -222,19 +220,17 @@ order:
         extras: [str]
         ingredients: [str]
     commands: []
-        date*: date
+        timestamp*: datetime
         requests*: [request]
         receipt*: []
             total: float
-            items: []
-                section: str
-                item: str 
+            elements: []
+                section: str // name
+                element: str // name
                 quantity: int 
                 price: float
-                responsible: str
-                variants: []
-                    name: str 
-                    value: str
+                manager: str
+                variants: [variant]
                 extras: [str]
                 ingredients: [str]
     receipt:
@@ -243,7 +239,7 @@ order:
             receipt*: receipt 
         individual: []
             paid: date
-            clientId* : str
+            client* : str // ID
             receipt*: receipt 
 ```
 

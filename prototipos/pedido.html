@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es" class="h-100">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QRest | Carta</title>
+    <link rel="icon" href="/static/img/icon.png" type="image/icon type" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" type="text/css" href="/static/css/body.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/bulma.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/form.css" />
+    <script src="/static/js/bulmajs-0.10.4/bulma.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body class="has-navbar-fixed-top has-navbar-fixed-bottom">
+    <nav class="navbar is-fixed-top has-background-black">
+      <div class="columns is-mobile is-vcentered p-2">
+        <div class="column is-full">
+          <h1 class="title is-size-5 has-text-white">
+            Productos Seleccionados
+          </h1>
+        </div>
+      </div>
+    </nav>
+
+    <nav class="navbar is-fixed-bottom is-transparent is-block">
+      <div class="columns is-multiline p-5">
+        <div class="column is-full p-0">
+          <a
+            class="button is-fullwidth is-black"
+            href="/prototipos/pedido.html"
+          >
+            <p class="is-size-5">Pedir</p>
+          </a>
+        </div>
+        <div class="column is-full p-0 pt-2">
+          <a class="button is-fullwidth" href="/prototipos/pedido.html">
+            <p class="is-size-5">Volver a la carta</p>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div class="containter p-2">
+        <div class="columns m-0 is-mobile is-vcentered">
+          <div class="column is-narrow">
+            <figure class="image is-96x96">
+              <img
+                class="has-rounded-border"
+                src="https://bulma.io/images/placeholders/96x96.png"
+              />
+            </figure>
+          </div>
+          <div class="column">
+            <p class="title is-size-5 m-0">Plato</p>
+          </div>
+          <div class="column is-narrow">
+            <button
+              id="addElementComplex"
+              class="button"
+              onclick="modalAdd.open()"
+            >
+              <span class="icon">
+                <i class="fas fa-square-plus"></i>
+              </span>
+            </button>
+            <div id="counterSeccionComplex" class="field has-addons is-hidden">
+              <div class="control">
+                <button class="button is-danger" onclick="modalTakeOff.open()">
+                  <span class="icon">
+                    <i class="fas fa-minus"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="control">
+                <input
+                  id="cantidadSeccionComplex"
+                  class="input"
+                  type="number"
+                  min="0"
+                  value="0"
+                  readonly
+                />
+              </div>
+              <div class="control">
+                <button class="button is-success" onclick="modalAdd.open()">
+                  <span class="icon">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="m-2" />
+        <div class="columns m-0 is-mobile is-vcentered">
+          <div class="column is-narrow">
+            <figure class="image image is-96x96">
+              <img
+                class="has-rounded-border"
+                src="https://bulma.io/images/placeholders/96x96.png"
+              />
+            </figure>
+          </div>
+          <div class="column">
+            <p class="title is-size-5 m-0">Plato</p>
+          </div>
+          <div class="column is-narrow">
+            <button
+              id="addElement"
+              class="button"
+              id="addBtn"
+              onclick="incrementValue(event); hide(event); show(event)"
+              to="cantidadSeccion"
+              show="counterSeccion"
+              hide="addElement"
+            >
+              <span class="icon">
+                <i class="fas fa-plus"></i>
+              </span>
+            </button>
+            <div id="counterSeccion" class="field has-addons is-hidden">
+              <div class="control">
+                <button
+                  class="button is-danger"
+                  onclick="decrementValue(event)"
+                  to="cantidadSeccion"
+                  show="addElement"
+                  hide="counterSeccion"
+                >
+                  <span class="icon">
+                    <i class="fas fa-minus"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="control">
+                <input
+                  id="cantidadSeccion"
+                  class="input"
+                  type="number"
+                  min="0"
+                  value="0"
+                  readonly
+                />
+              </div>
+              <div class="control">
+                <button
+                  class="button is-success"
+                  onclick="incrementValue(event)"
+                  to="cantidadSeccion"
+                >
+                  <span class="icon">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script src="/static/js/counter.js"></script>
+  <script src="/static/js/scroll.js"></script>
+  <script src="/static/js/modal.js"></script>
+  <script src="/static/js/sections.js"></script>
+</html>
