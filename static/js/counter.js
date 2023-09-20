@@ -21,7 +21,18 @@ function hide(event) {
     hideElement.classList.add("is-hidden");
 }
 
-function decrementValue(event) {
+function removeElement(event) {
+    event.preventDefault();
+    let buttonElement = event.currentTarget;
+    let id = buttonElement.getAttribute('remove');
+    let element = document.getElementById(id);
+    element.remove();
+    id = buttonElement.getAttribute('remove_hr');
+    element = document.getElementById(id);
+    element.remove(id);
+}
+
+function decrementValue(event, remove=false) {
     event.preventDefault();
     let buttonElement = event.currentTarget;
     let targetInput = buttonElement.getAttribute('to');
@@ -34,7 +45,11 @@ function decrementValue(event) {
 
         // Hide counter and show addElement when value reaches 0
         if (inputElement.value == 0) {
-            hide(event);
+            if (remove) {
+                removeElement(event);
+            } else {
+                hide(event);
+            }
             show(event);
         }
     }
