@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/body.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/bulma.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/form.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/font.css" />
     <script src="/static/js/bulmajs-0.10.4/bulma.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -26,7 +27,7 @@
       crossorigin="anonymous"
     ></script>
     <style>
-      body.has-navbar-fixed-bottom{
+      body.has-navbar-fixed-bottom {
         padding-bottom: 100px;
       }
     </style>
@@ -36,7 +37,7 @@
     <nav class="navbar is-fixed-top has-background-black">
       <div class="columns is-mobile is-vcentered p-2">
         <div class="column is-full">
-          <h1 class="title is-size-5 has-text-white">
+          <h1 class="title is-size-4 has-text-white ml-3">
             Productos Seleccionados
           </h1>
         </div>
@@ -63,7 +64,11 @@
 
     <main>
       <div class="containter p-2">
-        <div id="element" class="columns m-0 is-mobile is-vcentered">
+        
+        <div
+          id="element"
+          class="columns is-multiline m-0 is-mobile is-vcentered"
+        >
           <div class="column is-narrow">
             <figure class="image image is-96x96">
               <img
@@ -73,9 +78,28 @@
             </figure>
           </div>
           <div class="column">
-            <p class="title is-size-5 m-0">Plato</p>
+            <p
+              class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered"
+            >
+              Patatas bravas
+            </p>
+            <div
+              class="columns is-multiline m-0 is-mobile is-vcentered is-centered"
+            >
+              <div class="column is-narrow">
+                <p class="subtitle is-size-5 m-0 is-unbreakable">Ración</p>
+              </div>
+              <div class="column is-narrow">
+                <p class="subtitle is-size-5 m-0 is-unbreakable">+Beicon</p>
+                <p class="subtitle is-size-5 m-0 is-unbreakable">+Alioli</p>
+              </div>
+              <div class="column is-narrow">
+                <p class="subtitle is-size-5 m-0 is-unbreakable">-Patatas</p>
+                <p class="subtitle is-size-5 m-0 is-unbreakable">-Queso</p>
+              </div>
+            </div>
           </div>
-          <div class="column is-narrow">
+          <div class="column column is-narrow">
             <div id="counterSeccion" class="field has-addons">
               <div class="control">
                 <button
@@ -117,7 +141,10 @@
 
         <hr class="m-2" />
 
-        <div id="element" class="columns m-0 is-mobile is-vcentered">
+        <div
+          id="element"
+          class="columns is-multiline m-0 is-mobile is-vcentered"
+        >
           <div class="column is-narrow">
             <figure class="image image is-96x96">
               <img
@@ -127,9 +154,28 @@
             </figure>
           </div>
           <div class="column">
-            <p class="title is-size-5 m-0">Plato</p>
+            <p
+              class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered"
+            >
+              Patatas bravas
+            </p>
+            <div
+              class="columns is-multiline m-0 is-mobile is-vcentered is-centered"
+            >
+              <div class="column is-narrow">
+                <p class="subtitle is-size-5 m-0 is-unbreakable">Ración</p>
+              </div>
+              <div class="column is-narrow">
+                <p class="subtitle is-size-5 m-0 is-unbreakable">+Beicon</p>
+                <p class="subtitle is-size-5 m-0 is-unbreakable">+Alioli</p>
+              </div>
+              <div class="column is-narrow">
+                <p class="subtitle is-size-5 m-0 is-unbreakable">-Patatas</p>
+                <p class="subtitle is-size-5 m-0 is-unbreakable">-Queso</p>
+              </div>
+            </div>
           </div>
-          <div class="column is-narrow">
+          <div class="column column is-narrow">
             <div id="counterSeccion" class="field has-addons">
               <div class="control">
                 <button
@@ -169,221 +215,6 @@
           </div>
         </div>
 
-        <hr class="m-2" />
-
-        <div id="element" class="columns m-0 is-mobile is-vcentered">
-          <div class="column is-narrow">
-            <figure class="image image is-96x96">
-              <img
-                class="has-rounded-border"
-                src="https://bulma.io/images/placeholders/96x96.png"
-              />
-            </figure>
-          </div>
-          <div class="column">
-            <p class="title is-size-5 m-0">Plato</p>
-          </div>
-          <div class="column is-narrow">
-            <div id="counterSeccion" class="field has-addons">
-              <div class="control">
-                <button
-                  class="button is-danger"
-                  onclick="decrementValue(event, remove=true)"
-                  to="cantidadSeccion"
-                  show="addElement"
-                  remove="element"
-                >
-                  <span class="icon">
-                    <i class="fas fa-minus"></i>
-                  </span>
-                </button>
-              </div>
-              <div class="control">
-                <input
-                  id="cantidadSeccion"
-                  class="input"
-                  type="number"
-                  min="0"
-                  value="0"
-                  readonly
-                />
-              </div>
-              <div class="control">
-                <button
-                  class="button is-success"
-                  onclick="incrementValue(event)"
-                  to="cantidadSeccion"
-                >
-                  <span class="icon">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <hr class="m-2" />
-
-        <div id="element" class="columns m-0 is-mobile is-vcentered">
-          <div class="column is-narrow">
-            <figure class="image image is-96x96">
-              <img
-                class="has-rounded-border"
-                src="https://bulma.io/images/placeholders/96x96.png"
-              />
-            </figure>
-          </div>
-          <div class="column">
-            <p class="title is-size-5 m-0">Plato</p>
-          </div>
-          <div class="column is-narrow">
-            <div id="counterSeccion" class="field has-addons">
-              <div class="control">
-                <button
-                  class="button is-danger"
-                  onclick="decrementValue(event, remove=true)"
-                  to="cantidadSeccion"
-                  show="addElement"
-                  remove="element"
-                >
-                  <span class="icon">
-                    <i class="fas fa-minus"></i>
-                  </span>
-                </button>
-              </div>
-              <div class="control">
-                <input
-                  id="cantidadSeccion"
-                  class="input"
-                  type="number"
-                  min="0"
-                  value="0"
-                  readonly
-                />
-              </div>
-              <div class="control">
-                <button
-                  class="button is-success"
-                  onclick="incrementValue(event)"
-                  to="cantidadSeccion"
-                >
-                  <span class="icon">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <hr class="m-2" />
-
-        <div id="element" class="columns m-0 is-mobile is-vcentered">
-          <div class="column is-narrow">
-            <figure class="image image is-96x96">
-              <img
-                class="has-rounded-border"
-                src="https://bulma.io/images/placeholders/96x96.png"
-              />
-            </figure>
-          </div>
-          <div class="column">
-            <p class="title is-size-5 m-0">Plato</p>
-          </div>
-          <div class="column is-narrow">
-            <div id="counterSeccion" class="field has-addons">
-              <div class="control">
-                <button
-                  class="button is-danger"
-                  onclick="decrementValue(event, remove=true)"
-                  to="cantidadSeccion"
-                  show="addElement"
-                  remove="element"
-                >
-                  <span class="icon">
-                    <i class="fas fa-minus"></i>
-                  </span>
-                </button>
-              </div>
-              <div class="control">
-                <input
-                  id="cantidadSeccion"
-                  class="input"
-                  type="number"
-                  min="0"
-                  value="0"
-                  readonly
-                />
-              </div>
-              <div class="control">
-                <button
-                  class="button is-success"
-                  onclick="incrementValue(event)"
-                  to="cantidadSeccion"
-                >
-                  <span class="icon">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <hr class="m-2" />
-
-        <div id="element" class="columns m-0 is-mobile is-vcentered">
-          <div class="column is-narrow">
-            <figure class="image image is-96x96">
-              <img
-                class="has-rounded-border"
-                src="https://bulma.io/images/placeholders/96x96.png"
-              />
-            </figure>
-          </div>
-          <div class="column">
-            <p class="title is-size-5 m-0">Plato</p>
-          </div>
-          <div class="column is-narrow">
-            <div id="counterSeccion" class="field has-addons">
-              <div class="control">
-                <button
-                  class="button is-danger"
-                  onclick="decrementValue(event, remove=true)"
-                  to="cantidadSeccion"
-                  show="addElement"
-                  remove="element"
-                >
-                  <span class="icon">
-                    <i class="fas fa-minus"></i>
-                  </span>
-                </button>
-              </div>
-              <div class="control">
-                <input
-                  id="cantidadSeccion"
-                  class="input"
-                  type="number"
-                  min="0"
-                  value="0"
-                  readonly
-                />
-              </div>
-              <div class="control">
-                <button
-                  class="button is-success"
-                  onclick="incrementValue(event)"
-                  to="cantidadSeccion"
-                >
-                  <span class="icon">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </main>
   </body>
