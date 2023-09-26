@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from typing import Optional
 from pydantic import BaseModel, HttpUrl
 
 
@@ -11,8 +11,8 @@ class ComplexModel(BaseModel):
 
 class Variant(ComplexModel):
     name: str
-    image: HttpUrl | None
-    price: float | None
+    image: Optional[HttpUrl] = None
+    price: Optional[float] = None
 
 
 class Variants(ComplexModel):
@@ -22,33 +22,33 @@ class Variants(ComplexModel):
 
 class Extra(BaseModel):
     name: str
-    price: float | None
+    price: Optional[float] = None
 
 
 class Tag(ComplexModel):
     name: str
-    icon: HttpUrl | None
+    icon: Optional[HttpUrl] = None
 
 
 class Element(ComplexModel):
     name: str
-    image: HttpUrl | None
-    description: str | None
-    price: float | None
+    image: Optional[HttpUrl] = None
+    description: Optional[str] = None
+    price: Optional[float] = None
     manager: str
     visible: bool = True
-    ingredients: list[str] | None
-    allergens: list[str] | None
-    variants: list[Variants] | None
-    extras: list[Extra] | None
-    tags: list[Tag] | None
+    ingredients: Optional[list[str]] = None
+    allergens: Optional[list[str]] = None
+    variants: Optional[list[Variants]] = None
+    extras: Optional[list[Extra]] = None
+    tags: Optional[list[Tag]] = None
 
 
 class Section(ComplexModel):
     name: str
     visible: bool = True
-    parent: str | None
-    elements: list[Element] | None
+    parent: Optional[str] = None
+    elements: Optional[list[Element]] = None
 
 
 # Pedidos
@@ -63,52 +63,52 @@ class OrderElement(ComplexModel):
     quantity: int
     price: float
     manager: str
-    variants: list[OrderVariant] | None
-    extras: list[str] | None
-    ingredients: list[str] | None
+    variants: Optional[list[OrderVariant]] = None
+    extras: Optional[list[str]] = None
+    ingredients: Optional[list[str]] = None
 
 class Receipt(ComplexModel):
     total: float
     elements: list[OrderElement]
 
 class TotalReceipt(ComplexModel):
-    paid: datetime | None
+    paid: Optional[datetime] = None
     receipt: Receipt
 
 class IndividualReceipt(ComplexModel):
-    paid: datetime | None
+    paid: Optional[datetime] = None
     client: str
     receipt: Receipt
 
 class FinalReceipt(ComplexModel):
     total: TotalReceipt
-    individual: list[IndividualReceipt] | None
+    individual: Optional[list[IndividualReceipt]] = None
 
 class Request(ComplexModel):
-    timestamp: datetime
+    timestamp: Optional[datetime] = None
     client: str
     order: str
     type: str
     section: str
     element: str
     price: float
-    variants: list[OrderVariant] | None
-    extras: list[str] | None
-    ingredients: list[str] | None
+    variants: Optional[list[OrderVariant]] = None
+    extras: Optional[list[str]] = None
+    ingredients: Optional[list[str]] = None
 
 class Command(ComplexModel):
-    timestamp: datetime
+    timestamp: Optional[datetime] = None
     requests: list[Request]
     receipts: list[Receipt]
 
 class Order(ComplexModel):
-    zone: str
-    table: str
-    created: datetime
-    closed: datetime | None
-    requests: list[Request] | None
-    commands: list[Command] | None
-    receipt: FinalReceipt | None
+    zone: Optional[str] = None
+    table: Optional[str] = None
+    created: Optional[datetime] = None
+    closed: Optional[datetime] = None
+    requests: Optional[list[Request]] = None
+    commands: Optional[list[Command]] = None
+    receipt: Optional[FinalReceipt] = None
 
 
 # Allergens
