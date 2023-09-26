@@ -59,10 +59,10 @@
         {% set element_id = section_id ~ "_element" ~ element_index %}
         {% set element_is_complex = element.variantes is defined or element.extras is defined %}
       <div class="columns m-0 is-mobile is-vcentered">
-        {% if section.image is defined %}
+        {% if element.image is defined %}
         <div class="column is-narrow">
           <figure class="image is-96x96">
-            <img class="has-rounded-border" src="{{ section.image }}">
+            <img class="has-rounded-border" src="{{ element.image }}">
           </figure>
         </div>
         {% endif %}
