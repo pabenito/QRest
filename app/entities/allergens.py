@@ -13,7 +13,7 @@ allergens = db["allergens"]
 
 @router.get("/", response_model=list[Allergen])
 def get():
-    return list(allergens.find({}))
+    return list(allergens.find({}, {"_id": False}))
 
 
 @router.get("/dict")

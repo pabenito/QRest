@@ -31,8 +31,8 @@ def create_section(section: Section):
 
 @router.get("/", response_model=list[Section], response_model_exclude_unset=True)
 def get_carta():
-    sections = list(menu.find({"parent": {"$exists": False}}).sort("name"))
-    subsections = list(menu.find({"parent": {"$exists": True}}).sort("name"))
+    sections = list(menu.find({"parent": {"$exists": False}}, {"_id": False}).sort("name"))
+    subsections = list(menu.find({"parent": {"$exists": True}}, {"_id": False}).sort("name"))
     return sort_menu(sections, subsections)
 
 
@@ -58,7 +58,7 @@ def update_section(section: str, section_body: Section):
     old_section_json = menu.find_one({"name": section.lower()})
     if old_section_json is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"La sección '{section}', no existe.")
-    old_section = Section.parse_obj(old_section_json)
+    old_section = Section.model_validate(old_section_json)
 
     if section_body.name.lower() != old_section.name and menu.count_documents(
             {"name": section_body.name.lower()}) > 0:
@@ -69,7 +69,7 @@ def update_section(section: str, section_body: Section):
             check_price(element)
 
     new_section = json_lower_encoder(section_body)
-    updated_secction = old_section.copy(update=new_section)
+    updated_secction = old_section.model_copy(update=new_section)
     menu.find_one_and_update(
         {"name": section.lower()},
         {"$set": json_lower_encoder(updated_secction)})
@@ -128,10 +128,10 @@ def delete_element_section(section: str, element: str):
 
 
 def get_section(section: str) -> Section:
-    result = menu.find_one({"name": section.lower()})
+    result = menu.find_one({"name": section.lower()}, {"_id": False})
     if result is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"La sección '{section}', no existe.")
-    return Section.parse_obj(result)
+    return Section.model_validate(result)
 
 
 def check_section_exists(section: str):

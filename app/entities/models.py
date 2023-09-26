@@ -1,11 +1,10 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, HttpUrl
+from pydantic import ConfigDict, BaseModel, HttpUrl
 
 
 class ComplexModel(BaseModel):
-    class Config:
-        arbitrary_types_allowed = True  # In order to allow ObjectId
+    model_config = ConfigDict(arbitrary_types_allowed=True)
 
 # Carta
 
