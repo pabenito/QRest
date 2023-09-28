@@ -1,10 +1,33 @@
 from datetime import datetime
-from typing import Optional
-from pydantic import ConfigDict, BaseModel, HttpUrl
+from typing import Optional, Annotated, Union, Any
+from pydantic import ConfigDict, BaseModel, HttpUrl, Field, AfterValidator, PlainSerializer, WithJsonSchema
+from bson import ObjectId
+
+
+def validate_object_id(v: Any) -> ObjectId:
+    if isinstance(v, ObjectId):
+        return v
+    if ObjectId.is_valid(v):
+        return ObjectId(v)
+    raise ValueError("Invalid ObjectId")
+
+
+PyObjectId = Annotated[
+    Union[str, ObjectId],
+    AfterValidator(validate_object_id),
+    PlainSerializer(lambda x: str(x), return_type=str),
+    WithJsonSchema({"type": "string"}, mode="serialization"),
+]
 
 
 class ComplexModel(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
+
+
+class Id(ComplexModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    model_config = ConfigDict(populate_by_name=True)
+
 
 # Carta
 
@@ -56,6 +79,7 @@ class OrderVariant(BaseModel):
     name: str
     value: str
 
+
 class OrderElement(ComplexModel):
     section: str
     element: str
@@ -66,22 +90,27 @@ class OrderElement(ComplexModel):
     extras: Optional[list[str]] = None
     ingredients: Optional[list[str]] = None
 
+
 class Receipt(ComplexModel):
     total: float
     elements: list[OrderElement]
 
+
 class TotalReceipt(ComplexModel):
     paid: Optional[datetime] = None
     receipt: Receipt
+
 
 class IndividualReceipt(ComplexModel):
     paid: Optional[datetime] = None
     client: str
     receipt: Receipt
 
+
 class FinalReceipt(ComplexModel):
     total: TotalReceipt
     individual: Optional[list[IndividualReceipt]] = None
+
 
 class Request(ComplexModel):
     timestamp: Optional[datetime] = None
@@ -95,10 +124,12 @@ class Request(ComplexModel):
     extras: Optional[list[str]] = None
     ingredients: Optional[list[str]] = None
 
+
 class Command(ComplexModel):
     timestamp: Optional[datetime] = None
     requests: list[Request]
     receipts: list[Receipt]
+
 
 class Order(ComplexModel):
     zone: Optional[str] = None
@@ -108,6 +139,10 @@ class Order(ComplexModel):
     requests: list[Request] = []
     commands: list[Command] = []
     receipt: Optional[FinalReceipt] = None
+
+
+class OrderId(Order, Id):
+    pass
 
 
 # Allergens
