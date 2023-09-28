@@ -105,8 +105,8 @@ class Order(ComplexModel):
     table: Optional[str] = None
     created: Optional[datetime] = None
     closed: Optional[datetime] = None
-    requests: Optional[list[Request]] = None
-    commands: Optional[list[Command]] = None
+    requests: list[Request] = []
+    commands: list[Command] = []
     receipt: Optional[FinalReceipt] = None
 
 
