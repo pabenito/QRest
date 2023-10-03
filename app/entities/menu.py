@@ -38,7 +38,7 @@ def get_carta():
 
 @router.get("/{section}", response_model=Section, response_model_exclude_unset=True)
 def get_section(section: str, ids: bool = False):
-    section_obj = get_section(section)
+    section_obj = _get_section(section)
     if ids:
         for element in section_obj.elements:
             add_element_id(element)
@@ -79,7 +79,7 @@ def update_section(section: str, section_body: Section):
 
 @router.delete("/{section}", response_model=Section, response_model_exclude_unset=True)
 def delete_section(section: str):
-    section_obj = get_section(section)
+    section_obj = _get_section(section)
     menu.delete_one({"name": section.lower()})
     return section_obj
 
@@ -121,13 +121,13 @@ def update_element_section(section: str, element: str, element_body: Element):
 
 @router.delete("/{section}/{element}", response_model=Section, response_model_exclude_unset=True)
 def delete_element_section(section: str, element: str):
-    section_obj = get_section(section)
+    section_obj = _get_section(section)
     check_element_exists(section, element)
     menu.find_one_and_update({"name": section.lower()}, {"$pull": {"elements": {"name": element.lower()}}})
     return section_obj
 
 
-def get_section(section: str) -> Section:
+def _get_section(section: str) -> Section:
     result = menu.find_one({"name": section.lower()}, {"_id": False})
     if result is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"La sección '{section}', no existe.")
