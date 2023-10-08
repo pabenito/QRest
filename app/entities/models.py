@@ -113,6 +113,7 @@ class FinalReceipt(ComplexModel):
 
 
 class Request(ComplexModel):
+    id: Optional[str] = None
     timestamp: Optional[datetime] = None
     client: str
     order: str
@@ -126,9 +127,9 @@ class Request(ComplexModel):
 
 
 class Command(ComplexModel):
-    timestamp: Optional[datetime] = None
+    timestamp: datetime
     requests: list[Request]
-    receipts: list[Receipt]
+    receipts: Optional[list[Receipt]] = []
 
 
 class Order(ComplexModel):
