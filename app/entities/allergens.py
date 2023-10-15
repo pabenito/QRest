@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 from app.database import db
-from app.entities.models import Allergen
+from app.models.allergens import Allergen
 
 # Create router
 router = APIRouter()

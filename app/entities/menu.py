@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, status, HTTPException
 from app.database import db
-from app.entities.models import Section, Element
+from app.models.menu import Section, Element
 from app.utils import json_lower_encoder, remove_non_letters_and_replace_spaces
 
 # Create router

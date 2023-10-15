@@ -7,7 +7,7 @@ from bson import ObjectId
 from fastapi import APIRouter, status, HTTPException
 from datetime import datetime
 from app.database import db
-from app.entities.models import Order, OrderId, Request, Command, IndividualReceipt, OrderElement
+from app.models.order import Order, OrderId, Request, Command, Receipt, OrderElement
 from app.utils import json_lower_encoder, remove_non_letters_and_replace_spaces
 
 # Create router
