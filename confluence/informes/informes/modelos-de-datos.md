@@ -169,47 +169,60 @@ De forma que la API de pedidos cuenta con las siguientes llamadas.
 - GET total_receipt(order, zone, table) // `order` o `table` y `zone` si fuese necesaria. 
 - GET individual_receipt(client*, order, zone, table) // `order` o `table` y `zone` si fuese necesaria. 
 
-``` 
-order:
+```
+Request:
+    id: str
+    timestamp*: datetime
+    client*: str
+    order*: str
+    type*: str
+    section*: str
+    element*: str
+    price*: float
+    manager*: str
+    variants: []
+        name*: str
+        value*: str
+    extras: []
+    ingredients: []
+
+Element:
+    section*: str
+    element*: str
+    quantity*: int
+    price*: float
+    manager*: str
+    variants: []
+        name*: str
+        value*: str
+    extras: []
+    ingredients: []
+
+Receipt:
+    total*: float
+    elements: [Element]
+
+Order:
     zone: str
     table: str
-    created*: datetime
+    created: datetime
     closed: datetime
-    requests: []
-        timestamp*: datetime
-        client*: str // ID
-        order*: str // ID 
-        type*: str // add | remove 
-        section*: str // name
-        element*: str // name
-        price: float    
-        variants: []
-            name: str 
-            value: str
-        extras: [str]
-        ingredients: [str]
+    requests: [Request]
     commands: []
         timestamp*: datetime
-        requests*: [request]
-        receipt*: []
-            total: float
-            elements: []
-                section: str // name
-                element: str // name
-                quantity: int 
-                price: float
-                manager: str
-                variants: [variant]
-                extras: [str]
-                ingredients: [str]
-    receipt:
-        total*: 
-            paid: date
-            receipt*: receipt 
+        requests*: [Request]
+        total: Receipt
         individual: []
-            paid: date
-            client* : str // ID
-            receipt*: receipt 
+            client*: str
+            receipt: Receipt
+    receipt:
+        total*:
+            paid: datetime
+            receipt*: Receipt
+        individual: []
+            client*: str
+            receipt*: Receipt
+            paid: datetime
 ```
 
 ### Ejemplo

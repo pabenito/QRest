@@ -1,4 +1,5 @@
 # Import libraries
+from collections import defaultdict
 from pprint import pprint
 
 import pymongo
@@ -6,7 +7,7 @@ from bson import ObjectId
 from fastapi import APIRouter, status, HTTPException
 from datetime import datetime
 from app.database import db
-from app.entities.models import Order, OrderId, Request, Command
+from app.entities.models import Order, OrderId, Request, Command, IndividualReceipt, OrderElement
 from app.utils import json_lower_encoder, remove_non_letters_and_replace_spaces
 
 # Create router
@@ -80,4 +81,29 @@ def _get_requests(id: str) -> list[Request]:
 
 def compute_command(requests: list[Request]):
     command = Command(timestamp=datetime.now(), requests=requests)
+    grouped_individual_requests = defaultdict(int)
+    for request in command.requests:
+        key = (request.client, request.section, request.element, request.manager, request.price,
+               tuple(request.variants or []), tuple(request.extras or []), tuple(request.ingredients or []))
+        if request.type == 'add':
+            grouped_individual_requests[key] += 1
+        elif request.type == 'remove':
+            grouped_individual_requests[key] -= 1
+    for key, quantity in grouped_individual_requests.items():
+        client, section, element, manager, price, variants, extras, ingredients = key
+        if quantity > 0:
+            individual_receipt = OrderElement(
+                section =  section,
+                element = element,
+                quantity = quantity,
+                price = price,
+                manager = manager,
+                variants = variants,
+                extras = extras,
+                ingredients = ingredients
+            )
+            command.individual.append(IndividualReceipt(client = client, receipt = IndividualReceipt(total = )))
+    grouped_total_receipt = defaultdict(int)
+    for individual_receipt in command.individual:
+        key = (individual_receipt.)
     return command

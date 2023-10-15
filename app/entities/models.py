@@ -75,6 +75,15 @@ class Section(ComplexModel):
 
 # Pedidos
 
+class SimpleElement(BaseModel):
+    section: str
+    element: str
+    price: float
+    manager: str
+    variants: Optional[list[OrderVariant]] = None
+    extras: Optional[list[str]] = None
+    ingredients: Optional[list[str]] = None
+
 class OrderVariant(BaseModel):
     name: str
     value: str
@@ -95,21 +104,20 @@ class Receipt(ComplexModel):
     total: float
     elements: list[OrderElement]
 
-
-class TotalReceipt(ComplexModel):
-    paid: Optional[datetime] = None
+class IndividualReceipt(ComplexModel):
+    client: str
     receipt: Receipt
 
-
-class IndividualReceipt(ComplexModel):
+class FinalIndividualReceipt(IndividualReceipt):
     paid: Optional[datetime] = None
-    client: str
+class FinalTotalReceipt(ComplexModel):
+    paid: Optional[datetime] = None
     receipt: Receipt
 
 
 class FinalReceipt(ComplexModel):
-    total: TotalReceipt
-    individual: Optional[list[IndividualReceipt]] = None
+    total: FinalTotalReceipt
+    individual: Optional[list[FinalIndividualReceipt]] = None
 
 
 class Request(ComplexModel):
@@ -121,6 +129,7 @@ class Request(ComplexModel):
     section: str
     element: str
     price: float
+    manager: str
     variants: Optional[list[OrderVariant]] = None
     extras: Optional[list[str]] = None
     ingredients: Optional[list[str]] = None
@@ -129,7 +138,8 @@ class Request(ComplexModel):
 class Command(ComplexModel):
     timestamp: datetime
     requests: list[Request]
-    receipts: Optional[list[Receipt]] = []
+    total: Optional[list[Receipt]] = []
+    individual: Optional[list[IndividualReceipt]] = []
 
 
 class Order(ComplexModel):
