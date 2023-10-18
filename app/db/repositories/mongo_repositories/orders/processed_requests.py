@@ -8,7 +8,7 @@ from app.lib.utils import json_lower_encoder
 from .orders import MongoOrderRepository
 
 
-class MongoCurrentRequestsRepository(IProcessedRequestsRepository):
+class MongoProcessedRequestsRepository(IProcessedRequestsRepository):
     def __init__(self):
         self.db = db["orders"]
         self.json_encoder = json_lower_encoder

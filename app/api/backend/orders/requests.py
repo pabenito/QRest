@@ -1,13 +1,13 @@
 from fastapi import APIRouter, status
 
 from app.core.entities.order import Request, Order, RequestPost
-from app.core.use_cases.orders.requests import RequestUseCases
+from app.core.use_cases.orders.current_requests import CurrentRequestsUseCases
 from app.db.repositories.mongo_repositories.orders.current_requests import MongoCurrentRequestsRepository
 
 # Create router
 router = APIRouter()
 
-use_cases = RequestUseCases(repository=MongoCurrentRequestsRepository())
+use_cases = CurrentRequestsUseCases(repository=MongoCurrentRequestsRepository())
 
 
 @router.post("/{id}", status_code=status.HTTP_201_CREATED, response_model=Request, response_model_exclude_unset=True)

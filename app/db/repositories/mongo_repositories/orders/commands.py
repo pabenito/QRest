@@ -2,11 +2,12 @@ from bson import ObjectId
 
 from app.core.entities.order import Command
 from app.db import db
+from app.db.repositories.interfaces.orders.commands import ICommandRepository
 from app.db.repositories.mongo_repositories.orders.orders import MongoOrderRepository
 from app.lib.utils import json_lower_encoder
 
 
-class MongoCommandRepository:
+class MongoCommandRepository(ICommandRepository):
     def __init__(self):
         self.db = db["orders"]
         self.json_encoder = json_lower_encoder

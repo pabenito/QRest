@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from app.core.entities.order import Request, CommandPost, Element
+from app.core.entities.order import Request, CommandPost, Element, Command
 from app.core.exceptions.orders import OrderValidationException
 from app.db.repositories.interfaces.orders.commands import ICommandRepository
 from app.db.repositories.interfaces.orders.current_requests import ICurrentRequestsRepository
@@ -19,12 +19,13 @@ class ComputeCommandUseCases:
         self.current_requests_use_cases = CurrentRequestsUseCases(current_requests_repository)
         self.processed_requests_use_cases = ProcessedRequestsUseCases(processed_requests_repository)
 
-    def process_current_requests_and_create_new_command(self, order_id: str):
+    def process_current_requests_and_create_new_command(self, order_id: str) -> Command:
         current_requests = self.current_requests_use_cases.get_all(order_id)
         command_post = self._compute_commands_from_requests(current_requests)
-        self.commands_use_cases.add(order_id, command_post)
+        command = self.commands_use_cases.add(order_id, command_post)
         self.processed_requests_use_cases.add_all(order_id, current_requests)
         self.current_requests_use_cases.remove_all(order_id)
+        return command
 
     @staticmethod
     def _compute_commands_from_requests(requests: list[Request]) -> CommandPost:
