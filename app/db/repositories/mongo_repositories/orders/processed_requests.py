@@ -17,7 +17,7 @@ class MongoProcessedRequestsRepository(IProcessedRequestsRepository):
     def add_all(self, order_id: str, requests: list[Request]) -> list[Request]:
         result = self.db.find_one_and_update(
             {"_id": ObjectId(order_id)},
-            {"$set": {"processed_requests": self.json_encoder(requests)}})
+            {"$push": {"processed_requests": {"$each": self.json_encoder(requests)}}})
         if result is None:
             raise OrderOperationFailedException(
                 f"Add all requests to processed_requests in order with id {order_id} failed")
