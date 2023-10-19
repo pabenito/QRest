@@ -10,11 +10,18 @@ router = APIRouter()
 use_cases = CurrentRequestsUseCases(repository=MongoCurrentRequestsRepository())
 
 
-@router.post("/{id}", status_code=status.HTTP_201_CREATED, response_model=Request, response_model_exclude_unset=True)
+@router.post("/{id}",
+             status_code=status.HTTP_201_CREATED,
+             response_model=Request,
+             response_model_exclude_unset=True,
+             response_model_exclude_defaults=True)
 def post_request(order_id: str, request: RequestPost):
     return use_cases.add(request)
 
 
-@router.get("/{id}/requests", response_model=list[Request], response_model_exclude_unset=True)
+@router.get("/{id}/requests",
+            response_model=list[Request],
+            response_model_exclude_unset=True,
+            response_model_exclude_defaults=True)
 def get_all_requests(order_id: str):
     return use_cases.get_all(order_id)

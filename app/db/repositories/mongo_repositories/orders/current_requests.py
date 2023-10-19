@@ -25,6 +25,8 @@ class MongoCurrentRequestsRepository(ICurrentRequestsRepository):
 
     def get_all(self, order_id: str) -> list[Request]:
         order = self.order_repository.get_with_filter(order_id, {"current_requests": True})
+        if "current_requests" not in order:
+            return []
         list_validator = TypeAdapter(list[Request])
         try:
             current_requests = list_validator.validate_python(order["current_requests"])

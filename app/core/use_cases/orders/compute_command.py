@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from app.core.entities.order import Request, CommandPost, Element, Command, OrderElement
-from app.core.exceptions.orders import OrderValidationException
+from app.core.exceptions.orders import OrderValidationException, OrderOperationFailedException
 from app.db.repositories.interfaces.orders.commands import ICommandRepository
 from app.db.repositories.interfaces.orders.current_requests import ICurrentRequestsRepository
 from app.db.repositories.interfaces.orders.processed_requests import IProcessedRequestsRepository
@@ -23,6 +23,8 @@ class ComputeCommandUseCases:
 
     def process_current_requests_and_create_new_command(self, order_id: str) -> Command:
         current_requests = self.current_requests_use_cases.get_all(order_id)
+        if not current_requests:
+            raise OrderOperationFailedException("There are no requests to compute a command.")
         command_post = self._compute_commands_from_requests(current_requests)
         command = self.commands_use_cases.add(order_id, command_post)
         self.processed_requests_use_cases.add_all(order_id, current_requests)
@@ -35,9 +37,9 @@ class ComputeCommandUseCases:
             key = (
                 request.element.section,
                 request.element.element,
-                tuple(request.element.variants or None),
-                tuple(request.element.extras or None),
-                tuple(request.element.ingredients or None))
+                tuple(request.element.variants) if request.element.variants else None,
+                tuple(request.element.extras) if request.element.extras else None,
+                tuple(request.element.ingredients) if request.element.ingredients else None)
             if request.type == 'add':
                 grouped_requests[key] += 1
             elif request.type == 'remove':
