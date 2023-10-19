@@ -15,7 +15,7 @@ use_cases = CurrentRequestsUseCases(repository=MongoCurrentRequestsRepository())
              response_model=Request,
              response_model_exclude_unset=True,
              response_model_exclude_defaults=True)
-def post_request(order_id: str, request: RequestPost):
+def post_request(request: RequestPost):
     return use_cases.add(request)
 
 

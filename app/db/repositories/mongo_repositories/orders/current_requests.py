@@ -9,6 +9,7 @@ from app.db import db
 from app.db.repositories.interfaces.orders.current_requests import ICurrentRequestsRepository
 from app.lib.utils import json_lower_encoder
 from .orders import MongoOrderRepository
+from app.core.exceptions.orders import OrderNotFoundException
 
 
 class MongoCurrentRequestsRepository(ICurrentRequestsRepository):
@@ -18,9 +19,11 @@ class MongoCurrentRequestsRepository(ICurrentRequestsRepository):
         self.order_repository = MongoOrderRepository()
 
     def add(self, order_id: str, request: Request) -> Request:
-        self.db.find_one_and_update(
+        result = self.db.find_one_and_update(
             {"_id": ObjectId(order_id)},
             {"$push": {"current_requests": json_lower_encoder(request)}})
+        if not result:
+            raise OrderNotFoundException(order_id)
         return request
 
     def get_all(self, order_id: str) -> list[Request]:

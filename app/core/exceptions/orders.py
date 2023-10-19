@@ -5,24 +5,19 @@ class OrderException(QRestException):
     pass
 
 
-class OrderNotFoundException(ResourceNotFoundException, OrderException):
+class OrderNotFoundException(ResourceNotFoundException):
     def __init__(self, value: str):
-        self.entity = "Order"
-        self.key = "id"
-        super().__init__(value)
+        super().__init__("Order", "id", value)
 
 
 class OrderAlreadyExistsException(ResourceAlreadyExistsException, OrderException):
     def __init__(self, value: str):
-        self.entity = "Order"
-        self.key = "id"
-        super().__init__(value)
+        super().__init__("Order", "id", value)
 
 
 class OrderValidationException(EntityValidationException, OrderException):
     def __init__(self, message: str):
-        self.entity = "Order"
-        super().__init__(message)
+        super().__init__("Order", message)
 
 
 class OrderInvalidInputException(InvalidInputException, OrderException):
