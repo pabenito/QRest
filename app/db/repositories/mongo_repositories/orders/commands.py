@@ -14,9 +14,14 @@ class MongoCommandRepository(ICommandRepository):
         self.order_repository = MongoOrderRepository()
 
     def add(self, order_id: str, command: Command) -> Command:
-        self.db.find_one_and_update(
-            {"_id": ObjectId(order_id)},
-            {"$push": {"commands": json_lower_encoder(command)}})
+        if self.order_repository.has_field(order_id, "commands"):
+            self.db.find_one_and_update(
+                {"_id": ObjectId(order_id)},
+                {"$push": {"commands": json_lower_encoder(command)}})
+        else:
+            self.db.find_one_and_update(
+                {"_id": ObjectId(order_id)},
+                {"$set": {"commands": json_lower_encoder([command])}})
         return command
 
     def get_all(self, order_id: str) -> list[Command]:

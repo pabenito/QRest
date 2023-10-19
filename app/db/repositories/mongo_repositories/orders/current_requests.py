@@ -36,7 +36,7 @@ class MongoCurrentRequestsRepository(ICurrentRequestsRepository):
         requests = self.get_all(order_id)
         result = self.db.find_one_and_update(
             {"_id": ObjectId(order_id)},
-            {"$set": {"current_requests": None}})
+            {"$unset": {"current_requests": None}})
         if result is None:
             raise OrderOperationFailedException(
                 f"Remove all current_requests in order with id {order_id} failed")

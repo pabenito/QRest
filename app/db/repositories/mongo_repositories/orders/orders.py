@@ -45,3 +45,7 @@ class MongoOrderRepository(IOrderRepository):
             raise OrderNotFoundException(order_id)
         return order
 
+    def has_field(self, order_id: str, field: str):
+        result = self.db.find_one({"_id": ObjectId(order_id), field: {"$exists": True}})
+        return True if result else False
+

@@ -35,9 +35,9 @@ class ComputeCommandUseCases:
             key = (
                 request.element.section,
                 request.element.element,
-                tuple(request.element.variants or []),
-                tuple(request.element.extras or []),
-                tuple(request.element.ingredients or []))
+                tuple(request.element.variants or None),
+                tuple(request.element.extras or None),
+                tuple(request.element.ingredients or None))
             if request.type == 'add':
                 grouped_requests[key] += 1
             elif request.type == 'remove':
