@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from app.core.entities.order import Request, CommandPost, Element, Command
+from app.core.entities.order import Request, CommandPost, Element, Command, OrderElement
 from app.core.exceptions.orders import OrderValidationException
 from app.db.repositories.interfaces.orders.commands import ICommandRepository
 from app.db.repositories.interfaces.orders.current_requests import ICurrentRequestsRepository
@@ -8,6 +8,7 @@ from app.db.repositories.interfaces.orders.processed_requests import IProcessedR
 from app.core.use_cases.orders.commands import CommandUseCases
 from app.core.use_cases.orders.current_requests import CurrentRequestsUseCases
 from app.core.use_cases.orders.processed_requests import ProcessedRequestsUseCases
+from app.lib.utils import json_lower_encoder
 
 
 class ComputeCommandUseCases:
@@ -18,6 +19,7 @@ class ComputeCommandUseCases:
         self.commands_use_cases = CommandUseCases(commands_repository)
         self.current_requests_use_cases = CurrentRequestsUseCases(current_requests_repository)
         self.processed_requests_use_cases = ProcessedRequestsUseCases(processed_requests_repository)
+        self.json_encoder = json_lower_encoder
 
     def process_current_requests_and_create_new_command(self, order_id: str) -> Command:
         current_requests = self.current_requests_use_cases.get_all(order_id)
@@ -27,8 +29,7 @@ class ComputeCommandUseCases:
         self.current_requests_use_cases.remove_all(order_id)
         return command
 
-    @staticmethod
-    def _compute_commands_from_requests(requests: list[Request]) -> CommandPost:
+    def _compute_commands_from_requests(self, requests: list[Request]) -> CommandPost:
         grouped_requests = defaultdict(int)
         for request in requests:
             key = (
@@ -48,11 +49,13 @@ class ComputeCommandUseCases:
         for key, quantity in grouped_requests.items():
             (section, element, variants, extras, ingredients) = key
             if quantity > 0:
-                command_elements.append(Element(
+                command_element = Element(
                     section=section,
                     element=element,
                     variants=variants,
                     extras=extras,
-                    ingredients=ingredients
-                ))
+                    ingredients=ingredients)
+                command_elements.append(OrderElement(
+                    quantity=quantity,
+                    element=self.json_encoder(command_element)))
         return CommandPost(elements=command_elements)
