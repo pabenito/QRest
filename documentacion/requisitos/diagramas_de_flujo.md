@@ -1,18 +1,44 @@
 # Diagramas de flujo
 
-## Web
+En este documento se recoge qué casos de uso se disparan en el backend las acciones en la web.
+
+Los casos de uso de este documento son casos de uso del backend de la aplicación, siendo estas las acciones atómicas que se pueden realizar en la aplicación. En estos no se recogen las acciones del usuario en la vista de la aplicación. 
+
+## Transiciones web
+
+Transiciones entre las distintas páginas de la web y los casos de uso que activan.
+
+### Sintaxis
+
+#### Tipos de pantalla
+
+```mermaid
+flowchart TD
+    pantalla[Pantalla]
+    decision{{Modal de decisión}}
+    mensaje[/Modal con mensaje/]
+```
+
+#### Transiciones y casos de uso
+
+```mermaid
+flowchart LR
+    a --Caso de uso que activa--> b
+    a --_Opcion en pantalla_--> b
+    a --_Opción en pantalla_: Caso de uso que activa--> b
+```
 
 ### Clientes
 
 ```mermaid
 flowchart LR
-        carta[Carta]
-        pedido[Pedido]
-        pago[Pago]
-    carta --Ver pedido--> pedido
-    pedido --_Volver a la carta_: Ver carta--> carta
-    pedido --Confirmar pedido & Ver carta--> carta
-    carta --Generar recibo & Ver recibo total--> pago
+    carta[Carta]
+    pedido[Pedido]
+    pago[Pago]
+    carta --Get pedido--> pedido
+    pedido --_VolGet a la carta_: Get carta--> carta
+    pedido --Confirmar pedido & Get carta--> carta
+    carta --Generar recibo & Get recibo total--> pago
 ```
 
 ### Carta
@@ -32,11 +58,11 @@ flowchart LR
     carta --_Añadir_--> elemento_complejo
     elemento_complejo --Añadir elemento complejo--> carta
     elemento_complejo --_Cancelar_--> carta
-    carta --Ver pedido--> pedido
-    pedido --_Volver a la carta_: Ver carta--> carta
-    pedido --Confirmar pedido & Ver carta--> carta
+    carta --Get pedido--> pedido
+    pedido --_VolGet a la carta_: Get carta--> carta
+    pedido --Confirmar pedido & Get carta--> carta
     carta --_Pedir cuenta_--> confirmacion_cuenta
-    confirmacion_cuenta --_Sí_: Generar recibo & Ver recibo total--> pago
+    confirmacion_cuenta --_Sí_: Generar recibo & Get recibo total--> pago
     confirmacion_cuenta --_No_--> carta
 ```
 
@@ -50,16 +76,16 @@ flowchart LR
         pedido[Pedido]
         pedido_confirmado[/Pedido Confirmado/]
     end
-    carta --Ver pedido--> pedido
+    carta --Get pedido--> pedido
     pedido --Añadir elemento simple--> pedido
     pedido --Eliminar elemento simple--> pedido
     pedido --Añadir elemento complejo--> pedido
     pedido --Eliminar elemento complejo--> pedido
-    pedido --_Volver a la carta_: Ver carta--> carta
+    pedido --_VolGet a la carta_: Get carta--> carta
     pedido --_Confirmar pedido_--> confirmar_pedido
     confirmar_pedido --_No_--> pedido
     confirmar_pedido --_Sí_: Confirmar pedido--> pedido_confirmado
-    pedido_confirmado --_Aceptar_: Ver carta--> carta
+    pedido_confirmado --_Aceptar_: Get carta--> carta
 ```
 
 ### Pago
@@ -73,14 +99,14 @@ flowchart LR
         pago[Pago]
         pagado[Pagado]
     end
-    carta --Generar recibo & Ver recibo total--> recibo_total
-    recibo_total --Ver recibo individual--> recibo_individual
+    carta --Generar recibo & Get recibo total--> recibo_total
+    recibo_total --Get recibo individual--> recibo_individual
     recibo_total --_Pagar_--> pago
-    recibo_individual --Ver recibo total--> recibo_total
+    recibo_individual --Get recibo total--> recibo_total
     recibo_individual --_Pagar--> pago
-    pago --_Cancelar_: Ver recibo total--> recibo_total
+    pago --_Cancelar_: Get recibo total--> recibo_total
     pago --_Aceptar_: Tramitar pago--> pagado
-    pagado --_Ok_: Ver recibo total--> recibo_total
+    pagado --_Ok_: Get recibo total--> recibo_total
 ```
 
 ## Trazabilidad de casos de uso
@@ -99,16 +125,16 @@ flowchart LR
         eliminar_elemento_simple[Eliminar elemento simple]
         anadir_elemento_complejo[Añadir elemento Complejo]
         eliminar_elemento_complejo[Eliminar elemento Complejo]
-        ver_pedido[Ver pedido]
-        ver_recibo_total[Ver recibo total]
+        get_pedido[Get pedido]
+        get_recibo_total[Get recibo total]
         generar_recibo[Generar recibo]
     end
     carta --> anadir_elemento_simple
     carta --> eliminar_elemento_simple
     carta --> eliminar_elemento_complejo
     elemento_complejo --> anadir_elemento_complejo
-    carta --> ver_pedido
-    confirmacion_cuenta --> generar_recibo & ver_recibo_total
+    carta --> get_pedido
+    confirmacion_cuenta --> generar_recibo & get_recibo_total
 ```
 
 ### Pedido
@@ -126,15 +152,15 @@ flowchart LR
         anadir_elemento_complejo[Añadir elemento Complejo]
         eliminar_elemento_complejo[Eliminar elemento Complejo]
         confirmar_pedido[Confirmar pedido]
-        ver_carta[Ver carta]
+        get_carta[Get carta]
     end
     pedido --> anadir_elemento_simple
     pedido --> eliminar_elemento_simple
     pedido --> anadir_elemento_complejo
     pedido --> eliminar_elemento_complejo
-    pedido --> ver_carta
+    pedido --> get_carta
     confirmar --> confirmar_pedido
-    pedido_confirmado --> ver_carta
+    pedido_confirmado --> get_carta
 ```
 
 ### Pago
@@ -148,37 +174,13 @@ flowchart LR
         pagado[Pagado]
     end
     subgraph casos_de_uso[Casos de uso]
-        ver_recibo_individual[Ver recibo individual]
-        ver_recibo_total[Ver recibo total]
+        get_recibo_individual[Get recibo individual]
+        get_recibo_total[Get recibo total]
         tramitar_pago[Tramitar pago]
     end
-    recibo_total --> ver_recibo_individual
-    recibo_individual --> ver_recibo_total
+    recibo_total --> get_recibo_individual
+    recibo_individual --> get_recibo_total
     pago --> tramitar_pago
-    pago --> ver_recibo_total
-    pagado --> ver_recibo_total
-```
-
-### Ver
-
-En la práctica cada caso de uso ver lo que hace es llamar a un caso de uso de tipo GET que se usa para generar el HTML de la nueva pantalla y transitar a ella. 
-
-```mermaid
-flowchart TB
-    subgraph casos_de_uso[Ver]
-        ver_carta[Ver carta]
-        ver_pedido[Ver pedido]
-        ver_recibo_total[Ver recibo total]
-        ver_recibo_individual[Ver recibo individual]
-    end
-    subgraph casos_de_uso[Casos de uso]
-        get_carta[Get pedido]
-        get_pedido[Get pedido]
-        get_recibo_total[Get recibo total]
-        get_recibo_individual[Get recibo individual]
-    end
-    ver_carta --> get_carta
-    ver_pedido --> get_pedido
-    ver_recibo_total --> get_recibo_total
-    ver_recibo_individual --> get_recibo_individual
+    pago --> get_recibo_total
+    pagado --> get_recibo_total
 ```
