@@ -1,12 +1,29 @@
 # Diagramas de flujo
 
-En este documento se recoge qué casos de uso se disparan en el backend las acciones en la web.
+En este documento se recogen los diagramas de flujo de los casos de uso de la web.
 
-Los casos de uso de este documento son casos de uso del backend de la aplicación, siendo estas las acciones atómicas que se pueden realizar en la aplicación. En estos no se recogen las acciones del usuario en la vista de la aplicación. 
+Diferenciamos entre casos de uso de alto y bajo nivel.
+
+- **Casos de uso de alto nivel**: Los que el usuario realiza haciendo uso de la vista de la aplicación. 
+- **Casos de uso de bajo nivel**: Los casos de uso que se ejecutan en el backend de la aplicación. Son las acciones atómicas que se pueden realizar en la aplicación.
+
+## Casos de uso de alto nivel
+
+```mermaid
+flowchart LR
+    hacer_pedido[Hacer pedido]
+    confirmar_pedido[Confirmar pedido]
+    pedir_cuenta[Pedir cuenta]
+    pagar[Pagar]
+    hacer_pedido --> confirmar_pedido
+    confirmar_pedido --> hacer_pedido
+    confirmar_pedido --> pedir_cuenta
+    pedir_cuenta --> pagar
+```
 
 ## Transiciones web
 
-Transiciones entre las distintas páginas de la web y los casos de uso que activan.
+Transiciones entre las distintas páginas de la web y los casos de uso de bajo nivel que activan.
 
 ### Sintaxis
 
@@ -23,9 +40,9 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    a --Caso de uso que activa--> b
+    a --Caso de uso de bajo nivel--> b
     a --_Opcion en pantalla_--> b
-    a --_Opción en pantalla_: Caso de uso que activa--> b
+    a --_Opción en pantalla_: Caso de uso de bajo nivel--> b
 ```
 
 ### Clientes
