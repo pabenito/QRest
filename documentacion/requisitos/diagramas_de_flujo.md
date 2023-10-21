@@ -103,7 +103,7 @@ flowchart LR
 ### Pago
 
 ```mermaid
-flowchart LR
+flowchart TD
     carta[Carta]
     subgraph g_pago[Pago]
         recibo_total[Recibo Total]
@@ -117,7 +117,7 @@ flowchart LR
     recibo_individual --Get recibo total--> recibo_total
     recibo_individual --_Pagar--> pago
     pago --_Cancelar_: Get recibo total--> recibo_total
-    pago --_Aceptar_: Tramitar pago--> pagado
+    pago --_Aceptar_: Tramitar pago & Confirmar pago--> pagado
     pagado --_Ok_: Get recibo total--> recibo_total
 ```
 
@@ -178,10 +178,12 @@ flowchart LR
         get_recibo_individual[Get recibo individual]
         get_recibo_total[Get recibo total]
         tramitar_pago[Tramitar pago]
+        confirmar_pago[Confirmar pago]
     end
     recibo_total --> get_recibo_individual
     recibo_individual --> get_recibo_total
     pago --> tramitar_pago
+    pago --> confirmar_pago
     pago --> get_recibo_total
     pagado --> get_recibo_total
 ```
