@@ -69,11 +69,10 @@ flowchart LR
         elemento_complejo[Elemento Complejo]
         confirmacion_cuenta{{Confirmación Cuenta}}
     end
-    carta --Añadir elemento simple--> carta
-    carta --Eliminar elemento simple--> carta
-    carta --Eliminar elemento complejo--> carta
+    carta --Añadir elemento--> carta
+    carta --Eliminar elemento--> carta
     carta --_Añadir_--> elemento_complejo
-    elemento_complejo --Añadir elemento complejo--> carta
+    elemento_complejo --Añadir elemento--> carta
     elemento_complejo --_Cancelar_--> carta
     carta --Get pedido--> pedido
     pedido --_VolGet a la carta_: Get carta--> carta
@@ -94,10 +93,8 @@ flowchart LR
         pedido_confirmado[/Pedido Confirmado/]
     end
     carta --Get pedido--> pedido
-    pedido --Añadir elemento simple--> pedido
-    pedido --Eliminar elemento simple--> pedido
-    pedido --Añadir elemento complejo--> pedido
-    pedido --Eliminar elemento complejo--> pedido
+    pedido --Añadir elemento--> pedido
+    pedido --Eliminar elemento--> pedido
     pedido --_VolGet a la carta_: Get carta--> carta
     pedido --_Confirmar pedido_--> confirmar_pedido
     confirmar_pedido --_No_--> pedido
@@ -138,18 +135,15 @@ flowchart LR
         confirmacion_cuenta[Confirmación Cuenta]
     end
     subgraph casos_de_uso[Casos de uso]
-        anadir_elemento_simple[Añadir elemento simple]
-        eliminar_elemento_simple[Eliminar elemento simple]
-        anadir_elemento_complejo[Añadir elemento Complejo]
-        eliminar_elemento_complejo[Eliminar elemento Complejo]
+        anadir_elemento[Añadir elemento]
+        eliminar_elemento[Eliminar elemento]
         get_pedido[Get pedido]
         get_recibo_total[Get recibo total]
         generar_recibo[Generar recibo]
     end
-    carta --> anadir_elemento_simple
-    carta --> eliminar_elemento_simple
-    carta --> eliminar_elemento_complejo
-    elemento_complejo --> anadir_elemento_complejo
+    carta --> anadir_elemento
+    carta --> eliminar_elemento
+    elemento_complejo --> anadir_elemento
     carta --> get_pedido
     confirmacion_cuenta --> generar_recibo & get_recibo_total
 ```
@@ -160,21 +154,17 @@ flowchart LR
 flowchart LR
     subgraph g_pedido[Pedido]
         pedido[Pedido]
-        confirmar[Confirmar Pedido]
         pedido_confirmado[Pedido Confirmado]
+        confirmar[Confirmar Pedido]
     end
     subgraph casos_de_uso[Casos de uso]
-        anadir_elemento_simple[Añadir elemento simple]
-        eliminar_elemento_simple[Eliminar elemento simple]
-        anadir_elemento_complejo[Añadir elemento Complejo]
-        eliminar_elemento_complejo[Eliminar elemento Complejo]
+        anadir_elemento[Añadir elemento]
+        eliminar_elemento[Eliminar elemento]
         confirmar_pedido[Confirmar pedido]
         get_carta[Get carta]
     end
-    pedido --> anadir_elemento_simple
-    pedido --> eliminar_elemento_simple
-    pedido --> anadir_elemento_complejo
-    pedido --> eliminar_elemento_complejo
+    pedido --> anadir_elemento
+    pedido --> eliminar_elemento
     pedido --> get_carta
     confirmar --> confirmar_pedido
     pedido_confirmado --> get_carta
@@ -186,8 +176,8 @@ flowchart LR
 flowchart LR
     subgraph g_pago[Pago]
         recibo_total[Recibo Total]
-        recibo_individual[Recibo Individual]
         pago[Pago]
+        recibo_individual[Recibo Individual]
         pagado[Pagado]
     end
     subgraph casos_de_uso[Casos de uso]
