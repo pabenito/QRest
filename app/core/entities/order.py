@@ -13,40 +13,20 @@ class Variant(BaseModel):
 class Element(BaseModel):
     section: str
     element: str
+    quantity: int
+    clients: list[str]
     variants: Optional[list[Variant]] = None
     extras: Optional[list[str]] = None
     ingredients: Optional[list[str]] = None
 
 
-class OrderElement(BaseModel):
-    quantity: int
-    element: Element
+class ReceiptElement(Element):
+    price: float
 
 
-class Receipt(BaseModel):
-    client: Optional[str] = None
-    paid: Optional[datetime] = None
-    total: float
-    elements: OrderElement
-
-
-class RequestPost(BaseModel):
-    client: str
-    order: str
-    type: str
-    element: Element
-
-
-class Request(RequestPost):
+class Command(BaseModel):
     timestamp: datetime
-
-
-class CommandPost(BaseModel):
-    elements: list[OrderElement]
-
-
-class Command(CommandPost):
-    timestamp: datetime
+    elements: list[Element]
 
 
 class OrderPost(BaseModel):
@@ -55,13 +35,12 @@ class OrderPost(BaseModel):
 
 
 class OrderNew(OrderPost):
-    created: datetime
+    date: datetime
 
 
 class Order(OrderNew, Id):
-    closed: Optional[datetime] = None
-    current_requests: Optional[list[Request]] = None
-    processed_requests: Optional[list[Request]] = None
+    current_command: Optional[list[Element]] = None
     commands: Optional[list[Command]] = None
-    total_receipt: Optional[Receipt] = None
-    individual_receipts: Optional[list[Receipt]] = None
+    receipt: Optional[list[ReceiptElement]] = None
+    to_be_paid: Optional[list[ReceiptElement]] = None
+    paid: Optional[bool] = None
