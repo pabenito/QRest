@@ -2,12 +2,12 @@
 
 En este documento se recogen los diagramas de flujo de los casos de uso de la web.
 
-Diferenciamos entre casos de uso de alto y bajo nivel.
+Diferenciamos entre casos de uso del frontend y backend.
 
-- **Casos de uso de alto nivel**: Los que el usuario realiza haciendo uso de la vista de la aplicación. 
-- **Casos de uso de bajo nivel**: Los casos de uso que se ejecutan en el backend de la aplicación. Son las acciones atómicas que se pueden realizar en la aplicación.
+- **Casos de uso del frontend**: Los que el usuario realiza haciendo uso de la vista de la aplicación. 
+- **Casos de uso del backend**: Los casos de uso que se ejecutan en el backend de la aplicación. Son las acciones atómicas que se pueden realizar en la aplicación.
 
-## Casos de uso de alto nivel
+## Casos de uso del fronted
 
 ```mermaid
 flowchart LR
@@ -23,7 +23,7 @@ flowchart LR
 
 ## Transiciones web
 
-Transiciones entre las distintas páginas de la web y los casos de uso de bajo nivel que activan.
+Transiciones entre las distintas páginas de la web y los casos de uso del backend que activan.
 
 ### Sintaxis
 
