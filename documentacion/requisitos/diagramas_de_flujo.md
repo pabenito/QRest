@@ -12,13 +12,12 @@ Diferenciamos entre casos de uso del frontend y backend.
 ```mermaid
 flowchart LR
     hacer_pedido[Hacer pedido]
-    confirmar_pedido[Confirmar pedido]
     pedir_cuenta[Pedir cuenta]
+    ver_recibo[Ver recibo]
     pagar[Pagar]
-    hacer_pedido --> confirmar_pedido
-    confirmar_pedido --> hacer_pedido
-    confirmar_pedido --> pedir_cuenta
-    pedir_cuenta --> pagar
+    hacer_pedido --> hacer_pedido & pedir_cuenta
+    pedir_cuenta --> ver_recibo
+    ver_recibo --> ver_recibo & pagar
 ```
 
 ## Transiciones web
@@ -42,7 +41,7 @@ flowchart TD
 flowchart LR
     a --Caso de uso de bajo nivel--> b
     a --_Opcion en pantalla_--> b
-    a --_Opción en pantalla_: Caso de uso de bajo nivel--> b
+    a --_Opción en pantalla_: Caso de uso del backend--> b
 ```
 
 ### Clientes
@@ -100,7 +99,7 @@ flowchart TD
     pedido_confirmado --_Aceptar_: Get carta--> carta
 ```
 
-### Pago
+### Recibo & Pago
 
 ```mermaid
 flowchart TD
