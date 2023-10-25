@@ -26,7 +26,11 @@ Transiciones entre las distintas páginas de la web y los casos de uso del backe
 
 ### Sintaxis
 
+Definimos la sintaxis de los diagramas de flujo.
+
 #### Tipos de pantalla
+
+Usamos la forma para indicar el tipo de pantalla que es:
 
 ```mermaid
 flowchart TD
@@ -36,6 +40,8 @@ flowchart TD
 ```
 
 #### Transiciones y casos de uso
+
+Usamos los mensajes para diferenciar entre la opción en el frontend y el caso de uso que ejecuta:
 
 ```mermaid
 flowchart LR
