@@ -9,10 +9,6 @@ Diferenciamos en dos catergorías de casos de uso, de alto y bajo nivel:
 
 ## Glosario
 
-## Sintaxis
-
-- **(-> Pantalla _)**: Accede a la pantalla indicada.
-
 ### Actores
 
 - **Empleado**: Entendido como una persona que opera el restaurante.
@@ -103,6 +99,7 @@ flowchart LR
         volver_a_la_carta([Volver a la carta])
         anadir_al_pedido_simple([Añadir elemento simple al pedido])
         anadir_al_pedido_complejo([Añadir elemento complejo al pedido])
+        confirmar_pedido([Confirmar pedido])
       end
     end
     subgraph casos_de_uso_pagar[Pagar]
@@ -113,12 +110,10 @@ flowchart LR
         tramitar_pago([Tramitar pago])
       end
     end
-    confirmar_pedido([Confirmar pedido])
     pedir_cuenta([Pedir cuenta])
   end
-  comensal --use--> hacer_pedido & confirmar_pedido & pedir_cuenta & pagar
-  hacer_pedido -.includes.-> anadir_al_pedido & eliminar_del_pedido & ver_pedido & volver_a_la_carta
-  co
+  comensal --use--> hacer_pedido & pedir_cuenta & pagar
+  hacer_pedido -.includes.-> anadir_al_pedido & eliminar_del_pedido & ver_pedido & volver_a_la_carta & confirmar_pedido
   anadir_al_pedido_simple & anadir_al_pedido_complejo ==extends==> anadir_al_pedido
   pagar_total & pagar_individual ==extends==> pagar
   pagar_total & pagar_individual -.includes.-> tramitar_pago
@@ -143,12 +138,10 @@ Que se representan en el siguiente diagrama de flujo:
 ```mermaid
 flowchart LR
     hacer_pedido[Hacer pedido]
-    confirmar_pedido[Confirmar pedido]
     pedir_cuenta[Pedir cuenta]
     pagar[Pagar]
-    hacer_pedido --> confirmar_pedido
-    confirmar_pedido --> hacer_pedido
-    confirmar_pedido --> pedir_cuenta
+    hacer_pedido --> hacer_pedido
+    hacer_pedido --> pedir_cuenta
     pedir_cuenta --> pagar
 ```
 
@@ -162,13 +155,26 @@ flowchart LR
   eliminar_del_pedido([Eliminar elemento del pedido])
   ver_pedido([Ver pedido])
   volver_a_la_carta([Volver a la carta])
+  confirmar_pedido([Confirmar pedido])
   anadir_al_pedido_simple([Añadir elemento simple al pedido])
   anadir_al_pedido_complejo([Añadir elemento complejo al pedido])
   comensal --use--> hacer_pedido
-  hacer_pedido --includes--> anadir_al_pedido & eliminar_del_pedido & ver_pedido & volver_a_la_carta
-
+  hacer_pedido --includes--> anadir_al_pedido & eliminar_del_pedido & ver_pedido & volver_a_la_carta & confirmar_pedido
   anadir_al_pedido_simple & anadir_al_pedido_complejo ==extends==> anadir_al_pedido
 ```
+
+**Precondición**: Pantalla Carta
+**Escenario Principal**:
+
+1. El comensal navega por la carta.
+2. El comensal _Añade un elemeno al pedido_ o _Elimina un elemento del pedido_.
+3. El comensal selecciona la opción _Ver pedido_.
+
+**Escenarios Alternativos**:
+
+2a. _Eliminar elemento del pedido_.
+2a1. El comensal selecciona la opción
+
 
 #### Pagar
 
@@ -183,6 +189,3 @@ flowchart LR
   pagar_total & pagar_individual ==extends==> pagar
   pagar_total & pagar_individual -.includes.-> tramitar_pago
 ```
-
-
-### 
