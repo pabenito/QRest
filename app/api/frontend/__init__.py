@@ -3,7 +3,4 @@ from . import menu
 
 router = APIRouter()
 
-router.include_router(
-    menu.router,
-    tags=["carta"]
-)
+router.include_router(menu.router)

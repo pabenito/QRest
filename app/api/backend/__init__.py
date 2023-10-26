@@ -5,11 +5,11 @@ router = APIRouter()
 
 router.include_router(
     menu.router,
-    prefix="/empleados",
+    prefix="/carta"
 )
 
 router.include_router(
-    orders.router,
-    prefix="/orders",
+    order.router,
+    prefix="/mesa/{order}/pedido",
     tags=["orders"]
 )

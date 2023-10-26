@@ -10,10 +10,7 @@ app.include_router(
     prefix="/backend"
 )
 
-app.include_router(
-    frontend.router,
-    tags=["frontend"]
-)
+app.include_router(frontend.router)
 
 
 @app.on_event("startup")
