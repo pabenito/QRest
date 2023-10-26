@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.core.entities import Id
 
@@ -11,6 +11,7 @@ class Variant(BaseModel):
 
 
 class Element(BaseModel):
+    version: Optional[int] = 0
     section: str
     element: str
     quantity: int
@@ -35,7 +36,8 @@ class OrderPost(BaseModel):
 
 
 class OrderNew(OrderPost):
-    date: datetime
+    date: datetime = Field(default_factory=datetime.now)
+    version: int = 0
 
 
 class Order(OrderNew, Id):

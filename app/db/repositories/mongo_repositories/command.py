@@ -7,11 +7,14 @@ class MongoCommandRepository(ICommandRepository):
     def __init__(self):
         self.db = db["order"]
 
-    def add(self, order: str, element: Element) -> Element:
+    def get_version(self, order: str, element: Element) -> int:
         pass
 
-    def update(self, order: str, element: Element) -> Element:
+    def add(self, order: str, element: Element, version: int) -> Element:
         pass
 
-    def remove(self, order: str, element: Element) -> Element:
+    def update(self, order: str, element: Element, version: int) -> Element:
+        pass
+
+    def remove(self, order: str, element: Element, version: int) -> Element:
         pass
