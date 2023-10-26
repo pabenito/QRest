@@ -3,7 +3,7 @@ from fastapi import status
 from fastapi.testclient import TestClient
 from fastapi.exceptions import HTTPException
 
-from app.api.backend.order import router
+from app.api.backend.command import router
 from app.lib.utils import json_lower_encoder
 
 client = TestClient(router)

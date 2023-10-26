@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from . import menu, order
+from . import menu, command
 
 router = APIRouter()
 
