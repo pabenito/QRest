@@ -5,6 +5,29 @@
 ### Estructura de datos
 
 ```
+class Variant(BaseModel):
+    name: str
+    value: str
+
+
+class Element(BaseModel):
+    section: str
+    element: str
+    quantity: int
+    clients: list[str]
+    variants: Optional[list[Variant]] = None
+    extras: Optional[list[str]] = None
+    ingredients: Optional[list[str]] = None
+
+
+class ReceiptElement(Element):
+    price: float
+
+
+class Command(BaseModel):
+    timestamp: datetime
+    elements: list[Element]
+
 class Order(BaseModel):
     id: str
     current_command: Optional[list[Element]] = None
@@ -22,38 +45,575 @@ class Order(BaseModel):
 - **Comanda confirmada** (`commands`): Comanda que ha sido confirmada por los comensales y que se ha enviado a cocina. Se llama comanda confirmada independientemente de que se haya servido ya o no. 
 - **Generar comanda**: Cuando se han añadido elemento de la comanda actual, de forma que no está vacía.
 - **Confirmar comanda**: Cuando la comanda actual se añade al conjunto de comandas del pedido `commands`. Quedadndo la comanda actual vacía.
-- **pedido existe**: Se refiere a que hay algún pedido cuyo identificador coincida con el introducido.
+- **Pedido existe**: Se refiere a que hay algún pedido cuyo identificador coincida con el introducido.
+- **Comanda actual existe**: Se refiere a que el atributo comanda actual existe en el pedido, aunqu sea una lista vacía.
 
-### Caso 1: Obtener la comanda actual cuando existe
+### Caso 1: Obtener la comanda actual cuando existe el pedido y hay comanda actual
+
+Este caso se intenta ver la comanda actual de un pedido existe previamente y para el cual hay una comanda actual. Devolvemos la comanda actual.
 
 - **Método**: Ver comanda actual (`get_current_command`).
+- **Escenario**: Pedido existe y comanda actual existe.
+- **Tipo**: Éxito.
 
 #### Caso de prueba
 
 - **Dado que** se crea nuevo pedido con identificador _{id}_.
-- **Y** el comensal _{comensal}_ añade _{unidades}_ unidades del elemento _{elemento}_ de la sección _{seccion}_ al la comanda actual.
-- **Cuando** se solicita ver la comanda actual del pedido con identificador `{id}`
-- **Entonces** el sistema devuelve la comanda actual que contiene _{unidades}_ unidades del elemento _{elemento}_ de la sección _{sección}_ y en cuya lista de clientes es hay _{unidades}_ veces el identificador del comensal _{comensal}_
+- **Y** se añade el elemento _{elemento}_ al la comanda actual del pedido con identificador _{id}_
+- **Cuando** se solicita ver la comanda actual del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 200 (OK)
+- **Y** el sistema devuelve el elemento _{elemento}_.
 
-#### Parámetros
+#### Ejemplos
 
-#### Un elemento simple
+##### Un elemento simple
 
-- **{id}**: "abc"
-- **{elemento}**: "carbonara"
-- **{sección}**: "pizzas"
-- **{unidades}**: 1
+- _{id}_: "abc"
+- _{element}_:
 
-Resultado:
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": ["marcos"]
+}
+```
+
+Resultado: `[{element}]`
+
+##### Un elemento complejo
+
+- _{id}_: "abc"
+- _{element}_:
 
 ```json
 [
-  {
-    "section": "pizzas",
-    "element": "carbonara",
-    "quantity": 1,
-    "clients": ["paula"]
-  }
+    {
+        "section": "pizzas",
+        "element": "carbonara",
+        "quantity": 3,
+        "variants": [
+            {
+                "name": "tamaño",
+                "value": "familiar"
+            }
+        ],
+        "extras": ["albahaca"],
+        "ingredients": ["bacon"],
+        "clients": ["paula", "marta", "paco"]
+    }
 ]
 ```
 
+Resultado: `[{element}]`
+
+#### Test en Python
+`test_get_current_command__when_current_command_exists__then_return_current_command()`
+
+### Caso 2: Obtener la comanda actual cuando no existe el pedido
+
+Este caso se intenta ver la comanda actual de un pedido que no existe. Devolvemos HTTP Status 404 (Not Found).
+
+- **Método**: Ver comanda actual (`get_current_command`).
+- **Escenario**: Pedido no existe.
+- **Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** no existe ningun pedido cuyo identificado sea _{id}_.
+- **Cuando** se solicita ver la comanda actual del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 404 (Not Found).
+
+#### Ejemplos
+
+- _{id}_: "abc"
+
+#### Test en Python
+`test_get_current_command__when_order_does_not_exists__then_http_status_not_found()`
+
+### Caso 3: Obtener la comanda actual cuando no hay comanda actual
+
+Este caso se intenta ver la comanda actual de un pedido existe previamente, pero para el cual no existe la comanda actual. Devolvemos una lista vacía.
+
+- **Método**: Ver comanda actual (`get_current_command`).
+- **Escenario**: Comanda actual no existe.
+- **Tipo**: Éxito.
+
+#### Caso de prueba
+
+- **Dado que** se crea nuevo pedido con identificador _{id}_
+- **Y** no se ha añadido ningún elemento a la comanda actual.
+- **Cuando** se solicita ver la comanda actual del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 200 (OK)
+- **Y** el sistema devuelve una lista vacía.
+
+#### Ejemplos
+
+- _{id}_: "abc"
+
+Resultado: `[]`
+
+#### Test en Python
+`test_get_current_command__when_current_command_does_not_exists__then_return_empty_list()`
+
+### Caso 4: Confirmar la comanda actual cuando existe el pedido y hay comanda actual
+
+En este caso, la comanda actual de un pedido existente se confirma y se añade a la lista de comandas confirmadas del pedido. La comanda actual se vacía después de confirmarla.
+
+- **Método**: Confirmar comanda actual (`confirm_current_command`).
+- **Escenario**: Pedido y comanda actual existen.
+- **Tipo**: Éxito.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** se añade el elemento _{elemento}_ a la comanda actual del pedido con identificador _{id}_
+- **Y** la fecha actual es _{timestamp}_.
+- **Cuando** se solicita confirmar la comanda actual del pedido con identificador _{id}_.
+- **Entonces** el sistema añade la comanda actual a la lista de comandas confirmadas confirmadas
+- **Y** el sistema vacía la comanda actual
+- **Y** el sistema devuelve un HTTP Status 200 (OK)
+- **Y** el sistema devuelve la commanda que se ha añadido a la lista de comandas confirmadas.
+
+#### Ejemplos
+
+##### Un elemento simple
+
+- _{timestamp}_: 2023-10-30 15:30:45.123456
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": ["marcos"]
+}
+```
+
+Resultado: 
+
+```json
+{
+    "timestamp": "{timestamp}",
+    "elements": ["{element}"]
+}
+```
+
+##### Un elemento complejo
+
+- _{timestamp}_: 2023-10-30 15:30:45.123456
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+{
+    "section": "pizzas",
+    "element": "carbonara",
+    "quantity": 3,
+    "variants": [
+        {
+            "name": "tamaño",
+            "value": "familiar"
+        }
+    ],
+    "extras": ["albahaca"],
+    "ingredients": ["bacon"],
+    "clients": ["paula", "marta", "paco"]
+}
+```
+
+Resultado: 
+
+```json
+{
+    "timestamp": "{timestamp}",
+    "elements": ["{element}"]
+}
+```
+
+#### Test en Python
+`test_confirm_current_command__when_command_exists__then_return_command()`
+
+### Caso 5: Confirmar la comanda actual cuando no existe el pedido
+
+Este caso trata de confirmar una comanda para un pedido que no existe. Devolvemos HTTP Status 404 (Not Found).
+
+- **Método**: Confirmar comanda actual (`confirm_current_command`).
+- **Escenario**: Pedido no existe.
+- **Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** no existe ningún pedido con ese identificador.
+- **Cuando** se solicita confirmar la comanda actual del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 404 (Not Found).
+
+#### Ejemplos
+
+- _{id}_: "abc"
+
+#### Test en Python
+`test_confirm_current_command__when_order_does_not_exists__then_http_status_404_not_found()`
+
+### Caso 6: Confirmar la comanda actual cuando la comanda actual no existe
+
+Este caso trata de confirmar una comanda para un pedido que sí existe, pero no tiene una comanda actual. En este caso, se devuelve un HTTP Status 400 (Bad Request).
+
+- **Método**: Confirmar comanda actual (`confirm_current_command`).
+- **Escenario**: Comanda actual no existe.
+- **Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** no se ha añadido ningún elemento a la comanda actual.
+- **Cuando** se solicita confirmar la comanda actual del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 400 (Bad Request).
+
+#### Ejemplos
+
+- _{id}_: "abc"
+
+#### Test en Python
+`test_confirm_current_command__when_current_command_does_not_exists__then_http_status_400_bad_request()`
+
+### Caso 7: Añadir un elemento cuando el elemento es correcto, es nuevo y su cantidad es mayor que cero
+
+En este caso, se añade un elemento nuevo a la comanda actual de un pedido existente. El elemento es válido y su cantidad es mayor que cero.
+
+- **Método**: Añadir elemento (`add_element`).
+- **Escenario**: Elemento es correcto, es nuevo y su cantidad es mayor que cero.
+- **Tipo**: Éxito.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el elemento _{elemento}_ es correcto
+- **Y** la cantidad del elemento _{elemento}_ es mayor que cero.
+- **Cuando** se solicita añadir _{elemento}_ al pedido con identificador _{id}_.
+- **Entonces** el sistema añade el elemento a la comanda actual.
+- **Y** el sistema devuelve un HTTP Status 200 (OK).
+- **Y** el sistema devuelve el nuevo elemento añadido.
+
+#### Ejemplos
+
+##### Un elemento simple
+
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": ["marcos"]
+}
+```
+
+Resultado: `{element}`
+
+##### Un elemento complejo
+
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+[
+    {
+        "section": "pizzas",
+        "element": "carbonara",
+        "quantity": 3,
+        "variants": [
+            {
+                "name": "tamaño",
+                "value": "familiar"
+            }
+        ],
+        "extras": ["albahaca"],
+        "ingredients": ["bacon"],
+        "clients": ["paula", "marta", "paco"]
+    }
+]
+```
+
+Resultado: `{element}`
+
+#### Test en Python
+`test_add_element__when_element_is_correct_and_element_is_new_and_element_quantity_is_grater_than_zero__then_added_to_the_order_and_return_new_element()`
+
+### Caso 8: Añadir un elemento cuando el elemento es correcto, ya existe en la comanda y la suma de las cantidades es mayor que cero
+
+Este caso es para añadir un elemento que ya existe en la comanda actual. En este caso, se sumará la cantidad al elemento existente.
+
+- **Método**: Añadir elemento (`add_element`).
+- **Escenario**: Elemento es correcto, ya existe y la suma de las cantidades es mayor que cero.
+- **Tipo**: Éxito.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_
+- **Y** el elemento _{elemento nuevo}_ es correcto
+- **Y** existe un elemento _{elmento actual}_ en la comanda actual
+- **Y** el elemento _{elmento actual}_ es el mismo que el elemento _{elemento nuevo}_
+- **Y** la cantidad del elemento _{elemento actual}_ es _{cantidad elemento actual}_ 
+- **Y** la cantidad del elemento _{elemento nuevo}_ es _{cantidad elemento nuevo}_
+- **Y** la suma _{cantidad elemento actual}_ y _{cantidad elemento nuevo}_ es mayor que 0
+- **Y** la lista de clientes de _{elmento actual}_ es _{lista de clientes elemento actual}_
+- **Y** la lista de clientes de _{elmento nuevo}_ es _{lista de clientes elemento nuevo}_
+- **Cuando** se solicita añadir _{elemento nuevo}_ al pedido con identificador _{id}_.
+- **Entonces** el sistema actualiza la cantidad _{cantidad elemento actual}_ sumándole la cantidad _{cantidad elemento actual}_
+- **Y** el sistema actualiza la lista de clientes _{lista de clientes elemento actual}_ añadiendo los elementos de la lista de clientes _{lista de clientes elemento nuevo}_
+- **Y** el sistema devuelve un HTTP Status 200 (OK)
+- **Y** el sistema devuelve el elemento {elemento actual} actualizado.
+
+#### Ejemplos
+
+##### Un elemento simple
+
+- _{id}_: "abc"
+- _{cantidad elemento actual}_: 1
+- _{cantidad elemento nuevo}_: 2
+- _{lista de clientes actual}_: `["marcos"]`
+- _{lista de clientes nuevo}_: `["lola", "antonio"]`
+- _{elemento actual}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": "{cantidad elemento actual}",
+    "clients": "{lista de clientes actual}"
+}
+```
+- _{elemento nuevo}_:
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": "{cantidad elemento nuevo}",
+    "clients": "{lista de clientes nuevo}"
+}
+```
+
+Resultado: 
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": "{cantidad elemento actual} + {cantidad elemento nuevo}",
+    "clients": "{lista de clientes actual} union {lista de clientes nuevo}"
+}
+```
+
+##### Un elemento complejo
+
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+[
+    {
+        "section": "pizzas",
+        "element": "carbonara",
+        "quantity": 3,
+        "variants": [
+            {
+                "name": "tamaño",
+                "value": "familiar"
+            }
+        ],
+        "extras": ["albahaca"],
+        "ingredients": ["bacon"],
+        "clients": ["paula", "marta", "paco"]
+    }
+]
+```
+
+- _{id}_: "abc"
+- _{cantidad elemento actual}_: 3
+- _{cantidad elemento nuevo}_: 2
+- _{lista de clientes actual}_: `["paula", "marta", "paco"]`
+- _{lista de clientes nuevo}_: `["lola", "antonio"]`
+- _{elemento actual}_:
+
+```json
+{
+    "section": "pizzas",
+    "element": "carbonara",
+    "variants": [
+        {
+            "name": "tamaño",
+            "value": "familiar"
+        }
+    ],
+    "extras": ["albahaca"],
+    "ingredients": ["bacon"],
+    "quantity": "{cantidad elemento actual}",
+    "clients": "{lista de clientes actual}"
+}
+```
+- _{elemento nuevo}_:
+```json
+{
+    "section": "pizzas",
+    "element": "carbonara",
+    "variants": [
+        {
+            "name": "tamaño",
+            "value": "familiar"
+        }
+    ],
+    "extras": ["albahaca"],
+    "ingredients": ["bacon"],
+    "quantity": "{cantidad elemento nuevo}",
+    "clients": "{lista de clientes nuevo}"
+}
+```
+
+Resultado: 
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": "{cantidad elemento actual} + {cantidad elemento nuevo}",
+    "clients": "{lista de clientes actual} union {lista de clientes nuevo}"
+}
+```
+
+#### Test en Python
+`test_add_element__when_element_is_correct_and_element_is_alerady_exists_and_the_sum_of_both_quantities_is_grater_than_zero__then_element_quantity_is_updated_to_the_sum_of_them_and_return_updated_element()`
+
+### Caso 9: Añadir un elemento cuando el elemento es correcto, ya existe en la comanda y la suma de las cantidades es menor o igual a cero
+
+Este caso es para añadir un elemento que ya existe en la comanda actual. Si la suma de las cantidades resulta en cero o menor, se devuelve un HTTP Status 400 (Bad Request).
+
+- **Método**: Añadir elemento (`add_element`).
+- **Escenario**: Elemento es correcto, ya existe y la suma de las cantidades es menor o igual a cero.
+- **Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_
+- **Y** el elemento _{elemento nuevo}_ es correcto
+- **Y** existe un elemento _{elemento actual}_ en la comanda actual
+- **Y** el elemento _{elemento actual}_ es el mismo que el elemento _{elemento nuevo}_
+- **Y** la cantidad del elemento _{elemento actual}_ es _{cantidad elemento actual}_ 
+- **Y** la cantidad del elemento _{elemento nuevo}_ es _{cantidad elemento nuevo}_
+- **Y** la suma _{cantidad elemento actual}_ y _{cantidad elemento nuevo}_ es menor o igual a 0
+- **Cuando** se solicita añadir un elemento _{elemento nuevo}_ al pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 400 (Bad Request).
+
+#### Ejemplos
+
+- _{id}_: "abc"
+- _{cantidad elemento actual}_: 1
+- _{cantidad elemento nuevo}_: -1
+- _{elemento actual}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": "{cantidad elemento actual}",
+    "clients": ["marcos"]
+}
+```
+- _{elemento nuevo}_:
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": "{cantidad elemento nuevo}",
+    "clients": ["lola"]
+}
+```
+
+#### Test en Python
+`test_add_element__when_element_is_correct_and_element_is_alerady_exists_and_the_sum_of_both_quantities_is_less_or_equals_to_zero__then_http_status_400_bad_request()`
+
+### Caso 10: Añadir un elemento cuando el pedido no existe
+
+Este caso se da cuando se intenta añadir un elemento a un pedido que no existe.
+
+- **Método**: Añadir elemento (`add_element`).
+- **Escenario**: Pedido no existe.
+- **Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** no existe ningun pedido cuyo identificado sea _{id}_.
+- **Cuando** se solicita añadir un elemento al pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 404 (Not Found).
+
+#### Ejemplos
+
+- _{id}_: "abc"
+
+#### Test en Python
+`test_add_element__when_order_does_not_exists__then_http_status_404_not_found()`
+
+### Caso 11: Añadir un elemento cuando el elemento es inválido
+
+Este caso trata de añadir un elemento inválido a la comanda actual de un pedido existente. Podría ser que el elemento no tiene todos los campos necesarios, o los valores de los campos son incorrectos.
+
+- **Método**: Añadir elemento (`add_element`).
+- **Escenario**: El elemento es inválido.
+- **Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el elemento _{elemento}_ es inválido.
+- **Cuando** se solicita añadir _{elemento}_ al pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 422 (Unprocessable Emtity).
+
+#### Ejemplos
+
+##### Falta campo requerido
+
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+{
+    "section": "bebidas",
+    "quantity": 1,
+    "clients": ["marcos"]
+}
+```
+
+##### El elemento no existe
+
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "xyz",
+    "quantity": 1,
+    "clients": ["marcos"]
+}
+```
+
+##### Cantidad es menor o igual a cero
+
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 0,
+    "clients": ["marcos"]
+}
+```
+
+#### Test en Python
+
+`test_add_element__when_element_is_not_correct__then_http_status_422_unprocessable_entity()`
