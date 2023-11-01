@@ -7,9 +7,9 @@ class VersionedObject(BaseModel):
     version: int = 0
 
 
-class DBElement(Element, VersionedObject):
+class VersionedElement(Element, VersionedObject):
     pass
 
 
-class DBOrder(Order, VersionedObject):
+class VersionedOrder(Order, VersionedObject):
     pass

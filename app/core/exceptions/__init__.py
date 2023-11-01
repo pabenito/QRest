@@ -18,10 +18,10 @@ class EntityValidationException(QRestException):
 
 
 class InvalidInputException(QRestException):
-    def __init__(self, message: str):
+    def __init__(self, resource: str, message: str):
         super().__init__(message)
 
 
 class OperationFailedException(QRestException):
-    def __init__(self, message: str):
+    def __init__(self, resource: str, message: str):
         super().__init__(message)
