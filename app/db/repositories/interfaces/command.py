@@ -5,11 +5,11 @@ class ICommandRepository:
     def get_version(self, order: str, element: Element) -> int:
         pass
 
-    def add(self, order: str, element: Element, version: int) -> Element:
+    def add(self, order: str, element: Element, version: int):
         pass
 
     def update(self, order: str, element: Element, version: int) -> Element:
         pass
 
-    def remove(self, order: str, element: Element, version: int) -> Element:
+    def remove(self, order: str, element: Element, version: int):
         pass

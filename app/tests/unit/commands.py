@@ -1,11 +1,14 @@
-from datetime import datetime, timedelta
-
 import pytest
+from datetime import datetime, timedelta
 from fastapi import status
 from fastapi.testclient import TestClient
 
 from app.api.backend.command import router as command_router
 from app.api.backend.order import router as order_router
+from app import db
+
+db.configure_db(testing=True)
+
 
 simple_element = {
     "section": "bebidas",

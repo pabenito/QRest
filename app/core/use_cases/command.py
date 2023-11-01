@@ -9,10 +9,10 @@ from app.db.repositories.interfaces.command import ICommandRepository
 class CommandUseCases:
     def __init__(self, order_repository: IOrderRepository, command_repository: ICommandRepository):
         self.order_repository = order_repository
-        self.command_respository = command_repository
+        self.command_repository = command_repository
 
     def get(self, order: str) -> list[Element]:
-        return self.order_repository.get_attribute(order, "current_command", list[Element])
+        return self.order_repository.get_current_command(order)
 
     def confirm(self, order: str) -> Command:
         current_command = self.get(order)
