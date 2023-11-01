@@ -1,68 +1,20 @@
-from typing import Type, Any, Tuple
-
-from bson import ObjectId
-
-from app.core.entities.order import Order, OrderPost, Element, Command, ReceiptElement
-from app.core.exceptions.orders import OrderNotFoundException, OrderOperationFailedException
-from app.db.entities.order import VersionedOrder
-from app import db
-from app.db.repositories.interfaces.order import IOrderRepository
+from app.core.entities.order import OrderPost, Element, Command, ReceiptElement
 from app.core.exceptions.orders import OrderNotFoundException
+from app.core.exceptions.orders import OrderOperationFailedException
+from app.db.entities.order import VersionedOrder
+from app.db.repositories.interfaces.order import IOrderRepository
+from app.db.repositories.mongo_repositories import MongoRepository
 
 
-class MongoOrder:
-    @staticmethod
-    def _get_db():
-        return db.get_collection("order")
+class MongoOrder(MongoRepository):
+    def __init__(self):
+        super().__init__("order")
 
-    def insert_one(self, order) -> str:
-        result = self._get_db().insert_one(order)
-        return str(result.inserted_id)
+    def _exception_not_found(self, order_id: str) -> OrderNotFoundException:
+        return OrderNotFoundException(order_id)
 
-    def delete_one(self, order_id: str):
-        result = self._get_db().delete_one({"_id": ObjectId(order_id)})
-        if result.deleted_count != 1:
-            raise OrderNotFoundException(order_id)
-
-    def get_attribute(self, order_id: str, attribute: str):
-        result = self._get_db().find_one({"_id": ObjectId(order_id)}, {attribute: True})
-        if result is None:
-            raise OrderNotFoundException(order_id)
-        return result[attribute]
-
-    def set_attribute(self, order_id: str, attribute: str, value):
-        result = self._get_db().update_one({"_id": ObjectId(order_id)}, {"$set": {attribute: value}})
-        if result.matched_count <= 0:
-            raise OrderNotFoundException(order_id)
-        if result.modified_count <= 0:
-            raise OrderOperationFailedException(
-                f"Error setting attribute. Order with id {order_id} already has {attribute} value: {value}")
-
-    def unset_attribute(self, order_id: str, attribute: str):
-        result = self._get_db().update_one({"_id": ObjectId(order_id)}, {"$unset": {attribute: ""}})
-        if result.matched_count <= 0:
-            raise OrderNotFoundException(order_id)
-        if result.modified_count <= 0:
-            raise OrderOperationFailedException(
-                f"Error unsetting attribute. Order with id {order_id} does not have '{attribute}' attribute")
-
-    def push_attribute(self, order_id: str, attribute: str, value):
-        result = self._get_db().update_one({"_id": ObjectId(order_id)}, {"$push": {attribute: value}})
-        if result.matched_count <= 0:
-            raise OrderNotFoundException(order_id)
-        if result.modified_count <= 0:
-            raise OrderOperationFailedException(
-                f"Error pushing attribute. Order with id {order_id} attribute '{attribute}' with value: {value}")
-
-    def pop_attribute(self, order_id: str, attribute: str, last=True):
-        index = 1 if last else -1
-        result = self._get_db().update_one({"_id": ObjectId(order_id)}, {"$pop": {attribute: index}})
-        if result.matched_count <= 0:
-            raise OrderNotFoundException(order_id)
-        if result.modified_count <= 0:
-            position = "last" if last else "first"
-            raise OrderOperationFailedException(
-                f"Error popping attribute. Order with id {order_id} attribute '{attribute}' popping {position}")
+    def _exception_operation_failed(self, message: str) -> OrderOperationFailedException:
+        return OrderOperationFailedException(message)
 
 
 class MongoOrderRepository(IOrderRepository):
