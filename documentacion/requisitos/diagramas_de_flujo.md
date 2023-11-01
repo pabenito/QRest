@@ -282,10 +282,11 @@ flowchart LR
     end
     subgraph repositorio_pedido[Repositorio Pedido]
         _get_pedido[Get pedido]
-        get_atributo_pedido[Get atributo del pedido]
-        anadir_atributo_pedido[Añadir atributo al pedido]
-        eliminar_atributo_pedido[Eliminar atributo del pedido]
-        actualizar_atributo_pedido[Actualizar atributo del pedido]
+        get_comandas[Get comandas]
+        get_recibo[Get recibo]
+        anadir_comanda[Añadir comanda]
+        crear_recibo[Crear recibo]
+        eliminar_pedido[Eliminar pedido]
     end
     subgraph repositorio_elemento_pedido[Repositorio Elemento Pedido]
         _get_pedido[Get pedido]
@@ -296,11 +297,11 @@ flowchart LR
     get_carta --> _get_carta
     anadir_eliminar_elemento --> anadir_elemento_pedido & actualizar_elemento_pedido & eliminar_elemento_pedido
     get_pedido --> _get_pedido
-    confirmar_pedido --> get_atributo_pedido & eliminar_atributo_pedido & anadir_atributo_pedido
-    get_recibo_total --> get_atributo_pedido
-    get_recibo_individual --> get_atributo_pedido
-    generar_recibo --> get_atributo_pedido & anadir_atributo_pedido
-    confirmar_pago --> get_atributo_pedido & actualizar_atributo_pedido
+    confirmar_pedido --> _get_pedido & eliminar_pedido & anadir_comanda
+    get_recibo_total --> get_recibo
+    get_recibo_individual --> get_recibo
+    generar_recibo --> get_comandas & crear_recibo
+    confirmar_pago --> get_recibo & crear_recibo
 ```
 
 ### Carta
@@ -333,12 +334,11 @@ flowchart LR
     end
     subgraph repositorio_pedido[Repositorio Pedido]
         _get_pedido[Get pedido]
-        get_atributo_pedido[Get atributo del pedido]
-        anadir_atributo_pedido[Añadir atributo al pedido]
-        eliminar_atributo_pedido[Eliminar atributo del pedido]
+        anadir_comanda[Añadir comanda]
+        eliminar_pedido[Eliminar pedido]
     end
     get_pedido --> _get_pedido
-    confirmar_pedido --> get_atributo_pedido & eliminar_atributo_pedido & anadir_atributo_pedido
+    confirmar_pedido --> _get_pedido & eliminar_pedido & anadir_comanda
 ```
 
 ### Recibo
@@ -351,12 +351,12 @@ flowchart LR
         generar_recibo[Generar recibo]
     end
     subgraph repositorio_pedido[Repositorio Pedido]
-        get_atributo_pedido[Get atributo del pedido]
-        anadir_atributo_pedido[Añadir atributo al pedido]
+        get_comandas[Get comandas]
+        get_recibo[Get recibo]
+        crear_recibo[Crear recibo]
     end
-    get_recibo_total --> get_atributo_pedido
-    get_recibo_individual --> get_atributo_pedido
-    generar_recibo --> get_atributo_pedido & anadir_atributo_pedido
+    get_recibo_total & get_recibo_individual --> get_recibo
+    generar_recibo --> get_comandas & crear_recibo
 ```
 
 ### Pago
@@ -367,8 +367,8 @@ flowchart LR
         confirmar_pago[Confirmar pago]
     end
     subgraph repositorio_pedido[Repositorio Pedido]
-        get_atributo_pedido[Get atributo del pedido]
-        actualizar_atributo_pedido[Actualizar atributo del pedido]
+        get_recibo[Get recibo]
+        crear_recibo[Crear recibo]
     end
-    confirmar_pago --> get_atributo_pedido & actualizar_atributo_pedido
+    confirmar_pago --> get_recibo & crear_recibo
 ```
