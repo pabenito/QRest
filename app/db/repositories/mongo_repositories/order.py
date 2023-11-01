@@ -1,12 +1,20 @@
 from typing import Type, Any, Tuple
 
+from app.core.entities.order import Order, OrderPost
 from app.db import db
 from app.db.repositories.interfaces.order import IOrderRepository
 
 
 class MongoOrderRepository(IOrderRepository):
-    def __init__(self):
-        self.db = db["order"]
+    @staticmethod
+    def _get_db():
+        return db.get_collection("order")
+
+    def create(self, order: OrderPost) -> str:
+        pass
+
+    def delete(self, order: str) -> Order:
+        pass
 
     def get_attribute(self, order: str, attribute_name: str, attribute_type: Type[Any]) -> Tuple[int, Type[Any]]:
         pass

@@ -130,7 +130,7 @@ Este caso se intenta ver la comanda actual de un pedido que no existe. Devolvemo
 - _{id}_: "abc"
 
 #### Test en Python
-`test_get_current_command__when_order_does_not_exists__then_http_status_not_found()`
+`test_get_current_command__when_order_does_not_exists__then_http_status_404_not_found()`
 
 ### Caso 3: Obtener la comanda actual cuando no hay comanda actual
 
@@ -569,7 +569,7 @@ Este caso trata de añadir un elemento inválido a la comanda actual de un pedid
 - **Dado que** se crea un nuevo pedido con identificador _{id}_.
 - **Y** el elemento _{elemento}_ es inválido.
 - **Cuando** se solicita añadir _{elemento}_ al pedido con identificador _{id}_.
-- **Entonces** el sistema devuelve un HTTP Status 422 (Unprocessable Emtity).
+- **Entonces** el sistema devuelve un HTTP Status 422 (Unprocessable Entity).
 
 #### Ejemplos
 
@@ -586,21 +586,7 @@ Este caso trata de añadir un elemento inválido a la comanda actual de un pedid
 }
 ```
 
-##### El elemento no existe
-
-- _{id}_: "abc"
-- _{element}_:
-
-```json
-{
-    "section": "bebidas",
-    "element": "xyz",
-    "quantity": 1,
-    "clients": ["marcos"]
-}
-```
-
-##### Cantidad es menor o igual a cero
+##### Cantidad cero
 
 - _{id}_: "abc"
 - _{element}_:
@@ -617,3 +603,52 @@ Este caso trata de añadir un elemento inválido a la comanda actual de un pedid
 #### Test en Python
 
 `test_add_element__when_element_is_not_correct__then_http_status_422_unprocessable_entity()`
+
+### Caso 12: Añadir un elemento cuando el elemento no existe
+
+Este caso trata de añadir un elemento que no existe a la comanda actual de un pedido existente. Puede ser que la sección no exista o que el elemento dentro de la sección no exista
+
+- **Método**: Añadir elemento (`add_element`).
+- **Escenario**: El elemento no existe.
+- **Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el elemento _{elemento}_ no existe.
+- **Cuando** se solicita añadir _{elemento}_ al pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 404 (Not Found).
+
+#### Ejemplos
+
+##### Sección no existe
+
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+{
+    "section": "seccion que no existe",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": ["marcos"]
+}
+```
+
+##### Cantidad cero
+
+- _{id}_: "abc"
+- _{element}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "elemento que no existe",
+    "quantity": 0,
+    "clients": ["marcos"]
+}
+```
+
+#### Test en Python
+
+`test_add_element__when_element_does_not_exists__then_http_status_404_not_found()`

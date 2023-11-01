@@ -9,7 +9,7 @@ router.include_router(
 )
 
 router.include_router(
-    order.router,
-    prefix="/mesa/{order}/pedido",
+    command.router,
+    prefix="/mesa",
     tags=["orders"]
 )
