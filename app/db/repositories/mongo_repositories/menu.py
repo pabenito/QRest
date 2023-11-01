@@ -1,4 +1,4 @@
-from app.db import db
+from app import db
 from app.core.entities.menu import Section
 from app.db.repositories.interfaces.menu import IMenuRepository
 

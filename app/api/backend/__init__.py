@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from . import menu, command
+from . import menu, command, order
 
 router = APIRouter()
 
@@ -10,6 +10,10 @@ router.include_router(
 
 router.include_router(
     command.router,
-    prefix="/mesa",
-    tags=["orders"]
+    prefix="/mesa"
+)
+
+router.include_router(
+    order.router,
+    prefix="/mesa"
 )

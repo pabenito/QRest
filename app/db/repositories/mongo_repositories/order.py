@@ -1,7 +1,7 @@
 from typing import Type, Any, Tuple
 
 from app.core.entities.order import Order, OrderPost
-from app.db import db
+from app import db
 from app.db.repositories.interfaces.order import IOrderRepository
 
 
