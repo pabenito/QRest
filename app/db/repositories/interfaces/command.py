@@ -2,14 +2,14 @@ from app.core.entities.order import Element
 
 
 class ICommandRepository:
-    def get_version(self, order: str, element: Element) -> int:
+    def get_version(self, order_id: str, element: Element) -> int:
         pass
 
-    def add(self, order: str, element: Element, version: int):
+    def add(self, order_id: str, element: Element, version: int):
         pass
 
-    def update(self, order: str, element: Element, version: int) -> Element:
+    def update(self, order_id: str, element: Element, version: int) -> Element:
         pass
 
-    def remove(self, order: str, element: Element, version: int):
+    def remove(self, order_id: str, element: Element, version: int):
         pass
