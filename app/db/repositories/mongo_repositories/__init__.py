@@ -149,11 +149,19 @@ class MongoOCCRepository(IOCCRepository, BasicMongoRepository):
                 f"Error popping attribute. Order with id {id} attribute '{attribute}' popping {position}")
 
 
-class Repository(IOptionalOCCRepository, BasicMongoRepository):
-    def __init__(self, collection: str):
-        super().__init__(collection)
-        self.occ_repository = MongoOCCRepository(collection)
-        self.standard_repository = MongoStandardRepository(collection)
+class OptionalOCCRepository(IOptionalOCCRepository):
+    def __init__(self, standard_repository: MongoStandardRepository, occ_repository: IOCCRepository):
+        self.standard_repository = standard_repository
+        self.occ_repository = occ_repository
+
+    def exists(self, id: str):
+        return self.standard_repository.exists(id)
+
+    def insert_one(self, document) -> str:
+        return self.standard_repository.insert_one(document)
+
+    def delete_one(self, id: str):
+        return self.standard_repository.delete_one(id)
 
     def get_version(self, id: str) -> int:
         return self.occ_repository.get_version(id)

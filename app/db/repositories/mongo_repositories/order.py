@@ -1,25 +1,14 @@
 from app.core.entities.order import OrderPost, Element, Command, ReceiptElement
-from app.core.exceptions.orders import OrderNotFoundException
-from app.core.exceptions.orders import OrderOperationFailedException
 from app.db.entities.order import VersionedOrder
 from app.db.repositories.interfaces.order import IOrderRepository
-from app.db.repositories.mongo_repositories import MongoRepository
-
-
-class MongoOrder(MongoRepository):
-    def __init__(self):
-        super().__init__("order")
-
-    def _exception_not_found(self, order_id: str) -> OrderNotFoundException:
-        return OrderNotFoundException(order_id)
-
-    def _exception_operation_failed(self, message: str) -> OrderOperationFailedException:
-        return OrderOperationFailedException(message)
+from app.db.repositories.mongo_repositories import MongoStandardRepository, MongoOCCRepository, OptionalOCCRepository
 
 
 class MongoOrderRepository(IOrderRepository):
     def __init__(self):
-        self.repository = MongoOrder()
+        self.repository = OptionalOCCRepository(
+            standard_repository=MongoStandardRepository("order"),
+            occ_repository=MongoOCCRepository("order"))
 
     def create(self, order: OrderPost) -> str:
         new_order = VersionedOrder(**order.model_dump())
