@@ -19,20 +19,26 @@ class BasicMongoRepository(IBasicRepository):
     def _get_db(self):
         return db.get_collection(self.collection)
 
+    def create(self, document) -> str:
+        result = self._get_db().insert_one(document)
+        return str(result.inserted_id)
+
+    def delete(self, id: str):
+        result = self._get_db().delete_one({"_id": ObjectId(id)})
+        if result.deleted_count != 1:
+            raise self._exception_not_found(id)
+
+    def get(self, id: str):
+        result = self._get_db().find_one({"_id": ObjectId(id)})
+        if result is None:
+            raise self._exception_not_found(id)
+        return result
+
     def exists(self, id: str):
         result = self._get_db().find_one({"_id": ObjectId()}, {"_id": True})
         if result is None:
             return False
         return True
-
-    def insert_one(self, document) -> str:
-        result = self._get_db().insert_one(document)
-        return str(result.inserted_id)
-
-    def delete_one(self, id: str):
-        result = self._get_db().delete_one({"_id": ObjectId(id)})
-        if result.deleted_count != 1:
-            raise self._exception_not_found(id)
 
 
 class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
@@ -89,6 +95,8 @@ class MongoOCCRepository(IOCCRepository, BasicMongoRepository):
         return ConcurrencyCollisionException(self.collection, id, method, expected_version)
 
     def get_version(self, id: str) -> int:
+        if not self.exists(id):
+            raise self._exception_not_found(id)
         return self.get_attribute(id, "version")
 
     def get_attribute(self, id: str, attribute: str, version: int):
@@ -154,14 +162,17 @@ class OptionalOCCRepository(IOptionalOCCRepository):
         self.standard_repository = standard_repository
         self.occ_repository = occ_repository
 
+    def create(self, document) -> str:
+        return self.standard_repository.create(document)
+
+    def delete(self, id: str):
+        return self.standard_repository.delete(id)
+
+    def get(self, id: str):
+        return self.standard_repository.get(id)
+
     def exists(self, id: str):
         return self.standard_repository.exists(id)
-
-    def insert_one(self, document) -> str:
-        return self.standard_repository.insert_one(document)
-
-    def delete_one(self, id: str):
-        return self.standard_repository.delete_one(id)
 
     def get_version(self, id: str) -> int:
         return self.occ_repository.get_version(id)

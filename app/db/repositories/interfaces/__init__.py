@@ -1,19 +1,17 @@
 from typing import Optional
 
-from bson import ObjectId
-
-from app import db
-from app.core.exceptions import ResourceNotFoundException, OperationFailedException, ConcurrencyCollisionException
-
 
 class IBasicRepository:
+    def create(self, document) -> str:
+        pass
+
+    def delete(self, id: str):
+        pass
+
+    def get(self, id: str):
+        pass
+
     def exists(self, id: str):
-        pass
-
-    def insert_one(self, document) -> str:
-        pass
-
-    def delete_one(self, id: str):
         pass
 
 

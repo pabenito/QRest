@@ -12,10 +12,10 @@ class MongoOrderRepository(IOrderRepository):
 
     def create(self, order: OrderPost) -> str:
         new_order = VersionedOrder(**order.model_dump())
-        return self.repository.insert_one(new_order.model_dump())
+        return self.repository.create(new_order.model_dump())
 
     def delete(self, order_id: str):
-        self.repository.delete_one(order_id)
+        self.repository.delete(order_id)
 
     def get_version(self, order_id: str) -> int:
         return self.repository.get_attribute(order_id, "version")
