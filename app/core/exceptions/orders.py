@@ -28,3 +28,8 @@ class OrderInvalidInputException(InvalidInputException, OrderException):
 class OrderOperationFailedException(OperationFailedException, OrderException):
     def __init__(self, message: str):
         super().__init__(message)
+
+
+class OrderConcurrencyCollisionException(ConcurrencyCollisionException, OrderException):
+    def __init__(self, id: str, method: str, expected_version: int):
+        super().__init__("order", id, method, expected_version)
