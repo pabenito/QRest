@@ -4,16 +4,19 @@ from pymongo.client_session import ClientSession
 
 
 class IBasicRepository:
-    def create(self, document, session: Optional[ClientSession] = None) -> str:
-        pass
-
-    def delete(self, id: str, session: Optional[ClientSession] = None):
+    def get_all(self, session: Optional[ClientSession] = None):
         pass
 
     def get(self, id: str, session: Optional[ClientSession] = None):
         pass
 
     def exists(self, id: str, session: Optional[ClientSession] = None):
+        pass
+
+    def create(self, document, session: Optional[ClientSession] = None) -> str:
+        pass
+
+    def delete(self, id: str, session: Optional[ClientSession] = None):
         pass
 
 
@@ -39,5 +42,6 @@ class IStandardRepository(IBasicRepository):
     def has_attribute(self, id: str, attribute: str, session: Optional[ClientSession] = None) -> bool:
         pass
 
-    def has_element_in_list_attribute(self, id: str, attribute: str, match: dict, session: Optional[ClientSession] = None) -> bool:
+    def has_element_in_list_attribute(self, id: str, attribute: str, match: dict,
+                                      session: Optional[ClientSession] = None) -> bool:
         pass

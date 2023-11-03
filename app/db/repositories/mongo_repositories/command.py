@@ -51,15 +51,3 @@ class MongoCommandRepository(ICommandRepository):
 
     def remove(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
         pass
-
-    def exists(self, order_id: str, element: Element) -> bool:
-
-
-    def add(self, order_id: str, element: Element):
-        self.repository.push_attribute(order_id, "current_command", element)
-
-    def update(self, order_id: str, element: Element) -> Element:
-        self
-
-    def remove(self, order_id: str, element: Element):
-        self.repository.pop_attribute(order_id, "current_command", element)
