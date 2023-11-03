@@ -10,23 +10,20 @@ class IOrderRepository:
     def delete(self, order_id: str):
         pass
 
-    def get_version(self, order: str) -> int:
+    def get_current_command(self, order_id: str) -> list[Element]:
         pass
 
-    def get_current_command(self, order_id: str, version: Optional[int] = None) -> list[Element]:
+    def delete_current_command(self, order_id: str):
         pass
 
-    def delete_current_command(self, order_id: str, version: Optional[int] = None):
+    def get_commands(self, order_id: str) -> list[Command]:
         pass
 
-    def get_commands(self, order_id: str, version: Optional[int] = None) -> list[Command]:
+    def add_command(self, order_id: str, command: Command):
         pass
 
-    def add_command(self, order_id: str, command: Command, version: Optional[int] = None):
+    def get_receipt(self, order_id: str) -> list[ReceiptElement]:
         pass
 
-    def get_receipt(self, order_id: str, version: Optional[int] = None) -> list[ReceiptElement]:
-        pass
-
-    def set_receipt(self, order_id: str, receipt: list[ReceiptElement], version: Optional[int] = None):
+    def set_receipt(self, order_id: str, receipt: list[ReceiptElement]):
         pass
