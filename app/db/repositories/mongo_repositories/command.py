@@ -1,6 +1,7 @@
 from typing import Optional
 
 from bson import ObjectId
+from pymongo.client_session import ClientSession
 
 from app import db
 from app.core.exceptions import *
@@ -30,13 +31,29 @@ class MongoCommandRepository(ICommandRepository):
             elem_match_condition["ingredients"] = {"$all": [ingredient for ingredient in element.ingredients]}
         return elem_match_condition
 
-    def exists(self, order_id: str, element: Element) -> bool:
+    def get(self, order_id: str, element: Element, session: Optional[ClientSession] = None) -> Element:
+        pass
+
+    def exists(self, order_id: str, element: Element, session: Optional[ClientSession] = None) -> bool:
         result = self._get_db().find_one(
             {"_id": ObjectId(order_id), "current_command": {"$elemMatch": self._elem_match_condition(element)}},
-            {"current_command.$": True})
+            {"current_command.$": True},
+            session=session)
         if not result or 'current_command' not in result or len(result['current_command']) == 0:
             return False
         return True
+
+    def add(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
+        pass
+
+    def update(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
+        pass
+
+    def remove(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
+        pass
+
+    def exists(self, order_id: str, element: Element) -> bool:
+
 
     def add(self, order_id: str, element: Element):
         self.repository.push_attribute(order_id, "current_command", element)

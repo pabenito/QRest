@@ -35,3 +35,9 @@ class IStandardRepository(IBasicRepository):
 
     def get_from_list_attribute(self, id: str, attribute: str, match: dict, session: Optional[ClientSession] = None):
         pass
+
+    def has_attribute(self, id: str, attribute: str, session: Optional[ClientSession] = None) -> bool:
+        pass
+
+    def has_element_in_list_attribute(self, id: str, attribute: str, match: dict, session: Optional[ClientSession] = None) -> bool:
+        pass

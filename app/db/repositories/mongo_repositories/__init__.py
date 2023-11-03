@@ -1,10 +1,12 @@
-from typing import Optional
+from typing import Optional, Any, Dict
 from bson import ObjectId
+from pydantic import BaseModel
 from pymongo.client_session import ClientSession
 
 from app import db
-from app.db.repositories.interfaces import IBasicRepository, IStandardRepository, IOCCRepository, IOptionalOCCRepository
-from app.core.exceptions import ResourceNotFoundException, OperationFailedException, ConcurrencyCollisionException
+from app.db.repositories.interfaces import IBasicRepository, IStandardRepository
+from app.core.exceptions import DocumentNotFoundException, OperationFailedException, FieldNotFoundException, \
+    FieldAlreadyExistsException, FieldDoesNotMatchException
 
 
 class MongoTransactionManager:
@@ -28,11 +30,20 @@ class BasicMongoRepository(IBasicRepository):
     def __init__(self, collection: str):
         self.collection = collection
 
-    def _exception_not_found(self, id: str) -> ResourceNotFoundException:
-        return ResourceNotFoundException(self.collection, "id", id)
+    def _exception_document_not_found(self, id: str) -> DocumentNotFoundException:
+        return DocumentNotFoundException(self.collection, "id", id)
+    
+    def _exception_field_not_found(self, id: str, field: str) -> FieldNotFoundException:
+        return FieldNotFoundException(self.collection, "id", id, field)
 
-    def _exception_operation_failed(self, message: str) -> OperationFailedException:
-        return OperationFailedException(self.collection, message)
+    def _exception_field_does_not_match(self, id: str, field: str, value: str) -> FieldDoesNotMatchException:
+        return FieldDoesNotMatchException(self.collection, "id", id, field, value)
+
+    def _exception_field_already_exists(self, id: str, field: str) -> FieldAlreadyExistsException:
+        return FieldAlreadyExistsException(self.collection, "id", id, field)
+
+    def _exception_operation_failed(self, id: str, field: Optional[str]) -> OperationFailedException:
+        return OperationFailedException(self.collection, "id", id, field)
 
     def _get_db(self):
         return db.get_collection(self.collection)
@@ -46,14 +57,14 @@ class BasicMongoRepository(IBasicRepository):
             {"_id": ObjectId(id)},
             session=session)
         if result.deleted_count != 1:
-            raise self._exception_not_found(id)
+            raise self._exception_document_not_found(id)
 
     def get(self, id: str, session: Optional[ClientSession] = None):
         result = self._get_db().find_one(
             {"_id": ObjectId(id)},
             session=session)
         if result is None:
-            raise self._exception_not_found(id)
+            raise self._exception_document_not_found(id)
         return result
 
     def exists(self, id: str, session: Optional[ClientSession] = None):
@@ -69,6 +80,22 @@ class BasicMongoRepository(IBasicRepository):
 class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
     def __init__(self, collection: str):
         super().__init__(collection)
+        
+    def _generate_query_rec(self, value: Any) -> Any:
+        if isinstance(value, list):
+            return {"$all": [self._generate_query_rec(item) for item in value]}
+        elif isinstance(value, BaseModel):
+            return {k: self._generate_query_rec(v) for k, v in value.model_dump().items()}
+        elif isinstance(value, dict):
+            return {k: self._generate_query_rec(v) for k, v in value.items()}
+        else:
+            return value
+
+    def _generate_query(self, element: Any) -> Dict:
+        if isinstance(element, (BaseModel, dict)):
+            return {"$elemMatch": self._generate_query_rec(element)}
+        else:
+            return element
 
     def get_attribute(self, id: str, attribute: str, session: Optional[ClientSession] = None):
         result = self._get_db().find_one(
@@ -76,7 +103,9 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
             {attribute: True},
             session=session)
         if result is None:
-            raise self._exception_not_found(id)
+            raise self._exception_document_not_found(id)
+        if attribute not in result:
+            raise self._exception_field_not_found(id, attribute)
         return result[attribute]
 
     def set_attribute(self, id: str, attribute: str, value, session: Optional[ClientSession] = None):
@@ -85,10 +114,9 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
             {"$set": {attribute: value}},
             session=session)
         if result.matched_count <= 0:
-            raise self._exception_not_found(id)
+            raise self._exception_document_not_found(id)
         if result.modified_count <= 0:
-            raise self._exception_operation_failed(
-                f"Error setting attribute. Order with id {id} already has {attribute} value: {value}")
+            raise self._exception_field_already_exists(id, attribute)
 
     def unset_attribute(self, id: str, attribute: str, session: Optional[ClientSession] = None):
         result = self._get_db().update_one(
@@ -96,10 +124,9 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
             {"$unset": {attribute: ""}},
             session=session)
         if result.matched_count <= 0:
-            raise self._exception_not_found(id)
+            raise self._exception_document_not_found(id)
         if result.modified_count <= 0:
-            raise self._exception_operation_failed(
-                f"Error unsetting attribute. Order with id {id} does not have '{attribute}' attribute")
+            raise self._exception_field_not_found(id, attribute)
 
     def push_to_list_attribute(self, id: str, attribute: str, value, session: Optional[ClientSession] = None):
         result = self._get_db().update_one(
@@ -107,29 +134,42 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
             {"$push": {attribute: value}},
             session=session)
         if result.matched_count <= 0:
-            raise self._exception_not_found(id)
+            raise self._exception_document_not_found(id)
         if result.modified_count <= 0:
-            raise self._exception_operation_failed(
-                f"Error pushing attribute. Order with id {id} attribute '{attribute}' with value: {value}")
+            raise self._exception_operation_failed(id, attribute)
 
-    def pull_from_list_attribute(self, id: str, attribute: str, match: dict, session: Optional[ClientSession] = None):
+    def pull_from_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None):
         result = self._get_db().update_one(
             {"_id": ObjectId(id)},
-            {"$pull": {attribute: match}},
+            {"$pull": {attribute: self._generate_query(element)}},
             session=session)
         if result.matched_count <= 0:
-            raise self._exception_not_found(id)
+            raise self._exception_document_not_found(id)
         if result.modified_count <= 0:
-            raise self._exception_operation_failed(
-                f"Error pulling attribute. Order with id {id} attribute '{attribute}' pulling {match}")
+            raise self._exception_operation_failed(id, attribute)
 
-    def get_from_list_attribute(self, id: str, attribute: str, match: dict, session: Optional[ClientSession] = None):
+    def get_from_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None):
         result = self._get_db().find_one(
-            {"_id": ObjectId(id), attribute: {"$elemMatch": match}},
+            {"_id": ObjectId(id), attribute: self._generate_query(element)},
             {f"{attribute}.$": True},
             session=session)
         if not result:
-            raise self._exception_not_found(id)
-        if attribute not in result or len(result[attribute]) == 0:
-            raise self._exception_operation_failed(f"There is no element that match: {match}")
+            raise self._exception_document_not_found(id)
+        if attribute not in result or not result[attribute]:
+            raise self._exception_field_does_not_match(id, attribute, element)
         return result[attribute][0]
+
+    def has_attribute(self, id: str, attribute: str, session: Optional[ClientSession] = None) -> bool:
+        result = self._get_db().find_one({"_id": ObjectId(id), attribute: {"$exists": True}})
+        if not result:
+            return False
+        return True
+
+    def has_element_in_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None) -> bool:
+        result = self._get_db().find_one(
+            {"_id": ObjectId(id), attribute: self._generate_query(element)},
+            {f"{attribute}.$": True},
+            session=session)
+        if not result or attribute not in result or len(result[attribute]) == 0:
+            return False
+        return True
