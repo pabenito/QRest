@@ -7,43 +7,33 @@ from app import db
 from app.core.exceptions import *
 from app.core.entities.order import Element
 from app.db.repositories.interfaces.command import ICommandRepository
-from app.db.repositories.mongo_repositories import OptionalOCCRepository, MongoStandardRepository, MongoOCCRepository
+from app.db.repositories.mongo_repositories import MongoStandardRepository
+from app.db.exceptions import PersistenceExceptionFactory
 
 
 class MongoCommandRepository(ICommandRepository):
     def __init__(self):
-        self.repository = OptionalOCCRepository(
-            standard_repository=MongoStandardRepository("order"),
-            occ_repository=MongoOCCRepository("order"))
+        self.repository = MongoStandardRepository("order")
 
-    @staticmethod
-    def _get_db():
-        return db.get_collection("order")
-
-    @staticmethod
-    def _elem_match_condition(element: Element):
-        elem_match_condition = {"section": element.section, "element": element.element}
-        if element.variants is not None:
-            elem_match_condition["variants"] = {"$all": [variant.model_dump() for variant in element.variants]}
-        if element.extras is not None:
-            elem_match_condition["extras"] = {"$all": [extra for extra in element.extras]}
-        if element.ingredients is not None:
-            elem_match_condition["ingredients"] = {"$all": [ingredient for ingredient in element.ingredients]}
-        return elem_match_condition
+    def _element_match(self, element: Element) -> dict:
+        element_dict = element.model_dump()
+        if "quantity" in element_dict:
+            del element_dict["quantity"]
+        if "clients" in element_dict:
+            del element_dict["clients"]
+        return element_dict
 
     def get(self, order_id: str, element: Element, session: Optional[ClientSession] = None) -> Element:
         pass
 
     def exists(self, order_id: str, element: Element, session: Optional[ClientSession] = None) -> bool:
-        result = self._get_db().find_one(
-            {"_id": ObjectId(order_id), "current_command": {"$elemMatch": self._elem_match_condition(element)}},
-            {"current_command.$": True},
-            session=session)
-        if not result or 'current_command' not in result or len(result['current_command']) == 0:
-            return False
-        return True
+        return self.repository.has_element_in_list_attribute(
+            id=order_id,
+            attribute="current_command",
+            element=self._element_match(element), session=session)
 
-    def add(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
+
+def add(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
         pass
 
     def update(self, order_id: str, element: Element, session: Optional[ClientSession] = None):

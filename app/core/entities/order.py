@@ -11,7 +11,6 @@ class Variant(BaseModel):
 
 
 class Element(BaseModel):
-    version: Optional[int] = 0
     section: str
     element: str
     quantity: int
@@ -37,7 +36,6 @@ class OrderPost(BaseModel):
 
 class OrderNew(OrderPost):
     date: datetime = Field(default_factory=datetime.now)
-    version: int = 0
 
 
 class Order(OrderNew, Id):

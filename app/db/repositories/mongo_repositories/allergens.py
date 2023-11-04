@@ -11,9 +11,7 @@ from app.db.repositories.mongo_repositories import MongoStandardRepository
 
 class MongoAllergensRepository(IAllergensRepository):
     def __init__(self):
-        self.repository = MongoStandardRepository(
-            collection="allergens",
-            exception_factory=PersistenceExceptionFactory("allergens"))
+        self.repository = MongoStandardRepository("allergens")
 
     def get_all(self, session: Optional[ClientSession] = None) -> list[Allergen]:
         return list(self.repository.get_all_with_query_and_projection(id_projection=False))

@@ -4,9 +4,8 @@ from pydantic import BaseModel
 from pymongo.client_session import ClientSession
 
 from app import db
+from app.db.exceptions import PersistenceExceptionFactory
 from app.db.repositories.interfaces import IBasicRepository, IStandardRepository
-from app.core.exceptions import DocumentNotFoundException, OperationFailedException, FieldNotFoundException, \
-    FieldAlreadyExistsException, FieldDoesNotMatchException, PersistenceExceptionFactory
 
 
 class MongoTransactionManager:
@@ -79,9 +78,9 @@ class MongoQueryProjectionGenerator:
 
 
 class BasicMongoRepository(IBasicRepository):
-    def __init__(self, collection: str, exception_factory: PersistenceExceptionFactory):
+    def __init__(self, collection: str):
         self.collection = collection
-        self.exception_factory = exception_factory
+        self.exception_factory = PersistenceExceptionFactory(collection)
         self.generator = MongoQueryProjectionGenerator()
 
     def _get_db(self):
@@ -120,8 +119,8 @@ class BasicMongoRepository(IBasicRepository):
 
 
 class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
-    def __init__(self, collection: str, exception_factory: PersistenceExceptionFactory):
-        super().__init__(collection, exception_factory)
+    def __init__(self, collection: str):
+        super().__init__(collection)
 
     def get_all_with_query_and_projection(self,
                                           has_attribute: Optional[list[str]] = None,

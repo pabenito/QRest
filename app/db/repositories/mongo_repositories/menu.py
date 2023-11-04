@@ -11,9 +11,7 @@ from app.db.exceptions import PersistenceExceptionFactory
 
 class MongoMenuRepository(IMenuRepository):
     def __init__(self):
-        self.repository = MongoStandardRepository(
-            collection="menu",
-            exception_factory=PersistenceExceptionFactory("menu"))
+        self.repository = MongoStandardRepository("menu")
 
     def get_all_sections(self, session: Optional[ClientSession] = None) -> list[Section]:
         result = self.repository.get_all_with_query_and_projection(
