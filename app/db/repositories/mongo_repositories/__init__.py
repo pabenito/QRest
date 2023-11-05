@@ -179,10 +179,10 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
         if result.modified_count <= 0:
             raise self.exception_factory.field_not_found(id, attribute)
 
-    def push_to_list_attribute(self, id: str, attribute: str, value, session: Optional[ClientSession] = None):
+    def push_to_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None):
         result = self._get_db().update_one(
             self.generator.query(id),
-            {"$push": {attribute: value}},
+            {"$push": {attribute: element}},
             session=session)
         if result.matched_count <= 0:
             raise self.exception_factory.document_not_found(id)

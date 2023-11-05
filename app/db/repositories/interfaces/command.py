@@ -15,8 +15,5 @@ class ICommandRepository:
     def add(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
         pass
 
-    def update(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
-        pass
-
     def remove(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
         pass

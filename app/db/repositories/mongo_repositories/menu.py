@@ -7,6 +7,7 @@ from app.core.entities.menu import Section
 from app.db.repositories.interfaces.menu import IMenuRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
 from app.db.exceptions import PersistenceExceptionFactory
+from app.lib.utils import parse_object
 
 
 class MongoMenuRepository(IMenuRepository):
@@ -17,10 +18,12 @@ class MongoMenuRepository(IMenuRepository):
         result = self.repository.get_all_with_query_and_projection(
             does_not_have_attribute=["parent"],
             id_projection=False)
-        return list(result).sort("name")
+        section_list = list(result).sort("name")
+        return parse_object(section_list, list[Section])
 
     def get_all_subsections(self, session: Optional[ClientSession] = None) -> list[Section]:
         result = self.repository.get_all_with_query_and_projection(
             has_attribute=["parent"],
             id_projection=False)
-        return list(result).sort("name")
+        section_list = list(result).sort("name")
+        return parse_object(section_list, list[Section])
