@@ -5,33 +5,41 @@ class PersistenceException(Exception):
     pass
 
 
-class DocumentNotFoundException(PersistenceException):
+class NotFoundException(PersistenceException):
+    pass
+
+
+class AlreadyExistsException(PersistenceException):
+    pass
+
+
+class DocumentNotFoundException(NotFoundException):
     def __init__(self, document: str, key: str, value: str):
         super().__init__(f"There is no {document} with {key} {value}.")
 
 
-class FieldNotFoundException(PersistenceException):
+class FieldNotFoundException(NotFoundException):
     def __init__(self, document: str, key: str, value: str, field: str):
         super().__init__(f"The {document} with {key} {value}, does not have field {field}.")
 
 
-class FieldDoesNotMatchException(PersistenceException):
+class FieldDoesNotMatchException(NotFoundException):
     def __init__(self, document: str, key: str, value: str, field: str, field_value: str):
         super().__init__(f"The {document} with {key} {value}, does not have field {field} with value {field_value}.")
 
 
-class DocumentAlreadyExistsException(PersistenceException):
+class DocumentAlreadyExistsException(AlreadyExistsException):
     def __init__(self, resource: str, key: str, value: str):
         super().__init__(f"{resource} with {key} {value} already exists.")
 
 
-class FieldAlreadyExistsException(PersistenceException):
+class FieldAlreadyExistsException(AlreadyExistsException):
     def __init__(self, document: str, key: str, value: str, field: str):
         super().__init__(f"The {document} with {key} {value} already has field {field}.")
 
 
 class OperationFailedException(PersistenceException):
-    def __init__(self, document: str, key: str, value: str, field: Optional[str]):
+    def __init__(self, document: str, key: str, value: str, field: Optional[str] = None):
         message_append = f" with field {field}" if field else ""
         super().__init__(f"Unknown error. {document} with {key} {value}{message_append}.")
 
@@ -53,5 +61,5 @@ class PersistenceExceptionFactory:
     def field_already_exists(self, value: str, field: str) -> FieldAlreadyExistsException:
         return FieldAlreadyExistsException(self.collection, self.key, value, field)
 
-    def operation_failed(self, value: str, field: Optional[str]) -> OperationFailedException:
+    def operation_failed(self, value: str, field: Optional[str] = None) -> OperationFailedException:
         return OperationFailedException(self.collection, self.key, value, field)
