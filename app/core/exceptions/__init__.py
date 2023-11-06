@@ -1,8 +1,8 @@
-class EntityValidationException:
+class EntityValidationException(Exception):
     def __init__(self, resource: str, message: str):
         super().__init__(f"{resource} is not valid: {message}.")
 
 
-class InvalidInputException:
-    def __init__(self, resource: str, message: str):
+class InvalidInputException(Exception):
+    def __init__(self, message: str):
         super().__init__(message)
