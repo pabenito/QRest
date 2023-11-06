@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Optional
 
 from pymongo.client_session import ClientSession
@@ -11,7 +12,7 @@ from app.lib.utils import parse_object, json_lower_encoder
 
 class MongoOrderRepository(IOrderRepository):
     def __init__(self):
-        self.repository: IStandardRepository = MongoStandardRepository("order")
+        self.repository: IStandardRepository = MongoStandardRepository("orders")
         self.encoder = json_lower_encoder
         self.parse = parse_object
 
@@ -23,7 +24,8 @@ class MongoOrderRepository(IOrderRepository):
 
     def get_current_command(self, order_id: str, session: Optional[ClientSession] = None) -> list[Element]:
         result = self.repository.get_attribute(order_id, "current_command", session)
-        return self.parse(result, list[Element])
+        pprint(list(result))
+        return self.parse(list(result), list[Element])
 
     def delete_current_command(self, order_id: str, session: Optional[ClientSession] = None):
         return self.repository.unset_attribute(order_id, "current_command", session)

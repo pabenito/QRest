@@ -8,5 +8,5 @@ use_cases = AllergensUseCases(MongoAllergensRepository())
 
 
 @router.get("/", response_model=dict)
-def get():
+def get() -> dict:
     return use_cases.get_allergens_dict()

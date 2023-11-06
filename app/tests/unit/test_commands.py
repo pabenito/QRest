@@ -50,7 +50,7 @@ def order_id(order_api):
     response = order_api.post("/", json={})
     if response.status_code != status.HTTP_201_CREATED:
         raise Exception(f"Error en la creación del pedido, código de estado: {response.status_code}")
-    order_id: str = response.text
+    order_id: str = response.text.replace('"', '')
     yield order_id
     response = order_api.delete(f"/{order_id}")
     if response.status_code != status.HTTP_200_OK:
@@ -58,7 +58,7 @@ def order_id(order_api):
 
 
 def _put_element(command_api: TestClient, order_id: str, element: dict):
-    return command_api.put(f"{order_id}/pedido/elements", json=element)
+    return command_api.put(f"{order_id}/pedido/elementos", json=element)
 
 
 def _get_current_command(command_api: TestClient, order_id: str):

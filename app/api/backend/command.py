@@ -9,25 +9,24 @@ router = APIRouter()
 use_cases = CommandUseCases(order_repository=MongoOrderRepository(), command_repository=MongoCommandRepository())
 
 
-@router.get("/{order_id}/pedido",
+@router.get("/{id}/pedido",
             response_model=list[Element],
             response_model_exclude_unset=True,
             response_model_by_alias=False)
-def get(order_id: str):
-    return use_cases.get(order_id)
+def get(id: str) -> list[Element]:
+    return use_cases.get(id)
 
 
-@router.post("/{order_id}/pedido/confirmar",
-             response_model=Command,
+@router.post("/{id}/pedido/confirmar",
              response_model_exclude_unset=True,
              response_model_by_alias=False)
-def confirm(order_id: str):
-    return use_cases.confirm(order_id)
+def confirm(id: str):
+    use_cases.confirm(id)
 
 
-@router.put("/{order_id}/pedido/elementos",
+@router.put("/{id}/pedido/elementos",
             response_model=Element,
             response_model_exclude_unset=True,
             response_model_by_alias=False)
-def update_element(order_id: str, element: Element):
-    return use_cases.update_element(order_id, element)
+def update_element(id: str, element: Element) -> Element:
+    return use_cases.update_element(id, element)

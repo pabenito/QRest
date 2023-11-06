@@ -8,11 +8,11 @@ router = APIRouter()
 use_cases = OrderUseCases(MongoOrderRepository())
 
 
-@router.post("/")
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create(order: OrderPost) -> str:
     return use_cases.create(order)
 
 
-@router.delete("/{order_id}")
-def delete(order_id: str) -> Order:
-    return use_cases.delete(order_id)
+@router.delete("/{id}")
+def delete(id: str):
+    use_cases.delete(id)

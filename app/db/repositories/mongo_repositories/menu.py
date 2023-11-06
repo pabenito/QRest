@@ -1,20 +1,17 @@
-from pprint import pprint
 from typing import Optional
 
 from pymongo.client_session import ClientSession
 
-from app import db
 from app.core.entities.menu import Section
 from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.menu import IMenuRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
-from app.db.exceptions import PersistenceExceptionFactory
 from app.lib.utils import parse_object
 
 
 class MongoMenuRepository(IMenuRepository):
     def __init__(self):
-        self.repository = MongoStandardRepository("menu")
+        self.repository: IStandardRepository = MongoStandardRepository("menu")
 
     def get_all_sections(self, session: Optional[ClientSession] = None) -> list[Section]:
         result = self.repository.get_all_with_query_and_projection(

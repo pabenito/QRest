@@ -15,7 +15,7 @@ from app.lib.utils import json_lower_encoder, parse_object
 
 class MongoCommandRepository(ICommandRepository):
     def __init__(self):
-        self.repository: IStandardRepository = MongoStandardRepository("order")
+        self.repository: IStandardRepository = MongoStandardRepository("orders")
         self.encoder = json_lower_encoder
         self.parse = parse_object
 
