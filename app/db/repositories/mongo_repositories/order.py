@@ -3,7 +3,7 @@ from typing import Optional
 from pymongo.client_session import ClientSession
 
 from app.core.entities.order import OrderPost, Element, Command, ReceiptElement
-from app.db.entities.order import VersionedOrder
+from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
 from app.lib.utils import parse_object, json_lower_encoder
@@ -11,7 +11,7 @@ from app.lib.utils import parse_object, json_lower_encoder
 
 class MongoOrderRepository(IOrderRepository):
     def __init__(self):
-        self.repository = MongoStandardRepository("order")
+        self.repository: IStandardRepository = MongoStandardRepository("order")
         self.encoder = json_lower_encoder
         self.parse = parse_object
 

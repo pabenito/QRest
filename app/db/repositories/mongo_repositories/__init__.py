@@ -128,7 +128,7 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
                                           include_projection_attribute: Optional[list[str]] = None,
                                           exclude_projection_attribute: Optional[list[str]] = None,
                                           id_projection: Optional[bool] = None,
-                                          session: Optional[ClientSession] = None):
+                                          session: Optional[ClientSession] = None) -> Any:
         result = self._get_db().find(
             self.generator.query(has_attribute=has_attribute, does_not_have_attribute=does_not_have_attribute),
             self.generator.projection(id_projection, include_projection_attribute, exclude_projection_attribute),
@@ -141,14 +141,14 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
                                       include_projection_attribute: Optional[list[str]] = None,
                                       exclude_projection_attribute: Optional[list[str]] = None,
                                       id_projection: Optional[bool] = None,
-                                      session: Optional[ClientSession] = None):
+                                      session: Optional[ClientSession] = None) -> Any:
         result = self._get_db().find_one(
             self.generator.query(id, has_attribute, does_not_have_attribute),
             self.generator.projection(id_projection, include_projection_attribute, exclude_projection_attribute),
             session=session)
         return result
 
-    def get_attribute(self, id: str, attribute: str, session: Optional[ClientSession] = None):
+    def get_attribute(self, id: str, attribute: str, session: Optional[ClientSession] = None) -> Any:
         result = self._get_db().find_one(
             self.generator.query(id),
             self.generator.projection(include_projection_attribute=[attribute]),
@@ -199,7 +199,7 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
         if result.modified_count <= 0:
             raise self.exception_factory.operation_failed(id, attribute)
 
-    def get_from_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None):
+    def get_from_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None) -> Any:
         result = self._get_db().find_one(
             {"_id": ObjectId(id), attribute: self.generator.element_match(element)},
             {f"{attribute}.$": True},
@@ -216,8 +216,7 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
             return False
         return True
 
-    def has_element_in_list_attribute(self, id: str, attribute: str, element,
-                                      session: Optional[ClientSession] = None) -> bool:
+    def has_element_in_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None) -> bool:
         result = self._get_db().find_one(
             {"_id": ObjectId(id), attribute: self.generator.element_match(element)},
             {f"{attribute}.$": True},

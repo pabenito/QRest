@@ -6,6 +6,7 @@ from pymongo.client_session import ClientSession
 from app import db
 from app.core.exceptions import *
 from app.core.entities.order import Element
+from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.command import ICommandRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
 from app.db.exceptions import PersistenceExceptionFactory
@@ -14,7 +15,7 @@ from app.lib.utils import json_lower_encoder, parse_object
 
 class MongoCommandRepository(ICommandRepository):
     def __init__(self):
-        self.repository = MongoStandardRepository("order")
+        self.repository: IStandardRepository = MongoStandardRepository("order")
         self.encoder = json_lower_encoder
         self.parse = parse_object
 
