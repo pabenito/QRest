@@ -5,7 +5,7 @@ from app.db.repositories.interfaces.allergens import IAllergensRepository
 def _allergens_as_dict(allergens: list[Allergen]):
     allergens_dict = dict()
     for allergen in allergens:
-        allergens_dict.update({allergen["name"]: allergen["icon"]})
+        allergens_dict.update({allergen.name: allergen.icon})
     return allergens_dict
 
 

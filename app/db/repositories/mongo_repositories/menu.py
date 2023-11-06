@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Optional
 
 from pymongo.client_session import ClientSession
@@ -13,18 +14,18 @@ from app.lib.utils import parse_object
 
 class MongoMenuRepository(IMenuRepository):
     def __init__(self):
-        self.repository: IStandardRepository = MongoStandardRepository("menu")
+        self.repository = MongoStandardRepository("menu")
 
     def get_all_sections(self, session: Optional[ClientSession] = None) -> list[Section]:
         result = self.repository.get_all_with_query_and_projection(
             does_not_have_attribute=["parent"],
             id_projection=False)
-        section_list = list(result).sort("name")
-        return parse_object(section_list, list[Section])
+        section_list = list(result.sort("name"))
+        return parse_object(list(section_list), list[Section])
 
     def get_all_subsections(self, session: Optional[ClientSession] = None) -> list[Section]:
         result = self.repository.get_all_with_query_and_projection(
             has_attribute=["parent"],
             id_projection=False)
-        section_list = list(result).sort("name")
+        section_list = list(result.sort("name"))
         return parse_object(section_list, list[Section])

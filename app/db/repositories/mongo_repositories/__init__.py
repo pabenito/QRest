@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Optional, Any, Dict
 from bson import ObjectId
 from pydantic import BaseModel
@@ -45,7 +46,7 @@ class MongoQueryProjectionGenerator:
     @staticmethod
     def query(id: Optional[str] = None,
               has_attribute: Optional[list[str]] = None,
-              does_not_have_attribute: Optional[list[str]] = None):
+              does_not_have_attribute: Optional[list[str]] = None) -> dict:
         query = dict()
         if id:
             query["_id"] = ObjectId(id)
@@ -60,10 +61,14 @@ class MongoQueryProjectionGenerator:
     @staticmethod
     def projection(id: Optional[bool] = None,
                    include_projection_attribute: Optional[list[str]] = None,
-                   exclude_projection_attribute: Optional[list[str]] = None):
+                   exclude_projection_attribute: Optional[list[str]] = None) -> dict:
         projection = dict()
         if include_projection_attribute and exclude_projection_attribute:
             raise Exception("Forbidden include and exclude projection at the same time.")
+        if include_projection_attribute is None:
+            include_projection_attribute = []
+        if exclude_projection_attribute is None:
+            exclude_projection_attribute = []
         if id is True:
             include_projection_attribute.append("_id")
         elif id is False:
@@ -118,7 +123,7 @@ class BasicMongoRepository(IBasicRepository):
             raise self.exception_factory.document_not_found(id)
 
 
-class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
+class MongoStandardRepository(BasicMongoRepository, IStandardRepository):
     def __init__(self, collection: str):
         super().__init__(collection)
 
@@ -131,7 +136,7 @@ class MongoStandardRepository(IStandardRepository, BasicMongoRepository):
                                           session: Optional[ClientSession] = None) -> Any:
         result = self._get_db().find(
             self.generator.query(has_attribute=has_attribute, does_not_have_attribute=does_not_have_attribute),
-            self.generator.projection(id_projection, include_projection_attribute, exclude_projection_attribute),
+            self.generator.projection(id=id_projection, include_projection_attribute=include_projection_attribute, exclude_projection_attribute=exclude_projection_attribute),
             session=session)
         return result
 

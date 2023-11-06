@@ -38,7 +38,8 @@ class IStandardRepository(IBasicRepository):
         pass
 
     @abstractmethod
-    def get_with_query_and_projection(self, id: str,
+    def get_with_query_and_projection(self,
+                                      id: str,
                                       has_attribute: Optional[List[str]] = None,
                                       does_not_have_attribute: Optional[List[str]] = None,
                                       include_projection_attribute: Optional[List[str]] = None,

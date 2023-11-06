@@ -1,16 +1,21 @@
+from pprint import pprint
+
 from app.core.entities.menu import Section
 from app.db.repositories.interfaces.menu import IMenuRepository
 
 
-def _sort_menu(sections, subsections):
-    sections_with_subsections = {section["name"]: [] for section in sections}
+def _sort_menu(sections: list[Section], subsections: list[Section]):
+    print(f"Section type: {type(sections)}.\nSections:\n")
+    pprint(sections)
+    print(f"Subsections type: {type(subsections)}.\nSubsections:\n")
+    pprint(subsections)
+    sections_with_subsections = {section.name: [] for section in sections}
     for subsection in subsections:
-        parent_section = subsection["parent"]
-        sections_with_subsections[parent_section].append(subsection)
+        sections_with_subsections[subsection.parent].append(subsection)
     ordered_menu = []
     for section in sections:
         ordered_menu.append(section)
-        ordered_menu.extend(sections_with_subsections[section["name"]])
+        ordered_menu.extend(sections_with_subsections[section.name])
     return ordered_menu
 
 
