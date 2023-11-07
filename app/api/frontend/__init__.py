@@ -3,4 +3,4 @@ from . import menu
 
 router = APIRouter()
 
-router.include_router(menu.router )
+router.include_router(menu.router)

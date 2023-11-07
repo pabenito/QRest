@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>QRest | Carta</title>
-    <link rel="icon" href="/static/img/icon.png" type="image/icon type" />
+    <link rel="icon" href="{{ url_for('static', path='/img/icon.png') }}" type="image/icon type" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
@@ -16,11 +16,11 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" type="text/css" href="/static/css/body.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/bulma.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/form.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/font.css" />
-    <script src="/static/js/bulmajs-0.10.4/bulma.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/body.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/font.css') }}" />
+    <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
     <script
       src="https://code.jquery.com/jquery-3.6.3.min.js"
       integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -64,16 +64,19 @@
 
     <main>
       <div class="containter p-2">
-        
+{% for element in command %}
+    {% set element_index = loop.index %}
+    {% set element_id = "element" ~ element_index %}
+    {% set element_quantity_id = "quantity_" ~ element_id %}
         <div
-          id="element"
+          id="{{ element_id }}"
           class="columns is-multiline m-0 is-mobile is-vcentered"
         >
           <div class="column is-narrow">
             <figure class="image image is-96x96">
               <img
                 class="has-rounded-border"
-                src="https://bulma.io/images/placeholders/96x96.png"
+                src="{{ element.image }}"
               />
             </figure>
           </div>
@@ -81,22 +84,32 @@
             <p
               class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered"
             >
-              Patatas bravas
+              {{ element.element }}
             </p>
             <div
               class="columns is-multiline m-0 is-mobile is-vcentered is-centered"
             >
+    {% if element.variants is defined %}
               <div class="column is-narrow">
-                <p class="subtitle is-size-5 m-0 is-unbreakable">Ración</p>
+        {% for variant in element.variants %}
+                <p class="subtitle is-size-5 m-0 is-unbreakable">{{ variant.value }}</p>
+        {% endfor %}
               </div>
+    {% endif %}
+    {% if element.extras is defined %}
               <div class="column is-narrow">
-                <p class="subtitle is-size-5 m-0 is-unbreakable">+Beicon</p>
-                <p class="subtitle is-size-5 m-0 is-unbreakable">+Alioli</p>
+        {% for extra in element.extras %}
+                <p class="subtitle is-size-5 m-0 is-unbreakable">+{{ extra }}</p>
+        {% endfor %}
               </div>
+    {% endif %}
+    {% if element.ingredients is defined %}
               <div class="column is-narrow">
-                <p class="subtitle is-size-5 m-0 is-unbreakable">-Patatas</p>
-                <p class="subtitle is-size-5 m-0 is-unbreakable">-Queso</p>
+        {% for ingredient in element.ingredients %}
+                <p class="subtitle is-size-5 m-0 is-unbreakable">-{{ ingredient }}</p>
+        {% endfor %}
               </div>
+    {% endif %}
             </div>
           </div>
           <div class="column column is-narrow">
@@ -105,8 +118,8 @@
                 <button
                   class="button is-danger"
                   onclick="decrementValue(event, remove=true)"
-                  to="cantidadSeccion"
-                  remove="element"
+                  to="{{ element_quantity_id }}"
+                  remove="{{ element_id }}"
                 >
                   <span class="icon">
                     <i class="fas fa-minus"></i>
@@ -115,11 +128,11 @@
               </div>
               <div class="control">
                 <input
-                  id="cantidadSeccion"
+                  id="{{ element_quantity_id }}"
                   class="input"
                   type="number"
                   min="0"
-                  value="0"
+                  value="{{ element.quantity }}"
                   readonly
                 />
               </div>
@@ -127,7 +140,7 @@
                 <button
                   class="button is-success"
                   onclick="incrementValue(event)"
-                  to="cantidadSeccion"
+                  to="{{ element_quantity_id }}"
                 >
                   <span class="icon">
                     <i class="fas fa-plus"></i>
@@ -137,14 +150,15 @@
             </div>
           </div>
         </div>
-
+    {% if not loop.last %}
         <hr class="m-2" />
-
+    {% endif %}
+{% endfor %}
       </div>
     </main>
   </body>
-  <script src="/static/js/counter.js"></script>
-  <script src="/static/js/scroll.js"></script>
-  <script src="/static/js/modal.js"></script>
-  <script src="/static/js/sections.js"></script>
+  <script src="{{ url_for('static', path='/js/counter.js') }}"></script>
+  <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
+  <script src="{{ url_for('static', path='/js/modal.js') }}"></script>
+  <script src="{{ url_for('static', path='/js/sections.js') }}"></script>
 </html>
