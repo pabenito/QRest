@@ -23,7 +23,7 @@ class MongoCommandRepository(ICommandRepository):
         result = self.repository.get_from_list_attribute(
             id=order_id,
             attribute="current_command",
-            element=element,
+            element=self.encoder(element),
             session=session)
         return self.parse(result, Element)
 
@@ -31,7 +31,7 @@ class MongoCommandRepository(ICommandRepository):
         return self.repository.has_element_in_list_attribute(
             id=order_id,
             attribute="current_command",
-            element=element,
+            element=self.encoder(element),
             session=session)
 
     def add(self, order_id: str, element: Element, session: Optional[ClientSession] = None):
@@ -45,5 +45,5 @@ class MongoCommandRepository(ICommandRepository):
         self.repository.pull_from_list_attribute(
             id=order_id,
             attribute="current_command",
-            element=element,
+            element=self.encoder(element),
             session=session)

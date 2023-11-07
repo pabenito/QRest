@@ -5,6 +5,7 @@ from pydantic import ValidationError
 
 from app import db
 from app.api import backend, frontend
+from app.core.exceptions import InvalidInputException
 from app.db.exceptions import AlreadyExistsException, NotFoundException, OperationFailedException
 
 app = FastAPI()
@@ -55,7 +56,6 @@ async def db_already_exists_exception_handler(request: Request, exc: AlreadyExis
     )
 
 
-'''
 @app.exception_handler(OperationFailedException)
 async def db_operation_failed_exception_handler(request: Request, exc: OperationFailedException):
     return JSONResponse(
@@ -64,4 +64,13 @@ async def db_operation_failed_exception_handler(request: Request, exc: Operation
             "error": OperationFailedException.__name__,
             "message": str(exc)},
     )
-'''
+
+
+@app.exception_handler(InvalidInputException)
+async def invalid_input_exception_handler(request: Request, exc: InvalidInputException):
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={
+            "error": InvalidInputException.__name__,
+            "message": str(exc)},
+    )

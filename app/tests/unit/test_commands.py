@@ -3,9 +3,10 @@ from datetime import datetime, timedelta
 from fastapi import status
 from fastapi.testclient import TestClient
 
-from app.api.backend.command import router as command_router
-from app.api.backend.order import router as order_router
+from app import app
 from app import db
+
+base_url = "/backend/mesa"
 
 db.configure_db(testing=True)
 
@@ -34,39 +35,33 @@ complex_element = {
 
 
 @pytest.fixture(scope="module")
-def command_api():
-    with TestClient(command_router) as client:
-        yield client
-
-
-@pytest.fixture(scope="module")
-def order_api():
-    with TestClient(order_router) as client:
+def api():
+    with TestClient(app) as client:
         yield client
 
 
 @pytest.fixture(scope="function")
-def order_id(order_api):
-    response = order_api.post("/", json={})
+def order_id(api):
+    response = api.post(base_url + "/", json={})
     if response.status_code != status.HTTP_201_CREATED:
         raise Exception(f"Error en la creación del pedido, código de estado: {response.status_code}")
     order_id: str = response.text.replace('"', '')
     yield order_id
-    response = order_api.delete(f"/{order_id}")
+    response = api.delete(base_url + f"/{order_id}")
     if response.status_code != status.HTTP_200_OK:
         raise Exception(f"rror en la eliminación del pedido {order_id}, código de estado: {response.status_code}")
 
 
-def _put_element(command_api: TestClient, order_id: str, element: dict):
-    return command_api.put(f"{order_id}/pedido/elementos", json=element)
+def _put_element(api: TestClient, order_id: str, element: dict):
+    return api.put(base_url + f"/{order_id}/pedido/elementos", json=element)
 
 
-def _get_current_command(command_api: TestClient, order_id: str):
-    return command_api.get(f"/{order_id}/pedido")
+def _get_current_command(api: TestClient, order_id: str):
+    return api.get(base_url + f"/{order_id}/pedido")
 
 
-def _confirm_command(command_api: TestClient, order_id: str):
-    return command_api.post(f"{order_id}/pedido/confirmar")
+def _confirm_command(api: TestClient, order_id: str):
+    return api.post(base_url + f"/{order_id}/pedido/confirmar")
 
 
 def _close_datetime(d1: datetime, d2: datetime) -> bool:
@@ -74,58 +69,58 @@ def _close_datetime(d1: datetime, d2: datetime) -> bool:
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_get_current_command__when_current_command_exists__then_return_current_command(command_api, order_id, element):
-    response = _put_element(command_api, order_id, element)
-    assert response.status_code == status.HTTP_200_OK
-    response = _get_current_command(command_api, order_id)
-    assert response.status_code == status.HTTP_200_OK
+def test_get_current_command__when_current_command_exists__then_return_current_command(api, order_id, element):
+    response = _put_element(api, order_id, element)
+    assert response.status_code == status.HTTP_200_OK, response.text
+    response = _get_current_command(api, order_id)
+    assert response.status_code == status.HTTP_200_OK, response.text
     assert response.json() == [element]
 
 
-def test_get_current_command__when_order_does_not_exists__then_http_status_404_not_found(command_api):
-    response = _get_current_command(command_api, "012345678901234567890123")
-    assert response.status_code == status.HTTP_404_NOT_FOUND
+def test_get_current_command__when_order_does_not_exists__then_http_status_404_not_found(api):
+    response = _get_current_command(api, "012345678901234567890123")
+    assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
 
-def test_get_current_command__when_current_command_does_not_exists__then_return_empty_list(command_api, order_id):
-    response = _get_current_command(command_api, order_id)
-    assert response.status_code == status.HTTP_200_OK
+def test_get_current_command__when_current_command_does_not_exists__then_return_empty_list(api, order_id):
+    response = _get_current_command(api, order_id)
+    assert response.status_code == status.HTTP_200_OK, response.text
     assert response.json() == []
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_confirm_current_command__when_command_exists__then_return_command(command_api, order_id, element):
-    response = _put_element(command_api, order_id, element)
-    assert response.status_code == status.HTTP_200_OK
-    response = _confirm_command(command_api, order_id)
-    assert response.status_code == status.HTTP_200_OK
+def test_confirm_current_command__when_command_exists__then_return_command(api, order_id, element):
+    response = _put_element(api, order_id, element)
+    assert response.status_code == status.HTTP_200_OK, response.text
+    response = _confirm_command(api, order_id)
+    assert response.status_code == status.HTTP_200_OK, response.text
     assert _close_datetime(response.json()["timestamp"], datetime.now())
     assert response.json()["elements"] == [element]
 
 
-def test_confirm_current_command__when_order_does_not_exists__then_http_status_404_not_found(command_api):
-    response = _confirm_command(command_api, "012345678901234567890123")
-    assert response.status_code == status.HTTP_404_NOT_FOUND
+def test_confirm_current_command__when_order_does_not_exists__then_http_status_404_not_found(api):
+    response = _confirm_command(api, "012345678901234567890123")
+    assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
 
-def test_confirm_current_command__when_current_command_does_not_exists__then_http_status_400_bad_request(command_api, order_id):
-    response = _confirm_command(command_api, order_id)
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
+def test_confirm_current_command__when_current_command_does_not_exists__then_http_status_400_bad_request(api, order_id):
+    response = _confirm_command(api, order_id)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST, response.text
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_add_element__when_element_is_correct_and_element_is_new_and_element_quantity_is_grater_than_zero__then_added_to_the_order_and_return_new_element(command_api, order_id, element):
-    response = _put_element(command_api, order_id, element)
-    assert response.status_code == status.HTTP_200_OK
+def test_add_element__when_element_is_correct_and_element_is_new_and_element_quantity_is_grater_than_zero__then_added_to_the_order_and_return_new_element(api, order_id, element):
+    response = _put_element(api, order_id, element)
+    assert response.status_code == status.HTTP_200_OK, response.text
     assert response.json() == [element]
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_grater_than_zero__then_element_quantity_is_updated_to_the_sum_of_them_and_return_updated_element(command_api, order_id, element):
-    response = _put_element(command_api, order_id, element)
-    assert response.status_code == status.HTTP_200_OK
-    response = _put_element(command_api, order_id, element)
-    assert response.status_code == status.HTTP_200_OK
+def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_grater_than_zero__then_element_quantity_is_updated_to_the_sum_of_them_and_return_updated_element(api, order_id, element):
+    response = _put_element(api, order_id, element)
+    assert response.status_code == status.HTTP_200_OK, response.text
+    response = _put_element(api, order_id, element)
+    assert response.status_code == status.HTTP_200_OK, response.text
     assert response.json()["quantity"] == element["quantity"] + element["quantity"]
     assert response.json()["clients"] == element["clients"] + element["clients"]
 
@@ -135,19 +130,19 @@ def test_add_element__when_element_is_correct_and_element_is_already_exists_and_
     (simple_element, -1),
     (complex_element, 0),
     (complex_element, -1)])
-def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_less_or_equals_to_zero__then_http_status_400_bad_request(command_api, order_id, element, quantity):
-    response = _put_element(command_api, order_id, element)
-    assert response.status_code == status.HTTP_200_OK
+def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_less_or_equals_to_zero__then_http_status_400_bad_request(api, order_id, element, quantity):
+    response = _put_element(api, order_id, element)
+    assert response.status_code == status.HTTP_200_OK, response.text
     over_remove_element = element.copy()
     over_remove_element["quantity"] = element["quantity"] - quantity
-    response = _put_element(command_api, order_id, over_remove_element)
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    response = _put_element(api, order_id, over_remove_element)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST, response.text
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_add_element__when_order_does_not_exists__then_http_status_404_not_found(command_api, element):
-    response = _put_element(command_api, "012345678901234567890123", element)
-    assert response.status_code == status.HTTP_404_NOT_FOUND
+def test_add_element__when_order_does_not_exists__then_http_status_404_not_found(api, element):
+    response = _put_element(api, "012345678901234567890123", element)
+    assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
 
 @pytest.mark.parametrize("element", [
@@ -186,9 +181,9 @@ def test_add_element__when_order_does_not_exists__then_http_status_404_not_found
         "clients": ["marcos"]
     },
 ])
-def test_add_element__when_element_is_not_correct__then_http_status_422_unprocessable_entity(command_api, order_id, element):
-    response = _put_element(command_api, order_id, element)
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+def test_add_element__when_element_is_not_correct__then_http_status_422_unprocessable_entity(api, order_id, element):
+    response = _put_element(api, order_id, element)
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY, response.text
 
 
 @pytest.mark.parametrize("element", [
@@ -205,6 +200,6 @@ def test_add_element__when_element_is_not_correct__then_http_status_422_unproces
         "clients": ["marcos"]
     },
 ])
-def test_add_element__when_element_does_not_exists__then_http_status_404_not_found(command_api, order_id, element):
-    response = _put_element(command_api, order_id, element)
-    assert response.status_code == status.HTTP_404_NOT_FOUND
+def test_add_element__when_element_does_not_exists__then_http_status_404_not_found(api, order_id, element):
+    response = _put_element(api, order_id, element)
+    assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
