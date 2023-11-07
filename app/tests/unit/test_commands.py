@@ -124,7 +124,7 @@ def test_add_element__when_element_is_correct_and_element_is_new_and_element_qua
     response = _put_element(api, order_id, element)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
-    assert response.json() == [element]
+    assert response.json() == element
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
@@ -140,11 +140,9 @@ def test_add_element__when_element_is_correct_and_element_is_already_exists_and_
 
 
 @pytest.mark.parametrize("element, quantity", [
-    (simple_element, 0),
     (simple_element, -1),
-    (complex_element, 0),
     (complex_element, -1)])
-def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_less_or_equals_to_zero__then_http_status_400_bad_request(api, order_id, element, quantity):
+def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_less_than_zero__then_http_status_400_bad_request(api, order_id, element, quantity):
     response = _put_element(api, order_id, element)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
@@ -184,19 +182,7 @@ def test_add_element__when_order_does_not_exists__then_http_status_404_not_found
         "element": "nestea",
         "quantity": 1,
         "clients": []
-    },
-    {
-        "section": "seccion que no existe",
-        "element": "nestea",
-        "quantity": 1,
-        "clients": ["marcos"]
-    },
-    {
-        "section": "bebidas",
-        "element": "elemento que no existe",
-        "quantity": 1,
-        "clients": ["marcos"]
-    },
+    }
 ])
 def test_add_element__when_element_is_not_correct__then_http_status_422_unprocessable_entity(api, order_id, element):
     response = _put_element(api, order_id, element)

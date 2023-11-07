@@ -2,6 +2,7 @@ from typing import Optional
 from pymongo.client_session import ClientSession
 
 from app.core.entities.order import OrderPost, Element, Command, ReceiptElement
+from app.db.exceptions import FieldNotFoundException
 from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
@@ -27,7 +28,10 @@ class MongoOrderRepository(IOrderRepository):
         return self.repository.has_attribute(order_id, "current_command", session)
 
     def get_current_command(self, order_id: str, session: Optional[ClientSession] = None) -> list[Element]:
-        result = self.repository.get_attribute(order_id, "current_command", session)
+        try:
+            result = self.repository.get_attribute(order_id, "current_command", session)
+        except FieldNotFoundException:
+            return []
         return self.parse(list(result), list[Element])
 
     def delete_current_command(self, order_id: str, session: Optional[ClientSession] = None):

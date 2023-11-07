@@ -19,12 +19,7 @@ class CommandUseCases:
         self.persistence_exception_factory = PersistenceExceptionFactory("order")
 
     def get(self, order_id: str) -> list[Element]:
-        with self.transaction_manager() as session:
-            if not self.order_repository.exists(order_id, session):
-                raise self.persistence_exception_factory.document_not_found(order_id)
-            if not self.order_repository.has_current_command(order_id, session):
-                return []
-            return self.order_repository.get_current_command(order_id, session)
+        return self.order_repository.get_current_command(order_id)
 
     def confirm(self, order_id: str):
         with self.transaction_manager() as session:
