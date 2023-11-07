@@ -4,6 +4,7 @@ from datetime import datetime
 from pymongo.client_session import ClientSession
 
 from app.core.entities.order import Command, Element, BasicElement
+from app.db.exceptions import PersistenceExceptionFactory
 from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.interfaces.command import ICommandRepository
 from app.db.repositories.mongo_repositories import MongoTransactionManager
@@ -15,9 +16,15 @@ class CommandUseCases:
         self.order_repository = order_repository
         self.command_repository = command_repository
         self.transaction_manager = MongoTransactionManager
+        self.persistence_exception_factory = PersistenceExceptionFactory("order")
 
     def get(self, order_id: str) -> list[Element]:
-        return self.order_repository.get_current_command(order_id)
+        with self.transaction_manager() as session:
+            if not self.order_repository.exists(order_id, session):
+                raise self.persistence_exception_factory.document_not_found(order_id)
+            if not self.order_repository.has_current_command(order_id, session):
+                return []
+            return self.order_repository.get_current_command(order_id, session)
 
     def confirm(self, order_id: str):
         with self.transaction_manager() as session:

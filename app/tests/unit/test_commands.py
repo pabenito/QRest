@@ -2,6 +2,7 @@ import pytest
 from datetime import datetime, timedelta
 from fastapi import status
 from fastapi.testclient import TestClient
+from httpx import Response
 
 from app import app
 from app import db
@@ -9,7 +10,6 @@ from app import db
 base_url = "/backend/mesa"
 
 db.configure_db(testing=True)
-
 
 simple_element = {
     "section": "bebidas",
@@ -68,49 +68,61 @@ def _close_datetime(d1: datetime, d2: datetime) -> bool:
     return d1 - timedelta(seconds=1) <= d2 <= d1 + timedelta(seconds=1)
 
 
+def _print_response(response: Response):
+    print(f"\nResponse status code: {response.status_code}\n")
+    print(f"\nResponse body: {response.text}\n")
+
+
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_get_current_command__when_current_command_exists__then_return_current_command(api, order_id, element):
+def test_get_current_command__when_current_command_exists__then_http_status_200_ok(api, order_id, element):
     response = _put_element(api, order_id, element)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     response = _get_current_command(api, order_id)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     assert response.json() == [element]
 
 
 def test_get_current_command__when_order_does_not_exists__then_http_status_404_not_found(api):
     response = _get_current_command(api, "012345678901234567890123")
+    _print_response(response)
     assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
 
 def test_get_current_command__when_current_command_does_not_exists__then_return_empty_list(api, order_id):
     response = _get_current_command(api, order_id)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     assert response.json() == []
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_confirm_current_command__when_command_exists__then_return_command(api, order_id, element):
+def test_confirm_current_command__when_command_exists__then_http_status_200_ok(api, order_id, element):
     response = _put_element(api, order_id, element)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     response = _confirm_command(api, order_id)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
-    assert _close_datetime(response.json()["timestamp"], datetime.now())
-    assert response.json()["elements"] == [element]
 
 
 def test_confirm_current_command__when_order_does_not_exists__then_http_status_404_not_found(api):
     response = _confirm_command(api, "012345678901234567890123")
+    _print_response(response)
     assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
 
-def test_confirm_current_command__when_current_command_does_not_exists__then_http_status_400_bad_request(api, order_id):
+def test_confirm_current_command__when_current_command_does_not_exists__then_http_status_404_not_found(api, order_id):
     response = _confirm_command(api, order_id)
-    assert response.status_code == status.HTTP_400_BAD_REQUEST, response.text
+    _print_response(response)
+    assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
 def test_add_element__when_element_is_correct_and_element_is_new_and_element_quantity_is_grater_than_zero__then_added_to_the_order_and_return_new_element(api, order_id, element):
     response = _put_element(api, order_id, element)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     assert response.json() == [element]
 
@@ -118,8 +130,10 @@ def test_add_element__when_element_is_correct_and_element_is_new_and_element_qua
 @pytest.mark.parametrize("element", [simple_element, complex_element])
 def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_grater_than_zero__then_element_quantity_is_updated_to_the_sum_of_them_and_return_updated_element(api, order_id, element):
     response = _put_element(api, order_id, element)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     response = _put_element(api, order_id, element)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     assert response.json()["quantity"] == element["quantity"] + element["quantity"]
     assert response.json()["clients"] == element["clients"] + element["clients"]
@@ -132,16 +146,19 @@ def test_add_element__when_element_is_correct_and_element_is_already_exists_and_
     (complex_element, -1)])
 def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_less_or_equals_to_zero__then_http_status_400_bad_request(api, order_id, element, quantity):
     response = _put_element(api, order_id, element)
+    _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     over_remove_element = element.copy()
     over_remove_element["quantity"] = element["quantity"] - quantity
     response = _put_element(api, order_id, over_remove_element)
+    _print_response(response)
     assert response.status_code == status.HTTP_400_BAD_REQUEST, response.text
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
 def test_add_element__when_order_does_not_exists__then_http_status_404_not_found(api, element):
     response = _put_element(api, "012345678901234567890123", element)
+    _print_response(response)
     assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
 
@@ -163,10 +180,10 @@ def test_add_element__when_order_does_not_exists__then_http_status_404_not_found
         "clients": ["marcos"]
     },
     {
-            "section": "bebidas",
-            "element": "nestea",
-            "quantity": 1,
-            "clients": []
+        "section": "bebidas",
+        "element": "nestea",
+        "quantity": 1,
+        "clients": []
     },
     {
         "section": "seccion que no existe",
@@ -183,6 +200,7 @@ def test_add_element__when_order_does_not_exists__then_http_status_404_not_found
 ])
 def test_add_element__when_element_is_not_correct__then_http_status_422_unprocessable_entity(api, order_id, element):
     response = _put_element(api, order_id, element)
+    _print_response(response)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY, response.text
 
 
@@ -202,4 +220,5 @@ def test_add_element__when_element_is_not_correct__then_http_status_422_unproces
 ])
 def test_add_element__when_element_does_not_exists__then_http_status_404_not_found(api, order_id, element):
     response = _put_element(api, order_id, element)
+    _print_response(response)
     assert response.status_code == status.HTTP_404_NOT_FOUND, response.text

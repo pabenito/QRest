@@ -1,6 +1,4 @@
-from pprint import pprint
 from typing import Optional
-
 from pymongo.client_session import ClientSession
 
 from app.core.entities.order import OrderPost, Element, Command, ReceiptElement
@@ -22,9 +20,14 @@ class MongoOrderRepository(IOrderRepository):
     def delete(self, order_id: str, session: Optional[ClientSession] = None):
         self.repository.delete(order_id, session)
 
+    def exists(self, order_id: str, session: Optional[ClientSession] = None) -> bool:
+        return self.repository.exists(order_id, session)
+
+    def has_current_command(self, order_id: str, session: Optional[ClientSession] = None) -> bool:
+        return self.repository.has_attribute(order_id, "current_command", session)
+
     def get_current_command(self, order_id: str, session: Optional[ClientSession] = None) -> list[Element]:
         result = self.repository.get_attribute(order_id, "current_command", session)
-        pprint(list(result))
         return self.parse(list(result), list[Element])
 
     def delete_current_command(self, order_id: str, session: Optional[ClientSession] = None):

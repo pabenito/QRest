@@ -15,6 +15,14 @@ class IOrderRepository(ABC):
         pass
 
     @abstractmethod
+    def exists(self, order_id: str, session: Optional[ClientSession] = None) -> bool:
+        pass
+
+    @abstractmethod
+    def has_current_command(self, order_id: str, session: Optional[ClientSession] = None) -> bool:
+        pass
+
+    @abstractmethod
     def get_current_command(self, order_id: str, session: Optional[ClientSession] = None) -> list[Element]:
         pass
 
