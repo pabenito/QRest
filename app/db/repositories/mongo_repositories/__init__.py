@@ -30,15 +30,13 @@ class MongoQueryProjectionGenerator:
     def element_match_rec(self, value: Any) -> Any:
         if isinstance(value, list):
             return {"$all": [self.element_match_rec(item) for item in value]}
-        elif isinstance(value, BaseModel):
-            return {k: self.element_match_rec(v) for k, v in value.model_dump().items()}
         elif isinstance(value, dict):
             return {k: self.element_match_rec(v) for k, v in value.items()}
         else:
             return value
 
     def element_match(self, element: Any) -> Dict:
-        if isinstance(element, (BaseModel, dict)):
+        if isinstance(element, dict):
             return {"$elemMatch": self.element_match_rec(element)}
         else:
             return element
@@ -197,7 +195,7 @@ class MongoStandardRepository(BasicMongoRepository, IStandardRepository):
     def pull_from_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None):
         result = self._get_db().update_one(
             self.generator.query(id),
-            {"$pull": {attribute: self.generator.element_match(element)}},
+            {"$pull": {attribute: element}},
             session=session)
         if result.matched_count <= 0:
             raise self.exception_factory.document_not_found(id)

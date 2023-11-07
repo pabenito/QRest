@@ -10,14 +10,17 @@ class Variant(BaseModel):
     value: str
 
 
-class Element(BaseModel):
+class BasicElement(BaseModel):
     section: str
     element: str
-    quantity: int
-    clients: list[str]
     variants: Optional[list[Variant]] = None
     extras: Optional[list[str]] = None
     ingredients: Optional[list[str]] = None
+
+
+class Element(BasicElement):
+    quantity: int
+    clients: list[str]
 
 
 class ReceiptElement(Element):

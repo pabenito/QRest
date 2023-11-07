@@ -55,11 +55,13 @@ async def db_already_exists_exception_handler(request: Request, exc: AlreadyExis
     )
 
 
+'''
 @app.exception_handler(OperationFailedException)
-async def db_already_exists_exception_handler(request: Request, exc: OperationFailedException):
+async def db_operation_failed_exception_handler(request: Request, exc: OperationFailedException):
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST,
         content={
             "error": OperationFailedException.__name__,
             "message": str(exc)},
     )
+'''

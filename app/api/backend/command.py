@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 
-from app.core.entities.order import Element, Command
+from app.core.entities.order import Element
 from app.core.use_cases.command import CommandUseCases
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
