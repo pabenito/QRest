@@ -5,10 +5,6 @@ from app.db.repositories.interfaces.menu import IMenuRepository
 
 
 def _sort_menu(sections: list[Section], subsections: list[Section]):
-    print(f"Section type: {type(sections)}.\nSections:\n")
-    pprint(sections)
-    print(f"Subsections type: {type(subsections)}.\nSubsections:\n")
-    pprint(subsections)
     sections_with_subsections = {section.name: [] for section in sections}
     for subsection in subsections:
         sections_with_subsections[subsection.parent].append(subsection)

@@ -55,7 +55,7 @@
           </a>
         </div>
         <div class="column is-full p-0 pt-2">
-          <a class="button is-fullwidth" href="/prototipos/pedido.html">
+          <a class="button is-fullwidth" href="/mesa/{{ order_id }}/carta">
             <p class="is-size-5">Volver a la carta</p>
           </a>
         </div>
@@ -64,7 +64,7 @@
 
     <main>
       <div class="containter p-2">
-{% for element in command %}
+{% for element in elements %}
     {% set element_index = loop.index %}
     {% set element_id = "element" ~ element_index %}
     {% set element_quantity_id = "quantity_" ~ element_id %}
@@ -76,7 +76,7 @@
             <figure class="image image is-96x96">
               <img
                 class="has-rounded-border"
-                src="{{ element.image }}"
+                src="{{ element.image if element.image is defined else 'https://bulma.io/images/placeholders/96x96.png' }}"
               />
             </figure>
           </div>

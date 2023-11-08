@@ -35,6 +35,19 @@
     </div>
   </nav>
 
+  <nav class="navbar is-fixed-bottom is-transparent is-block">
+    <div class="columns is-multiline p-5">
+      <div class="column is-full p-0">
+        <a
+          class="button is-fullwidth is-black"
+          href="/mesa/{{ order_id }}/pedido"
+        >
+          <p class="is-size-5">Pedir</p>
+        </a>
+      </div>
+    </div>
+  </nav>
+
   <main>
 {% for section in sections %}
   {% if not section.visible is defined%}

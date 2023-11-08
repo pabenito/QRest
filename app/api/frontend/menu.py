@@ -1,12 +1,9 @@
-from dotenv import dotenv_values
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.testclient import TestClient
 
-from app.api.backend.allergens import router as allergens_client
-from app.api.backend.menu import router as menu_client
+from app.api.frontend.services.menu import MenuFrontend
 
 # Create router
 router = APIRouter()
@@ -14,17 +11,13 @@ router = APIRouter()
 # Load templates directory
 templates = Jinja2Templates(directory="templates")
 
-# API
-menu = TestClient(menu_client)
-allergens = TestClient(allergens_client)
-
-# Config
-config = dotenv_values("config.env")
+menu_frontend = MenuFrontend()
 
 
-@router.get("/", response_class=HTMLResponse)
-def get(request: Request):
+@router.get("/mesa/{id}/carta", response_class=HTMLResponse)
+def get(request: Request, id: str):
     return templates.TemplateResponse("menu.html.j2", {
         "request": request,
-        "sections": menu.get("/").json(),
-        "allergens": allergens.get("/").json()})
+        "sections": menu_frontend.encode(menu_frontend.get_sections()),
+        "allergens": menu_frontend.encode(menu_frontend.get_allergens_dict()),
+        "order_id": id})
