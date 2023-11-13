@@ -144,7 +144,7 @@
               </button>
             </div>
             <div class="control">
-              <input id="{{ element_id ~ '_quantity_input' }}" class="input" type="number" min="0" value="0" readonly>
+              <input id="{{ element_id ~ '_quantity_input' }}" class="input" type="number" min="0" value="{{ element.quantity if element.quantity is defined else 0 }}" readonly>
             </div>
             <div class="control">
               <button class="button is-success" onclick="incrementValue(event)" to="{{ element_id ~ '_quantity_input' }}">
@@ -354,7 +354,7 @@
               </div>
             </div>
             <div class="column">
-              <button type="button" class="button is-fullwidth is-success" onclick="{{ element_id ~ '_add_modal' }}.close()">Aceptar</button>
+              <button type="button" class="button is-fullwidth is-success" onclick="{{ element_id ~ '_add_modal' }}.close(); hide(event); show(event); addTo(event)" show="{{ element_id ~ '_counter' }}" hide="{{ element_id ~ '_add_btn' }}" add_from="{{ element_id ~ '_add_modal_quantity_input' }}" add_to="{{ element_id ~ '_quantity_input' }}">Aceptar</button>
             </div>
           </div>
         </div>

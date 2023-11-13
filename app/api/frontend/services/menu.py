@@ -56,6 +56,7 @@ class MenuFrontend:
             if element.section not in extended_elements_dict:
                 extended_elements_dict[element.section] = {}
             if element.element not in extended_elements_dict[element.section]:
+                extended_elements_dict[element.section][element.element] = {}
                 extended_elements_dict[element.section][element.element]["quantity"] = 0
                 extended_elements_dict[element.section][element.element]["clients"] = []
             extended_elements_dict[element.section][element.element]["quantity"] += element.quantity
@@ -64,11 +65,12 @@ class MenuFrontend:
         for section in sections:
             extended_section = ExtendedSection(name=section.name, visible=section.visible, parent=section.parent)
             extended_section.elements = []
-            for element in section.elements:
-                extended_element = ExtendedElement(**self.encode(element))
-                if section.name in extended_elements_dict and element.name in extended_elements_dict[section.name]:
-                    extended_element.quantity = extended_elements_dict[element.section][element.element]["quantity"]
-                    extended_element.clients = extended_elements_dict[element.section][element.element]["clients"]
-                extended_section.elements.append(extended_element)
+            if section.elements:
+                for element in section.elements:
+                    extended_element = ExtendedElement(**self.encode(element))
+                    if section.name in extended_elements_dict and element.name in extended_elements_dict[section.name]:
+                        extended_element.quantity = extended_elements_dict[section.name][element.name]["quantity"]
+                        extended_element.clients = extended_elements_dict[section.name][element.name]["clients"]
+                    extended_section.elements.append(extended_element)
             extended_sections.append(extended_section)
         return extended_sections

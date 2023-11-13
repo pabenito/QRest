@@ -5,11 +5,15 @@ function show(event) {
 
     let showElement = document.getElementById(showId);
     showElement.classList.remove("is-hidden");
+}
 
-    // Automatically increase the value to 1 upon showing the counter
-    let targetInput = buttonElement.getAttribute('to');
-    let inputElement = document.getElementById(targetInput);
-    inputElement.value = 1;
+function set(event) {
+    event.preventDefault();
+    let element = event.currentTarget;
+    let toId = element.getAttribute('set_to');
+    let value = element.getAttribute('set_value');
+    let toElement = document.getElementById(toId);
+    toElement.value = value
 }
 
 function hide(event) {
@@ -64,4 +68,18 @@ function incrementValue(event) {
     let inputValue = Number(inputElement.value);
 
     inputElement.value = inputValue + 1;
+}
+
+function addTo(event) {
+    event.preventDefault();
+    let buttonElement = event.currentTarget;
+    let fromInput = buttonElement.getAttribute('add_from');
+    let toInput = buttonElement.getAttribute('add_to');
+
+    let fromElement = document.getElementById(fromInput);
+    let fromValue = Number(fromElement.value);
+    let toElement = document.getElementById(toInput);
+    let toValue = Number(toElement.value);
+
+    toElement.value = toValue + fromValue;
 }

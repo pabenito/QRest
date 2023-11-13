@@ -1,6 +1,6 @@
 from collections import Counter
 
-from app import InvalidInputException
+from app.core.exceptions import InvalidInputException
 from app.core.entities.order import Element, BasicElement
 
 

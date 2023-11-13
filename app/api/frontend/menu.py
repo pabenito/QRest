@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi.responses import HTMLResponse
@@ -16,6 +18,8 @@ menu_frontend = MenuFrontend()
 
 @router.get("/mesa/{id}/carta", response_class=HTMLResponse)
 def get(request: Request, id: str):
+    print("Extended sections:\n")
+    pprint(menu_frontend.encode(menu_frontend.get_extended_sections(id)))
     return templates.TemplateResponse("menu.html.j2", {
         "request": request,
         "sections": menu_frontend.encode(menu_frontend.get_extended_sections(id)),
