@@ -1,6 +1,9 @@
 from typing import Any
 
+from app.api.frontend.entities.menu import ExtendedSection, ExtendedElement
 from app.core.entities.allergens import Allergen
+from app.core.entities.menu import Section
+from app.core.entities.order import Element
 from app.core.use_cases.command import CommandUseCases
 from app.core.use_cases.menu import MenuUseCases
 from app.core.use_cases.allergens import AllergensUseCases
@@ -23,21 +26,49 @@ class MenuFrontend:
     def encode(object: Any) -> dict:
         return json_lower_encoder(object)
 
-    def get_sections(self):
+    def get_sections(self) -> list[Section]:
         return self.menu_use_cases.get_menu()
 
-    def get_current_command(self, order_id: str):
+    def get_current_command(self, order_id: str) -> list[Element]:
         return self.command_use_cases.get(order_id)
 
-    def get_allergens(self):
+    def get_allergens(self) -> list[Allergen]:
         return self.allergens_use_cases.get_allergens()
 
-    def get_allergens_dict(self):
+    def get_allergens_dict(self) -> dict:
         return self._allergens_as_dict(self.get_allergens())
 
+    def get_extended_sections(self, order_id: str) -> list[ExtendedSection]:
+        sections = self.get_sections()
+        current_command = self.get_current_command(order_id)
+        return self.generate_extended_sections(sections, current_command)
+
     @staticmethod
-    def _allergens_as_dict(allergens: list[Allergen]):
+    def _allergens_as_dict(allergens: list[Allergen]) -> dict:
         allergens_dict = dict()
         for allergen in allergens:
             allergens_dict.update({allergen.name: allergen.icon})
         return allergens_dict
+
+    def generate_extended_sections(self, sections: list[Section], command: list[Element]) -> list[ExtendedSection]:
+        extended_elements_dict = {}
+        for element in command:
+            if element.section not in extended_elements_dict:
+                extended_elements_dict[element.section] = {}
+            if element.element not in extended_elements_dict[element.section]:
+                extended_elements_dict[element.section][element.element]["quantity"] = 0
+                extended_elements_dict[element.section][element.element]["clients"] = []
+            extended_elements_dict[element.section][element.element]["quantity"] += element.quantity
+            extended_elements_dict[element.section][element.element]["clients"].extend(element.clients)
+        extended_sections = []
+        for section in sections:
+            extended_section = ExtendedSection(name=section.name, visible=section.visible, parent=section.parent)
+            extended_section.elements = []
+            for element in section.elements:
+                extended_element = ExtendedElement(**self.encode(element))
+                if section.name in extended_elements_dict and element.name in extended_elements_dict[section.name]:
+                    extended_element.quantity = extended_elements_dict[element.section][element.element]["quantity"]
+                    extended_element.clients = extended_elements_dict[element.section][element.element]["clients"]
+                extended_section.elements.append(extended_element)
+            extended_sections.append(extended_section)
+        return extended_sections

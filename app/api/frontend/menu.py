@@ -18,6 +18,6 @@ menu_frontend = MenuFrontend()
 def get(request: Request, id: str):
     return templates.TemplateResponse("menu.html.j2", {
         "request": request,
-        "sections": menu_frontend.encode(menu_frontend.get_sections()),
+        "sections": menu_frontend.encode(menu_frontend.get_extended_sections(id)),
         "allergens": menu_frontend.encode(menu_frontend.get_allergens_dict()),
         "order_id": id})
