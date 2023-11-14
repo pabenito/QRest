@@ -1,9 +1,7 @@
 fastapi
-uvicorn
-gunicorn
 python-dotenv
 pymongo
 pydantic
 pytest
 httpx
-jinja2
+starlette
