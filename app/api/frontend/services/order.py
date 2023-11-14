@@ -23,13 +23,13 @@ class OrderFrontend:
     def encode(object: Any) -> dict:
         return json_lower_encoder(object)
 
-    def get_sections(self):
+    def get_sections(self) -> list[Section]:
         return self.menu_use_cases.get_menu()
 
-    def get_current_command(self, order_id: str):
+    def get_current_command(self, order_id: str) -> list[Element]:
         return self.command_use_cases.get(order_id)
 
-    def get_current_command_elements_with_images(self, order_id: str):
+    def get_current_command_elements_with_images(self, order_id: str) -> list[ElementWithImage]:
         sections = self.get_sections()
         current_command = self.get_current_command(order_id)
         return self.add_image_to_elements(sections, current_command)
