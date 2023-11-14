@@ -129,6 +129,7 @@
               <div class="control">
                 <input
                   id="{{ element_quantity_id }}"
+                  json="{}"
                   class="input"
                   type="number"
                   min="0"
@@ -157,8 +158,14 @@
       </div>
     </main>
   </body>
+  <script>
+      var group = "{{ order_id }}";
+      var client = "{{ client }}";
+      var elements = {{ elements|tojson|safe }};
+  </script>
   <script src="{{ url_for('static', path='/js/counter.js') }}"></script>
   <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
   <script src="{{ url_for('static', path='/js/modal.js') }}"></script>
   <script src="{{ url_for('static', path='/js/sections.js') }}"></script>
+  <script src="{{ url_for('static', path='/js/websocket_menu.js') }}"></script>
 </html>
