@@ -1,4 +1,4 @@
-uvifunction show(event) {
+function show(event) {
     event.preventDefault();
     let buttonElement = event.currentTarget;
     let showId = buttonElement.getAttribute('show');
