@@ -49,12 +49,12 @@
     </nav>
     
   <main>
-    <section id="section1" title="Sección 1" class="p-3 has-background-light">
-      <p class="title is-size-5">Sección 1</p>
+    <section id="section1" title="Pizzas" class="p-3 has-background-light">
+      <p class="title is-size-5">Pizzas</p>
     </section>
 
     <div class="containter p-2">
-      <div class="columns m-0 is-mobile is-vcentered">
+      <div class="columns m-0 is-mobile is-vcentered is-multiline" onclick="showHide('pizzaMargaritaOrder')">
         <div class="column is-narrow">
           <figure class="image is-96x96">
             <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
@@ -66,13 +66,13 @@
               <span class="icon">
                 <img src="/static/img/tags/vegan.svg" />
               </span>
-              <span class="is-size-7 is-capitalized ml-1">vegan</span>
+              <span class="is-size-7 is-capitalized ml-1">Vegetarian</span>
             </span>
           </div>
-          <p class="title is-size-5 m-0">Plato</p>
+          <p class="title is-size-5 m-0">Margarita</p>
           <p class="subtitle is-size-5 m-0">10€</p>
         </div>
-        <div class="column is-narrow">
+        <div class="column is-narrow ml-auto">
           <button id="addElementComplex" class="button" onclick="modalAdd.open()">
             <span class="icon">
               <i class="fas fa-square-plus"></i>
@@ -99,16 +99,78 @@
           </div>
         </div>
       </div>
+      <div id="pizzaMargaritaOrder" class="container">
+        <hr class="my-0 mx-6" />
+        <div
+            id="orderElement1"
+            class="columns is-multiline m-0 is-mobile is-vcentered"
+          >
+            <div class="column">
+              <div
+                class="columns is-multiline m-0 is-mobile is-vcentered is-centered"
+              >
+                <div class="column is-narrow">
+                  <p class="subtitle is-size-5 m-0 is-unbreakable">Familiar</p>
+                </div>
+                <div class="column is-narrow">
+                  <p class="subtitle is-size-5 m-0 is-unbreakable">+Mozarella</p>
+                  <p class="subtitle is-size-5 m-0 is-unbreakable">+Champiñones</p>
+                </div>
+                <div class="column is-narrow">
+                  <p class="subtitle is-size-5 m-0 is-unbreakable">-Albahaca</p>
+                  <p class="subtitle is-size-5 m-0 is-unbreakable">-Tomate</p>
+                </div>
+              </div>
+            </div>
+            <div class="column column is-narrow">
+              <div class="field has-addons">
+                <div class="control">
+                  <button
+                    class="button is-danger"
+                    onclick="decrementValue(event, remove=true)"
+                    to="cantidadSeccion"
+                    remove="orderElement1"
+                  >
+                    <span class="icon">
+                      <i class="fas fa-minus"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="control">
+                  <input
+                    id="cantidadSeccion"
+                    class="input"
+                    type="number"
+                    min="0"
+                    value="0"
+                    readonly
+                  />
+                </div>
+                <div class="control">
+                  <button
+                    class="button is-success"
+                    onclick="incrementValue(event)"
+                    to="cantidadSeccion"
+                  >
+                    <span class="icon">
+                      <i class="fas fa-plus"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
       <hr class="m-2" />
-      <div class="columns m-0 is-mobile is-vcentered">
+      <div class="columns m-0 is-mobile is-vcentered is-multiline">
         <div class="column is-narrow">
           <figure class="image image is-96x96">
             <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png">
           </figure>
         </div>
         <div class="column">
-          <p class="title is-size-5 m-0">Plato</p>
-          <p class="subtitle is-size-5 m-0">10€</p>
+          <p class="title is-size-5 m-0">Pan de ajo</p>
+          <p class="subtitle is-size-5 m-0">8€</p>
         </div>
         <div class="column is-narrow">
           <button id="addElement" class="button" onclick="incrementValue(event); hide(event); show(event)"
@@ -141,9 +203,9 @@
       </div>
     </div>
 
-    <section id="section11" subtitle="Sección 1.1" class="p-3 has-background-light">
-      <p class="title is-size-5">Sección 1</p>
-      <p class="subtitle is-size-6">Sección 1.1</p>
+    <section id="section11" subtitle="Especiales" class="p-3 has-background-light">
+      <p class="title is-size-5">Pizzas</p>
+      <p class="subtitle is-size-6">Especiales</p>
     </section>
   </main>
   <div id="modalSecciones" class="modal p-4">
@@ -345,3 +407,4 @@
 <script src="/static/js/scroll.js"></script>
 <script src="/static/js/modal.js"></script>
 <script src="/static/js/sections.js"></script>
+<script src="/static/js/showhide.js"></script>
