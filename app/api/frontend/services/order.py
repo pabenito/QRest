@@ -1,7 +1,9 @@
+import hashlib
+import json
 from pprint import pprint
 from typing import Any
 
-from app.api.frontend.entities.order import ElementWithImage
+from app.api.frontend.entities.order import ExtendedElement
 from app.core.entities.menu import Section
 from app.core.entities.order import Element
 from app.core.use_cases.command import CommandUseCases
@@ -29,13 +31,12 @@ class OrderFrontend:
     def get_current_command(self, order_id: str) -> list[Element]:
         return self.command_use_cases.get(order_id)
 
-    def get_current_command_elements_with_images(self, order_id: str) -> list[ElementWithImage]:
+    def get_current_command_with_extended_elements(self, order_id: str) -> list[ExtendedElement]:
         sections = self.get_sections()
         current_command = self.get_current_command(order_id)
-        return self.add_image_to_elements(sections, current_command)
+        return self.extend_elements(sections, current_command)
 
-    @staticmethod
-    def add_image_to_elements(sections: list[Section], command: list[Element]) -> list[ElementWithImage]:
+    def extend_elements(self, sections: list[Section], command: list[Element]) -> list[ExtendedElement]:
         image_dict = {}
         for section in sections:
             if section.elements is not None:
@@ -43,15 +44,13 @@ class OrderFrontend:
                     image_dict[(section.name, element.name)] = element.image
         elements_with_image = []
         for element in command:
-            element_with_image = ElementWithImage(
-                section=element.section,
-                element=element.element,
-                variants=element.variants,
-                extras=element.extras,
-                ingredients=element.ingredients,
-                quantity=element.quantity,
-                clients=element.clients,
-                image=image_dict[(element.section, element.element)]
-            )
-            elements_with_image.append(element_with_image)
+            extended_element = ExtendedElement(id=self.generate_element_id(element), **self.encode(element))
+            extended_element.image = image_dict[(element.section, element.element)]
+            elements_with_image.append(extended_element)
         return elements_with_image
+
+    @staticmethod
+    def generate_element_id(element: Element) -> str:
+        json_str = json.dumps(element, sort_keys=True)
+        hash_obj = hashlib.sha256(json_str.encode())
+        return hash_obj.hexdigest()

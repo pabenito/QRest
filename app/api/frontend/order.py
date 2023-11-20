@@ -16,7 +16,7 @@ order_frontend = OrderFrontend()
 
 @router.get("/mesa/{id}/pedido", response_class=HTMLResponse)
 def get(request: Request, id: str):
-    elements = order_frontend.encode(order_frontend.get_current_command_elements_with_images(id))
+    elements = order_frontend.encode(order_frontend.get_current_command_with_extended_elements(id))
     return templates.TemplateResponse("pedido.html.j2", {
         "request": request,
         "elements": elements,
