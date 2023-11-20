@@ -15,6 +15,15 @@ class HTMLManager {
         }, 3000);
     }
 
+    updateHTMLElement(element){
+        const elementCounter = document.getElementById(element.id);
+        if (elementCounter) {
+            elementCounter.value = element.quantity;
+        } else {
+            this.generateHTMLElement(element);
+        }
+    }
+
     generateHTMLElement(element) {
         // Crear div principal
         const elementDiv = document.createElement('div');

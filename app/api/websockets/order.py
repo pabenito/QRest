@@ -18,22 +18,15 @@ use_cases = CommandUseCases(order_repository=MongoOrderRepository(), command_rep
 encoder = json_lower_encoder
 parser = parse_object
 
-@app.get("/mesa/{group}/cliente/{client}", response_class=HTMLResponse)
-async def get(request: Request, group: str, client: str):
-    return templates.TemplateResponse("chat.html.j2", {
-        "request": request,
-        "group": group,
-        "client": client})
 
-
-@app.websocket("/ws/mesa/{group}/cliente/{client}")
-async def websocket_endpoint(websocket: WebSocket, group: str, client: str):
-    await manager.connect(websocket, group)
+@app.websocket("/ws/mesa/{id}/cliente/{client}")
+async def websocket_endpoint(websocket: WebSocket, id: str, client: str):
+    await manager.connect(websocket, id)
     try:
         while True:
             data = await websocket.receive_json()
             element = parser(data, Element)
-            updated_element = use_cases.update_element(group, element)
-            await manager.send_group(encoder(updated_element), group)
+            updated_element = use_cases.update_element(id, element)
+            await manager.send_group(encoder(updated_element), id)
     except WebSocketDisconnect:
-        manager.disconnect(websocket, group)
+        manager.disconnect(websocket, id)

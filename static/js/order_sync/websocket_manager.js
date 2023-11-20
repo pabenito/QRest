@@ -7,7 +7,7 @@ class WebSocketManager {
      * @param {function} onElementReceived - Función a llamar cuando se recibe un Elemento.
      */
     constructor(group, client, onError, onElementReceived) {
-        this.ws = new WebSocket(`ws://localhost:8000/ws/group/${group}/client/${client}`);
+        this.ws = new WebSocket(`ws://localhost:8000/ws/mesa/${group}/client/${client}`);
         this.ws.onerror = (error) => this.#handleError(error);
         this.ws.onclose = (event) => this.#handleClose(event);
         this.ws.onmessage = (message) => this.#handleMessage(message);
