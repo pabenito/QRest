@@ -21,7 +21,11 @@ class OrderElementHTMLManager extends ElementHTMLManager{
     putElement(element){
         const elementCounter = document.getElementById(element.id);
         if (elementCounter) {
-            elementCounter.value = element.quantity;
+            if (element.quantity > 0) {
+                elementCounter.value = element.quantity;
+            } else {
+                document.getElementById(element.id).remove();
+            }
         } else {
             this.#generateElement(element);
         }

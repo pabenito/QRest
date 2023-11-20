@@ -17,6 +17,16 @@
   <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"
     integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', path='/js/sync/views/order.js') }}"></script>
+<script src="{{ url_for('static', path='/js/sync/controller.js') }}"></script>
+<script src="{{ url_for('static', path='/js/sync/model_websocket.js') }}"></script>
+<script>
+  var orderId = "{{ order_id }}";
+  var client = "{{ client }}";
+  var element_html_view = new OrderElementHTMLManager();
+  var element_websocket_model = new WebSocketManager(`ws://localhost:8000/ws/mesa/${orderId}/client/${client}`);
+  var element_controller = new OrderController(element_html_view, element_websocket_model);
+</script>
   <style>
     body.has-navbar-fixed-bottom {
       padding-bottom: 100px;
@@ -94,8 +104,7 @@
         <div class="column column is-narrow">
           <div class="field has-addons">
             <div class="control">
-              <button class="button is-danger" onclick="decrementValue(event, remove=true)"
-                to="{{ element_quantity_id }}" remove="{{ element.id }}">
+              <button class="button is-danger" onclick="element_controller.decreaseElementQuantityModel({{ element.section }}, {{ element.element }}, {{ client }}, {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})">
                 <span class="icon">
                   <i class="fas fa-minus"></i>
                 </span>
@@ -106,7 +115,7 @@
                 value="{{ element.quantity }}"/>
             </div>
             <div class="control">
-              <button class="button is-success" onclick="incrementValue(event)" to="{{ element_quantity_id }}">
+              <button class="button is-success" onclick="element_controller.increaseElementQuantityModel({{ element.section }}, {{ element.element }}, {{ client }}, {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})">
                 <span class="icon">
                   <i class="fas fa-plus"></i>
                 </span>
@@ -122,11 +131,4 @@
     </div>
   </main>
 </body>
-<script>
-  var group = "{{ order_id }}";
-  var client = "{{ client }}";
-  var elements = {{ elements| tojson | safe }};
-</script>
-<script src="{{ url_for('static', path='/js/counter.js') }}"></script>
-
 </html>
