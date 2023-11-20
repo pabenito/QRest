@@ -54,9 +54,9 @@
     <div id="elements" class="containter p-2">
       {% for element in elements %}
       {% set element_index = loop.index %}
-      {% set element_id = "element" ~ element_index %}
-      {% set element_quantity_id = "quantity_" ~ element_id %}
-      <div id="{{ element_id }}" class="columns is-multiline m-0 is-mobile is-vcentered">
+      {% set element.id = "element_" ~ element_index %}
+      {% set element_quantity_id = "quantity_" ~ element.id %}
+      <div id="{{ element.id }}" class="columns is-multiline m-0 is-mobile is-vcentered">
         <div class="column is-narrow">
           <figure class="image image is-96x96">
             <img class="has-rounded-border"
@@ -95,14 +95,14 @@
           <div class="field has-addons">
             <div class="control">
               <button class="button is-danger" onclick="decrementValue(event, remove=true)"
-                to="{{ element_quantity_id }}" remove="{{ element_id }}">
+                to="{{ element_quantity_id }}" remove="{{ element.id }}">
                 <span class="icon">
                   <i class="fas fa-minus"></i>
                 </span>
               </button>
             </div>
             <div class="control">
-              <input id="{{ element.id }}" class="input" type="number" min="0"
+              <input id="{{ element_quantity_id }}" class="input" type="number" min="0"
                 value="{{ element.quantity }}"/>
             </div>
             <div class="control">
@@ -128,9 +128,5 @@
   var elements = {{ elements| tojson | safe }};
 </script>
 <script src="{{ url_for('static', path='/js/counter.js') }}"></script>
-<script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
-<script src="{{ url_for('static', path='/js/modal.js') }}"></script>
-<script src="{{ url_for('static', path='/js/sections.js') }}"></script>
-<script src="{{ url_for('static', path='/js/websocket_menu.js') }}"></script>
 
 </html>

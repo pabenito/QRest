@@ -1,4 +1,4 @@
-class HTMLManager {
+class OrderHTMLManager {
     constructor() {
         this.elementsContainer = document.getElementById('elements');
     }
