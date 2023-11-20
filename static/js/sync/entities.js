@@ -1,4 +1,4 @@
-class Variant {
+export class Variant {
     /**
      * @param {string} name
      * @param {string} value
@@ -9,7 +9,7 @@ class Variant {
     }
 }
 
-class Element {
+export class Element {
     /**
      * Crea una instancia de Element.
      * @param {string} id - El identificador del elemento.

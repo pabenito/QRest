@@ -1,5 +1,8 @@
-class OrderHTMLManager {
+import {ElementHTMLManager} from '../view_interface.js';
+
+class OrderElementHTMLManager extends ElementHTMLManager{
     constructor() {
+        super();
         this.elementsContainer = document.getElementById('elements');
     }
 
@@ -15,16 +18,16 @@ class OrderHTMLManager {
         }, 3000);
     }
 
-    updateHTMLElement(element){
+    putElement(element){
         const elementCounter = document.getElementById(element.id);
         if (elementCounter) {
             elementCounter.value = element.quantity;
         } else {
-            this.generateHTMLElement(element);
+            this.#generateElement(element);
         }
     }
 
-    generateHTMLElement(element) {
+    #generateElement(element) {
         // Crear div principal
         const elementDiv = document.createElement('div');
         elementDiv.className = 'columns is-multiline m-0 is-mobile is-vcentered';
