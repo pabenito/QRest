@@ -1,11 +1,11 @@
 from pprint import pprint
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, APIRouter
+from fastapi import WebSocket, WebSocketDisconnect, APIRouter
 from starlette.templating import Jinja2Templates
 
-from app.api.frontend.entities.order import ExtendedElement
-from app.core.entities.order import Element
+from app.api.services.extend_elment import extend_element
 from app.api.websockets.connection_manager import ConnectionManager
+from app.core.entities.order import Element
 from app.core.use_cases.command import CommandUseCases
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
@@ -27,10 +27,13 @@ async def websocket_endpoint(websocket: WebSocket, id: str, client: str):
         while True:
             data = await websocket.receive_json()
             pprint(data)
-            element = parser(data, ExtendedElement)
+            element = parser(data, Element)
             updated_element = use_cases.update_element(id, element)
-            print("Element updated correctly:")
+            print("WS Element updated correctly:")
             pprint(updated_element)
-            await manager.send_group(encoder(updated_element), id)
+            extended_element = extend_element(updated_element)
+            print("WS Extended Element:")
+            pprint(extended_element)
+            await manager.send_group(encoder(extended_element), id)
     except WebSocketDisconnect:
         manager.disconnect(websocket, id)

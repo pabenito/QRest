@@ -4,6 +4,7 @@ from pprint import pprint
 from typing import Any
 
 from app.api.frontend.entities.order import ExtendedElement
+from app.api.services.extend_elment import extend_element, generate_extend_elements_with_images
 from app.core.entities.menu import Section
 from app.core.entities.order import Element
 from app.core.use_cases.command import CommandUseCases
@@ -34,22 +35,4 @@ class OrderFrontend:
     def get_current_command_with_extended_elements(self, order_id: str) -> list[ExtendedElement]:
         sections = self.get_sections()
         current_command = self.get_current_command(order_id)
-        return self.extend_elements(sections, current_command)
-
-    def extend_elements(self, sections: list[Section], command: list[Element]) -> list[ExtendedElement]:
-        image_dict = {}
-        for section in sections:
-            if section.elements is not None:
-                for element in section.elements:
-                    image_dict[(section.name, element.name)] = element.image
-        elements_with_image = []
-        for element in command:
-            extended_element = ExtendedElement(id=self.generate_element_id(element), **self.encode(element))
-            extended_element.image = image_dict[(element.section, element.element)]
-            elements_with_image.append(extended_element)
-        return elements_with_image
-
-    def generate_element_id(self, element: Element) -> str:
-        json_str = json.dumps(self.encode(element), sort_keys=True)
-        hash_obj = hashlib.sha256(json_str.encode())
-        return hash_obj.hexdigest()
+        return generate_extend_elements_with_images(sections, current_command)

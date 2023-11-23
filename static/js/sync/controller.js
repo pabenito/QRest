@@ -17,8 +17,8 @@ class OrderController {
         this.model.setOnMessage((element) => this.view.putElement(element));
     }
 
-    #updateElementModel(section, element, client, quantity, variants, extras, ingredients) {
-        let newElement = new Element(section, element, [client], quantity, variants, extras, ingredients);
+    #updateElementModel(id, section, element, client, quantity, variants, extras, ingredients) {
+        let newElement = new Element(id, section, element, [client], quantity, variants, extras, ingredients);
         this.model.sendJSON(newElement);
     }
 
@@ -30,11 +30,11 @@ class OrderController {
         this.view.showError(message);
     }
 
-    increaseElementQuantityModel(section, element, client, variants, extras, ingredients) {
-        this.#updateElementModel(section, element, client, 1, variants, extras, ingredients);
+    increaseElementQuantityModel(id, section, element, client, variants, extras, ingredients) {
+        this.#updateElementModel(id, section, element, client, 1, variants, extras, ingredients);
     }
 
-    decreaseElementQuantityModel(section, element, client, variants, extras, ingredients) {
-        this.#updateElementModel(section, element, client, -1, variants, extras, ingredients);
+    decreaseElementQuantityModel(id, section, element, client, variants, extras, ingredients) {
+        this.#updateElementModel(id, section, element, client, -1, variants, extras, ingredients);
     }
 }

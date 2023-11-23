@@ -45,7 +45,8 @@ class WebSocketManager {
         console.log(`handleMessage: ${message.data}`);
         try {
             if (this.onMessage) {
-                this.onMessage(message.data);
+                let element = JSON.parse(message.data);
+                this.onMessage(element);
             }
         } catch (e) {
             this.#handleError(e);
