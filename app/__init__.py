@@ -1,21 +1,15 @@
 from fastapi import FastAPI, Request, status
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
-from pydantic import ValidationError
 
 from app import db
-from app.api import backend, frontend
+from app import api
 from app.core.exceptions import InvalidInputException
 from app.db.exceptions import AlreadyExistsException, NotFoundException, OperationFailedException
 
 app = FastAPI()
 
-app.include_router(
-    backend.router,
-    prefix="/backend"
-)
-
-app.include_router(frontend.router)
+app.include_router(api.router)
 
 
 @app.on_event("startup")

@@ -14,10 +14,11 @@ templates = Jinja2Templates(directory="templates")
 order_frontend = OrderFrontend()
 
 
-@router.get("/mesa/{id}/pedido", response_class=HTMLResponse)
-def get(request: Request, id: str):
+@router.get("/mesa/{id}/cliente/{client}/pedido", response_class=HTMLResponse)
+def get(request: Request, id: str, client: str):
     elements = order_frontend.encode(order_frontend.get_current_command_with_extended_elements(id))
     return templates.TemplateResponse("pedido.html.j2", {
         "request": request,
         "elements": elements,
-        "order_id": id})
+        "order_id": id,
+        "client": client})

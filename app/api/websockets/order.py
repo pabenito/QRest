@@ -1,16 +1,14 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, WebSocketException, Request, status
-from pydantic import TypeAdapter
-from starlette.responses import HTMLResponse
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, APIRouter
 from starlette.templating import Jinja2Templates
 
 from app.core.entities.order import Element
-from app.api.websockets import ConnectionManager
+from app.api.websockets.connection_manager import ConnectionManager
 from app.core.use_cases.command import CommandUseCases
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 from app.lib.utils import json_lower_encoder, parse_object
 
-app = FastAPI()
+router = APIRouter()
 
 manager = ConnectionManager()
 templates = Jinja2Templates(directory="templates")
@@ -19,7 +17,7 @@ encoder = json_lower_encoder
 parser = parse_object
 
 
-@app.websocket("/ws/mesa/{id}/cliente/{client}")
+@router.websocket("/ws/mesa/{id}/cliente/{client}")
 async def websocket_endpoint(websocket: WebSocket, id: str, client: str):
     await manager.connect(websocket, id)
     try:

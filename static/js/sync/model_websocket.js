@@ -31,6 +31,7 @@ class WebSocketManager {
     }
 
     #handleError(error) {
+        console.error(`WebSocket Error: ${error.message}`);
         if (this.onError) {
             this.onError(`WebSocket Error: ${error.message}`);
         } else {
