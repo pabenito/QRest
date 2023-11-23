@@ -121,11 +121,6 @@
         {% endfor %}
     </div>
 </main>
-<script type="module" src="{{ url_for('static', path='/js/sync/entities.js') }}"></script>
-<script type="module" src="{{ url_for('static', path='/js/sync/view_interface.js') }}"></script>
-<script type="module" src="{{ url_for('static', path='/js/sync/views/order.js') }}"></script>
-<script type="module" src="{{ url_for('static', path='/js/sync/controller.js') }}"></script>
-<script type="module" src="{{ url_for('static', path='/js/sync/model_websocket.js') }}"></script>
 <script type="module">
     import { OrderElementHTMLManager } from '{{ url_for('static', path='/js/sync/views/order.js') }}';
     import { WebSocketManager } from '{{ url_for('static', path='/js/sync/model_websocket.js') }}';
