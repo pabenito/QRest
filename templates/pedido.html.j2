@@ -14,7 +14,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/font.css') }}"/>
-    <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"
             integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <style>
@@ -22,6 +21,19 @@
             padding-bottom: 100px;
         }
     </style>
+    <script type="module">
+        import { OrderElementHTMLManager } from '{{ url_for('static', path='/js/sync/views/order.js') }}';
+        import { WebSocketManager } from '{{ url_for('static', path='/js/sync/model_websocket.js') }}';
+        import { OrderController } from '{{ url_for('static', path='/js/sync/controller.js') }}';
+
+        var orderId = "{{ order_id }}";
+        var client = "{{ client }}";
+        var element_html_view = new OrderElementHTMLManager();
+        var element_websocket_model = new WebSocketManager(`ws://localhost:8000/ws/mesa/${orderId}/cliente/${client}`);
+        var element_controller = new OrderController(element_html_view, element_websocket_model);
+
+        window.element_controller = element_controller;
+    </script>
 </head>
 
 <body class="has-navbar-fixed-top has-navbar-fixed-bottom">
@@ -94,7 +106,7 @@
                     <div class="field has-addons">
                         <div class="control">
                             <button class="button is-danger"
-                                    onclick="element_controller.decreaseElementQuantityModel({{ element.section }}, {{ element.element }}, {{ client }}, {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})">
+                                    onclick='element_controller.decreaseElementQuantityModel("{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})'>
                 <span class="icon">
                   <i class="fas fa-minus"></i>
                 </span>
@@ -106,7 +118,7 @@
                         </div>
                         <div class="control">
                             <button class="button is-success"
-                                    onclick="element_controller.increaseElementQuantityModel({{ element.section }}, {{ element.element }}, {{ client }}, {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})">
+                                    onclick='element_controller.increaseElementQuantityModel("{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})'>
                 <span class="icon">
                   <i class="fas fa-plus"></i>
                 </span>
@@ -121,16 +133,5 @@
         {% endfor %}
     </div>
 </main>
-<script type="module">
-    import { OrderElementHTMLManager } from '{{ url_for('static', path='/js/sync/views/order.js') }}';
-    import { WebSocketManager } from '{{ url_for('static', path='/js/sync/model_websocket.js') }}';
-    import { OrderController } from '{{ url_for('static', path='/js/sync/controller.js') }}';
-
-    var orderId = "{{ order_id }}";
-    var client = "{{ client }}";
-    var element_html_view = new OrderElementHTMLManager();
-    var element_websocket_model = new WebSocketManager(`ws://localhost:8000/ws/mesa/${orderId}/cliente/${client}`);
-    var element_controller = new OrderController(element_html_view, element_websocket_model);
-</script>
 </body>
 </html>

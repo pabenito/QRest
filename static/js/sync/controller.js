@@ -1,4 +1,4 @@
-import { Variant, Element } from './entities.js';
+import { Element } from './entities.js';
 import { WebSocketManager } from './model_websocket.js';
 import { ElementHTMLManager } from './view_interface.js';
 
@@ -13,12 +13,12 @@ class OrderController {
     constructor(view, model) {
         this.view = view;
         this.model = model;
-        this.model.setOnError(this.view.showError)
-        this.model.setOnMessage(this.view.putElement)
+        this.model.setOnError((message) => this.view.showError(message));
+        this.model.setOnMessage((element) => this.view.putElement(element));
     }
 
     #updateElementModel(section, element, client, quantity, variants, extras, ingredients) {
-        let newElement = new Element(section, element, client, quantity, variants, extras, ingredients);
+        let newElement = new Element(section, element, [client], quantity, variants, extras, ingredients);
         this.model.sendJSON(newElement);
     }
 

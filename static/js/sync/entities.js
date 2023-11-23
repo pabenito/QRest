@@ -22,8 +22,10 @@ class Element {
      * @param {string[]} [extras] - Información extra sobre el elemento, opcional.
      * @param {string[]} [ingredients] - Los ingredientes del elemento, opcional.
      */
-    constructor(id, section, element, clients, quantity, variants, extras, ingredients) {
-        this.id = id;
+    constructor(section, element, clients, quantity, variants, extras, ingredients, id) {
+        if (id !== undefined) {
+            this.id = id;
+        }
         this.section = section;
         this.element = element;
         this.clients = clients;

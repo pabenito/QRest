@@ -1,4 +1,4 @@
-export { WebSocketManager };
+export {WebSocketManager};
 
 class WebSocketManager {
     /**
@@ -31,11 +31,9 @@ class WebSocketManager {
     }
 
     #handleError(error) {
-        console.error(`WebSocket Error: ${error.message}`);
+        console.log(error);
         if (this.onError) {
             this.onError(`WebSocket Error: ${error.message}`);
-        } else {
-            console.log(`WebSocket Error: ${error.message}`)
         }
     }
 
@@ -44,10 +42,10 @@ class WebSocketManager {
     }
 
     #handleMessage(message) {
+        console.log(`handleMessage: ${message.data}`);
         try {
-            const element = JSON.parse(message.data);
             if (this.onMessage) {
-                this.onMessage(element);
+                this.onMessage(message.data);
             }
         } catch (e) {
             this.#handleError(e);

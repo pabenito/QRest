@@ -21,7 +21,10 @@ class OrderElementHTMLManager extends ElementHTMLManager{
     }
 
     putElement(element){
-        const elementCounter = document.getElementById(element.id);
+        console.log(`putElement: ${element}`);
+        console.log(`id: quantity_${element.id}`);
+        const elementCounter = document.getElementById(`quantity_${element.id}`);
+        console.log(`counter: ${elementCounter}`);
         if (elementCounter) {
             if (element.quantity > 0) {
                 elementCounter.value = element.quantity;
