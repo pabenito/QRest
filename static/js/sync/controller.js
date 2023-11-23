@@ -2,6 +2,8 @@ import { Variant, Element } from './entities.js';
 import { WebSocketManager } from './model_websocket.js';
 import { ElementHTMLManager } from './view_interface.js';
 
+export { OrderController };
+
 class OrderController {
     /**
      * Crea una instancia de ElementInterface.

@@ -2,133 +2,140 @@
 <html lang="es" class="h-100">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>QRest | Carta</title>
-  <link rel="icon" href="{{ url_for('static', path='/img/icon.png') }}" type="image/icon type" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/body.css') }}" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/font.css') }}" />
-  <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', path='/js/sync/views/order.js') }}"></script>
-<script src="{{ url_for('static', path='/js/sync/controller.js') }}"></script>
-<script src="{{ url_for('static', path='/js/sync/model_websocket.js') }}"></script>
-<script>
-  var orderId = "{{ order_id }}";
-  var client = "{{ client }}";
-  var element_html_view = new OrderElementHTMLManager();
-  var element_websocket_model = new WebSocketManager(`ws://localhost:8000/ws/mesa/${orderId}/client/${client}`);
-  var element_controller = new OrderController(element_html_view, element_websocket_model);
-</script>
-  <style>
-    body.has-navbar-fixed-bottom {
-      padding-bottom: 100px;
-    }
-  </style>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>QRest | Carta</title>
+    <link rel="icon" href="{{ url_for('static', path='/img/icon.png') }}" type="image/icon type"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/body.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/font.css') }}"/>
+    <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+            integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <style>
+        body.has-navbar-fixed-bottom {
+            padding-bottom: 100px;
+        }
+    </style>
 </head>
 
 <body class="has-navbar-fixed-top has-navbar-fixed-bottom">
-  <nav class="navbar is-fixed-top has-background-black">
+<nav class="navbar is-fixed-top has-background-black">
     <div class="columns is-mobile is-vcentered p-2">
-      <div class="column is-full">
-        <h1 class="title is-size-4 has-text-white ml-3">
-          Productos Seleccionados
-        </h1>
-      </div>
+        <div class="column is-full">
+            <h1 class="title is-size-4 has-text-white ml-3">
+                Productos Seleccionados
+            </h1>
+        </div>
     </div>
-  </nav>
+</nav>
 
-  <nav class="navbar is-fixed-bottom is-transparent is-block">
+<nav class="navbar is-fixed-bottom is-transparent is-block">
     <div class="columns is-multiline p-5">
-      <div class="column is-full p-0">
-        <a class="button is-fullwidth is-black" href="/prototipos/pedido.html">
-          <p class="is-size-5">Pedir</p>
-        </a>
-      </div>
-      <div class="column is-full p-0 pt-2">
-        <a class="button is-fullwidth" href="/mesa/{{ order_id }}/carta">
-          <p class="is-size-5">Volver a la carta</p>
-        </a>
-      </div>
+        <div class="column is-full p-0">
+            <a class="button is-fullwidth is-black" href="/prototipos/pedido.html">
+                <p class="is-size-5">Pedir</p>
+            </a>
+        </div>
+        <div class="column is-full p-0 pt-2">
+            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/carta">
+                <p class="is-size-5">Volver a la carta</p>
+            </a>
+        </div>
     </div>
-  </nav>
+</nav>
 
-  <main>
+<main>
     <div id="elements" class="containter p-2">
-      {% for element in elements %}
-      {% set element_index = loop.index %}
-      {% set element.id = "element_" ~ element_index %}
-      {% set element_quantity_id = "quantity_" ~ element.id %}
-      <div id="{{ element.id }}" class="columns is-multiline m-0 is-mobile is-vcentered">
-        <div class="column is-narrow">
-          <figure class="image image is-96x96">
-            <img class="has-rounded-border"
-              src="{{ element.image if element.image is defined else 'https://bulma.io/images/placeholders/96x96.png' }}" />
-          </figure>
-        </div>
-        <div class="column">
-          <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered">
-            {{ element.element }}
-          </p>
-          <div class="columns is-multiline m-0 is-mobile is-vcentered is-centered">
-            {% if element.variants is defined %}
-            <div class="column is-narrow">
-              {% for variant in element.variants %}
-              <p class="subtitle is-size-5 m-0 is-unbreakable">{{ variant.value }}</p>
-              {% endfor %}
-            </div>
-            {% endif %}
-            {% if element.extras is defined %}
-            <div class="column is-narrow">
-              {% for extra in element.extras %}
-              <p class="subtitle is-size-5 m-0 is-unbreakable">+{{ extra }}</p>
-              {% endfor %}
-            </div>
-            {% endif %}
-            {% if element.ingredients is defined %}
-            <div class="column is-narrow">
-              {% for ingredient in element.ingredients %}
-              <p class="subtitle is-size-5 m-0 is-unbreakable">-{{ ingredient }}</p>
-              {% endfor %}
-            </div>
-            {% endif %}
-          </div>
-        </div>
-        <div class="column column is-narrow">
-          <div class="field has-addons">
-            <div class="control">
-              <button class="button is-danger" onclick="element_controller.decreaseElementQuantityModel({{ element.section }}, {{ element.element }}, {{ client }}, {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})">
+        {% for element in elements %}
+            {% set element_index = loop.index %}
+            {% set element_quantity_id = "quantity_" ~ element.id %}
+            <div id="{{ element.id }}" class="columns is-multiline m-0 is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image image is-96x96">
+                        <img class="has-rounded-border"
+                             src="{{ element.image if element.image is defined else 'https://bulma.io/images/placeholders/96x96.png' }}"/>
+                    </figure>
+                </div>
+                <div class="column">
+                    <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered">
+                        {{ element.element }}
+                    </p>
+                    <div class="columns is-multiline m-0 is-mobile is-vcentered is-centered">
+                        {% if element.variants is defined %}
+                            <div class="column is-narrow">
+                                {% for variant in element.variants %}
+                                    <p class="subtitle is-size-5 m-0 is-unbreakable">{{ variant.value }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if element.extras is defined %}
+                            <div class="column is-narrow">
+                                {% for extra in element.extras %}
+                                    <p class="subtitle is-size-5 m-0 is-unbreakable">+{{ extra }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if element.ingredients is defined %}
+                            <div class="column is-narrow">
+                                {% for ingredient in element.ingredients %}
+                                    <p class="subtitle is-size-5 m-0 is-unbreakable">-{{ ingredient }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="column column is-narrow">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <button class="button is-danger"
+                                    onclick="element_controller.decreaseElementQuantityModel({{ element.section }}, {{ element.element }}, {{ client }}, {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})">
                 <span class="icon">
                   <i class="fas fa-minus"></i>
                 </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="{{ element_quantity_id }}" class="input" type="number" min="0"
-                value="{{ element.quantity }}"/>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="element_controller.increaseElementQuantityModel({{ element.section }}, {{ element.element }}, {{ client }}, {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})">
+                            </button>
+                        </div>
+                        <div class="control">
+                            <input id="{{ element_quantity_id }}" class="input" type="number" min="0"
+                                   value="{{ element.quantity }}"/>
+                        </div>
+                        <div class="control">
+                            <button class="button is-success"
+                                    onclick="element_controller.increaseElementQuantityModel({{ element.section }}, {{ element.element }}, {{ client }}, {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})">
                 <span class="icon">
                   <i class="fas fa-plus"></i>
                 </span>
-              </button>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      {% if not loop.last %}
-      <hr class="m-2" />
-      {% endif %}
-      {% endfor %}
+            {% if not loop.last %}
+                <hr class="m-2"/>
+            {% endif %}
+        {% endfor %}
     </div>
-  </main>
+</main>
+<script type="module" src="{{ url_for('static', path='/js/sync/entities.js') }}"></script>
+<script type="module" src="{{ url_for('static', path='/js/sync/view_interface.js') }}"></script>
+<script type="module" src="{{ url_for('static', path='/js/sync/views/order.js') }}"></script>
+<script type="module" src="{{ url_for('static', path='/js/sync/controller.js') }}"></script>
+<script type="module" src="{{ url_for('static', path='/js/sync/model_websocket.js') }}"></script>
+<script type="module">
+    import { OrderElementHTMLManager } from '{{ url_for('static', path='/js/sync/views/order.js') }}';
+    import { WebSocketManager } from '{{ url_for('static', path='/js/sync/model_websocket.js') }}';
+    import { OrderController } from '{{ url_for('static', path='/js/sync/controller.js') }}';
+
+    var orderId = "{{ order_id }}";
+    var client = "{{ client }}";
+    var element_html_view = new OrderElementHTMLManager();
+    var element_websocket_model = new WebSocketManager(`ws://localhost:8000/ws/mesa/${orderId}/client/${client}`);
+    var element_controller = new OrderController(element_html_view, element_websocket_model);
+</script>
 </body>
 </html>

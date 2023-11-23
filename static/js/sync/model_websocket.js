@@ -1,4 +1,6 @@
-export class WebSocketManager {
+export { WebSocketManager };
+
+class WebSocketManager {
     /**
      * Crea una instancia de WebSocketManager.
      * @param {string} URL - URL para la conexión WebSocket.

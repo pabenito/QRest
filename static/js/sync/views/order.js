@@ -1,4 +1,6 @@
-import {ElementHTMLManager} from '../view_interface.js';
+import { ElementHTMLManager } from '../view_interface.js';
+
+export { OrderElementHTMLManager };
 
 class OrderElementHTMLManager extends ElementHTMLManager{
     constructor() {

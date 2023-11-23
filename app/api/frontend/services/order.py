@@ -49,8 +49,7 @@ class OrderFrontend:
             elements_with_image.append(extended_element)
         return elements_with_image
 
-    @staticmethod
-    def generate_element_id(element: Element) -> str:
-        json_str = json.dumps(element, sort_keys=True)
+    def generate_element_id(self, element: Element) -> str:
+        json_str = json.dumps(self.encode(element), sort_keys=True)
         hash_obj = hashlib.sha256(json_str.encode())
         return hash_obj.hexdigest()
