@@ -29,7 +29,7 @@
         var orderId = "{{ order_id }}";
         var client = "{{ client }}";
         var element_html_view = new OrderElementHTMLManager();
-        var element_websocket_model = new WebSocketManager(`ws://localhost:8000/ws/mesa/${orderId}/cliente/${client}`);
+        var element_websocket_model = new WebSocketManager(`ws://{{ url }}{{ ws_path }}?mesa=${orderId}&cliente=${client}`);
         var element_controller = new OrderController(element_html_view, element_websocket_model);
 
         window.element_controller = element_controller;

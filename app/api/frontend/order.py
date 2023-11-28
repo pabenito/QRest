@@ -4,6 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 from app.api.frontend.services.order import OrderFrontend
+from app import config
 
 # Create router
 router = APIRouter()
@@ -19,6 +20,8 @@ def get(request: Request, id: str, client: str):
     elements = order_frontend.encode(order_frontend.get_current_command_with_extended_elements(id))
     return templates.TemplateResponse("pedido.html.j2", {
         "request": request,
+        "url": config.url,
+        "ws_path": "/ws/comanda",
         "elements": elements,
         "order_id": id,
         "client": client})

@@ -6,6 +6,7 @@ from app import db
 from app import api
 from app.core.exceptions import InvalidInputException
 from app.db.exceptions import AlreadyExistsException, NotFoundException, OperationFailedException
+from app import config
 
 app = FastAPI()
 

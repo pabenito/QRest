@@ -20,20 +20,20 @@ encoder = json_lower_encoder
 parser = parse_object
 
 
-@router.websocket("/ws/mesa/{id}/cliente/{client}")
-async def websocket_endpoint(websocket: WebSocket, id: str, client: str):
-    await manager.connect(websocket, id)
+@router.websocket("/ws/comanda")
+async def websocket_endpoint(websocket: WebSocket, mesa: str, cliente: str):
+    await manager.connect(websocket, mesa)
     try:
         while True:
             data = await websocket.receive_json()
             pprint(data)
             element = parser(data, Element)
-            updated_element = use_cases.update_element(id, element)
+            updated_element = use_cases.update_element(mesa, element)
             print("WS Element updated correctly:")
             pprint(updated_element)
             extended_element = extend_element(updated_element)
             print("WS Extended Element:")
             pprint(extended_element)
-            await manager.send_group(encoder(extended_element), id)
+            await manager.send_group(encoder(extended_element), mesa)
     except WebSocketDisconnect:
-        manager.disconnect(websocket, id)
+        manager.disconnect(websocket, mesa)
