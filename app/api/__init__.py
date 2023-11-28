@@ -8,7 +8,7 @@ router = APIRouter()
 
 router.include_router(
     backend.router,
-    prefix="/backend"
+    prefix="/api"
 )
 router.include_router(frontend.router)
 router.include_router(websockets.router)

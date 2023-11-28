@@ -10,7 +10,7 @@ router.include_router(
 
 router.include_router(
     command.router,
-    prefix="/mesa"
+    prefix="/comanda"
 )
 
 router.include_router(

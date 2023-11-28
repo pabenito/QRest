@@ -16,13 +16,11 @@ templates = Jinja2Templates(directory="templates")
 menu_frontend = MenuFrontend()
 
 
-@router.get("/mesa/{id}/cliente/{client}/carta", response_class=HTMLResponse)
-def get(request: Request, id: str, client):
-    print("Extended sections:\n")
-    pprint(menu_frontend.encode(menu_frontend.get_extended_sections(id)))
+@router.get("/", response_class=HTMLResponse)
+def get(request: Request, mesa: str, client):
     return templates.TemplateResponse("menu.html.j2", {
         "request": request,
-        "sections": menu_frontend.encode(menu_frontend.get_extended_sections(id)),
+        "sections": menu_frontend.encode(menu_frontend.get_extended_sections(mesa)),
         "allergens": menu_frontend.encode(menu_frontend.get_allergens_dict()),
-        "order_id": id,
+        "order_id": mesa,
         "client": client})
