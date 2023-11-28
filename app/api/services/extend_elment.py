@@ -23,11 +23,7 @@ def basic_element_from_element(element: Element) -> BasicElement:
 def extend_element(element: Element) -> ExtendedElement:
     quantity = element.quantity
     json_element = json_lower_encoder(element)
-    print("JSON element:")
-    pprint(json_element)
     extended_element = ExtendedElement(**json_element)
-    print("Extended element:")
-    pprint(extended_element)
     extended_element.id = generate_element_id(element)
     extended_element.quantity = quantity
     return extended_element

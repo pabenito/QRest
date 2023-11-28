@@ -26,14 +26,9 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str, cliente: str):
     try:
         while True:
             data = await websocket.receive_json()
-            pprint(data)
             element = parser(data, Element)
             updated_element = use_cases.update_element(mesa, element)
-            print("WS Element updated correctly:")
-            pprint(updated_element)
             extended_element = extend_element(updated_element)
-            print("WS Extended Element:")
-            pprint(extended_element)
             await manager.send_group(encoder(extended_element), mesa)
     except WebSocketDisconnect:
         manager.disconnect(websocket, mesa)
