@@ -1,6 +1,6 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 
-from app.core.entities.order import OrderPost
+from app.core.entities.order import Order, OrderPost
 from app.core.use_cases.order import OrderUseCases
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 
@@ -13,6 +13,6 @@ def create(order: OrderPost) -> str:
     return use_cases.create(order)
 
 
-@router.delete("/")
-def delete(mesa: str):
-    use_cases.delete(mesa)
+@router.delete("/{id}")
+def delete(id: str):
+    use_cases.delete(id)

@@ -5,11 +5,5 @@ from app.api.frontend import order
 
 router = APIRouter()
 
-router.include_router(
-    menu.router,
-    prefix="/carta"
-)
-router.include_router(
-    order.router,
-    prefix="/comanda"
-)
+router.include_router(menu.router)
+router.include_router(order.router)

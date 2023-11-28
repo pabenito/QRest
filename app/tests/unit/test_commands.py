@@ -6,11 +6,10 @@ from httpx import Response
 
 from app import app
 from app import db
-from app import config
+
+base_url = "/backend/mesa"
 
 db.configure_db(testing=True)
-
-base_url = config.url + "/api/comanda"
 
 simple_element = {
     "section": "bebidas",
@@ -54,15 +53,15 @@ def order_id(api):
 
 
 def _put_element(api: TestClient, order_id: str, element: dict):
-    return api.put(base_url + f"/elementos?mesa={order_id}", json=element)
+    return api.put(base_url + f"/{order_id}/pedido/elementos", json=element)
 
 
 def _get_current_command(api: TestClient, order_id: str):
-    return api.get(base_url + f"/?mesa={order_id}")
+    return api.get(base_url + f"/{order_id}/pedido")
 
 
 def _confirm_command(api: TestClient, order_id: str):
-    return api.post(base_url + f"/confirmar?mesa={order_id}")
+    return api.post(base_url + f"/{order_id}/pedido/confirmar")
 
 
 def _close_datetime(d1: datetime, d2: datetime) -> bool:
