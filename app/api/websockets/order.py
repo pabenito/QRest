@@ -3,6 +3,7 @@ from pprint import pprint
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter
 from starlette.templating import Jinja2Templates
 
+from app.core.exceptions import InvalidInputException
 from app.api.services.extend_elment import extend_element
 from app.api.websockets.connection_manager import ConnectionManager
 from app.core.entities.order import Element
@@ -27,8 +28,11 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str, cliente: str):
         while True:
             data = await websocket.receive_json()
             element = parser(data, Element)
-            updated_element = use_cases.update_element(mesa, element)
-            extended_element = extend_element(updated_element)
-            await manager.send_group(encoder(extended_element), mesa)
+            try:
+                updated_element = use_cases.update_element(mesa, element)
+                extended_element = extend_element(updated_element)
+                await manager.send_group(encoder(extended_element), mesa)
+            except InvalidInputException as e:
+                await manager.send_single(websocket, {"type": "error", "message": str(e)})
     except WebSocketDisconnect:
         manager.disconnect(websocket, mesa)
