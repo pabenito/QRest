@@ -32,7 +32,10 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str, cliente: str):
                 updated_element = use_cases.update_element(mesa, element)
                 extended_element = extend_element(updated_element)
                 await manager.send_group(encoder(extended_element), mesa)
-            except InvalidInputException as e:
-                await manager.send_single(websocket, {"type": "error", "message": str(e)})
+            except InvalidInputException as error:
+                await manager.send_single(websocket, {"type": "error", "message": str(error)})
     except WebSocketDisconnect:
+        manager.disconnect(websocket, mesa)
+    except Exception as error:
+        await manager.send_single(websocket, {"type": "error", "message": str(error)})
         manager.disconnect(websocket, mesa)
