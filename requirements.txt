@@ -7,3 +7,4 @@ httpx
 starlette
 gunicorn
 uvicorn
+jinja2
