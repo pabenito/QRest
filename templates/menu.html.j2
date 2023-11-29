@@ -2,368 +2,375 @@
 <html lang="es" class="h-100">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QRest | Carta</title>
-  <link rel="icon" href="{{ url_for('static', path='/img/icon.png') }}" type="image/icon type">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/body.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}">
-  <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QRest | Carta</title>
+    <link rel="icon" href="{{ url_for('static', path='/img/icon.png') }}" type="image/icon type">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/body.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 </head>
 
 <body class="has-navbar-fixed-top">
-  <nav class="navbar is-fixed-top has-background-black">
-    <div class="columns is-mobile is-vcentered p-2">
-      <div class="column is-narrow">
-        <button class="button" onclick="modalSecciones.open()">
-          <span class="icon">
-            <i class="fas fa-bars"></i>
-          </span>
-        </button>
-      </div>
-      <div class="column">
-        <h2 id="section" class="title is-size-5 has-text-white"></h2>
-        <h3 id="subsection" class="subtitle is-size-6 has-text-white"></h3>
-      </div>
-    </div>
-  </nav>
-
-  <nav class="navbar is-fixed-bottom is-transparent is-block">
-    <div class="columns is-multiline p-5">
-      <div class="column is-full p-0">
-        <a
-          class="button is-fullwidth is-black"
-          href="/mesa/{{ order_id }}/pedido"
-        >
-          <p class="is-size-5">Pedir</p>
-        </a>
-      </div>
-    </div>
-  </nav>
-
-  <main>
-{% for section in sections %}
-  {% if not section.visible is defined%}
-    {% set section_index = loop.index %}
-    {% set section_id = "section" ~ section_index %}
-    {% set is_subsection = section.parent is defined %}
-    {% if is_subsection %}
-    <section id="{{ section_id }}" title="{{ section.parent }}" subtitle="{{ section.name }}" class="p-3 has-background-light">
-      <p class="title is-size-5">{{ section.parent }}</p>
-      <p class="subtitle is-size-6">{{ section.name }}</p>
-    </section>
-    {% else %}
-    <section id="{{ section_id }}" title="{{ section.name }}" class="p-3 has-background-light">
-      <p class="title is-size-5">{{ section.name }}</p>
-    </section>
-    {% endif %}
-
-    <div class="containter p-2">
-    {% for element in section.elements %}
-      {% if not element.visible is defined %}
-        {% set element_index = loop.index %}
-        {% set element_id = section_id ~ "_element" ~ element_index %}
-        {% set element_is_complex = element.variantes is defined or element.extras is defined %}
-      <div class="columns m-0 is-mobile is-vcentered">
-        {% if element.image is defined %}
-        <div class="column is-narrow">
-          <figure class="image is-96x96">
-            <img class="has-rounded-border" src="{{ element.image }}">
-          </figure>
+    <nav class="navbar is-fixed-top has-background-black">
+        <div class="columns is-mobile is-vcentered p-2">
+            <div class="column is-narrow">
+                <button class="button" onclick="modalSecciones.open()">
+                    <span class="icon">
+                        <i class="fas fa-bars"></i>
+                    </span>
+                </button>
+            </div>
+            <div class="column">
+                <h2 id="section" class="title is-size-5 has-text-white"></h2>
+                <h3 id="subsection" class="subtitle is-size-6 has-text-white"></h3>
+            </div>
         </div>
+    </nav>
+
+    <nav class="navbar is-fixed-bottom is-transparent is-block">
+        <div class="columns is-multiline p-5">
+            <div class="column is-full p-0">
+                <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/pedido">
+                    <p class="is-size-5">Pedir</p>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% for section in sections %}
+        {% if not section.visible is defined%}
+        {% set section_index = loop.index %}
+        {% set section.id = "section" ~ section_index %}
+        {% set is_subsection = section.parent is defined %}
+        {% if is_subsection %}
+        <section id="{{ section.id }}" title="{{ section.parent }}" subtitle="{{ section.name }}"
+            class="p-3 has-background-light">
+            <p class="title is-size-5">{{ section.parent }}</p>
+            <p class="subtitle is-size-6">{{ section.name }}</p>
+        </section>
+        {% else %}
+        <section id="{{ section.id }}" title="{{ section.name }}" class="p-3 has-background-light">
+            <p class="title is-size-5">{{ section.name }}</p>
+        </section>
         {% endif %}
-        <div class="column">
-        {% if element.tags is defined%}
-          <div class="tags m-0">
-          {% for tag in element.tags %}
-            <span class="tag is-rounded">
-            {% if tag.icon is defined %}
-              <span class="icon">
-                <img src="{{ tag.icon }}" />
-              </span>
+
+        <div class="containter p-2">
+            {% for element in section.elements %}
+            {% if not element.visible is defined %}
+            {% set element.id = element.id %}
+            {% set element_command_id = element_index ~ "_command" %}
+            {% set element_is_complex = element.variantes is defined or element.extras is defined %}
+            <div class="columns m-0 is-mobile is-vcentered">
+                {% if element.image is defined %}
+                <div class="column is-narrow">
+                    <figure class="image is-96x96">
+                        <img class="has-rounded-border" src="{{ element.image }}">
+                    </figure>
+                </div>
+                {% endif %}
+                <div class="column">
+                    {% if element.tags is defined%}
+                    <div class="tags m-0">
+                        {% for tag in element.tags %}
+                        <span class="tag is-rounded">
+                            {% if tag.icon is defined %}
+                            <span class="icon">
+                                <img src="{{ tag.icon }}" />
+                            </span>
+                            {% endif %}
+                            <span class="is-size-7 is-capitalized ml-1">{{ tag.name }}</span>
+                        </span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <p class="title is-size-5 m-0">{{ element.name }}</p>
+                    {% if element.price is defined %}
+                    <p class="subtitle is-size-5 m-0">{{ element.price }}€</p>
+                    {% endif %}
+                </div>
+                {% if element_is_complex %}
+                <div class="column is-narrow">
+                    <button id="{{ element.id ~ '_add_btn' }}" class="button"
+                        onclick="{{ element.id ~ '_add_modal' }}.open()">
+                        <span class="icon">
+                            <i class="fas fa-square-plus"></i>
+                        </span>
+                    </button>
+                    <div id="{{ element.id ~ '_counter' }}" class="field has-addons is-hidden">
+                        <div class="control">
+                            <button class="button is-danger" onclick="{{ element.id ~ '_takeOff_modal' }}.open()">
+                                <span class="icon">
+                                    <i class="fas fa-minus"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="control">
+                            <input id="{{ element.id ~ '_quantity_input' }}" class="input" type="number" min="0"
+                                value="0" readonly>
+                        </div>
+                        <div class="control">
+                            <button class="button is-success" onclick="{{ element.id ~ '_add_modal' }}.open()">
+                                <span class="icon">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="column column is-narrow">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <button class="button is-danger"
+                                onclick='element_controller.decreaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})'>
+                                <span class="icon">
+                                    <i class="fas fa-minus"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="control">
+                            <input id="{{ element_quantity_id }}" class="input" type="number" min="0"
+                                value="{{ element.quantity }}" />
+                        </div>
+                        <div class="control">
+                            <button class="button is-success"
+                                onclick='element_controller.increaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})'>
+                                <span class="icon">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endif %}
-              <span class="is-size-7 is-capitalized ml-1">{{ tag.name }}</span>
-            </span>
-          {% endfor %}
-          </div>
-        {% endif %}
-          <p class="title is-size-5 m-0">{{ element.name }}</p>
-        {% if element.price is defined %}
-          <p class="subtitle is-size-5 m-0">{{ element.price }}€</p>
-        {% endif %}
         </div>
         {% if element_is_complex %}
-        <div class="column is-narrow">
-          <button id="{{ element_id ~ '_add_btn' }}" class="button" onclick="{{ element_id ~ '_add_modal' }}.open()">
-            <span class="icon">
-              <i class="fas fa-square-plus"></i>
-            </span>
-          </button>
-          <div id="{{ element_id ~ '_counter' }}" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="{{ element_id ~ '_takeOff_modal' }}.open()">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="{{ element_id ~ '_quantity_input' }}" class="input" type="number" min="0" value="0" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="{{ element_id ~ '_add_modal' }}.open()">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-        {% else %}
-        <div class="column is-narrow">
-          <button id="{{ element_id ~ '_add_btn' }}" class="button" onclick="incrementValue(event); hide(event); show(event)"
-            to="{{ element_id ~ '_quantity_input' }}" show="{{ element_id ~ '_counter' }}" hide="{{ element_id ~ '_add_btn' }}">
-            <span class="icon">
-              <i class="fas fa-plus"></i>
-            </span>
-          </button>
-          <div id="{{ element_id ~ '_counter' }}" class="field has-addons is-hidden">
-            <div class="control">
-              <button class="button is-danger" onclick="decrementValue(event)" to="{{ element_id ~ '_quantity_input' }}" show="{{ element_id ~ '_add_btn' }}"
-                hide="{{ element_id ~ '_counter' }}">
-                <span class="icon">
-                  <i class="fas fa-minus"></i>
-                </span>
-              </button>
-            </div>
-            <div class="control">
-              <input id="{{ element_id ~ '_quantity_input' }}" class="input" type="number" min="0" value="{{ element.quantity if element.quantity is defined else 0 }}" readonly>
-            </div>
-            <div class="control">
-              <button class="button is-success" onclick="incrementValue(event)" to="{{ element_id ~ '_quantity_input' }}">
-                <span class="icon">
-                  <i class="fas fa-plus"></i>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
+        <div id="{{ element.id ~ 'elements' }}" class="container is-hidden"></div>
         {% endif %}
-      </div>
+        </div>
         {% if not loop.last %}
-      <hr class="m-2" />
+        <hr class="m-2" />
         {% endif %}
-      {% endif %}
-    {% endfor %}
-    </div>
-  {% endif %}
-{% endfor %}
-  </main>
-  <div id="modalSecciones" class="modal p-4">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">Secciones</p>
-        <button class="delete" aria-label="close"></button>
-      </header>
-      <nav class="modal-card-body p-5">
-{% for section in sections %}
-  {% if not section.visible is defined %}
-    {% set section_index = loop.index0 %}
-    {% set section_id = "section" ~ section_index %}
-    {% set is_subsection = section.parent is defined %}
-    {% if not loop.last %}
-      {% set next_section = sections[section_index + 1] %}
-      {% set next_is_subsection = next_section.parent is defined %}
-    {% endif %}
-    {% if not is_subsection %}
-        <a class="is-size-4 has-text-black" onclick="doScroll(event)" to="{{ section_id }}">
-          {{ section.name }}
-        </a>
-      {% if not loop.last %}
-        <hr class="m-2">
-        {% if next_is_subsection %}
-        <div class="pl-6">
         {% endif %}
-      {% endif %}
-    {% else %}
-          <a class="is-size-5 has-text-black" onclick="doScroll(event)" to="{{ section_id }}">
-            {{ section.name }}
-          </a>
-      {% if not loop.last %}
-        {% if next_is_subsection %}
-          <hr class="m-2">
-        {% else %}
+        {% endfor %}
         </div>
-        <hr class="m-2">
         {% endif %}
-      {% endif %}
-    {% endif %}
-  {% endif %}
-{% endfor %}
-      </nav>
-      <footer class="modal-card-foot">
-        <button class="button is-fullwidth" onclick="modalSecciones.close()">Cerrar</button>
-      </footer>
+        {% endfor %}
+    </main>
+    <div id="modalSecciones" class="modal p-4">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Secciones</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <nav class="modal-card-body p-5">
+                {% for section in sections %}
+                {% if not section.visible is defined %}
+                {% set section_index = loop.index0 %}
+                {% set section.id = "section" ~ section_index %}
+                {% set is_subsection = section.parent is defined %}
+                {% if not loop.last %}
+                {% set next_section = sections[section_index + 1] %}
+                {% set next_is_subsection = next_section.parent is defined %}
+                {% endif %}
+                {% if not is_subsection %}
+                <a class="is-size-4 has-text-black" onclick="doScroll(event)" to="{{ section.id }}">
+                    {{ section.name }}
+                </a>
+                {% if not loop.last %}
+                <hr class="m-2">
+                {% if next_is_subsection %}
+                <div class="pl-6">
+                    {% endif %}
+                    {% endif %}
+                    {% else %}
+                    <a class="is-size-5 has-text-black" onclick="doScroll(event)" to="{{ section.id }}">
+                        {{ section.name }}
+                    </a>
+                    {% if not loop.last %}
+                    {% if next_is_subsection %}
+                    <hr class="m-2">
+                    {% else %}
+                </div>
+                <hr class="m-2">
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </nav>
+            <footer class="modal-card-foot">
+                <button class="button is-fullwidth" onclick="modalSecciones.close()">Cerrar</button>
+            </footer>
+        </div>
     </div>
-  </div>
-{% for section in sections %}
-  {% if not section.visible is defined %}
+    {% for section in sections %}
+    {% if not section.visible is defined %}
     {% set section_index = loop.index %}
-    {% set section_id = "section" ~ section_index %}
     {% set is_subsection = section.parent is defined %}
     {% for element in section.elements %}
-      {% if not element.visible is defined %}
-        {% set element_index = loop.index %}
-        {% set element_id = section_id ~ "_element" ~ element_index %}
-        {% set element_is_complex = element.variantes is defined or element.extras is defined %}
-  <div id="{{ element_id ~ '_add_modal' }}" class="modal p-4">
-    <div class="modal-background"></div>
-    <form class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">{{ element.name }}</p>
-        <button class="delete" aria-label="close"></button>
-      </header>
-      <div class="modal-card-body p-3 has-background-light">
-          {% if element.description is defined %}
-        <div class="box">
-          <p class="has-text-justified">
-            <p class="is-size-5 has-text-weight-bold">Descripción</p>
-            <hr class="m-2">
-            <p class="is-size-6">{{ element.description }}</p>
-          </p>
-        </div>
-          {% endif %}
-          {% if element.allergens is defined %}
-        <div class="box">
-          <p class="is-size-5 has-text-weight-bold">Alérgenos</p>
-          <hr class="m-2">
-          <span class="icon-text is-size-5">
-            {% for allergen in element.allergens %}
-            <span class="icon is-medium">
-              <img src="{{ allergens[allergen] }}" />
-            </span>
-            {% endfor %}
-          </span>
-        </div>
-          {% endif %}
-          {% if element.variants is defined %}
-            {% for variant_group in element.variants %}
-        <div class="box">
-          <p class="is-size-5 has-text-weight-bold">{{ variant_group.name }}</p>
-          <hr class="m-2">
-              {% for variant in variant_group.variants %}
-                {% set variant_index = loop.index %}
-                {% set variant_id = "variant" ~ variant_index %}
-          <div class="columns is-mobile">
-            <div class="column is-one-third has-text-centered">
-              <p class="is-size-5">{{ variant.name }}</p>
-            </div>
-                {% if variant.price is defined %}
-            <div class="column is-one-third has-text-centered">
-              <p class="is-size-5">{{ variant.price }}€</p>
-            </div>
+    {% if not element.visible is defined %}
+    {% set element_index = loop.index %}
+    {% set element_is_complex = element.variantes is defined or element.extras is defined %}
+    <div id="{{ element.id ~ '_add_modal' }}" class="modal p-4">
+        <div class="modal-background"></div>
+        <form class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">{{ element.name }}</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <div class="modal-card-body p-3 has-background-light">
+                {% if element.description is defined %}
+                <div class="box">
+                    <p class="has-text-justified">
+                    <p class="is-size-5 has-text-weight-bold">Descripción</p>
+                    <hr class="m-2">
+                    <p class="is-size-6">{{ element.description }}</p>
+                    </p>
+                </div>
                 {% endif %}
-            <div class="column is-one-third has-text-centered">
-              <input type="radio" name="{{ variant_group.name }}" value="{{ variant.name }}">
-            </div>
-          </div>
-                {% if not loop.last %}
-          <hr class="m-2">
+                {% if element.allergens is defined %}
+                <div class="box">
+                    <p class="is-size-5 has-text-weight-bold">Alérgenos</p>
+                    <hr class="m-2">
+                    <span class="icon-text is-size-5">
+                        {% for allergen in element.allergens %}
+                        <span class="icon is-medium">
+                            <img src="{{ allergens[allergen] }}" />
+                        </span>
+                        {% endfor %}
+                    </span>
+                </div>
                 {% endif %}
-              {% endfor %}
-        </div>
-            {% endfor %}
-          {% endif %}
-          {% if element.ingredients is defined %}
-        <div class="box">
-          <p class="is-size-5 has-text-weight-bold">Ingredientes</p>
-          <hr class="m-2">
-            {% for ingredient in element.ingredients %}
-          <div class="columns is-mobile">
-            <div class="column is-half has-text-centered">
-              <p class="is-size-5">{{ ingredient }}</p>
-            </div>
-            <div class="column is-half has-text-centered">
-              <input type="checkbox" name="ingredients" value="{{ ingredient }}" checked>
-            </div>
-          </div>
-              {% if not loop.last %}
-          <hr class="m-2">
-              {% endif %}
-            {% endfor %}
-        </div>
-          {% endif %}
-          {% if element.extras is defined %}
-        <div class="box">
-          <p class="is-size-5 has-text-weight-bold">Extras</p>
-          <hr class="m-2">
-            {% for extra in element.extras %}
-          <div class="columns is-mobile">
-            <div class="column is-one-third has-text-centered">
-              <p class="is-size-5">{{ extra.name }}</p>
-            </div>
-              {% if extra.price is defined %}
-            <div class="column is-one-third has-text-centered">
-              <p class="is-size-5">{{ extra.price }}€</p>
-            </div>
-              {% endif %}
-            <div class="column is-one-third has-text-centered">
-              <input type="checkbox" name="extras" value="{{ extra.name }}">
-            </div>
-          </div>
-              {% if not loop.last %}
-          <hr class="m-2">
-              {% endif %}
-            {% endfor %}
-        </div>
-          {% endif %}
-      </div>
-      <footer class="modal-card-foot">
-        <div class="container">
-          <div class="columns is-mobile is-multiline">
-            <div class="column">
-              <button class="button is-fullwidth is-danger" onclick="{{ element_id ~ '_add_modal' }}.close()">Cancelar</button>
-            </div>
-            <div class="column is-narrow">
-              <div class="field has-addons">
-                <div class="control">
-                  <button type="button" class="button is-danger" onclick="decrementValue(event)" to="{{ element_id ~ '_add_modal_quantity_input' }}">
-                    <span class="icon">
-                      <i class="fas fa-minus"></i>
-                    </span>
-                  </button>
+                {% if element.variants is defined %}
+                {% for variant_group in element.variants %}
+                <div class="box">
+                    <p class="is-size-5 has-text-weight-bold">{{ variant_group.name }}</p>
+                    <hr class="m-2">
+                    {% for variant in variant_group.variants %}
+                    {% set variant_index = loop.index %}
+                    {% set variant_id = "variant" ~ variant_index %}
+                    <div class="columns is-mobile">
+                        <div class="column is-one-third has-text-centered">
+                            <p class="is-size-5">{{ variant.name }}</p>
+                        </div>
+                        {% if variant.price is defined %}
+                        <div class="column is-one-third has-text-centered">
+                            <p class="is-size-5">{{ variant.price }}€</p>
+                        </div>
+                        {% endif %}
+                        <div class="column is-one-third has-text-centered">
+                            <input type="radio" name="{{ variant_group.name }}" value="{{ variant.name }}">
+                        </div>
+                    </div>
+                    {% if not loop.last %}
+                    <hr class="m-2">
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                <div class="control">
-                  <input id="{{ element_id ~ '_add_modal_quantity_input' }}" class="input" type="number" min="1" value="1" readonly>
+                {% endfor %}
+                {% endif %}
+                {% if element.ingredients is defined %}
+                <div class="box">
+                    <p class="is-size-5 has-text-weight-bold">Ingredientes</p>
+                    <hr class="m-2">
+                    {% for ingredient in element.ingredients %}
+                    <div class="columns is-mobile">
+                        <div class="column is-half has-text-centered">
+                            <p class="is-size-5">{{ ingredient }}</p>
+                        </div>
+                        <div class="column is-half has-text-centered">
+                            <input type="checkbox" name="ingredients" value="{{ ingredient }}" checked>
+                        </div>
+                    </div>
+                    {% if not loop.last %}
+                    <hr class="m-2">
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                <div class="control">
-                  <button type="button" class="button is-success" onclick="incrementValue(event)" to="{{ element_id ~ '_add_modal_quantity_input' }}">
-                    <span class="icon">
-                      <i class="fas fa-plus"></i>
-                    </span>
-                  </button>
+                {% endif %}
+                {% if element.extras is defined %}
+                <div class="box">
+                    <p class="is-size-5 has-text-weight-bold">Extras</p>
+                    <hr class="m-2">
+                    {% for extra in element.extras %}
+                    <div class="columns is-mobile">
+                        <div class="column is-one-third has-text-centered">
+                            <p class="is-size-5">{{ extra.name }}</p>
+                        </div>
+                        {% if extra.price is defined %}
+                        <div class="column is-one-third has-text-centered">
+                            <p class="is-size-5">{{ extra.price }}€</p>
+                        </div>
+                        {% endif %}
+                        <div class="column is-one-third has-text-centered">
+                            <input type="checkbox" name="extras" value="{{ extra.name }}">
+                        </div>
+                    </div>
+                    {% if not loop.last %}
+                    <hr class="m-2">
+                    {% endif %}
+                    {% endfor %}
                 </div>
-              </div>
+                {% endif %}
             </div>
-            <div class="column">
-              <button type="button" class="button is-fullwidth is-success" onclick="{{ element_id ~ '_add_modal' }}.close(); hide(event); show(event); addTo(event)" show="{{ element_id ~ '_counter' }}" hide="{{ element_id ~ '_add_btn' }}" add_from="{{ element_id ~ '_add_modal_quantity_input' }}" add_to="{{ element_id ~ '_quantity_input' }}">Aceptar</button>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </form>
-  </div>
-      {% endif %}
+            <footer class="modal-card-foot">
+                <div class="container">
+                    <div class="columns is-mobile is-multiline">
+                        <div class="column">
+                            <button class="button is-fullwidth is-danger"
+                                onclick="{{ element.id ~ '_add_modal' }}.close()">Cancelar</button>
+                        </div>
+                        <div class="column is-narrow">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <button type="button" class="button is-danger" onclick="decrementValue(event)"
+                                        to="{{ element.id ~ '_add_modal_quantity_input' }}">
+                                        <span class="icon">
+                                            <i class="fas fa-minus"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="control">
+                                    <input id="{{ element.id ~ '_add_modal_quantity_input' }}" class="input"
+                                        type="number" min="1" value="1" readonly>
+                                </div>
+                                <div class="control">
+                                    <button type="button" class="button is-success" onclick="incrementValue(event)"
+                                        to="{{ element.id ~ '_add_modal_quantity_input' }}">
+                                        <span class="icon">
+                                            <i class="fas fa-plus"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <button type="button" class="button is-fullwidth is-success"
+                                onclick="{{ element.id ~ '_add_modal' }}.close(); hide(event); show(event); addTo(event)"
+                                show="{{ element.id ~ '_counter' }}" hide="{{ element.id ~ '_add_btn' }}"
+                                add_from="{{ element.id ~ '_add_modal_quantity_input' }}"
+                                add_to="{{ element.id ~ '_quantity_input' }}">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </form>
+    </div>
+    {% endif %}
     {% endfor %}
-  {% endif %}
-{% endfor %}
+    {% endif %}
+    {% endfor %}
 </body>
 
 <script src="{{ url_for('static', path='/js/counter.js') }}"></script>

@@ -8,12 +8,21 @@ from app.core.entities.order import Element, BasicElement
 from app.lib.utils import json_lower_encoder
 
 
+def encode(string: str):
+    hash_obj = hashlib.sha256(string.encode())
+    return hash_obj.hexdigest()
+
+
+def generate_element_id_from_names(section: str, element: str) -> str:
+    composed_name = section + element
+    return encode(composed_name)
+
+
 def generate_element_id(element: BasicElement) -> str:
     if isinstance(element, Element):
         element = basic_element_from_element(element)
     json_str = json.dumps(json_lower_encoder(element), sort_keys=True)
-    hash_obj = hashlib.sha256(json_str.encode())
-    return hash_obj.hexdigest()
+    return encode(json_str)
 
 
 def basic_element_from_element(element: Element) -> BasicElement:

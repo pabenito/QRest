@@ -4,6 +4,7 @@ from app.core.entities.menu import Element, Section
 
 
 class ExtendedElement(Element):
+    id: Optional[str] = None
     quantity: Optional[int] = None
     clients: Optional[list[str]] = None
 

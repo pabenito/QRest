@@ -1,6 +1,7 @@
 from typing import Any
 
 from app.api.frontend.entities.menu import ExtendedSection, ExtendedElement
+from app.api.services.extend_elment import generate_element_id_from_names
 from app.core.entities.allergens import Allergen
 from app.core.entities.menu import Section
 from app.core.entities.order import Element
@@ -41,7 +42,9 @@ class MenuFrontend:
     def get_extended_sections(self, order_id: str) -> list[ExtendedSection]:
         sections = self.get_sections()
         current_command = self.get_current_command(order_id)
-        return self.generate_extended_sections(sections, current_command)
+        extended_sections = self.generate_extended_sections(sections, current_command)
+        self._add_id_to_elements_in_sections(extended_sections)
+        return extended_sections
 
     @staticmethod
     def _allergens_as_dict(allergens: list[Allergen]) -> dict:
@@ -74,3 +77,8 @@ class MenuFrontend:
                     extended_section.elements.append(extended_element)
             extended_sections.append(extended_section)
         return extended_sections
+
+    def _add_id_to_elements_in_sections(self, extended_sections: list[ExtendedSection]):
+        for section in extended_sections:
+            for element in section.elements:
+                element.id = generate_element_id_from_names(section.name, element.name)
