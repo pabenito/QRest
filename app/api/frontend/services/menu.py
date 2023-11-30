@@ -74,6 +74,9 @@ class MenuFrontend:
                     if section.name in extended_elements_dict and element.name in extended_elements_dict[section.name]:
                         extended_element.quantity = extended_elements_dict[section.name][element.name]["quantity"]
                         extended_element.clients = extended_elements_dict[section.name][element.name]["clients"]
+                    else:
+                        extended_element.quantity = 0
+                        extended_element.clients = []
                     extended_section.elements.append(extended_element)
             extended_sections.append(extended_section)
         return extended_sections
