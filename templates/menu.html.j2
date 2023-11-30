@@ -365,9 +365,6 @@
     {% endif %}
 {% endfor %}
 </body>
-<script>
-    element_html_view.generateElements({{ elements | tojson | safe }})
-</script>
 <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
 <script src="{{ url_for('static', path='/js/showhide.js') }}"></script>
 <script src="{{ url_for('static', path='/js/modal.js') }}"></script>
