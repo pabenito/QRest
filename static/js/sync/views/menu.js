@@ -7,6 +7,12 @@ class MenuElementHTMLManager extends ElementHTMLManager{
         super();
     }
 
+    generateElements(elements) {
+        for (const element of elements) {
+            this.#generateElement(element)
+        }
+    }
+
     showError(message) {
         const notification = document.createElement('div');
         notification.className = 'notification is-danger';
@@ -22,10 +28,8 @@ class MenuElementHTMLManager extends ElementHTMLManager{
     putElement(element){
         const elementCounter = document.getElementById(`quantity_${element.id}`);
         if (elementCounter) {
-            if (element.quantity > 0) {
+            if (element.quantity >= 0) {
                 elementCounter.value = element.quantity;
-            } else {
-                document.getElementById(element.id).remove();
             }
         } else {
             this.#generateElement(element);
@@ -49,7 +53,8 @@ class MenuElementHTMLManager extends ElementHTMLManager{
         const quantityControlDiv = this.#createQuantityControl(element);
         elementDiv.appendChild(quantityControlDiv);
 
-        this.elementsContainer.appendChild(elementDiv);
+        const elementsContainer = document.getElementById( "command_" + element.id)
+        elementsContainer.appendChild(elementDiv);
     }
 
     #createElementImage(element) {

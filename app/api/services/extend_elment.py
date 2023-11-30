@@ -14,8 +14,8 @@ def encode(string: str):
 
 
 def generate_element_id_from_names(section: str, element: str) -> str:
-    composed_name = section + element
-    return encode(composed_name)
+    basic_element = BasicElement(section=section, element=element)
+    return generate_element_id(basic_element)
 
 
 def generate_element_id(element: BasicElement) -> str:

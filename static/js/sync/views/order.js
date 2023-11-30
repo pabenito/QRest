@@ -8,6 +8,12 @@ class OrderElementHTMLManager extends ElementHTMLManager{
         this.elementsContainer = document.getElementById('elements');
     }
 
+    generateElements(elements) {
+        for (const element of elements) {
+            this.#generateElement(element)
+        }
+    }
+
     showError(message) {
         const notification = document.createElement('div');
         notification.className = 'notification is-danger';

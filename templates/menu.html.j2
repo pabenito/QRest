@@ -78,8 +78,8 @@
         <div class="containter p-2">
         {% for element in section.elements %}
             {% if not element.visible is defined %}
-                {% set element_command_id = element_index ~ "_command" %}
-                {% set element_is_complex = element.variants is defined or element.extras is defined %}
+                {% set element_command_id = "command_" ~ element.id %}
+                {% set element_is_complex = element.variants is defined or element.extras is defined or element.ingredients is defined %}
                 {% set modal_id = 'modal' ~ element.id %}
             <div class="columns m-0 is-mobile is-vcentered">
                 {% if element.image is defined %}
@@ -214,8 +214,8 @@
         {% for element in section.elements %}
             {% if not element.visible is defined %}
                 {% set element_index = loop.index %}
-                {% set element_is_complex = element.variants is defined or element.extras is defined %}
-                {% set element_command_id = element_index ~ "_command" %}
+                {% set element_is_complex = element.variants is defined or element.extras is defined or element.ingredients is defined %}
+                {% set element_command_id = "command_" ~ element.id %}
                 {% if element_is_complex %}
                     {% set modal_quantity_id = modal_quantity_id %}
                     {% set modal_id = 'modal' ~ element.id %}
@@ -365,6 +365,9 @@
     {% endif %}
 {% endfor %}
 </body>
+<script>
+    element_html_view.generateElements({{ elements | tojson | safe }})
+</script>
 <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
 <script src="{{ url_for('static', path='/js/showhide.js') }}"></script>
 <script src="{{ url_for('static', path='/js/modal.js') }}"></script>
