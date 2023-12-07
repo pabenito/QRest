@@ -26,3 +26,9 @@ class MongoMenuRepository(IMenuRepository):
             id_projection=False)
         section_list = list(result.sort("name"))
         return parse_object(section_list, list[Section])
+
+    def section_element_exists(self, section: str, element: str) -> bool:
+        result = self.repository.get_with_query_and_projection(
+            has_attribute_value={"name": section},
+            has_list_value={"elements": {"name": element}})
+        return True if result else False

@@ -176,7 +176,14 @@ def test_add_element__when_order_does_not_exists__then_http_status_404_not_found
         "section": "bebidas",
         "element": "nestea",
         "clients": ["marcos"]
-    },
+    }
+])
+def test_add_element__when_element_is_not_correct__then_http_status_422_unprocessable_entity(api, order_id, element):
+    response = _put_element(api, order_id, element)
+    _print_response(response)
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY, response.text
+
+@pytest.mark.parametrize("element", [
     {
         "section": "bebidas",
         "element": "nestea",
@@ -184,10 +191,11 @@ def test_add_element__when_order_does_not_exists__then_http_status_404_not_found
         "clients": []
     }
 ])
-def test_add_element__when_element_is_not_correct__then_http_status_422_unprocessable_entity(api, order_id, element):
+def test_add_element__when_element_is_not_correct__then_http_status_400_bad_request(api, order_id, element):
     response = _put_element(api, order_id, element)
     _print_response(response)
-    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY, response.text
+    assert response.status_code == status.HTTP_400_BAD_REQUEST, response.text
+
 
 
 @pytest.mark.parametrize("element", [

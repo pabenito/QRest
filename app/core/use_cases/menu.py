@@ -14,3 +14,6 @@ class MenuUseCases:
         sections = self.repository.get_all_sections()
         subsections = self.repository.get_all_subsections()
         return self.services.sort_menu(sections, subsections)
+
+    def section_exists(self, section: str) -> bool:
+        return self.repository.section_exists(section)

@@ -6,6 +6,7 @@ from pymongo.client_session import ClientSession
 from app.core.entities.order import Command, Element, BasicElement
 from app.core.use_cases.services.command import CommandServices
 from app.db.exceptions import PersistenceExceptionFactory
+from app.db.repositories.interfaces.menu import IMenuRepository
 from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.interfaces.command import ICommandRepository
 from app.db.repositories.mongo_repositories import MongoTransactionManager
@@ -32,6 +33,7 @@ class CommandUseCases:
 
     def update_element(self, order_id: str, element: Element) -> Element:
         self.services.check_element_is_correct(element)
+        self.services.check_element_exists_in_menu(element)
         with self.transaction_manager() as session:
             if not self.command_repository.exists(order_id, self.services.element_to_basic_element(element), session):
                 self.command_repository.add(order_id, element, session)

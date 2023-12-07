@@ -41,10 +41,11 @@ class MongoQueryProjectionGenerator:
         else:
             return element
 
-    @staticmethod
-    def query(id: Optional[str] = None,
+    def query(self, id: Optional[str] = None,
               has_attribute: Optional[list[str]] = None,
-              does_not_have_attribute: Optional[list[str]] = None) -> dict:
+              does_not_have_attribute: Optional[list[str]] = None,
+              has_attribute_value: Optional[dict] = None,
+              has_list_value: Optional[dict] = None) -> dict:
         query = dict()
         if id:
             query["_id"] = ObjectId(id)
@@ -54,6 +55,12 @@ class MongoQueryProjectionGenerator:
         if does_not_have_attribute:
             for attribute in does_not_have_attribute:
                 query[attribute] = {"$exists": False}
+        if has_attribute_value:
+            for attribute, value in has_attribute_value.items():
+                query[attribute] = value
+        if has_list_value:
+            for attribute, value in has_list_value.items():
+                query[attribute] = self.element_match(value)
         return query
 
     @staticmethod
@@ -128,25 +135,38 @@ class MongoStandardRepository(BasicMongoRepository, IStandardRepository):
     def get_all_with_query_and_projection(self,
                                           has_attribute: Optional[list[str]] = None,
                                           does_not_have_attribute: Optional[list[str]] = None,
+                                          has_attribute_value: Optional[dict] = None,
+                                          has_list_value: Optional[dict] = None,
                                           include_projection_attribute: Optional[list[str]] = None,
                                           exclude_projection_attribute: Optional[list[str]] = None,
                                           id_projection: Optional[bool] = None,
                                           session: Optional[ClientSession] = None) -> Any:
         result = self._get_db().find(
-            self.generator.query(has_attribute=has_attribute, does_not_have_attribute=does_not_have_attribute),
-            self.generator.projection(id=id_projection, include_projection_attribute=include_projection_attribute, exclude_projection_attribute=exclude_projection_attribute),
+            self.generator.query(
+                has_attribute = has_attribute,
+                does_not_have_attribute = does_not_have_attribute,
+                has_attribute_value = has_attribute_value,
+                has_list_value = has_list_value),
+            self.generator.projection(id=id_projection, include_projection_attribute=include_projection_attribute,
+                                      exclude_projection_attribute=exclude_projection_attribute),
             session=session)
         return result
 
-    def get_with_query_and_projection(self, id: str,
+    def get_with_query_and_projection(self,
                                       has_attribute: Optional[list[str]] = None,
                                       does_not_have_attribute: Optional[list[str]] = None,
+                                      has_attribute_value: Optional[dict] = None,
+                                      has_list_value: Optional[dict] = None,
                                       include_projection_attribute: Optional[list[str]] = None,
                                       exclude_projection_attribute: Optional[list[str]] = None,
                                       id_projection: Optional[bool] = None,
                                       session: Optional[ClientSession] = None) -> Any:
         result = self._get_db().find_one(
-            self.generator.query(id, has_attribute, does_not_have_attribute),
+            self.generator.query(
+                has_attribute=has_attribute,
+                does_not_have_attribute=does_not_have_attribute,
+                has_attribute_value=has_attribute_value,
+                has_list_value=has_list_value),
             self.generator.projection(id_projection, include_projection_attribute, exclude_projection_attribute),
             session=session)
         return result
@@ -219,7 +239,8 @@ class MongoStandardRepository(BasicMongoRepository, IStandardRepository):
             return False
         return True
 
-    def has_element_in_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None) -> bool:
+    def has_element_in_list_attribute(self, id: str, attribute: str, element,
+                                      session: Optional[ClientSession] = None) -> bool:
         result = self._get_db().find_one(
             {"_id": ObjectId(id), attribute: self.generator.element_match(element)},
             {f"{attribute}.$": True},

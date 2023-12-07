@@ -2,9 +2,14 @@ from collections import Counter
 
 from app.core.exceptions import InvalidInputException
 from app.core.entities.order import Element, BasicElement
+from app.db.repositories.interfaces.menu import IMenuRepository
+from app.db.repositories.mongo_repositories.menu import MongoMenuRepository
 
 
 class CommandServices:
+    def __init__(self):
+        self.menu_repository: IMenuRepository = MongoMenuRepository()
+
     def update_db_element(self, db_element: Element, element: Element):
         if element.quantity == 0:
             raise InvalidInputException("Element quantity for update cant be 0.")
@@ -52,3 +57,8 @@ class CommandServices:
             else:
                 result_list.append(item)
         return result_list
+
+    def check_element_exists_in_menu(self, element: Element):
+        if not self.menu_repository.section_element_exists(element.section, element.element):
+            raise InvalidInputException(f"Element does not exitst in menu: section:{element.section}, element:{element.element}")
+

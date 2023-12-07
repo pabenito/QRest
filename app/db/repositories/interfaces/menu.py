@@ -13,3 +13,6 @@ class IMenuRepository(ABC):
     @abstractmethod
     def get_all_subsections(self, session: Optional[ClientSession] = None) -> list[Section]:
         pass
+
+    def section_element_exists(self, section: str, element: str) -> bool:
+        pass
