@@ -8,6 +8,11 @@ router = APIRouter()
 use_cases = OrderUseCases(MongoOrderRepository())
 
 
+@router.get("/", status_code=status.HTTP_201_CREATED)
+def get_all() -> list[Order]:
+    return use_cases.get_all()
+
+
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create(order: OrderPost) -> str:
     return use_cases.create(order)

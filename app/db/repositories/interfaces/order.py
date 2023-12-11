@@ -2,7 +2,7 @@ from typing import Optional
 from abc import ABC, abstractmethod
 from pymongo.client_session import ClientSession
 
-from app.core.entities.order import OrderPost, Element, Command, ReceiptElement
+from app.core.entities.order import OrderPost, Element, Command, ReceiptElement, Order
 
 
 class IOrderRepository(ABC):
@@ -44,4 +44,8 @@ class IOrderRepository(ABC):
 
     @abstractmethod
     def set_receipt(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+        pass
+
+    @abstractmethod
+    def get_all(self, session: Optional[ClientSession] = None) -> list[Order]:
         pass

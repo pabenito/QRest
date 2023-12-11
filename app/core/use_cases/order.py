@@ -15,6 +15,9 @@ class OrderUseCases:
     def delete(self, order: str):
         return self.repository.delete(order)
 
+    def get_all(self):
+        return self.repository.get_all()
+
 
 
 
