@@ -106,7 +106,7 @@
                     <div class="field has-addons">
                         <div class="control">
                             <button class="button is-danger"
-                                onclick='element_controller.decreaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})'>
+                                onclick='element_controller.decreaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
                                 <span class="icon">
                                     <i class="fas fa-minus"></i>
                                 </span>
@@ -118,7 +118,7 @@
                         </div>
                         <div class="control">
                             <button class="button is-success"
-                                onclick='element_controller.increaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson }}, {{ element.extras | tojson }}, {{ element.ingredients | tojson }})'>
+                                onclick='element_controller.increaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
                                 <span class="icon">
                                     <i class="fas fa-plus"></i>
                                 </span>
