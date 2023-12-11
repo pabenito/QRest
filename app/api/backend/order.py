@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status
 
 from app.core.entities.order import Order, OrderPost
 from app.core.use_cases.order import OrderUseCases
@@ -8,7 +8,7 @@ router = APIRouter()
 use_cases = OrderUseCases(MongoOrderRepository())
 
 
-@router.get("/", status_code=status.HTTP_201_CREATED)
+@router.get("/", response_model=list[Order], response_model_exclude_unset=True)
 def get_all() -> list[Order]:
     return use_cases.get_all()
 
