@@ -41,13 +41,12 @@ class IStandardRepository(IBasicRepository):
 
     @abstractmethod
     def get_with_query_and_projection(self,
-                                      id: str,
-                                      has_attribute: Optional[List[str]] = None,
-                                      does_not_have_attribute: Optional[List[str]] = None,
+                                      has_attribute: Optional[list[str]] = None,
+                                      does_not_have_attribute: Optional[list[str]] = None,
                                       has_attribute_value: Optional[dict] = None,
                                       has_list_value: Optional[dict] = None,
-                                      include_projection_attribute: Optional[List[str]] = None,
-                                      exclude_projection_attribute: Optional[List[str]] = None,
+                                      include_projection_attribute: Optional[list[str]] = None,
+                                      exclude_projection_attribute: Optional[list[str]] = None,
                                       id_projection: Optional[bool] = None,
                                       session: Optional[ClientSession] = None) -> Any:
         pass

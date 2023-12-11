@@ -57,7 +57,7 @@ class MongoQueryProjectionGenerator:
                 query[attribute] = {"$exists": False}
         if has_attribute_value:
             for attribute, value in has_attribute_value.items():
-                query[attribute] = value
+                query[attribute] = self.element_match(value)
         if has_list_value:
             for attribute, value in has_list_value.items():
                 query[attribute] = self.element_match(value)

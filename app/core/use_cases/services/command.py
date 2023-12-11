@@ -1,5 +1,6 @@
 from collections import Counter
 
+from app.db.exceptions import NotFoundException
 from app.core.exceptions import InvalidInputException
 from app.core.entities.order import Element, BasicElement
 from app.db.repositories.interfaces.menu import IMenuRepository
@@ -60,5 +61,5 @@ class CommandServices:
 
     def check_element_exists_in_menu(self, element: Element):
         if not self.menu_repository.section_element_exists(element.section, element.element):
-            raise InvalidInputException(f"Element does not exitst in menu: section:{element.section}, element:{element.element}")
+            raise NotFoundException(f"Element does not exitst in menu: section:{element.section}, element:{element.element}")
 

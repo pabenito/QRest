@@ -9,8 +9,6 @@ from app import db
 
 base_url = "/backend/mesa"
 
-db.configure_db(testing=True)
-
 simple_element = {
     "section": "bebidas",
     "element": "nestea",
@@ -50,6 +48,10 @@ def order_id(api):
     response = api.delete(base_url + f"/{order_id}")
     if response.status_code != status.HTTP_200_OK:
         raise Exception(f"rror en la eliminación del pedido {order_id}, código de estado: {response.status_code}")
+
+
+def setup_function(function):
+    db.configure_db(testing=True)
 
 
 def _put_element(api: TestClient, order_id: str, element: dict):
@@ -120,7 +122,8 @@ def test_confirm_current_command__when_current_command_does_not_exists__then_htt
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_add_element__when_element_is_correct_and_element_is_new_and_element_quantity_is_grater_than_zero__then_added_to_the_order_and_return_new_element(api, order_id, element):
+def test_add_element__when_element_is_correct_and_element_is_new_and_element_quantity_is_grater_than_zero__then_added_to_the_order_and_return_new_element(
+        api, order_id, element):
     response = _put_element(api, order_id, element)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
@@ -128,7 +131,8 @@ def test_add_element__when_element_is_correct_and_element_is_new_and_element_qua
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
-def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_grater_than_zero__then_element_quantity_is_updated_to_the_sum_of_them_and_return_updated_element(api, order_id, element):
+def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_grater_than_zero__then_element_quantity_is_updated_to_the_sum_of_them_and_return_updated_element(
+        api, order_id, element):
     response = _put_element(api, order_id, element)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
@@ -142,7 +146,8 @@ def test_add_element__when_element_is_correct_and_element_is_already_exists_and_
 @pytest.mark.parametrize("element, quantity", [
     (simple_element, -1),
     (complex_element, -1)])
-def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_less_than_zero__then_http_status_400_bad_request(api, order_id, element, quantity):
+def test_add_element__when_element_is_correct_and_element_is_already_exists_and_the_sum_of_both_quantities_is_less_than_zero__then_http_status_400_bad_request(
+        api, order_id, element, quantity):
     response = _put_element(api, order_id, element)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
@@ -183,6 +188,7 @@ def test_add_element__when_element_is_not_correct__then_http_status_422_unproces
     _print_response(response)
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY, response.text
 
+
 @pytest.mark.parametrize("element", [
     {
         "section": "bebidas",
@@ -195,7 +201,6 @@ def test_add_element__when_element_is_not_correct__then_http_status_400_bad_requ
     response = _put_element(api, order_id, element)
     _print_response(response)
     assert response.status_code == status.HTTP_400_BAD_REQUEST, response.text
-
 
 
 @pytest.mark.parametrize("element", [

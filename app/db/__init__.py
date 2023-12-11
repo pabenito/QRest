@@ -15,8 +15,10 @@ def configure_db(testing: bool = False):
     if db_client is None:
         db_client = MongoClient(db_uri)
     if testing:
+        print("Database is configured for testing")
         db = db_client["test"]
     else:
+        print("Database is configured for deployment")
         db = db_client[db_name]
 
 

@@ -16,19 +16,22 @@ class MongoMenuRepository(IMenuRepository):
     def get_all_sections(self, session: Optional[ClientSession] = None) -> list[Section]:
         result = self.repository.get_all_with_query_and_projection(
             does_not_have_attribute=["parent"],
-            id_projection=False)
+            id_projection=False,
+            session=session)
         section_list = list(result.sort("name"))
         return parse_object(list(section_list), list[Section])
 
     def get_all_subsections(self, session: Optional[ClientSession] = None) -> list[Section]:
         result = self.repository.get_all_with_query_and_projection(
             has_attribute=["parent"],
-            id_projection=False)
+            id_projection=False,
+            session=session)
         section_list = list(result.sort("name"))
         return parse_object(section_list, list[Section])
 
-    def section_element_exists(self, section: str, element: str) -> bool:
+    def section_element_exists(self, section: str, element: str, session: Optional[ClientSession] = None) -> bool:
         result = self.repository.get_with_query_and_projection(
             has_attribute_value={"name": section},
-            has_list_value={"elements": {"name": element}})
+            has_list_value={"elements": {"name": element}},
+            session=session)
         return True if result else False
