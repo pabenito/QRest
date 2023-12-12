@@ -8,3 +8,4 @@ starlette
 gunicorn
 uvicorn
 jinja2
+websockets
