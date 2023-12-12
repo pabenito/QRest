@@ -17,14 +17,14 @@
         integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
     <script type="module">
-        import { OrderElementHTMLManager } from '{{ url_for('static', path='/js/sync/views/order.js') }}';
+        import { MenuElementHTMLManager } from '{{ url_for('static', path='/js/sync/views/menu.js') }}';
         import { WebSocketManager } from '{{ url_for('static', path='/js/sync/model_websocket.js') }}';
         import { OrderController } from '{{ url_for('static', path='/js/sync/controller.js') }}';
         import { ClientController } from '{{ url_for('static', path='/js/client/controller.js') }}';
 
         var orderId = "{{ order_id }}";
         var client = "{{ client }}";
-        var element_html_view = new OrderElementHTMLManager();
+        var element_html_view = new MenuElementHTMLManager();
         var element_websocket_model = new WebSocketManager(`ws://{{ url }}{{ ws_path }}?mesa=${orderId}`);
         var client_controller = new ClientController("modalCliente", "client");
         var element_controller = new OrderController(element_html_view, element_websocket_model, client_controller);
