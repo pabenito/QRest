@@ -124,7 +124,7 @@
                     <div class="field has-addons">
                         <div class="control">
                             <button class="button is-danger"
-                                onclick='element_controller.decreaseElementQuantityModel("{{ element.id }}", "{{ section.name }}", "{{ element.name }}", "{{ client }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
+                                onclick='element_controller.decreaseElementQuantityModel("{{ element.id }}", "{{ section.name }}", "{{ element.name }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
                                 <span class="icon">
                                     <i class="fas fa-minus"></i>
                                 </span>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="control">
                             <button class="button is-success"
-                                onclick='element_controller.increaseElementQuantityModel("{{ element.id }}", "{{ section.name }}", "{{ element.name }}", "{{ client }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
+                                onclick='element_controller.increaseElementQuantityModel("{{ element.id }}", "{{ section.name }}", "{{ element.name }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
                                 <span class="icon">
                                     <i class="fas fa-plus"></i>
                                 </span>
@@ -160,6 +160,23 @@
     {% endif %}
 {% endfor %}
     </main>
+    <div id="modalCliente" class="modal p-4">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Nombre de Cliente</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <p class="is-size-5 m-0">Introduce el nombre con el que quieres hacer los pedidos:</p>
+                <input id="client" class="input is-medium" type="text" placeholder="Nombre">
+            </section>
+            <footer class="modal-card-foot">
+                 <button class="button is-success is-fullwidth" onclick=element_controller.setClient("client")>Guardar</button>
+            </footer>
+        </div>
+    </div>
+
     <div id="modalSecciones" class="modal p-4">
         <div class="modal-background"></div>
         <div class="modal-card">
@@ -369,3 +386,6 @@
 <script src="{{ url_for('static', path='/js/showhide.js') }}"></script>
 <script src="{{ url_for('static', path='/js/modal.js') }}"></script>
 <script src="{{ url_for('static', path='/js/sections.js') }}"></script>
+<script>
+    modalCliente.open();
+</script>

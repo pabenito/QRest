@@ -25,13 +25,16 @@
         import { OrderElementHTMLManager } from '{{ url_for('static', path='/js/sync/views/order.js') }}';
         import { WebSocketManager } from '{{ url_for('static', path='/js/sync/model_websocket.js') }}';
         import { OrderController } from '{{ url_for('static', path='/js/sync/controller.js') }}';
+        import { ClientController } from '{{ url_for('static', path='/js/client/controller.js') }}';
 
         var orderId = "{{ order_id }}";
         var client = "{{ client }}";
         var element_html_view = new OrderElementHTMLManager();
         var element_websocket_model = new WebSocketManager(`ws://{{ url }}{{ ws_path }}?mesa=${orderId}`);
-        var element_controller = new OrderController(element_html_view, element_websocket_model);
+        var client_controller = new ClientController("modalCliente", "client");
+        var element_controller = new OrderController(element_html_view, element_websocket_model, client_controller);
 
+        window.client_controller = client_controller;
         window.element_controller = element_controller;
     </script>
 </head>
@@ -106,7 +109,7 @@
                     <div class="field has-addons">
                         <div class="control">
                             <button class="button is-danger"
-                                onclick='element_controller.decreaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
+                                onclick='element_controller.decreaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
                                 <span class="icon">
                                     <i class="fas fa-minus"></i>
                                 </span>
@@ -118,7 +121,7 @@
                         </div>
                         <div class="control">
                             <button class="button is-success"
-                                onclick='element_controller.increaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", "{{ client }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
+                                onclick='element_controller.increaseElementQuantityModel("{{ element.id }}", "{{ element.section }}", "{{ element.element }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
                                 <span class="icon">
                                     <i class="fas fa-plus"></i>
                                 </span>
@@ -133,6 +136,22 @@
             {% endfor %}
         </div>
     </main>
+    <div id="modalCliente" class="modal is-active p-4">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Nombre de Cliente</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <p class="is-size-5 m-0">Introduce el nombre con el que quieres hacer los pedidos:</p>
+                <input id="client" class="input is-medium" type="text" placeholder="Nombre">
+            </section>
+            <footer class="modal-card-foot">
+                 <button class="button is-success is-fullwidth" onclick=client_controller.setClient()>Guardar</button>
+            </footer>
+        </div>
+    </div>
 </body>
 
 </html>
