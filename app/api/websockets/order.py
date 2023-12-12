@@ -22,7 +22,7 @@ parser = parse_object
 
 
 @router.websocket("/ws/comanda")
-async def websocket_endpoint(websocket: WebSocket, mesa: str, cliente: str):
+async def websocket_endpoint(websocket: WebSocket, mesa: str):
     await manager.connect(websocket, mesa)
     try:
         while True:
