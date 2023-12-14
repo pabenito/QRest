@@ -54,11 +54,9 @@
     <nav class="navbar is-fixed-bottom is-transparent is-block">
         <div class="columns is-multiline p-5">
             <div class="column is-full p-0">
-                <form class="button is-fullwidth is-black" method="post" action="/backend/mesa/{{ order_id }}/pedido/confirmar" onsubmit="confirm(event)">
-                    <button type="submit">
-                        <p class="is-size-5">Pedir</p>
-                    </button>
-                </form>
+                <button class="button is-fullwidth is-black" onclick="confirm('/backend/mesa/{{ order_id }}/pedido/confirmar', '/mesa/{{ order_id }}/carta')">
+                    <p class="is-size-5">Pedir</p>
+                </button>
             </div>
             <div class="column is-full p-0 pt-2">
                 <a class="button is-fullwidth" href="/mesa/{{ order_id }}/carta">
