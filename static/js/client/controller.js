@@ -6,7 +6,7 @@ class ClientController {
     constructor(modalId, inputId) {
         this.#setModal(modalId);
         this.#setInput(inputId);
-        this.client = undefined;
+        this.setClientFromLocalStorage();
     }
 
     #setModal(modal){
@@ -29,9 +29,18 @@ class ClientController {
         this.#getModal().show();
     }
 
+    setClientFromLocalStorage() {
+        const clientFromStorage = localStorage.getItem('client');
+        if (clientFromStorage) {
+            this.client = clientFromStorage;
+        }
+    }
+
     setClient() {
-        if (this.#getInput().value.length > 0) {
-            this.client = this.#getInput().value;
+        const inputElement = this.#getInput();
+        if (inputElement && inputElement.value.length > 0) {
+            this.client = inputElement.value;
+            localStorage.setItem('client', this.client);
             this.#getModal().hide();
         } else {
             this.#showError("No se ha introducido ningún nombre");
