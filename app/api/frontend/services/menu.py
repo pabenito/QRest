@@ -8,6 +8,7 @@ from app.core.entities.order import Element
 from app.core.use_cases.command import CommandUseCases
 from app.core.use_cases.menu import MenuUseCases
 from app.core.use_cases.allergens import AllergensUseCases
+from app.core.use_cases.order import OrderUseCases
 from app.db.repositories.mongo_repositories.allergens import MongoAllergensRepository
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
 from app.db.repositories.mongo_repositories.menu import MongoMenuRepository
@@ -18,6 +19,7 @@ from app.lib.utils import json_lower_encoder
 class MenuFrontend:
     def __init__(self):
         self.menu_use_cases = MenuUseCases(repository=MongoMenuRepository())
+        self.order_use_cases = OrderUseCases(repository=MongoOrderRepository())
         self.command_use_cases = CommandUseCases(order_repository=MongoOrderRepository(),
                                                  command_repository=MongoCommandRepository())
         self.allergens_use_cases = AllergensUseCases(repository=MongoAllergensRepository())
@@ -26,6 +28,9 @@ class MenuFrontend:
     @staticmethod
     def encode(object: Any) -> dict:
         return json_lower_encoder(object)
+
+    def create_order(self) -> str:
+        return self.order_use_cases.create()
 
     def get_sections(self) -> list[Section]:
         return self.menu_use_cases.get_menu()

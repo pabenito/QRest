@@ -2,7 +2,7 @@ from pprint import pprint
 
 from fastapi import APIRouter
 from fastapi import Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from app import config
@@ -17,6 +17,12 @@ templates = Jinja2Templates(directory="templates")
 
 menu_frontend = MenuFrontend()
 order_frontend = OrderFrontend()
+
+
+@router.get("/carta")
+def redirect_new_order_carta():
+    order_id = menu_frontend.create_order()
+    return RedirectResponse(url=f"/mesa/{order_id}/carta")
 
 
 @router.get("/mesa/{id}/carta", response_class=HTMLResponse)

@@ -1,10 +1,7 @@
-import hashlib
-import json
-from pprint import pprint
 from typing import Any
 
 from app.api.frontend.entities.order import ExtendedElement
-from app.api.services.extend_elment import extend_element, generate_extend_elements_with_images
+from app.api.services.extend_elment import generate_extend_elements_with_images
 from app.core.entities.menu import Section
 from app.core.entities.order import Element
 from app.core.use_cases.command import CommandUseCases

@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request, status
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 
 from app import db
 from app import api
@@ -11,6 +11,11 @@ from app import config
 app = FastAPI()
 
 app.include_router(api.router)
+
+
+@app.get("/")
+async def redirect_to_carta():
+    return RedirectResponse(url="/carta")
 
 
 @app.on_event("startup")
