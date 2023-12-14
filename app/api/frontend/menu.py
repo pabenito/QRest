@@ -19,8 +19,8 @@ menu_frontend = MenuFrontend()
 order_frontend = OrderFrontend()
 
 
-@router.get("/mesa/{id}/cliente/{client}/carta", response_class=HTMLResponse)
-def get(request: Request, id: str, client):
+@router.get("/mesa/{id}/carta", response_class=HTMLResponse)
+def get(request: Request, id: str):
     print("Extended sections:\n")
     pprint(menu_frontend.encode(menu_frontend.get_extended_sections(id)))
     return templates.TemplateResponse("menu.html.j2", {
@@ -30,5 +30,4 @@ def get(request: Request, id: str, client):
         "sections": menu_frontend.encode(menu_frontend.get_extended_sections(id)),
         "allergens": menu_frontend.encode(menu_frontend.get_allergens_dict()),
         "order_id": id,
-        "client": client,
         "elements": order_frontend.get_current_command(id)})
