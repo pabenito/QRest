@@ -652,3 +652,213 @@ Este caso trata de añadir un elemento que no existe a la comanda actual de un p
 #### Test en Python
 
 `test_add_element__when_element_does_not_exists__then_http_status_404_not_found()`
+
+## Recibo
+
+### Caso de prueba 1: Generar el recibo cuando hay comandas una comanda confirmada
+
+En este caso se intenta generar un recibo para un pedido que existe y que tiene una comanda confirmada. El recibo se genera a partir de la comanda confirmada.
+
+**Método**: Generar recibo (`generate_receipt`).
+**Escenario**: Pedido existe y hay una comanda confirmada.
+**Tipo**: Éxito.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el cliente _{cliente]_ añade el elemento _{elemento}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}.
+- **Y** el precio de del elemento _{elemento}_ es de _{precio}_. 
+- **Cuando** se solicita generar el recibo del pedido con identificador _{id}_.
+- **Entonces** el sistema genera el recibo _{recibo}_ a partir de la comanda confirmada.
+- **Y** el sistema devuelve un HTTP Status 200 (OK).
+
+#### Ejemplos
+
+##### Un elemento simple
+
+- _{id}_: "abc"
+- _{cliente}_: "marcos"
+- _{precio}_: 2.5
+- _{elemento}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": {cliente}
+}
+```
+
+- _{Recibo}_:
+
+```json
+[
+    {
+        **{element},
+        "clients": [{cliente}],
+        "price": {precio},
+    }
+]
+```
+
+##### Un elemento complejo
+
+- _{id}_: "abc"
+- _{cliente}_: "marcos"
+- _{precio}_: 2.5
+- _{elemento}_:
+
+```json
+[
+    {
+        "section": "pizzas",
+        "element": "carbonara",
+        "quantity": 1,
+        "variants": [
+            {
+                "name": "tamaño",
+                "value": "familiar"
+            }
+        ],
+        "extras": ["albahaca"],
+        "ingredients": ["bacon"],
+        "clients": [{cliente}]
+    }
+]
+```
+
+- _{recibo}_:
+
+```json
+[
+    {
+        **{element},
+        "clients": [{cliente}],
+        "price": {precio},
+    }
+]
+```
+
+### Caso de prueba 2: Generar el recibo cuando hay varias comandas confirmadas
+
+En este caso se intenta generar un recibo para un pedido que existe y que tiene varias comandas confirmadas. El recibo se genera a partir de las comandas confirmadas.
+
+**Método**: Generar recibo (`generate_receipt`).
+**Escenario**: Pedido existe y hay varias comandas confirmadas.
+**Tipo**: Éxito.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el cliente _{cliente}_ añade el elemento _{elemento}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}_.
+- **Y** el cliente _{cliente}_ añade el elemento _{elemento}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}_.
+- **Cuando** se solicita generar el recibo del pedido con identificador _{id}_.
+- **Entonces** el sistema genera el recibo _{recibo}_ a partir de las comandas confirmadas.
+
+#### Ejemplos
+
+##### Un elemento simple
+
+- _{id}_: "abc"
+- _{cliente}_: "marcos"
+- _{precio}_: 2.5
+- _{elemento}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 2,
+    "clients": {cliente}
+}
+```
+
+- _{Recibo}_:
+
+```json
+[
+    {
+        **{element},
+        "clients": [{cliente}],
+        "price": 2 * {precio},
+    }
+]
+```
+
+##### Un elemento complejo
+
+- _{id}_: "abc"
+- _{cliente}_: "marcos"
+- _{precio}_: 2.5
+- _{elemento}_:
+
+```json
+[
+    {
+        "section": "pizzas",
+        "element": "carbonara",
+        "quantity": 2,
+        "variants": [
+            {
+                "name": "tamaño",
+                "value": "familiar"
+            }
+        ],
+        "extras": ["albahaca"],
+        "ingredients": ["bacon"],
+        "clients": [{cliente}]
+    }
+]
+```
+
+- _{recibo}_:
+
+```json
+[
+    {
+        **{element},
+        "clients": [{cliente}],
+        "price": 2 * {precio},
+    }
+]
+```
+
+### Caso de prueba 3: Generar el recibo cuando no hay comandas confirmadas
+
+En este caso se intenta generar un recibo para un pedido que existe y que no tiene comandas confirmadas. Se revolverá un error con codigo HTTP 400 (Bad Request).
+
+**Método**: Generar recibo (`generate_receipt`).
+**Escenario**: Pedido existe y no hay comandas confirmadas.
+**Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Cuando** se solicita generar el recibo del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 400 (Bad Request).
+
+#### Ejemplo
+
+- _{id}_: "abc"
+
+### Caso de prueba 4: Generar el recibo cuando el pedido no existe
+
+En este caso se intenta generar un recibo para un pedido que no existe. Se revolverá un error con codigo HTTP 404 (Not Found).
+
+**Método**: Generar recibo (`generate_receipt`).
+**Escenario**: Pedido no existe.
+**Tipo**: Error.
+
+#### Caso de prueba
+
+- **Dado que** no existe ningún pedido con identificador _{id}_.
+- **Cuando** se solicita generar el recibo del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 404 (Not Found).
+
+#### Ejemplo
+
+- _{id}_: "abc"
