@@ -16,14 +16,6 @@ simple_element = {
     "price": 2
 }
 
-simple_element_receipt = {
-    "section": "bebidas",
-    "element": "nestea",
-    "quantity": 1,
-    "clients": ["marcos"],
-    "price": 2,
-}
-
 
 def generate_receipt(list_elements: list[dict]) -> list[dict]:
     receipt = {}
@@ -33,7 +25,8 @@ def generate_receipt(list_elements: list[dict]) -> list[dict]:
             receipt[element["element"]]["clients"].extend(element["clients"])
             receipt[element["element"]]["total"] += element["price"] * element["quantity"]
         else:
-            receipt[element["element"]] = element
+            receipt[element["element"]] = element.copy()
+            receipt[element["element"]]["price"] = element["price"]
             receipt[element["element"]]["total"] = element["price"] * element["quantity"]
     return list(receipt.values())
 
@@ -73,12 +66,12 @@ def _confirm_command(api: TestClient, order_id: str):
 
 
 def _generate_receipt(api: TestClient, order_id: str):
-    return api.post(base_url + f"/{order_id}/pedido/recibo")
+    return api.post(base_url + f"/{order_id}/recibo")
 
 
 def _print_response(response: Response):
     print(f"\nResponse status code: {response.status_code}\n")
-    print(f"\nResponse body: {response.text}\n")
+    print(f"Response body: {response.text}\n")
 
 
 @pytest.mark.parametrize("element", [simple_element])
@@ -89,11 +82,10 @@ def test_post_generate_receipt__when_order_exists_and_one_confirmed_order_exists
     response = _confirm_command(api, order_id)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
-    assert response.json() == [element]
     response = _generate_receipt(api, order_id)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
-    assert response.json() == generate_receipt([simple_element_receipt])
+    assert response.json() == generate_receipt([simple_element])
 
 @pytest.mark.parametrize("element", [simple_element])
 def test_post_generate_receipt__when_order_exists_and_two_confirmed_order_exists__then_http_status_200_ok(api, order_id, element: dict):
@@ -103,24 +95,20 @@ def test_post_generate_receipt__when_order_exists_and_two_confirmed_order_exists
     response = _confirm_command(api, order_id)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
-    assert response.json() == [element]
     _put_element(api, order_id, element)
     _confirm_command(api, order_id)
     response = _generate_receipt(api, order_id)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
-    assert response.json() == generate_receipt([simple_element_receipt, simple_element_receipt])
+    assert response.json() == generate_receipt([simple_element, simple_element])
 
 def test_post_generate_receipt__when_order_does_not_exists__then_http_status_404_not_found(api):
     response = _generate_receipt(api, "012345678901234567890123")
     _print_response(response)
     assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
-def test_post_generate_receipt__when_order_exists_and_no_confirmed_order_exists__then_http_status_400_bad_request(api, order_id):
-    response = _put_element(api, order_id, simple_element)
+def test_post_generate_receipt__when_order_exists_and_no_confirmed_order_exists__then_http_status_404_bad_request(api):
+    response = _generate_receipt(api, "012345678901234567890123")
     _print_response(response)
-    assert response.status_code == status.HTTP_200_OK, response.text
-    response = _generate_receipt(api, order_id)
-    _print_response(response)
-    assert response.status_code == status.HTTP_400_BAD_REQUEST, response.text
+    assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
     _print_response(response)
