@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter
 from fastapi import Request
 from fastapi.responses import HTMLResponse
@@ -16,11 +18,12 @@ order_frontend = OrderFrontend()
 
 
 @router.get("/mesa/{id}/pedido", response_class=HTMLResponse)
-def get(request: Request, id: str):
+def get(request: Request, id: str, error: Optional[str] = None):
     elements = order_frontend.encode(order_frontend.get_current_command_with_extended_elements(id))
     return templates.TemplateResponse("pedido.html.j2", {
         "request": request,
         "url": config.url,
         "ws_path": "/ws/comanda",
         "elements": elements,
-        "order_id": id})
+        "order_id": id,
+        "error": error})
