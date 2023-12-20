@@ -7,6 +7,10 @@ from app.core.entities.menu import Section
 
 class IMenuRepository(ABC):
     @abstractmethod
+    def get_all(self, session: Optional[ClientSession] = None) -> list[Section]:
+        pass
+
+    @abstractmethod
     def get_all_sections(self, session: Optional[ClientSession] = None) -> list[Section]:
         pass
 

@@ -1,4 +1,5 @@
 from pprint import pprint
+from typing import Optional
 
 from fastapi import APIRouter
 from fastapi import Request
@@ -26,7 +27,7 @@ def redirect_new_order_carta():
 
 
 @router.get("/mesa/{id}/carta", response_class=HTMLResponse)
-def get(request: Request, id: str):
+def get(request: Request, id: str, error: Optional[str] = None):
     print("Extended sections:\n")
     pprint(menu_frontend.encode(menu_frontend.get_extended_sections(id)))
     return templates.TemplateResponse("menu.html.j2", {
@@ -36,4 +37,5 @@ def get(request: Request, id: str):
         "sections": menu_frontend.encode(menu_frontend.get_extended_sections(id)),
         "allergens": menu_frontend.encode(menu_frontend.get_allergens_dict()),
         "order_id": id,
-        "elements": order_frontend.get_current_command(id)})
+        "elements": order_frontend.get_current_command(id),
+        "error": error})

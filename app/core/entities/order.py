@@ -25,6 +25,7 @@ class Element(BasicElement):
 
 class ReceiptElement(Element):
     price: float
+    total: float
 
 
 class Command(BaseModel):

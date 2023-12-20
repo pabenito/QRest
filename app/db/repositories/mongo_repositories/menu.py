@@ -13,6 +13,13 @@ class MongoMenuRepository(IMenuRepository):
     def __init__(self):
         self.repository: IStandardRepository = MongoStandardRepository("menu")
 
+    def get_all(self, session: Optional[ClientSession] = None) -> list[Section]:
+        result = self.repository.get_all_with_query_and_projection(
+            id_projection=False,
+            session=session)
+        section_list = list(result.sort("name"))
+        return parse_object(list(section_list), list[Section])
+
     def get_all_sections(self, session: Optional[ClientSession] = None) -> list[Section]:
         result = self.repository.get_all_with_query_and_projection(
             does_not_have_attribute=["parent"],

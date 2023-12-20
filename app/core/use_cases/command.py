@@ -1,16 +1,11 @@
-from collections import Counter
 from datetime import datetime
 
-from pymongo.client_session import ClientSession
-
-from app.core.entities.order import Command, Element, BasicElement
+from app.core.entities.order import Command, Element
 from app.core.use_cases.services.command import CommandServices
 from app.db.exceptions import PersistenceExceptionFactory
-from app.db.repositories.interfaces.menu import IMenuRepository
-from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.interfaces.command import ICommandRepository
+from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.mongo_repositories import MongoTransactionManager
-from app.core.exceptions import InvalidInputException
 
 
 class CommandUseCases:
