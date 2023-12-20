@@ -37,7 +37,7 @@
         window.client_controller = client_controller;
         window.element_controller = element_controller;
     </script>
-    <script src="{{ url_for('static', path='/js/forms/confirm.js') }}"></script>
+    <script src="{{ url_for('static', path='/js/forms/post_handler.js') }}"></script>
 </head>
 
 <body class="has-navbar-fixed-top has-navbar-fixed-bottom">
@@ -54,7 +54,7 @@
     <nav class="navbar is-fixed-bottom is-transparent is-block">
         <div class="columns is-multiline p-5">
             <div class="column is-full p-0">
-                <button class="button is-fullwidth is-black" onclick="confirm('/backend/mesa/{{ order_id }}/pedido/confirmar', '/mesa/{{ order_id }}/carta')">
+                <button class="button is-fullwidth is-black" onclick="post_handler('/backend/mesa/{{ order_id }}/pedido/confirmar', '/mesa/{{ order_id }}/carta')">
                     <p class="is-size-5">Pedir</p>
                 </button>
             </div>
