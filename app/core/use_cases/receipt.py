@@ -26,4 +26,7 @@ class ReceiptUseCases:
             return inserted_receipt
 
     def get(self, order_id: str) -> list[ReceiptElement]:
-        return self.order_repository.get_receipt(order_id)
+        try:
+            return self.order_repository.get_receipt(order_id)
+        except:
+            return []
