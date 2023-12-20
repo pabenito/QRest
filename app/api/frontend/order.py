@@ -20,7 +20,7 @@ order_frontend = OrderFrontend()
 
 
 @router.get("/mesa/{id}/pedido")
-def get(request: Request, id: str, error: Optional[str] = None):
+def get(request: Request, id: str, error: Optional[str] = None, message: Optional[str] = None):
     elements = order_frontend.encode(order_frontend.get_current_command_with_extended_elements(id))
     pprint(elements)
     if not elements:
@@ -31,4 +31,5 @@ def get(request: Request, id: str, error: Optional[str] = None):
         "ws_path": "/ws/comanda",
         "elements": elements,
         "order_id": id,
-        "error": error})
+        "error": error,
+        "message": message})
