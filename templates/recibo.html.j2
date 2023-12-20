@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QRest | Recibo</title>
+    <link rel="icon" href="/static/img/icon.png" type="image/icon type">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}"/>
+</head>
+<body class="has-navbar-fixed-top has-navbar-fixed-bottom">
+<nav class="navbar is-fixed-top has-background-black">
+    <div class="columns is-mobile is-vcentered p-2">
+        <div class="column is-full">
+            <h1 class="title is-size-4 has-text-white ml-3">
+                Recibo
+            </h1>
+        </div>
+    </div>
+</nav>
+<nav class="navbar is-fixed-bottom is-transparent is-block">
+    <div class="columns is-multiline p-5">
+        <div class="column is-full p-0">
+            <a class="button is-fullwidth is-black" href="/prototipos/recibo.html">
+                <p class="is-size-5">Pagar</p>
+            </a>
+        </div>
+    </div>
+</nav>
+<main class="container">
+    <ol id="elements">
+        {% for element in elements %}
+        <li id="elementId" class="columns is-multiline m-0 is-mobile is-vcentered">
+            <div class="column is-narrow">
+                <figure class="image image is-96x96">
+                    <img class="has-rounded-border"
+                         src="{{ element.image if element.image is defined else 'https://bulma.io/images/placeholders/96x96.png' }}"/>
+                </figure>
+            </div>
+            <div class="column">
+                <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered">
+                    {{ element.element }}
+                </p>
+                <div class="columns is-multiline m-0 is-mobile is-vcentered is-centered">
+                    {% if element.variants is defined %}
+                        <div class="column is-narrow">
+                            {% for variant in element.variants %}
+                                <p class="subtitle is-size-5 m-0 is-unbreakable">{{ variant.value }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if element.extras is defined %}
+                        <div class="column is-narrow">
+                            {% for extra in element.extras %}
+                                <p class="subtitle is-size-5 m-0 is-unbreakable">+{{ extra }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if element.ingredients is defined %}
+                        <div class="column is-narrow">
+                            {% for ingredient in element.ingredients %}
+                                <p class="subtitle is-size-5 m-0 is-unbreakable">-{{ ingredient }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="column is-narrow">
+                <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                    Cantidad:
+                </p>
+                <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                    Precio:
+                </p>
+                <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                    Total:
+                </p>
+            </div>
+            <div class="column is-narrow">
+                <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                    {{ element.quantity }}
+                </p>
+                <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                    {{ element.price }} €
+                </p>
+                <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                    {{ element.total }} €
+                </p>
+            </div>
+        </li>
+        <hr class="m-2"/>
+    </ol>
+</main>
+</body>
+</html>

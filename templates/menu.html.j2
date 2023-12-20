@@ -25,13 +25,14 @@
         var orderId = "{{ order_id }}";
         var client = "{{ client }}";
         var element_html_view = new MenuElementHTMLManager();
-        var element_websocket_model = new WebSocketManager(`wss://{{ url }}{{ ws_path }}?mesa=${orderId}`);
+        var element_websocket_model = new WebSocketManager(`ws://{{ url }}{{ ws_path }}?mesa=${orderId}`);
         var client_controller = new ClientController("modalCliente", "client");
         var element_controller = new OrderController(element_html_view, element_websocket_model, client_controller);
 
         window.client_controller = client_controller;
         window.element_controller = element_controller;
     </script>
+    <script src="{{ url_for('static', path='/js/forms/post_handler.js') }}"></script>
 </head>
 
 <body class="has-navbar-fixed-top">
@@ -56,6 +57,11 @@
             <div class="column is-full p-0">
                 <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/pedido">
                     <p class="is-size-5">Pedir</p>
+                </a>
+            </div>
+            <div class="column is-full p-0 pt-2">
+                <a class="button is-fullwidth" onclick="post_handler('/backend/mesa/{{ order_id }}/recibo', '/mesa/{{ order_id }}/recibo')">
+                    <p class="is-size-5">Pedir cuenta</p>
                 </a>
             </div>
         </div>

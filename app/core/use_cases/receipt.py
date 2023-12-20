@@ -24,3 +24,6 @@ class ReceiptUseCases:
             self.order_repository.set_receipt(order_id, receipt, session)
             inserted_receipt = self.order_repository.get_receipt(order_id, session)
             return inserted_receipt
+
+    def get(self, order_id: str) -> list[ReceiptElement]:
+        return self.order_repository.get_receipt(order_id)

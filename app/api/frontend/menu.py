@@ -28,8 +28,6 @@ def redirect_new_order_carta():
 
 @router.get("/mesa/{id}/carta", response_class=HTMLResponse)
 def get(request: Request, id: str, error: Optional[str] = None):
-    print("Extended sections:\n")
-    pprint(menu_frontend.encode(menu_frontend.get_extended_sections(id)))
     return templates.TemplateResponse("menu.html.j2", {
         "request": request,
         "url": config.url,
