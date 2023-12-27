@@ -335,14 +335,20 @@ flowchart LR
 **Escenario principal**:
 
 1. El comensal selecciona _Pedir Cuenta_.
-2. El sistema muestra un modal para confirmar la decisión.
-3. El comensal selecciona _Aceptar_.
+2. El sistema comprueba que hay al menos un pedido realizado.
+3. El sistema muestra un modal para confirmar la decisión.
+4. El comensal selecciona _Aceptar_.
 4. El sistema llama a la _API_ para generar el recibo.
-5. El sistema ejecuta _Ver recibo total_.
+6. El sistema ejecuta _Ver recibo total_.
 
-**Escenario alternativo**:
+**Escenarios alternativos**:
 
-3a. El comensal no pide la cuenta.
+2a. Se muestra un error de que no se ha pedido nada aún:
+
+1. El sistema detecta que no hay ningún pedido realizado
+2. El sistema muestra un mensaje de error avisando de que no se ha hecho ningún pedido aún.
+
+4a. El comensal no pide la cuenta.
 
 1. El comensal selecciona _Cancelar_.
 2. El sistema cierra el modal. (Sigue en la pantalla Carta).

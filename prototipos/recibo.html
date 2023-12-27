@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QRest | Recibo</title>
+    <link rel="icon" href="/static/img/icon.png" type="image/icon type">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          <link rel="stylesheet" type="text/css" href="/static/css/bulma.css" />
+          <link rel="stylesheet" type="text/css" href="/static/css/form.css" />
+</head>
+<body class="has-navbar-fixed-top has-navbar-fixed-bottom">
+<nav class="navbar is-fixed-top has-background-black">
+    <div class="columns is-mobile is-vcentered p-2">
+        <div class="column is-full">
+            <h1 class="title is-size-4 has-text-white ml-3">
+                Recibo
+            </h1>
+        </div>
+    </div>
+</nav>
+<nav class="navbar is-fixed-bottom is-transparent is-block">
+    <div class="columns is-multiline p-5">
+        <div class="column is-full p-0">
+            <a class="button is-fullwidth is-black" href="/prototipos/recibo.html">
+                <p class="is-size-5">Pagar</p>
+            </a>
+        </div>
+    </div>
+</nav>
+<main class="container">
+    <ol id="elements">
+        <li id="elementId" class="columns is-multiline m-0 is-mobile is-vcentered">
+            <div class="column is-narrow">
+                <figure class="image image is-96x96">
+                    <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png"/>
+                </figure>
+            </div>
+            <div class="column">
+                <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered">
+                    Patatas bravas
+                </p>
+                <div class="columns is-multiline m-0 is-mobile is-vcentered is-centered">
+                    <div class="column is-narrow">
+                        <p class="subtitle is-size-5 m-0 is-unbreakable">Ración</p>
+                    </div>
+                    <div class="column is-narrow">
+                        <p class="subtitle is-size-5 m-0 is-unbreakable">+Beicon</p>
+                        <p class="subtitle is-size-5 m-0 is-unbreakable">+Alioli</p>
+                    </div>
+                    <div class="column is-narrow">
+                        <p class="subtitle is-size-5 m-0 is-unbreakable">-Patatas</p>
+                        <p class="subtitle is-size-5 m-0 is-unbreakable">-Queso</p>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-narrow">
+                <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                    Cantidad:
+                </p>
+                <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                    Precio:
+                </p>
+                <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                    Total:
+                </p>
+            </div>
+            <div class="column is-narrow">
+                <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                    10 uds.
+                </p>
+                <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                    10 €
+                </p>
+                <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                    100 €
+                </p>
+            </div>
+        </li>
+        <hr class="m-2" />
+    </ol>
+</main>
+</body>
+</html>
