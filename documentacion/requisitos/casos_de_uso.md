@@ -424,3 +424,25 @@ flowchart LR
 1. Los datos bancarios introducidos no son correctos.
 2. La pasarela de pago informa de los errores.
 3. Se vuelve al paso 3.
+
+#### Pagar en caja
+
+**Precondición**: Pantalla Recibo total o individual.
+**Postcondición de éxito**: Se han pagado los elementos correspondientes.
+
+**Escenario principal**:
+
+1. El comensal selecciona _Pagar_.
+2. El sistema informa al restaurante que se quiere pagar en caja.
+3. El sistema redirige al la pantalla de _Esperando pago_.
+4. El comensal paga en caja.
+5. El camarero marca el pedido como pagado.
+6. El sistema marca los elemento correspondientes como pagado.
+10. El sistema ejecuta _Ver recibo total_.
+
+**Escenario alternativo**:
+
+[3-4] Se cancela el pago.
+
+1. El comensal cancela el pago.
+2. El sistema ejecuta _Ver recibo total_.
