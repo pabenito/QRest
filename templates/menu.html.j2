@@ -396,6 +396,12 @@
     showError("{{ error }}");
 </script>
 {% endif %}
+{% if message is defined and message is not none %}
+<script type="module">
+    import { showMessage } from '{{ url_for('static', path='/js/utils/errorHandler.js') }}';
+    showMessage("{{ message }}");
+</script>
+{% endif %}
 <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
 <script src="{{ url_for('static', path='/js/showhide.js') }}"></script>
 <script src="{{ url_for('static', path='/js/modal.js') }}"></script>

@@ -27,7 +27,7 @@ def redirect_new_order_carta():
 
 
 @router.get("/mesa/{id}/carta", response_class=HTMLResponse)
-def get(request: Request, id: str, error: Optional[str] = None):
+def get(request: Request, id: str, error: Optional[str] = None, message: Optional[str] = None):
     return templates.TemplateResponse("menu.html.j2", {
         "request": request,
         "url": config.url,
@@ -36,4 +36,5 @@ def get(request: Request, id: str, error: Optional[str] = None):
         "allergens": menu_frontend.encode(menu_frontend.get_allergens_dict()),
         "order_id": id,
         "elements": order_frontend.get_current_command(id),
-        "error": error})
+        "error": error,
+        "message": message})

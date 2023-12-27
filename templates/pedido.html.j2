@@ -54,7 +54,7 @@
     <nav class="navbar is-fixed-bottom is-transparent is-block">
         <div class="columns is-multiline p-5">
             <div class="column is-full p-0">
-                <button class="button is-fullwidth is-black" onclick="post_handler('/backend/mesa/{{ order_id }}/pedido/confirmar', '/mesa/{{ order_id }}/carta')">
+                <button class="button is-fullwidth is-black" onclick="post_handler('/backend/mesa/{{ order_id }}/pedido/confirmar', '/mesa/{{ order_id }}/carta?message=Se ha confirmado el pedido')">
                     <p class="is-size-5">Pedir</p>
                 </button>
             </div>
@@ -158,6 +158,12 @@
 <script type="module">
     import { showError } from '{{ url_for('static', path='/js/utils/errorHandler.js') }}';
     showError("{{ error }}");
+</script>
+{% endif %}
+{% if message is defined and message is not none %}
+<script type="module">
+    import { showMessage } from '{{ url_for('static', path='/js/utils/errorHandler.js') }}';
+    showMessage("{{ message }}");
 </script>
 {% endif %}
 </html>
