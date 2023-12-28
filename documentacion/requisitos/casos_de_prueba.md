@@ -862,3 +862,327 @@ En este caso se intenta generar un recibo para un pedido que no existe. Se revol
 #### Ejemplo
 
 - _{id}_: "abc"
+
+## Ver por pagar
+
+### Caso de prueba 1: Ver por pagar total completo 
+
+En este caso se intenta ver lo que queda por pagar en total cuando todavía no se ha pagado nada. En este caso debe devolver lo mismo que el recibo total.
+
+**Método**: Ver recibo (get_to_be_paid)
+**Escenario**: Ver por pagar total cuando no se ha pagado nada todavía.
+**Tipo**: Éxito
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el cliente _{cliente}_ añade el elemento _{elemento}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** el cliente _{cliente}_ añade el elemento _{elemento}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}_.
+- **Y** se genera el recibo del pedido con identificador _{id}_.
+- **Cuando** se solicita ver el total de lo que queda por pagar del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve lo que queda por pagar _{por_pagar}_, que corresponde con el recibo total.
+
+#### Ejemplo
+
+- _{id}_: "abc"
+- _{cliente}_: "marcos"
+- _{precio}_: 2.5
+- _{elemento}_:
+
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": [{cliente}]
+}
+```
+
+- _{por_pagar}_:
+
+```json
+[
+    {
+        "section": "bebidas",
+        "element": "nestea",
+        "quantity": 2,
+        "clients": [{cliente}, {cliente}],
+        "price": {precio},
+        "total": 2 * {precio},
+    }
+]
+```
+
+### Caso de prueba 2: Ver por pagar total parcial
+
+En este caso se intenta ver lo que queda por pagar en total cuando todavía ya se ha pagado algo. En este caso debe devolver lo mismo que el recibo total menos lo que se ha pagado ya.
+
+**Método**: Ver recibo (get_to_be_paid)
+**Escenario**: Ver por pagar total cuando no se ha pagado nada todavía.
+**Tipo**: Éxito
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el cliente _{cliente1}_ añade el elemento _{elemento1}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** el cliente _{cliente2}_ añade el elemento _{elemento2}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}_.
+- **Y** se genera el recibo del pedido con identificador _{id}_.
+- **Y** se paga _{pagado}_ del pedido con identificador _{id}_.
+- **Cuando** se solicita ver el total de lo que queda por pagar del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve lo que queda por pagar _{por_pagar}_, que corresponde con el recibo total menos lo que se ha pagado ya _{pagado}_.
+
+#### Ejemplo
+
+- _{id}_: "abc"
+- _{cliente1}_: "marcos"
+- _{cliente2}_: "lola"
+- _{precio}_: 2.5
+- _{elemento1}_:
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": {cliente1}
+}
+```
+- _{elemento2}_:
+```json
+{
+    "section": "bebidas",
+    "element": "coca-cola",
+    "quantity": 1,
+    "clients": {cliente2}
+}
+```
+- _{pagado}_: [_{elemento1}_]
+- _{por_pagar}_: [_{elemento2}_]
+
+### Caso de prueba 4: Ver por pagar individual
+
+En este caso se intenta ver lo que queda por pagar de forma indiviudal, es decir, para un comensal concreto. Se debe devolver los elementos que ha pedido el cliente concreto.
+
+**Método**: Ver recibo (get_to_be_paid)
+**Escenario**: Ver por pagar individual cuando no se ha pagado nada todavía.
+**Tipo**: Éxito
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el cliente _{cliente1}_ añade el elemento _{elemento1}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** el cliente _{cliente2}_ añade el elemento _{elemento2}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}_.
+- **Y** se genera el recibo del pedido con identificador _{id}_.
+- **Cuando** se solicita ver lo que queda por pagar para el cliente _{cliente1}_.
+- **Entonces** el sistema devuelve el elemento _{elemento1}_.
+
+#### Ejemplo
+
+- _{id}_: "abc"
+- _{cliente1}_: "marcos"
+- _{cliente2}_: "lola"
+- _{precio}_: 2.5
+- _{elemento1}_:
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": {cliente1}
+}
+```
+- _{elemento2}_:
+```json
+{
+    "section": "bebidas",
+    "element": "coca-cola",
+    "quantity": 1,
+    "clients": {cliente2}
+}
+```
+- _{por_pagar}_: [_{elemento1}_]
+
+### Caso de prueba 3: Ver por pagar total cuando no se ha generado recibo
+
+En este caso se intenta ver lo que queda por pagar cuando no se ha generado el recibo. Se debe devolver un error con código HTTP 400 (Bad Request).
+
+- **Método**: Ver recibo (get_to_be_paid)
+- **Escenario**: Ver por pagar total cuando no se ha generado recibo.
+- **Tipo**: Error
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Cuando** se solicita ver el total de lo que queda por pagar del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 400 (Bad Request).
+
+### Caso de prueba 5: Ver por pagar individual cuando no se ha generado recibo
+
+En este caso se intenta ver lo que queda por pagar de forma individual cuando no se ha generado el recibo. Se debe devolver un error con código HTTP 400 (Bad Request).
+
+- **Método**: Ver recibo (get_to_be_paid)
+- **Escenario**: Ver por pagar individual cuando no se ha generado recibo.
+- **Tipo**: Error
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Cuando** se solicita ver lo que queda por pagar para el cliente _{cliente1}_.
+- **Entonces** el sistema devuelve un HTTP Status 400 (Bad Request).
+
+## Pagar
+
+### Caso de prueba 1: Pagar total completo
+
+En este caso se intenta pagar todo lo que queda por pagar cuando todavía no se ha pagado nada. Tras realizar el pago, se debe vaciar la lista de elementos por pagar.
+
+**Método**: Pagar (pay)
+**Escenario**: Pagar total cuando no se ha pagado nada todavía.
+**Tipo**: Éxito
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el cliente _{cliente1}_ añade el elemento _{elemento1}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** el cliente _{cliente2}_ añade el elemento _{elemento2}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}_.
+- **Y** se genera el recibo del pedido con identificador _{id}_.
+- **Y** se solicita pagar el total de lo que queda por pagar del pedido con identificador _{id}_.
+- **Cuando** se solicita ver el total de lo que queda por pagar del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve una lista vacía.
+- **Y** el sistema devuelve un HTTP Status 200 (OK).
+
+#### Ejemplo
+
+- _{id}_: "abc"
+- _{cliente1}_: "marcos"
+- _{cliente2}_: "lola"
+- _{precio}_: 2.5
+- _{elemento1}_:
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": {cliente1}
+}
+```
+- _{elemento2}_:
+```json
+{
+    "section": "bebidas",
+    "element": "coca-cola",
+    "quantity": 1,
+    "clients": {cliente2}
+}
+```
+
+### Caso de prueba 2: Pagar parcial con por pagar total completo
+
+En este caso se intenta pagar parte de lo que queda por pagar partiendo del recibo toal. Tras realizar el pago, se debe devolver lo que queda por pagar, que debe corresponder con el recibo total menos lo que se ha pagado.
+
+**Método**: Pagar (pay)
+**Escenario**: Pagar parcial cuando no se ha pagado nada todavía.
+**Tipo**: Éxito
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el cliente _{cliente1}_ añade el elemento _{elemento1}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** el cliente _{cliente2}_ añade el elemento _{elemento2}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}_.
+- **Y** se genera el recibo del pedido con identificador _{id}_.
+- **Y** se solicita pagar el elemento _{elemento1}_ del pedido con identificador _{id}_.
+- **Cuando** se solicita ver el total de lo que queda por pagar del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve lo que queda por pagar, que es el elemento _{elemento2}_.
+
+#### Ejemplo
+
+- _{id}_: "abc"
+- _{cliente1}_: "marcos"
+- _{cliente2}_: "lola"
+- _{precio}_: 2.5
+- _{elemento1}_:
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": {cliente1}
+}
+```
+- _{elemento2}_:
+```json
+{
+    "section": "bebidas",
+    "element": "coca-cola",
+    "quantity": 1,
+    "clients": {cliente2}
+}
+```
+
+### Caso de prueba 3: Pagar parcial con por pagar total parcial
+
+En este caso se intenta pagar parte de lo que queda por pagar habiendose pagado ya algo. Tras realizar el pago, se debe devolver lo que queda por pagar, que debe corresponder con el recibo total menos lo que ya se había pagado menos lo que se ha pagado ahora.
+
+**Método**: Pagar (pay)
+**Escenario**: Pagar parcial cuando no ya se ha pagado algo.
+**Tipo**: Éxito
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Y** el cliente _{cliente1}_ añade el elemento _{elemento1}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** el cliente _{cliente2}_ añade el elemento _{elemento2}_ a la comanda actual del pedido con identificador _{id}_.
+- **Y** se confirma la comanda actual del pedido con identificador _{id}_.
+- **Y** se genera el recibo del pedido con identificador _{id}_.
+- **Y** se solicita pagar el elemento _{elemento1}_ del pedido con identificador _{id}_.
+- **Y** se solicita pagar el elemento _{elemento2}_ del pedido con identificador _{id}_.
+- **Cuando** se solicita ver el total de lo que queda por pagar del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve lo que queda por pagar, que es una lista vacía.
+- **Y** el sistema devuelve un HTTP Status 200 (OK).
+
+#### Ejemplo
+
+- _{id}_: "abc"
+- _{cliente1}_: "marcos"
+- _{cliente2}_: "lola"
+- _{precio}_: 2.5
+- _{elemento1}_:
+```json
+{
+    "section": "bebidas",
+    "element": "nestea",
+    "quantity": 1,
+    "clients": {cliente1}
+}
+```
+- _{elemento2}_:
+```json
+{
+    "section": "bebidas",
+    "element": "coca-cola",
+    "quantity": 1,
+    "clients": {cliente2}
+}
+```
+
+### Caso de prueba 4: Pagar total cuando no se ha generado recibo
+
+En este caso se intenta pagar todo lo que queda por pagar cuando no se ha generado el recibo. Se debe devolver un error con código HTTP 400 (Bad Request).
+
+**Método**: Pagar (pay)
+**Escenario**: Pagar total cuando no se ha generado recibo.
+**Tipo**: Error
+
+#### Caso de prueba
+
+- **Dado que** se crea un nuevo pedido con identificador _{id}_.
+- **Cuando** se solicita pagar el total de lo que queda por pagar del pedido con identificador _{id}_.
+- **Entonces** el sistema devuelve un HTTP Status 400 (Bad Request).
+
+
+
+

@@ -395,45 +395,49 @@ flowchart LR
 ```mermaid
 flowchart LR
   comensal[[Comensal]]
-  ver_recibo_total([Ver recibo total])
-  comensal --uses--> pagar
-  pagar -.includes.-> ver_recibo_total
+  ver_por_pagar([Ver por pagar])
+  ver_por_pagar_individual([Ver por pagar individual])
+  ver_por_pagar_total([Ver por pagar total])
+  pagar([Pagar])
+  pagar_online([Pagar online])
+  pagar_en_caja([Pagar en caja])
+  ver_por_pagar_individual & ver_por_pagar_total ==extends==> ver_por_pagar
+  pagar_online & pagar_en_caja ==extends==> pagar
+  comensal --uses--> pagar & ver_por_pagar
+  pagar -.includes.-> ver_por_pagar
 ```
 
-#### Pagar
+#### Pagar online
 
-**Precondición**: Pantalla Recibo total o individual.
+**Precondición**: Pantalla _Por pagar total o individual_.
 **Postcondición de éxito**: Se han pagado los elementos correspondientes.
 
 **Escenario principal**:
 
-1. El comensal selecciona _Pagar_.
-2. El sistema redirige a la pasarela de pago.
-3. El comensal rellena los datos bancarios necesarios.
-4. El comensal selecciona _Pagar_. 
-5. La pasarela de pago compruba que los datos sean correctos.
-6. Los bancarios son correctos y se puede realizar el pago.
-7. La pasarela de pago tramita el pago.
-8. La pasarela de pago hace una llamada a la _API_ para confirmar el pago.
-9. El sistema marca los elemento correspondientes como pagado.
-10. El sistema ejecuta _Ver recibo total_.
+1. El comensal selecciona _Pagar_. 
+2. El comensal introduce los datos de pago.
+3. La pasarela de pago comprueba que los datos sean correctos.
+4. Los bancarios son correctos y se puede realizar el pago.
+5. La pasarela de pago tramita el pago.
+6. El sistema marca los elemento correspondientes como pagado.
+7. El sistema ejecuta _Ver por pagar_.
 
 **Escenario alternativo**:
 
-[3-4] Se cancela el pago.
+2a. Se cancela el pago.
 
 1. El comensal cancela el pago.
-2. El sistema ejecuta _Ver recibo total_.
+2. El sistema ejecuta _Ver por pagar_.
 
-5a. Los datos bancarios no son correctos.
+3a. Los datos bancarios no son correctos.
 
 1. Los datos bancarios introducidos no son correctos.
 2. La pasarela de pago informa de los errores.
-3. Se vuelve al paso 3.
+3. Se vuelve al paso 2.
 
 #### Pagar en caja
 
-**Precondición**: Pantalla Recibo total o individual.
+**Precondición**: Pantalla _Por pagar total o individual_.
 **Postcondición de éxito**: Se han pagado los elementos correspondientes.
 
 **Escenario principal**:
@@ -444,11 +448,11 @@ flowchart LR
 4. El comensal paga en caja.
 5. El camarero marca el pedido como pagado.
 6. El sistema marca los elemento correspondientes como pagado.
-10. El sistema ejecuta _Ver recibo total_.
+10. El sistema ejecuta _Ver por pagar_.
 
 **Escenario alternativo**:
 
 [3-4] Se cancela el pago.
 
 1. El comensal cancela el pago.
-2. El sistema ejecuta _Ver recibo total_.
+2. El sistema ejecuta _Ver por pagar_.
