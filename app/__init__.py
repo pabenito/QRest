@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request, status
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse, RedirectResponse
@@ -8,18 +10,9 @@ from app.core.exceptions import InvalidInputException
 from app.db.exceptions import AlreadyExistsException, NotFoundException, OperationFailedException
 from app import config
 
-app = FastAPI()
 
-app.include_router(api.router)
-
-
-@app.get("/")
-async def redirect_to_carta():
-    return RedirectResponse(url="/carta")
-
-
-@app.on_event("startup")
-def startup_db_client():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     app.mount("/static", StaticFiles(directory="static"), name="static")
     db.configure_db()
     app.db_client = db.get_client()
@@ -29,11 +22,18 @@ def startup_db_client():
         print("Pinged your deployment. You successfully connected to MongoDB!")
     except Exception as e:
         print(e)
-
-
-@app.on_event("shutdown")
-def shutdown_db_client():
+    yield
     db.close()
+
+
+app = FastAPI(lifespan=lifespan)
+
+app.include_router(api.router)
+
+
+@app.get("/")
+async def redirect_to_carta():
+    return RedirectResponse(url="/carta")
 
 
 @app.exception_handler(NotFoundException)
