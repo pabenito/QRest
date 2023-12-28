@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from app.core.entities.order import ReceiptElement
 from app.core.use_cases.services.receipt import ReceiptServices
 from app.db.exceptions import PersistenceExceptionFactory
