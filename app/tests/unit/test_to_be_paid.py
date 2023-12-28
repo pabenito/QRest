@@ -8,14 +8,11 @@ from app import db
 
 base_url = "/backend/mesa"
 
-client_1 = "marcos"
-client_2 = "lola"
-
 simple_element1 = {
     "section": "bebidas",
     "element": "nestea",
     "quantity": 1,
-    "clients": [client_1],
+    "clients": ["marcos"],
     "price": 2
 }
 
@@ -23,7 +20,7 @@ simple_element2 = {
     "section": "bebidas",
     "element": "coca-cola",
     "quantity": 1,
-    "clients": [client_2],
+    "clients": ["lola"],
     "price": 2
 }
 
@@ -46,14 +43,15 @@ def get_receipt_for_client(list_elements: list[dict], client: str) -> list[dict]
     for element in list_elements:
         if client in element["clients"]:
             if element["element"] in receipt:
-                receipt[element["element"]]["quantity"] += element["quantity"]
+                receipt[element["element"]]["quantity"] += element["clients"].count(client)
                 receipt[element["element"]]["clients"].extend([client] * element["clients"].count(client))
-                receipt[element["element"]]["total"] += element["price"] * element["quantity"]
+                receipt[element["element"]]["total"] += element["price"] * element["clients"].count(client)
             else:
                 receipt[element["element"]] = element.copy()
+                receipt[element["element"]]["quantity"] = element["clients"].count(client)
                 receipt[element["element"]]["clients"] = [client] * element["clients"].count(client)
                 receipt[element["element"]]["price"] = element["price"]
-                receipt[element["element"]]["total"] = element["price"] * element["quantity"]
+                receipt[element["element"]]["total"] = element["price"] * element["clients"].count(client)
     return list(receipt.values())
 
 

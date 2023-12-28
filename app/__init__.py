@@ -7,7 +7,8 @@ from fastapi.responses import JSONResponse, RedirectResponse
 from app import db
 from app import api
 from app.core.exceptions import InvalidInputException
-from app.db.exceptions import AlreadyExistsException, NotFoundException, OperationFailedException
+from app.db.exceptions import AlreadyExistsException, NotFoundException, OperationFailedException, \
+    FieldNotFoundException
 from app import config
 
 
@@ -68,6 +69,16 @@ async def db_operation_failed_exception_handler(request: Request, exc: Operation
 
 @app.exception_handler(InvalidInputException)
 async def invalid_input_exception_handler(request: Request, exc: InvalidInputException):
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={
+            "error": InvalidInputException.__name__,
+            "message": str(exc)},
+    )
+
+
+@app.exception_handler(FieldNotFoundException)
+async def field_not_found_exception_handler(request: Request, exc: InvalidInputException):
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST,
         content={
