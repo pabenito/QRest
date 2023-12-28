@@ -15,7 +15,8 @@ simple_element1 = {
     "element": "nestea",
     "quantity": 1,
     "clients": ["marcos"],
-    "price": 2
+    "price": 2,
+    "total": 2
 }
 
 simple_element2 = {
@@ -23,7 +24,8 @@ simple_element2 = {
     "element": "coca-cola",
     "quantity": 1,
     "clients": ["lola"],
-    "price": 2
+    "price": 2,
+    "total": 2
 }
 
 
