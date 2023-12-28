@@ -41,6 +41,21 @@ def generate_receipt(list_elements: list[dict]) -> list[dict]:
             receipt[element["element"]]["total"] = element["price"] * element["quantity"]
     return list(receipt.values())
 
+def get_receipt_for_client(list_elements: list[dict], client: str) -> list[dict]:
+    receipt = {}
+    for element in list_elements:
+        if client in element["clients"]:
+            if element["element"] in receipt:
+                receipt[element["element"]]["quantity"] += element["quantity"]
+                receipt[element["element"]]["clients"].extend([client] * element["clients"].count(client))
+                receipt[element["element"]]["total"] += element["price"] * element["quantity"]
+            else:
+                receipt[element["element"]] = element.copy()
+                receipt[element["element"]]["clients"] = [client] * element["clients"].count(client)
+                receipt[element["element"]]["price"] = element["price"]
+                receipt[element["element"]]["total"] = element["price"] * element["quantity"]
+    return list(receipt.values())
+
 
 @pytest.fixture(scope="module")
 def api():
@@ -81,11 +96,11 @@ def _generate_receipt(api: TestClient, order_id: str):
 
 
 def _get_to_be_paid(api: TestClient, order_id: str):
-    return api.get(base_url + f"/{order_id}/pedido")
+    return api.get(base_url + f"/{order_id}/por_pagar")
 
 
 def _get_to_be_paid_client(api: TestClient, order_id: str, client: str):
-    return api.get(base_url + f"/{order_id}/pedido?client={client}")
+    return api.get(base_url + f"/{order_id}/por_pagar?client={client}")
 
 
 def _pay(api: TestClient, order_id: str, elements: list[dict]):
@@ -160,7 +175,7 @@ def test_get_to_be_paid_client__when_order_exists_and_one_confirmed_order_exists
     response = _get_to_be_paid_client(api, order_id, elements[0]["clients"][0])
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
-    assert response.json() == generate_receipt([elements[0]])
+    assert response.json() == get_receipt_for_client(elements, elements[0]["clients"][0])
 
 def test_get_to_be_paid_total__when_order_does_not_exists__then_http_status_404_not_found(api):
     response = _get_to_be_paid(api, "012345678901234567890123")
