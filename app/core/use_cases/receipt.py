@@ -22,6 +22,7 @@ class ReceiptUseCases:
             menu = self.menu_repository.get_all(session)
             receipt = self.services.generate_receipt_from_commands(menu, commands)
             self.order_repository.set_receipt(order_id, receipt, session)
+            self.order_repository.set_to_be_paid(order_id, receipt, session)
             inserted_receipt = self.order_repository.get_receipt(order_id, session)
             return inserted_receipt
 

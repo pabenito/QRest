@@ -47,5 +47,13 @@ class IOrderRepository(ABC):
         pass
 
     @abstractmethod
+    def get_to_be_paid(self, order_id: str, session: Optional[ClientSession] = None) -> list[ReceiptElement]:
+        pass
+
+    @abstractmethod
+    def set_to_be_paid(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+        pass
+
+    @abstractmethod
     def get_all(self, session: Optional[ClientSession] = None) -> list[Order]:
         pass

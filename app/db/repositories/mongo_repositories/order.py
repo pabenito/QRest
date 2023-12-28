@@ -52,5 +52,12 @@ class MongoOrderRepository(IOrderRepository):
     def set_receipt(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
         return self.repository.set_attribute(order_id, "receipt", self.encoder(receipt), session)
 
+    def set_to_be_paid(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+        return self.repository.set_attribute(order_id, "to_be_paid", self.encoder(receipt), session)
+
+    def get_to_be_paid(self, order_id: str, session: Optional[ClientSession] = None) -> list[ReceiptElement]:
+        result = self.repository.get_attribute(order_id, "to_be_paid", session)
+        return self.parse(result, list[ReceiptElement])
+
     def get_all(self, session: Optional[ClientSession] = None) -> list[Order]:
         return self.repository.get_all(session)
