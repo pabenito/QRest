@@ -7,7 +7,7 @@ from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.mongo_repositories import MongoTransactionManager
 
 
-class ReceiptUseCases:
+class ToBePaidUseCases:
     def __init__(self, order_repository: IOrderRepository):
         self.order_repository = order_repository
         self.transaction_manager = MongoTransactionManager
