@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 import pytest
 from fastapi import status
 from fastapi.testclient import TestClient
@@ -33,7 +35,7 @@ def generate_receipt(list_elements: list[dict]) -> list[dict]:
             receipt[element["element"]]["clients"].extend(element["clients"])
             receipt[element["element"]]["total"] += element["price"] * element["quantity"]
         else:
-            receipt[element["element"]] = element.copy()
+            receipt[element["element"]] = deepcopy(element)
             receipt[element["element"]]["price"] = element["price"]
             receipt[element["element"]]["total"] = element["price"] * element["quantity"]
     return list(receipt.values())
@@ -47,7 +49,7 @@ def get_receipt_for_client(list_elements: list[dict], client: str) -> list[dict]
                 receipt[element["element"]]["clients"].extend([client] * element["clients"].count(client))
                 receipt[element["element"]]["total"] += element["price"] * element["clients"].count(client)
             else:
-                receipt[element["element"]] = element.copy()
+                receipt[element["element"]] = deepcopy(element)
                 receipt[element["element"]]["quantity"] = element["clients"].count(client)
                 receipt[element["element"]]["clients"] = [client] * element["clients"].count(client)
                 receipt[element["element"]]["price"] = element["price"]
