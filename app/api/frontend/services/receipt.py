@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 
 from app.core.entities.order import ReceiptElement
 from app.core.use_cases.receipt import ReceiptUseCases
@@ -16,5 +16,5 @@ class ReceiptFrontend:
     def encode(object: Any) -> dict:
         return json_lower_encoder(object)
 
-    def get_receipt(self, order_id: str) -> list[ReceiptElement]:
-        return self.receipt_use_cases.get(order_id)
+    def get_receipt(self, order_id: str, client: Optional[str] = None) -> list[ReceiptElement]:
+        return self.receipt_use_cases.get(order_id, client)

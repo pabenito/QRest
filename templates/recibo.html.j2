@@ -10,10 +10,20 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}"/>
+    {% if individual and not client %}
     <script type="module">
         import { ClientController } from '{{ url_for('static', path='/js/client/controller.js') }}';
-        var client_controller = new ClientController("modalCliente", "client");
+        import { redirect} from '{{ url_for('static', path='/js/utils/redirect.js') }}';
+        var redirect_to_individual = function (client) {
+            redirect("/mesa/{{ order_id }}/recibo/individual?cliente=" + client);
+        }
+        var client_controller = new ClientController("modalCliente", "client", redirect_to_individual);
+        window.client_controller = client_controller;
+        if (!client_controller.hasClient()){
+            client_controller.showModal();
+        }
     </script>
+    {% endif %}
 </head>
 <body class="has-navbar-fixed-top has-navbar-fixed-bottom">
 <nav class="navbar is-fixed-top has-background-black">
@@ -28,24 +38,24 @@
 <nav class="navbar is-fixed-bottom is-transparent is-block">
     <div class="columns is-multiline p-5">
         <div class="column is-full p-0">
-            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/total{{ '?cliente=' + client if client is defined }}">
+            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/total{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver pendiente de pago total</p>
             </a>
         </div>
         <div class="column is-full p-0">
-            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/individual{{ '?cliente=' + client if client is defined }}">
+            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/individual{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver pendiente de pago individual</p>
             </a>
         </div>
         {% if individual is defined %}
         <div class="column is-full p-0">
-            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/recibo/total{{ '?cliente=' + client if client is defined }}">
+            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/recibo/total{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver recibo total</p>
             </a>
         </div>
         {% else %}
         <div class="column is-full p-0">
-            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/recibo/individual{{ '?cliente=' + client if client is defined }}">
+            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/recibo/individual{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver recibo individual</p>
             </a>
         </div>
@@ -129,7 +139,7 @@
             <input id="client" class="input is-medium" type="text" placeholder="Nombre">
         </section>
         <footer class="modal-card-foot">
-             <button class="button is-success is-fullwidth" onclick=client_controller.setClient()>Guardar</button>
+             <button class="button is-success is-fullwidth" onclick=client_controller.setClientFromModal()>Guardar</button>
         </footer>
     </div>
 </div>

@@ -20,7 +20,7 @@ to_be_paid_frontend = ToBePaidFrontend()
 
 
 @router.get("/mesa/{id}/por_pagar/total")
-def get_total(request: Request, id: str, cliente: str, error: Optional[str] = None, message: Optional[str] = None):
+def get_total(request: Request, id: str, cliente: Optional[str] = None, error: Optional[str] = None, message: Optional[str] = None):
     elements = to_be_paid_frontend.encode(to_be_paid_frontend.get_to_be_paid(id))
     if not elements:
         return RedirectResponse(f"http://{config.url}/mesa/{id}/carta?error=Error: Todavía no se ha confirmado ninguna comanda.")
@@ -33,8 +33,8 @@ def get_total(request: Request, id: str, cliente: str, error: Optional[str] = No
         "message": message})
 
 @router.get("/mesa/{id}/por_pagar/individual")
-def get_client(request: Request, id: str, cliente: str, error: Optional[str] = None, message: Optional[str] = None):
-    elements = to_be_paid_frontend.encode(to_be_paid_frontend.get_to_be_paid(id))
+def get_client(request: Request, id: str, cliente: Optional[str] = None, error: Optional[str] = None, message: Optional[str] = None):
+    elements = to_be_paid_frontend.encode(to_be_paid_frontend.get_to_be_paid(id, cliente))
     if not elements:
         return RedirectResponse(f"http://{config.url}/mesa/{id}/carta?error=Error: Todavía no se ha confirmado ninguna comanda.")
     return templates.TemplateResponse("por_pagar.html.j2", {

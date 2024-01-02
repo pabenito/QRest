@@ -3,9 +3,10 @@ import { ShowHideManager } from '../utils/showhide.js';
 export { ClientController };
 
 class ClientController {
-    constructor(modalId, inputId) {
+    constructor(modalId, inputId, onSet) {
         this.#setModal(modalId);
         this.#setInput(inputId);
+        this.onSet = onSet;
         this.setClientFromLocalStorage();
     }
 
@@ -25,6 +26,13 @@ class ClientController {
         return document.getElementById(this.inputId);
     }
 
+    #setClient(client){
+        this.client = client;
+        if (this.onSet) {
+            this.onSet(this.client);
+        }
+    }
+
     showModal() {
         this.#getModal().show();
     }
@@ -32,14 +40,14 @@ class ClientController {
     setClientFromLocalStorage() {
         const clientFromStorage = localStorage.getItem('client');
         if (clientFromStorage) {
-            this.client = clientFromStorage;
+            this.#setClient(clientFromStorage);
         }
     }
 
-    setClient() {
+    setClientFromModal() {
         const inputElement = this.#getInput();
         if (inputElement && inputElement.value.length > 0) {
-            this.client = inputElement.value;
+            this.#setClient(inputElement.value);
             localStorage.setItem('client', this.client);
             this.#getModal().hide();
         } else {

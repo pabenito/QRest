@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Optional
 
 from app.core.entities.order import ReceiptElement
@@ -27,10 +28,10 @@ class ReceiptUseCases:
             return inserted_receipt
 
     def get(self, order_id: str, client: Optional[str] = None) -> list[ReceiptElement]:
-        try:
-            receipt = self.order_repository.get_receipt(order_id)
-            if client:
-                return self.services.get_receipt_for_client(receipt, client)
-            return receipt
-        except:
-            return []
+        receipt = self.order_repository.get_receipt(order_id)
+        pprint(receipt)
+        print(f"client: {client}")
+        if client:
+            print(f"client: {client}")
+            return self.services.get_receipt_for_client(receipt, client)
+        return receipt

@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Optional
 
 from fastapi import APIRouter
@@ -18,12 +19,14 @@ templates = Jinja2Templates(directory="templates")
 receipt_frontend = ReceiptFrontend()
 
 @router.get("/mesa/{id}/recibo")
-def get(request: Request, id: str, cliente: str, error: Optional[str] = None, message: Optional[str] = None):
-    return RedirectResponse(f"http://{config.url}/mesa/{id}/recibo/total?cliente={cliente}")
+def get(request: Request, id: str, cliente: Optional[str] = None, error: Optional[str] = None, message: Optional[str] = None):
+    if cliente:
+        return RedirectResponse(f"http://{config.url}/mesa/{id}/recibo/total?cliente={cliente}")
+    return RedirectResponse(f"http://{config.url}/mesa/{id}/recibo/total")
 
 
 @router.get("/mesa/{id}/recibo/total")
-def get(request: Request, id: str, cliente: str, error: Optional[str] = None, message: Optional[str] = None):
+def get(request: Request, id: str, cliente: Optional[str] = None, error: Optional[str] = None, message: Optional[str] = None):
     elements = receipt_frontend.encode(receipt_frontend.get_receipt(id))
     if not elements:
         return RedirectResponse(f"http://{config.url}/mesa/{id}/carta?error=Error: Todavía no se ha confirmado ninguna comanda.")
@@ -36,8 +39,9 @@ def get(request: Request, id: str, cliente: str, error: Optional[str] = None, me
         "message": message})
 
 @router.get("/mesa/{id}/recibo/individual")
-def get(request: Request, id: str, cliente: str, error: Optional[str] = None, message: Optional[str] = None):
-    elements = receipt_frontend.encode(receipt_frontend.get_receipt(id))
+def get(request: Request, id: str, cliente: Optional[str] = None, error: Optional[str] = None, message: Optional[str] = None):
+    elements = receipt_frontend.encode(receipt_frontend.get_receipt(id, cliente))
+    pprint(elements)
     if not elements:
         return RedirectResponse(f"http://{config.url}/mesa/{id}/carta?error=Error: Todavía no se ha confirmado ninguna comanda.")
     return templates.TemplateResponse("recibo.html.j2", {
