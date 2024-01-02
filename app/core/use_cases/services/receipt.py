@@ -23,7 +23,18 @@ class ReceiptServices:
                         price=price_dict[element.element],
                         total=element.quantity * price_dict[element.element]))
         return list(receipt.values())
-    
+
+    @staticmethod
+    def get_receipt_for_client(self, receipt: list[ReceiptElement], client: str) -> list[ReceiptElement]:
+        receipt_for_client = []
+        for element in receipt:
+            if client in element.clients:
+                element_for_client = element.model_copy(update={
+                    "clients": [client] * element.clients.count(client),
+                    "total": element.price * element.clients.count(client)})
+                receipt_for_client.append(element_for_client)
+        return receipt_for_client
+
     @staticmethod
     def _generate_price_dict(menu: list[Section]) -> dict[str, float]:
         price_dict = {}

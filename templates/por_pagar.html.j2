@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>QRest | Recibo</title>
+    <title>QRest | Por pagar</title>
     <link rel="icon" href="/static/img/icon.png" type="image/icon type">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
@@ -10,17 +10,13 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}"/>
-    <script type="module">
-        import { ClientController } from '{{ url_for('static', path='/js/client/controller.js') }}';
-        var client_controller = new ClientController("modalCliente", "client");
-    </script>
 </head>
 <body class="has-navbar-fixed-top has-navbar-fixed-bottom">
 <nav class="navbar is-fixed-top has-background-black">
     <div class="columns is-mobile is-vcentered p-2">
         <div class="column is-full">
             <h1 class="title is-size-4 has-text-white ml-3">
-                Recibo {{ 'individual' if client is defined else 'total' }}
+                Por pagar {{ 'individual' if client is defined else 'total' }}
             </h1>
         </div>
     </div>
@@ -28,25 +24,24 @@
 <nav class="navbar is-fixed-bottom is-transparent is-block">
     <div class="columns is-multiline p-5">
         <div class="column is-full p-0">
-            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/total{{ '?cliente=' + client if client is defined }}">
-                <p class="is-size-5">Ver pendiente de pago total</p>
+            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/recibo/total{{ '?cliente=' + client if client is defined }}">
+                <p class="is-size-5">Ver recibo total</p>
             </a>
-        </div>
         <div class="column is-full p-0">
-            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/individual{{ '?cliente=' + client if client is defined }}">
-                <p class="is-size-5">Ver pendiente de pago individual</p>
+            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/recibo/individual{{ '?cliente=' + client if client is defined }}">
+                <p class="is-size-5">Ver recibo individual</p>
             </a>
         </div>
         {% if individual is defined %}
         <div class="column is-full p-0">
-            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/recibo/total{{ '?cliente=' + client if client is defined }}">
-                <p class="is-size-5">Ver recibo total</p>
+            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/por_pagar/total{{ '?cliente=' + client if client is defined }}">
+                <p class="is-size-5">Ver pendiente de pago total</p>
             </a>
         </div>
         {% else %}
         <div class="column is-full p-0">
-            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/recibo/individual{{ '?cliente=' + client if client is defined }}">
-                <p class="is-size-5">Ver recibo individual</p>
+            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/por_pagar/individual{{ '?cliente=' + client if client is defined }}">
+                <p class="is-size-5">Ver pendiente de pago individual</p>
             </a>
         </div>
         {% endif %}
@@ -117,22 +112,6 @@
         {% endfor %}
     </ol>
 </main>
-<div id="modalCliente" class="modal is-active is-hidden p-4">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-        <header class="modal-card-head">
-            <p class="modal-card-title">Nombre de Cliente</p>
-            <button class="delete" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body">
-            <p class="is-size-5 m-0">Introduce el nombre con el que quieres hacer los pedidos:</p>
-            <input id="client" class="input is-medium" type="text" placeholder="Nombre">
-        </section>
-        <footer class="modal-card-foot">
-             <button class="button is-success is-fullwidth" onclick=client_controller.setClient()>Guardar</button>
-        </footer>
-    </div>
-</div>
 </body>
 {% if error is defined and error is not none %}
 <script type="module">

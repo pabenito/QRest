@@ -1,3 +1,5 @@
+from typing import Optional
+
 from app.core.entities.order import ReceiptElement
 from app.core.use_cases.services.receipt import ReceiptServices
 from app.db.exceptions import PersistenceExceptionFactory
@@ -24,8 +26,11 @@ class ReceiptUseCases:
             inserted_receipt = self.order_repository.get_receipt(order_id, session)
             return inserted_receipt
 
-    def get(self, order_id: str) -> list[ReceiptElement]:
+    def get(self, order_id: str, client: Optional[str] = None) -> list[ReceiptElement]:
         try:
-            return self.order_repository.get_receipt(order_id)
+            receipt = self.order_repository.get_receipt(order_id)
+            if client:
+                return self.services.get_receipt_for_client(receipt, client)
+            return receipt
         except:
             return []
