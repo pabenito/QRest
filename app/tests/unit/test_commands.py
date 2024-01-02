@@ -115,10 +115,10 @@ def test_confirm_current_command__when_order_does_not_exists__then_http_status_4
     assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
 
 
-def test_confirm_current_command__when_current_command_does_not_exists__then_http_status_404_not_found(api, order_id):
+def test_confirm_current_command__when_current_command_does_not_exists__then_http_status_400_bad_request(api, order_id):
     response = _confirm_command(api, order_id)
     _print_response(response)
-    assert response.status_code == status.HTTP_404_NOT_FOUND, response.text
+    assert response.status_code == status.HTTP_400_BAD_REQUEST, response.text
 
 
 @pytest.mark.parametrize("element", [simple_element, complex_element])
