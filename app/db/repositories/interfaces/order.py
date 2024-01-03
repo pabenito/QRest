@@ -57,3 +57,7 @@ class IOrderRepository(ABC):
     @abstractmethod
     def get_all(self, session: Optional[ClientSession] = None) -> list[Order]:
         pass
+
+    @abstractmethod
+    def has_receipt(self, order_id: str, session: Optional[ClientSession] = None):
+        pass

@@ -39,7 +39,6 @@ class ClientController {
 
     setClientFromLocalStorage() {
         const clientFromStorage = localStorage.getItem('client');
-        console.log("clientFromStorage: " + clientFromStorage);
         if (clientFromStorage) {
             console.log("Estamos dentro del if: " + clientFromStorage);
             this.#setClient(clientFromStorage);

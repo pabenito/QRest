@@ -14,10 +14,25 @@ function post_handler(url_post, url_redirect) {
         window.location.href = url_redirect;
     })
     .catch(error => {
-        // Manejar errores aquí (no redirige)
-        console.error('Error:', error);
-        showError(`Error: ${error}`);
+        console.error(error);
+
+        // Extrae la parte JSON del mensaje de error
+        const jsonPart = error.message.match(/\{.*\}/);
+        if (jsonPart) {
+            try {
+                // Intenta parsear la parte JSON y obtener el mensaje
+                const errorObj = JSON.parse(jsonPart[0]);
+                showError(errorObj.message);
+            } catch (parseError) {
+                // Si hay un error al parsear, muestra el mensaje de error original
+                showError(error.message);
+            }
+        } else {
+            // Si no se encuentra JSON en el mensaje, muestra el mensaje de error original
+            showError(error.message);
+        }
     });
+
 }
 
 

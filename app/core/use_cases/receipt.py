@@ -32,3 +32,6 @@ class ReceiptUseCases:
         if client:
             return self.services.get_receipt_for_client(receipt, client)
         return receipt
+
+    def has(self, order_id: str):
+        self.order_repository.has_receipt(order_id);

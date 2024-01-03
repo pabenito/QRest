@@ -61,3 +61,6 @@ class MongoOrderRepository(IOrderRepository):
 
     def get_all(self, session: Optional[ClientSession] = None) -> list[Order]:
         return self.repository.get_all(session)
+
+    def has_receipt(self, order_id: str, session: Optional[ClientSession] = None):
+        return self.repository.has_attribute(order_id, "receipt", session)
