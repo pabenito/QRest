@@ -19,6 +19,13 @@ templates = Jinja2Templates(directory="templates")
 to_be_paid_frontend = ToBePaidFrontend()
 
 
+@router.get("/mesa/{id}/por_pagar")
+def get(request: Request, id: str, cliente: Optional[str] = None, error: Optional[str] = None, message: Optional[str] = None):
+    if cliente:
+        return RedirectResponse(f"http://{config.url}/mesa/{id}/por_pagar/total?cliente={cliente}")
+    return RedirectResponse(f"http://{config.url}/mesa/{id}/por_pagar/total")
+
+
 @router.get("/mesa/{id}/por_pagar/total")
 def get_total(request: Request, id: str, cliente: Optional[str] = None, error: Optional[str] = None, message: Optional[str] = None):
     elements = to_be_paid_frontend.encode(to_be_paid_frontend.get_to_be_paid(id))

@@ -24,11 +24,6 @@ router.include_router(
 )
 
 router.include_router(
-    to_be_paid.router,
-    prefix="/mesa"
-)
-
-router.include_router(
     pay.router,
     prefix="/mesa"
 )
