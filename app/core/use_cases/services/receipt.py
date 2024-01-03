@@ -25,7 +25,7 @@ class ReceiptServices:
         return list(receipt.values())
 
     @staticmethod
-    def get_receipt_for_client(self, receipt: list[ReceiptElement], client: str) -> list[ReceiptElement]:
+    def get_receipt_for_client(receipt: list[ReceiptElement], client: str) -> list[ReceiptElement]:
         receipt_for_client = []
         for element in receipt:
             if client in element.clients:

@@ -29,9 +29,6 @@ class ReceiptUseCases:
 
     def get(self, order_id: str, client: Optional[str] = None) -> list[ReceiptElement]:
         receipt = self.order_repository.get_receipt(order_id)
-        pprint(receipt)
-        print(f"client: {client}")
         if client:
-            print(f"client: {client}")
             return self.services.get_receipt_for_client(receipt, client)
         return receipt

@@ -41,19 +41,19 @@
             <a class="button is-fullwidth" href="/mesa/{{ order_id }}/recibo/total{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver recibo total</p>
             </a>
-        <div class="column is-full p-0">
+        <div class="column is-full p-0 pt-2">
             <a class="button is-fullwidth" href="/mesa/{{ order_id }}/recibo/individual{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver recibo individual</p>
             </a>
         </div>
         {% if individual is defined %}
-        <div class="column is-full p-0">
+        <div class="column is-full p-0 pt-2">
             <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/por_pagar/total{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver pendiente de pago total</p>
             </a>
         </div>
         {% else %}
-        <div class="column is-full p-0">
+        <div class="column is-full p-0 pt-2">
             <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/por_pagar/individual{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver pendiente de pago individual</p>
             </a>
@@ -125,6 +125,22 @@
         <hr class="m-2"/>
         {% endfor %}
     </ol>
+    <div id="modalCliente" class="modal is-active is-hidden p-4">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Nombre de Cliente</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <p class="is-size-5 m-0">Introduce el nombre con el que quieres hacer los pedidos:</p>
+                <input id="client" class="input is-medium" type="text" placeholder="Nombre">
+            </section>
+            <footer class="modal-card-foot">
+                 <button class="button is-success is-fullwidth" onclick=client_controller.setClientFromModal()>Guardar</button>
+            </footer>
+        </div>
+    </div>
 </main>
 </body>
 {% if error is defined and error is not none %}
