@@ -38,25 +38,28 @@
 </nav>
 <nav class="navbar is-fixed-bottom is-transparent is-block">
     <div class="columns is-multiline p-5">
-        <div class="column is-full p-0">
-            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/total{{ '?cliente=' + client if client }}">
-                <p class="is-size-5">Ver pendiente de pago total</p>
-            </a>
-        </div>
-        <div class="column is-full p-0 pt-2">
-            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/individual{{ '?cliente=' + client if client }}">
-                <p class="is-size-5">Ver pendiente de pago individual</p>
-            </a>
-        </div>
         {% if individual is defined %}
         <div class="column is-full p-0 pt-2">
-            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/recibo/total{{ '?cliente=' + client if client }}">
+            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/por_pagar/individual{{ '?cliente=' + client if client }}">
+                <p class="is-size-5">Ver pendiente de pago</p>
+            </a>
+        </div>
+        {% else %}
+        <div class="column is-full p-0">
+            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/por_pagar/total{{ '?cliente=' + client if client }}">
+                <p class="is-size-5">Ver pendiente de pago</p>
+            </a>
+        </div>
+        {% endif %}
+        {% if individual is defined %}
+        <div class="column is-full p-0 pt-2">
+            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/recibo/total{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver recibo total</p>
             </a>
         </div>
         {% else %}
         <div class="column is-full p-0 pt-2">
-            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/recibo/individual{{ '?cliente=' + client if client }}">
+            <a class="button is-fullwidth" href="/mesa/{{ order_id }}/recibo/individual{{ '?cliente=' + client if client }}">
                 <p class="is-size-5">Ver recibo individual</p>
             </a>
         </div>
