@@ -25,6 +25,9 @@ def redirect_new_order_carta():
     order_id = menu_frontend.create_order()
     return RedirectResponse(url=f"/mesa/{order_id}/carta")
 
+@router.get("/mesa/{id}")
+def get(request: Request, id: str):
+    return RedirectResponse(url=f"/mesa/{id}/carta")
 
 @router.get("/mesa/{id}/carta", response_class=HTMLResponse)
 def get(request: Request, id: str, error: Optional[str] = None, message: Optional[str] = None):
