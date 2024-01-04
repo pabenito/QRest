@@ -19,7 +19,7 @@ class OrderFrontend:
         self.menu_use_cases = MenuUseCases(repository=MongoMenuRepository())
         self.command_use_cases = CommandUseCases(order_repository=MongoOrderRepository(),
                                                  command_repository=MongoCommandRepository())
-        self.receipt_use_cases = ReceiptUseCases(MongoOrderRepository, MongoMenuRepository)
+        self.receipt_use_cases = ReceiptUseCases(MongoOrderRepository(), MongoMenuRepository())
         self.encoder = json_lower_encoder
 
     @staticmethod
