@@ -64,3 +64,16 @@ class MongoOrderRepository(IOrderRepository):
 
     def has_receipt(self, order_id: str, session: Optional[ClientSession] = None):
         return self.repository.has_attribute(order_id, "receipt", session)
+
+    def set_waiting_for_payment(self, order_id: str, receipt: list[list[ReceiptElement]], session: Optional[ClientSession] = None):
+        return self.repository.set_attribute(order_id, "waiting_for_payment", self.encoder(receipt), session)
+
+    def get_waiting_for_payment(self, order_id: str, session: Optional[ClientSession] = None) -> list[list[ReceiptElement]]:
+        result = self.repository.get_attribute(order_id, "waiting_for_payment", session)
+        return self.parse(result, list[ReceiptElement])
+
+    def push_waiting_for_payment(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+        return self.repository.push_to_list_attribute(order_id, "waiting_for_payment", self.encoder(receipt), session)
+
+    def pull_waiting_for_payment(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+        return self.repository.pull_from_list_attribute(order_id, "waiting_for_payment", self.encoder(receipt), session)

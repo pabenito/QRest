@@ -61,3 +61,20 @@ class IOrderRepository(ABC):
     @abstractmethod
     def has_receipt(self, order_id: str, session: Optional[ClientSession] = None):
         pass
+
+    @abstractmethod
+    def set_waiting_for_payment(self, order_id: str, receipt: list[list[ReceiptElement]],
+                                session: Optional[ClientSession] = None):
+        pass
+
+    @abstractmethod
+    def get_waiting_for_payment(self, order_id: str, session: Optional[ClientSession] = None) -> list[list[ReceiptElement]]:
+        pass
+
+    @abstractmethod
+    def push_waiting_for_payment(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+        pass
+
+    @abstractmethod
+    def pull_waiting_for_payment(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+        pass

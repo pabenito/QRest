@@ -9,5 +9,5 @@ use_cases = PayUseCases(order_repository=MongoOrderRepository())
 
 
 @router.post("/{id}/pagar", response_model=list[ReceiptElement], response_model_exclude_unset=True, status_code=status.HTTP_200_OK)
-def generate_receipt(id: str, elements: list[ReceiptElement]) -> list[ReceiptElement]:
+def pay(id: str, elements: list[ReceiptElement]) -> list[ReceiptElement]:
     return use_cases.pay(id, elements)

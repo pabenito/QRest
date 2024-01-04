@@ -21,3 +21,8 @@ class PayUseCases:
             self.order_repository.set_to_be_paid(order_id, updated_to_be_paid, session)
             inserted_to_be_paid = self.order_repository.get_to_be_paid(order_id, session)
             return inserted_to_be_paid
+
+    def pay_from_waiting_for_payment(self, order_id: str, elements: list[ReceiptElement]) -> list[list[ReceiptElement]]:
+        with self.transaction_manager() as session:
+            waiting_for_payment = self.order_repository.get_waiting_for_payment(order_id, session)
+

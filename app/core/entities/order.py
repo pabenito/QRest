@@ -47,4 +47,5 @@ class Order(OrderNew, Id):
     commands: Optional[list[Command]] = None
     receipt: Optional[list[ReceiptElement]] = None
     to_be_paid: Optional[list[ReceiptElement]] = None
+    waiting_for_payment: Optional[list[list[ReceiptElement]]] = None
     paid: Optional[bool] = None
