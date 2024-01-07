@@ -1,8 +1,8 @@
 from typing import Optional
 
-from app.core.entities.order import ReceiptElement
-from app.core.use_cases.services.to_be_paid import ToBePaidServices
-from app.db.exceptions import PersistenceExceptionFactory, FieldNotFoundException
+from app.extra.entities.order import ReceiptElement
+from app.core.services.to_be_paid import ToBePaidServices
+from app.db.exceptions import PersistenceExceptionFactory
 from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.mongo_repositories import MongoTransactionManager
 

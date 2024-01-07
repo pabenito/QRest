@@ -1,13 +1,12 @@
-from abc import ABC
 from typing import Optional
 from pymongo.client_session import ClientSession
 
-from app.core.entities.order import OrderPost, Element, Command, ReceiptElement, Order
+from app.extra.entities.order import OrderPost, Element, Command, ReceiptElement, Order, WaitingForPayment
 from app.db.exceptions import FieldNotFoundException
 from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
-from app.lib.utils import parse_object, json_lower_encoder
+from app.extra.utils import parse_object, json_lower_encoder
 
 
 class MongoOrderRepository(IOrderRepository):
@@ -65,15 +64,21 @@ class MongoOrderRepository(IOrderRepository):
     def has_receipt(self, order_id: str, session: Optional[ClientSession] = None):
         return self.repository.has_attribute(order_id, "receipt", session)
 
-    def set_waiting_for_payment(self, order_id: str, receipt: list[list[ReceiptElement]], session: Optional[ClientSession] = None):
-        return self.repository.set_attribute(order_id, "waiting_for_payment", self.encoder(receipt), session)
+    def has_waiting_for_payment(self, order_id: str, session: Optional[ClientSession] = None):
+        return self.repository.has_attribute(order_id, "waiting_for_payment", session)
 
-    def get_waiting_for_payment(self, order_id: str, session: Optional[ClientSession] = None) -> list[list[ReceiptElement]]:
+    def has_waiting_for_payment_in_list(self, order_id: str, waiting_for_payment: WaitingForPayment, session: Optional[ClientSession] = None):
+        return self.repository.has_element_in_list_attribute(order_id, "waiting_for_payment", self.encoder(waiting_for_payment), session)
+
+    def set_waiting_for_payment(self, order_id: str, elements: list[WaitingForPayment], session: Optional[ClientSession] = None):
+        return self.repository.set_attribute(order_id, "waiting_for_payment", self.encoder(elements), session)
+
+    def get_waiting_for_payment(self, order_id: str, session: Optional[ClientSession] = None) -> list[WaitingForPayment]:
         result = self.repository.get_attribute(order_id, "waiting_for_payment", session)
-        return self.parse(result, list[ReceiptElement])
+        return self.parse(result, list[WaitingForPayment])
 
-    def push_waiting_for_payment(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
-        return self.repository.push_to_list_attribute(order_id, "waiting_for_payment", self.encoder(receipt), session)
+    def push_waiting_for_payment(self, order_id: str, elements: WaitingForPayment, session: Optional[ClientSession] = None):
+        return self.repository.push_to_list_attribute(order_id, "waiting_for_payment", self.encoder(elements), session)
 
-    def pull_waiting_for_payment(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
-        return self.repository.pull_from_list_attribute(order_id, "waiting_for_payment", self.encoder(receipt), session)
+    def pull_waiting_for_payment(self, order_id: str, elements: WaitingForPayment, session: Optional[ClientSession] = None):
+        return self.repository.pull_from_list_attribute(order_id, "waiting_for_payment", self.encoder(elements), session)

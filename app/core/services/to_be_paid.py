@@ -1,4 +1,4 @@
-from app.core.entities.order import ReceiptElement
+from app.extra.entities.order import ReceiptElement
 
 
 class ToBePaidServices:

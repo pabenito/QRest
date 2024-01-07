@@ -2,8 +2,8 @@ from typing import Optional
 
 from fastapi import APIRouter, status
 
-from app.core.entities.order import ReceiptElement
-from app.core.use_cases.receipt import ReceiptUseCases
+from app.extra.entities.order import ReceiptElement
+from app.core.receipt import ReceiptUseCases
 from app.db.repositories.mongo_repositories.menu import MongoMenuRepository
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 

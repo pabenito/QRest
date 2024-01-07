@@ -1,4 +1,4 @@
-from app.core.entities.menu import Section
+from app.extra.entities.menu import Section
 
 
 class MenuServices:

@@ -1,11 +1,11 @@
 from typing import Optional
 from pymongo.client_session import ClientSession
 
-from app.core.entities.allergens import Allergen
+from app.extra.entities.allergens import Allergen
 from app.db.repositories.interfaces.allergens import IAllergensRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
 from app.db.repositories.interfaces import IStandardRepository
-from app.lib.utils import parse_object
+from app.extra.utils import parse_object
 
 
 class MongoAllergensRepository(IAllergensRepository):

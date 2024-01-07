@@ -2,11 +2,11 @@ from typing import Optional
 
 from pymongo.client_session import ClientSession
 
-from app.core.entities.menu import Section
+from app.extra.entities.menu import Section
 from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.menu import IMenuRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
-from app.lib.utils import parse_object
+from app.extra.utils import parse_object
 
 
 class MongoMenuRepository(IMenuRepository):

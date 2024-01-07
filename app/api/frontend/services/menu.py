@@ -1,19 +1,19 @@
 from typing import Any
 
-from app.api.frontend.entities.menu import ExtendedSection, ExtendedElement
+from app.extra.entities.frontend.menu import ExtendedSection, ExtendedElement
 from app.api.services.extend_elment import generate_element_id_from_names
-from app.core.entities.allergens import Allergen
-from app.core.entities.menu import Section
-from app.core.entities.order import Element
-from app.core.use_cases.command import CommandUseCases
-from app.core.use_cases.menu import MenuUseCases
-from app.core.use_cases.allergens import AllergensUseCases
-from app.core.use_cases.order import OrderUseCases
+from app.extra.entities.allergens import Allergen
+from app.extra.entities.menu import Section
+from app.extra.entities.order import Element
+from app.core.command import CommandUseCases
+from app.core.menu import MenuUseCases
+from app.core.allergens import AllergensUseCases
+from app.core.order import OrderUseCases
 from app.db.repositories.mongo_repositories.allergens import MongoAllergensRepository
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
 from app.db.repositories.mongo_repositories.menu import MongoMenuRepository
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
-from app.lib.utils import json_lower_encoder
+from app.extra.utils import json_lower_encoder
 
 
 class MenuFrontend:

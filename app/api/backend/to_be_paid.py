@@ -2,8 +2,8 @@ from typing import Optional
 
 from fastapi import APIRouter, status
 
-from app.core.entities.order import ReceiptElement
-from app.core.use_cases.to_be_paid import ToBePaidUseCases
+from app.extra.entities.order import ReceiptElement
+from app.core.to_be_paid import ToBePaidUseCases
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 
 router = APIRouter()

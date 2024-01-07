@@ -1,6 +1,6 @@
 from typing import Optional
 
-from app.core.entities.menu import Element, Section
+from app.extra.entities.menu import Element, Section
 
 
 class ExtendedElement(Element):

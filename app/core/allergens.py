@@ -1,4 +1,4 @@
-from app.core.entities.allergens import Allergen
+from app.extra.entities.allergens import Allergen
 from app.db.repositories.interfaces.allergens import IAllergensRepository
 
 

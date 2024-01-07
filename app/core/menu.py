@@ -1,7 +1,5 @@
-from pprint import pprint
-
-from app.core.entities.menu import Section
-from app.core.use_cases.services.menu import MenuServices
+from app.extra.entities.menu import Section
+from app.core.services.menu import MenuServices
 from app.db.repositories.interfaces.menu import IMenuRepository
 
 

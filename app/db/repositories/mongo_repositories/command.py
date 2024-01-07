@@ -1,16 +1,12 @@
 from typing import Optional
 
-from bson import ObjectId
 from pymongo.client_session import ClientSession
 
-from app import db
-from app.core.exceptions import *
-from app.core.entities.order import Element, BasicElement
+from app.extra.entities.order import Element, BasicElement
 from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.command import ICommandRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository
-from app.db.exceptions import PersistenceExceptionFactory
-from app.lib.utils import json_lower_encoder, parse_object
+from app.extra.utils import json_lower_encoder, parse_object
 
 
 class MongoCommandRepository(ICommandRepository):

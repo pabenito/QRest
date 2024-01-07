@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field
 
-from app.core.entities import Id
+from app.extra.entities import Id
 
 
 class Variant(BaseModel):
@@ -42,10 +42,16 @@ class OrderNew(OrderPost):
     date: datetime = Field(default_factory=datetime.now)
 
 
+class WaitingForPayment(BaseModel):
+    websocket: str
+    client: Optional[str] = None
+    elements: Optional[list[ReceiptElement]] = None
+
+
 class Order(OrderNew, Id):
     current_command: Optional[list[Element]] = None
     commands: Optional[list[Command]] = None
     receipt: Optional[list[ReceiptElement]] = None
     to_be_paid: Optional[list[ReceiptElement]] = None
-    waiting_for_payment: Optional[list[list[ReceiptElement]]] = None
+    waiting_for_payment: Optional[list[WaitingForPayment]] = None
     paid: Optional[bool] = None

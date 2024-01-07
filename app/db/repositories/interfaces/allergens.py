@@ -2,7 +2,7 @@ from typing import Optional
 from abc import ABC, abstractmethod
 from pymongo.client_session import ClientSession
 
-from app.core.entities.allergens import Allergen
+from app.extra.entities.allergens import Allergen
 
 
 class IAllergensRepository(ABC):

@@ -1,5 +1,5 @@
-from app.core.entities.menu import Section
-from app.core.entities.order import ReceiptElement, Command
+from app.extra.entities.menu import Section
+from app.extra.entities.order import ReceiptElement, Command
 
 
 class ReceiptServices:

@@ -1,20 +1,17 @@
-from pprint import pprint
-
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter
 from starlette.templating import Jinja2Templates
 
-from app.core.exceptions import InvalidInputException
+from app.extra.exceptions import InvalidInputException
 from app.api.services.extend_elment import extend_element
-from app.api.websockets.connection_manager import ConnectionManager
-from app.core.entities.order import Element
-from app.core.use_cases.command import CommandUseCases
+from app.extra.entities.order import Element
+from app.core.command import CommandUseCases
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
-from app.lib.utils import json_lower_encoder, parse_object
+from app.extra.utils import json_lower_encoder, parse_object
+from app.config import manager, wsdict
 
 router = APIRouter()
 
-manager = ConnectionManager()
 templates = Jinja2Templates(directory="templates")
 use_cases = CommandUseCases(order_repository=MongoOrderRepository(), command_repository=MongoCommandRepository())
 encoder = json_lower_encoder
@@ -39,3 +36,16 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str):
     except Exception as error:
         await manager.send_single(websocket, {"type": "error", "message": str(error)})
         manager.disconnect(websocket, mesa)
+
+
+@router.websocket("/ws/pay")
+async def websocket_endpoint(websocket: WebSocket, websocket_id: str):
+    wsdict.add(websocket_id, websocket)
+    try:
+        while True:
+            await websocket.receive_text()
+    except WebSocketDisconnect:
+        wsdict.remove(websocket_id)
+    except Exception as error:
+        wsdict.send(websocket_id, {"type": "error", "message": str(error)})
+        wsdict.remove(websocket_id)

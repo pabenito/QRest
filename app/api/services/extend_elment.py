@@ -1,11 +1,10 @@
 import hashlib
 import json
-from pprint import pprint
 
-from app.api.frontend.entities.order import ExtendedElement
-from app.core.entities.menu import Section
-from app.core.entities.order import Element, BasicElement
-from app.lib.utils import json_lower_encoder
+from app.extra.entities.frontend.order import ExtendedElement
+from app.extra.entities.menu import Section
+from app.extra.entities.order import Element, BasicElement
+from app.extra.utils import json_lower_encoder
 
 
 def encode(string: str):

@@ -1,5 +1,20 @@
 from typing import Dict
-from starlette.websockets import WebSocket
+
+from fastapi.websockets import WebSocket
+
+
+class WebSocketManagerDict:
+    def __init__(self):
+        self.websockets: dict[str, WebSocket] = {}
+
+    def add(self, websocket_id: str, websocket: WebSocket):
+        self.websockets[websocket_id] = websocket
+
+    def remove(self, websocket_id: str):
+        del self.websockets[websocket_id]
+
+    def send(self, websocket_id: str, message):
+        self.websockets[websocket_id].send_json(message)
 
 
 class ConnectionManager:

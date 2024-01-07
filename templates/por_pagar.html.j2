@@ -24,6 +24,11 @@
         }
     </script>
     {% endif %}
+    <script type="module">
+        import { ShowHideManager } from '{{ url_for('static', path='/js/utils/showhide.js') }}';
+        var modalCaja = ShowHideManager('modalCaja');
+        window.modalCaja = modalCaja;
+    </script>
 </head>
 <body class="has-navbar-fixed-top has-navbar-fixed-bottom">
 <nav class="navbar is-fixed-top has-background-black">
@@ -50,6 +55,11 @@
             </a>
         </div>
         {% endif %}
+        <div class="column is-full p-0 pt-2">
+            <button class="button is-fullwidth is-black" onclick="modalCaja.show()">
+                <p class="is-size-5">Pagar</p>
+            </button>
+        </div>
     </div>
 </nav>
 <main>
@@ -133,6 +143,23 @@
         </div>
     </div>
 </main>
+<div id="modalCaja" class="modal is-active p-4">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      	<header class="modal-card-head">
+			<p class="modal-card-title">Esperando a pagar en caja</p>
+			<button class="delete" aria-label="close"></button>
+      	</header>
+      	<div class="modal-card-body p-5">
+        <figure class="container image is-128x128">
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia1.giphy.com%2Fmedia%2FL05HgB2h6qICDs5Sms%2Fgiphy.gif&f=1&nofb=1&ipt=0381ef9d22f0ba7f5d09b10cfb7ef4d05afb4df6aa5da3ea92dad6147f9eebb8&ipo=images"/>
+        </figure>
+    </div>
+		<footer class="modal-card-foot">
+			<button class="button is-fullwidth is-danger" onclick="modalCaja.close()">Cerrar</button>
+		</footer>
+    </div>
+</div>
 </body>
 {% if error is defined and error is not none %}
 <script type="module">

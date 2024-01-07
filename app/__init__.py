@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse, RedirectResponse
 
 from app import db
 from app import api
-from app.core.exceptions import InvalidInputException
+from app.extra.exceptions import InvalidInputException
 from app.db.exceptions import AlreadyExistsException, NotFoundException, OperationFailedException, \
     FieldNotFoundException
 from app import config

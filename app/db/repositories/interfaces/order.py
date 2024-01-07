@@ -2,7 +2,7 @@ from typing import Optional
 from abc import ABC, abstractmethod
 from pymongo.client_session import ClientSession
 
-from app.core.entities.order import OrderPost, Element, Command, ReceiptElement, Order
+from app.extra.entities.order import OrderPost, Element, Command, ReceiptElement, Order, WaitingForPayment
 
 
 class IOrderRepository(ABC):
@@ -63,18 +63,25 @@ class IOrderRepository(ABC):
         pass
 
     @abstractmethod
-    def set_waiting_for_payment(self, order_id: str, receipt: list[list[ReceiptElement]],
-                                session: Optional[ClientSession] = None):
+    def has_waiting_for_payment(self, order_id: str, session: Optional[ClientSession] = None):
         pass
 
     @abstractmethod
-    def get_waiting_for_payment(self, order_id: str, session: Optional[ClientSession] = None) -> list[list[ReceiptElement]]:
+    def has_waiting_for_payment_in_list(self, order_id: str, waiting_for_payment: WaitingForPayment, session: Optional[ClientSession] = None):
         pass
 
     @abstractmethod
-    def push_waiting_for_payment(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+    def set_waiting_for_payment(self, order_id: str, elements: list[WaitingForPayment], session: Optional[ClientSession] = None):
         pass
 
     @abstractmethod
-    def pull_waiting_for_payment(self, order_id: str, receipt: list[ReceiptElement], session: Optional[ClientSession] = None):
+    def get_waiting_for_payment(self, order_id: str, session: Optional[ClientSession] = None) -> list[WaitingForPayment]:
+        pass
+
+    @abstractmethod
+    def push_waiting_for_payment(self, order_id: str, elements: WaitingForPayment, session: Optional[ClientSession] = None):
+        pass
+
+    @abstractmethod
+    def pull_waiting_for_payment(self, order_id: str, elements: WaitingForPayment, session: Optional[ClientSession] = None):
         pass
