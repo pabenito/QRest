@@ -26,7 +26,7 @@
     {% endif %}
     <script type="module">
         import { ShowHideManager } from '{{ url_for('static', path='/js/utils/showhide.js') }}';
-        var modalCaja = ShowHideManager('modalCaja');
+        var modalCaja = new ShowHideManager('modalCaja');
         window.modalCaja = modalCaja;
     </script>
 </head>
@@ -143,7 +143,7 @@
         </div>
     </div>
 </main>
-<div id="modalCaja" class="modal is-active p-4">
+<div id="modalCaja" class="modal is-active is-hidden p-4">
     <div class="modal-background"></div>
     <div class="modal-card">
       	<header class="modal-card-head">
@@ -156,7 +156,7 @@
         </figure>
     </div>
 		<footer class="modal-card-foot">
-			<button class="button is-fullwidth is-danger" onclick="modalCaja.close()">Cerrar</button>
+			<button class="button is-fullwidth is-danger" onclick="modalCaja.hide()">Cerrar</button>
 		</footer>
     </div>
 </div>
