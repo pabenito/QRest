@@ -8,11 +8,17 @@ router = APIRouter()
 use_cases = PayUseCases(order_repository=MongoOrderRepository())
 
 
-@router.post("/{id}/pagar", response_model=list[ReceiptElement], response_model_exclude_unset=True, status_code=status.HTTP_200_OK)
+@router.post("/{id}/pagar", response_model=list[ReceiptElement], response_model_exclude_unset=True,
+             status_code=status.HTTP_200_OK)
 def pay(id: str, elements: list[ReceiptElement]) -> list[ReceiptElement]:
     return use_cases.pay(id, elements)
+
 
 @router.post("/{id}/pagar/caja")
 def waiting_for_payment(id: str, elements: list[ReceiptElement], websocket: str, client: str = None):
     return use_cases.wait_for_payment(id, elements, websocket, client)
 
+
+@router.delete("/{id}/pagar/caja")
+def pay_from_waiting_for_payment(id: str, order_id: str, websocket_id: str):
+    return use_cases.pay_from_waiting_for_payment(order_id, websocket_id)

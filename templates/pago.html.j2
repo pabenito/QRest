@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QRest | Pagos en caja</title>
+    <link rel="icon" href="/static/img/icon.png" type="image/icon type">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+          integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          <link rel="stylesheet" type="text/css" href="/static/css/bulma.css" />
+          <link rel="stylesheet" type="text/css" href="/static/css/form.css" />
+</head>
+<body class="has-navbar-fixed-top has-navbar-fixed-bottom">
+<nav class="navbar is-fixed-top has-background-black">
+    <div class="columns is-mobile is-vcentered p-2">
+        <div class="column is-full">
+            <h1 class="title is-size-4 has-text-white ml-3">
+                Pagos en Caja
+            </h1>
+        </div>
+    </div>
+</nav>
+<main class="container">
+    {% for waiting in waiting_list %}
+    <section class="box m-2">
+        {% if waiting.client %}
+        <h2 class="title is-size-4">{{ waiting.client }}</h2>
+        {% endif %}
+        <ol id="elements">
+            {% for element in waiting.elements %}
+            <li class="columns is-multiline m-0 is-mobile is-vcentered">
+                <div class="column is-narrow">
+                    <figure class="image image is-96x96">
+                        <img class="has-rounded-border" src="https://bulma.io/images/placeholders/96x96.png"/>
+                    </figure>
+                </div>
+                <div class="column">
+                    <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered">
+                        {{ element.element }}
+                    </p>
+                    <div class="columns is-multiline m-0 is-mobile is-vcentered is-centered">
+                        <div class="column is-narrow">
+                            {% for variant in element.variants %}
+                            <p class="subtitle is-size-5 m-0 is-unbreakable">{{ variant.value }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="column is-narrow">
+                            {% for extra in element.extras %}
+                            <p class="subtitle is-size-5 m-0 is-unbreakable">+{{ extra }}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="column is-narrow">
+                            {% for ingradient in element.ingredients %}
+                            <p class="subtitle is-size-5 m-0 is-unbreakable">-{{ ingredient }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-narrow">
+                    <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                        Cantidad:
+                    </p>
+                    <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                        Precio:
+                    </p>
+                    <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-right">
+                        Total:
+                    </p>
+                </div>
+                <div class="column is-narrow">
+                    <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                        {{ element.quantity }} uds.
+                    </p>
+                    <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                        {{ element.price }} €
+                    </p>
+                    <p class="subtitle is-size-5 m-0 is-word-unbreakable has-text-left">
+                        {{ element.quantity * element.price }} €
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+            <hr class="m-2" />
+        </ol>
+        <a class="button is-fullwidth is-black" href="/backend/mesa/{{ order_id }}/">
+            <p class="is-size-5">Pagado</p>
+        </a>
+    </section>
+    {% endfor %}
+</main>
+</body>
+{% if error is defined and error is not none %}
+<script type="module">
+    import { showError } from '{{ url_for('static', path='/js/utils/errorHandler.js') }}';
+    showError("{{ error }}");
+</script>
+{% endif %}
+{% if message is defined and message is not none %}
+<script type="module">
+    import { showMessage } from '{{ url_for('static', path='/js/utils/errorHandler.js') }}';
+    showMessage("{{ message }}");
+</script>
+{% endif %}
+</html>

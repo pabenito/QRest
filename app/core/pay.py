@@ -16,6 +16,9 @@ class PayUseCases:
         self.persistence_exception_factory = PersistenceExceptionFactory("order")
         self.services = PayServices()
 
+    def get_waiting_for_payment(self, order_id: str) -> list[WaitingForPayment]:
+        return self.order_repository.get_waiting_for_payment(order_id)
+
     def pay(self, order_id: str, elements: list[ReceiptElement]) -> list[ReceiptElement]:
         with self.transaction_manager() as session:
             self._pay(order_id, elements, session)

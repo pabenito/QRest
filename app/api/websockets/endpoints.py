@@ -52,8 +52,6 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str, websocket_id: str,
             data = await websocket.receive_json()
             wait_for_payment = parser(data, list[ReceiptElement])
             pay_use_cases.wait_for_payment(mesa, wait_for_payment, websocket_id, client_id)
-            #sleep(5);
-            await pay_use_cases.pay_from_waiting_for_payment(mesa, websocket_id)
     except WebSocketDisconnect:
         wsdict.remove(websocket_id)
     except Exception as error:
