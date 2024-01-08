@@ -56,8 +56,6 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str, websocket_id: str,
             await pay_use_cases.pay_from_waiting_for_payment(mesa, websocket_id)
     except WebSocketDisconnect:
         wsdict.remove(websocket_id)
-'''
     except Exception as error:
         await wsdict.send(websocket_id, {"type": "error", "message": str(error)})
         wsdict.remove(websocket_id)
-'''

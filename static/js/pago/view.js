@@ -30,7 +30,7 @@ class PayHTMLManager {
     }
 
     redirect(){
-        redirect(this.urlRedirect + "?message=Pago realizado");
+        redirect(this.urlRedirect + "?message=Pago realizado con éxito");
     }
 
     reload(){
