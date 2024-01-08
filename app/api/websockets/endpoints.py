@@ -1,9 +1,13 @@
+from pprint import pprint
+from typing import Optional
+
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter
 from starlette.templating import Jinja2Templates
 
+from app.core.pay import PayUseCases
 from app.extra.exceptions import InvalidInputException
 from app.api.services.extend_elment import extend_element
-from app.extra.entities.order import Element
+from app.extra.entities.order import Element, ReceiptElement
 from app.core.command import CommandUseCases
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
@@ -13,7 +17,8 @@ from app.config import manager, wsdict
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
-use_cases = CommandUseCases(order_repository=MongoOrderRepository(), command_repository=MongoCommandRepository())
+command_use_cases = CommandUseCases(order_repository=MongoOrderRepository(), command_repository=MongoCommandRepository())
+pay_use_cases = PayUseCases(order_repository=MongoOrderRepository())
 encoder = json_lower_encoder
 parser = parse_object
 
@@ -26,7 +31,7 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str):
             data = await websocket.receive_json()
             element = parser(data, Element)
             try:
-                updated_element = use_cases.update_element(mesa, element)
+                updated_element = command_use_cases.update_element(mesa, element)
                 extended_element = extend_element(updated_element)
                 await manager.send_group(encoder(extended_element), mesa)
             except InvalidInputException as error:
@@ -39,13 +44,17 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str):
 
 
 @router.websocket("/ws/pay")
-async def websocket_endpoint(websocket: WebSocket, websocket_id: str):
-    wsdict.add(websocket_id, websocket)
+async def websocket_endpoint(websocket: WebSocket, websocket_id: str, client_id: Optional[str] = None):
+    await wsdict.add(websocket_id, websocket)
     try:
         while True:
-            await websocket.receive_text()
+            data = await websocket.receive_json()
+            pprint(data)
+            wait_for_payment = parser(data, list[ReceiptElement])
+            pprint(wait_for_payment)
+            await wsdict.send(websocket_id, {"type": "paid"})
     except WebSocketDisconnect:
         wsdict.remove(websocket_id)
     except Exception as error:
-        wsdict.send(websocket_id, {"type": "error", "message": str(error)})
+        await wsdict.send(websocket_id, {"type": "error", "message": str(error)})
         wsdict.remove(websocket_id)

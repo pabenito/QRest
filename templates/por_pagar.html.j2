@@ -12,8 +12,9 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}"/>
     {% if individual and not client %}
     <script type="module">
+        import { redirect } from '{{ url_for('static', path='/js/utils/redirect.js') }}';
         import { ClientController } from '{{ url_for('static', path='/js/client/controller.js') }}';
-        import { redirect} from '{{ url_for('static', path='/js/utils/redirect.js') }}';
+
         var redirect_to_individual = function (client) {
             redirect("/mesa/{{ order_id }}/por_pagar/individual?cliente=" + client);
         }
@@ -25,9 +26,17 @@
     </script>
     {% endif %}
     <script type="module">
-        import { ShowHideManager } from '{{ url_for('static', path='/js/utils/showhide.js') }}';
-        var modalCaja = new ShowHideManager('modalCaja');
-        window.modalCaja = modalCaja;
+        import { PayHTMLManager} from '{{ url_for('static', path='/js/pago/view.js') }}';
+        import { PayController } from '{{ url_for('static', path='/js/pago/controller.js') }}';
+        import { WebSocketManager } from '{{ url_for('static', path='/js/pago/model_websocket.js') }}';
+
+        var pay_html_manager = new PayHTMLManager("modalCaja", '/mesa/{{ order_id }}/por_pagar/total');
+        var wsId = Math.random().toString(36).slice(2, 7);
+        console.log("wsId: " + wsId);
+        var model = new WebSocketManager('ws://{{ url }}{{ ws_path }}?websocket_id=' + wsId);
+        var controller = new PayController(pay_html_manager, model);
+        window.controller = controller;
+        window.view = pay_html_manager;
     </script>
 </head>
 <body class="has-navbar-fixed-top has-navbar-fixed-bottom">
@@ -56,7 +65,7 @@
         </div>
         {% endif %}
         <div class="column is-full p-0 pt-2">
-            <button class="button is-fullwidth is-black" onclick="modalCaja.show()">
+            <button class="button is-fullwidth is-black" onclick='controller.waitForPayment({{ elements | tojson | safe }})'>
                 <p class="is-size-5">Pagar</p>
             </button>
         </div>
@@ -156,7 +165,7 @@
         </figure>
     </div>
 		<footer class="modal-card-foot">
-			<button class="button is-fullwidth is-danger" onclick="modalCaja.hide()">Cerrar</button>
+			<button class="button is-fullwidth is-danger" onclick="view.closeModal()">Cerrar</button>
 		</footer>
     </div>
 </div>

@@ -7,14 +7,15 @@ class WebSocketManagerDict:
     def __init__(self):
         self.websockets: dict[str, WebSocket] = {}
 
-    def add(self, websocket_id: str, websocket: WebSocket):
+    async def add(self, websocket_id: str, websocket: WebSocket):
+        await websocket.accept()
         self.websockets[websocket_id] = websocket
 
     def remove(self, websocket_id: str):
         del self.websockets[websocket_id]
 
-    def send(self, websocket_id: str, message):
-        self.websockets[websocket_id].send_json(message)
+    async def send(self, websocket_id: str, message):
+        await self.websockets[websocket_id].send_json(message)
 
 
 class ConnectionManager:
