@@ -20,5 +20,5 @@ def waiting_for_payment(id: str, elements: list[ReceiptElement], websocket: str,
 
 
 @router.delete("/{id}/pagar/caja")
-def pay_from_waiting_for_payment(id: str, order_id: str, websocket_id: str):
-    return use_cases.pay_from_waiting_for_payment(order_id, websocket_id)
+async def pay_from_waiting_for_payment(id: str, websocket_id: str):
+    return await use_cases.pay_from_waiting_for_payment(id, websocket_id)

@@ -22,7 +22,6 @@ order_frontend = OrderFrontend()
 @router.get("/mesa/{id}/pedido")
 def get(request: Request, id: str, error: Optional[str] = None, message: Optional[str] = None):
     elements = order_frontend.encode(order_frontend.get_current_command_with_extended_elements(id))
-    pprint(elements)
     if not elements:
         return RedirectResponse(f"http://{config.url}/mesa/{id}/carta?error=Error: No se han seleccionado elementos.")
     return templates.TemplateResponse("pedido.html.j2", {

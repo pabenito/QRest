@@ -80,10 +80,12 @@
                     </p>
                 </div>
             </li>
+            {% if not loop.last %}
+                <hr class="m-2" />
+            {% endif %}
             {% endfor %}
-            <hr class="m-2" />
         </ol>
-        <a class="button is-fullwidth is-black" href="/backend/mesa/{{ order_id }}/">
+        <a class="button is-fullwidth is-black" onclick="pay('{{ order_id }}', '{{ waiting.websocket }}')">
             <p class="is-size-5">Pagado</p>
         </a>
     </section>
@@ -102,4 +104,14 @@
     showMessage("{{ message }}");
 </script>
 {% endif %}
+<script>
+    function pay(order_id, websocket_id) {
+    fetch("/backend/mesa/" + order_id + "/pagar/caja?websocket_id=" + websocket_id, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        window.location.reload();
+    })
+}
+</script>
 </html>
