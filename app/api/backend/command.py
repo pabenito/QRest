@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.extra.entities.menu import Element
+from app.extra.entities.order import Element
 from app.core.command import CommandUseCases
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
