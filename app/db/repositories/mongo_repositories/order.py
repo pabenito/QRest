@@ -77,8 +77,9 @@ class MongoOrderRepository(IOrderRepository):
         result = self.repository.get_attribute(order_id, "waiting_for_payment", session)
         return self.parse(result, list[WaitingForPayment])
 
-    def push_waiting_for_payment(self, order_id: str, elements: WaitingForPayment, session: Optional[ClientSession] = None):
-        return self.repository.push_to_list_attribute(order_id, "waiting_for_payment", self.encoder(elements), session)
+    def push_waiting_for_payment(self, order_id: str, waiting_for_payment: WaitingForPayment, session: Optional[ClientSession] = None):
+        return self.repository.push_to_list_attribute(order_id, "waiting_for_payment", self.encoder(waiting_for_payment), session)
 
-    def pull_waiting_for_payment(self, order_id: str, elements: WaitingForPayment, session: Optional[ClientSession] = None):
-        return self.repository.pull_from_list_attribute(order_id, "waiting_for_payment", self.encoder(elements), session)
+    def pull_waiting_for_payment(self, order_id: str, waiting_for_payment: WaitingForPayment, session: Optional[ClientSession] = None) -> WaitingForPayment:
+        result = self.repository.pull_from_list_attribute(order_id, "waiting_for_payment", self.encoder(waiting_for_payment), session)
+        return result

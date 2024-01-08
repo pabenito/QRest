@@ -221,6 +221,7 @@ class MongoStandardRepository(BasicMongoRepository, IStandardRepository):
             raise self.exception_factory.document_not_found(id)
         if result.modified_count <= 0:
             raise self.exception_factory.operation_failed(id, attribute)
+        return result
 
     def get_from_list_attribute(self, id: str, attribute: str, element, session: Optional[ClientSession] = None) -> Any:
         result = self._get_db().find_one(

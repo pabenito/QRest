@@ -33,7 +33,7 @@
         var pay_html_manager = new PayHTMLManager("modalCaja", '/mesa/{{ order_id }}/por_pagar/total');
         var wsId = Math.random().toString(36).slice(2, 7);
         console.log("wsId: " + wsId);
-        var model = new WebSocketManager('ws://{{ url }}{{ ws_path }}?websocket_id=' + wsId);
+        var model = new WebSocketManager('ws://{{ url }}{{ ws_path }}?websocket_id=' + wsId + '&mesa={{ order_id }}');
         var controller = new PayController(pay_html_manager, model);
         window.controller = controller;
         window.view = pay_html_manager;

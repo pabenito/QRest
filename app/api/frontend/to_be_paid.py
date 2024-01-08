@@ -33,6 +33,8 @@ def get_total(request: Request, id: str, cliente: Optional[str] = None, error: O
         return RedirectResponse(f"http://{config.url}/mesa/{id}/carta?error=Error: Todavía no se ha confirmado ninguna comanda.")
     return templates.TemplateResponse("por_pagar.html.j2", {
         "request": request,
+        "url": config.url,
+        "ws_path": "/ws/pay",
         "order_id": id,
         "client": cliente,
         "elements": elements,

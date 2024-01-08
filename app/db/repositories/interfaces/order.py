@@ -79,9 +79,9 @@ class IOrderRepository(ABC):
         pass
 
     @abstractmethod
-    def push_waiting_for_payment(self, order_id: str, elements: WaitingForPayment, session: Optional[ClientSession] = None):
+    def push_waiting_for_payment(self, order_id: str, waiting_for_payment: WaitingForPayment, session: Optional[ClientSession] = None):
         pass
 
     @abstractmethod
-    def pull_waiting_for_payment(self, order_id: str, elements: WaitingForPayment, session: Optional[ClientSession] = None):
+    def pull_waiting_for_payment(self, order_id: str, waiting_for_payment: WaitingForPayment, session: Optional[ClientSession] = None) -> WaitingForPayment:
         pass

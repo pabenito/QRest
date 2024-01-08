@@ -1,4 +1,5 @@
 from pprint import pprint
+from time import sleep
 from typing import Optional
 
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter
@@ -44,17 +45,19 @@ async def websocket_endpoint(websocket: WebSocket, mesa: str):
 
 
 @router.websocket("/ws/pay")
-async def websocket_endpoint(websocket: WebSocket, websocket_id: str, client_id: Optional[str] = None):
+async def websocket_endpoint(websocket: WebSocket, mesa: str, websocket_id: str, client_id: Optional[str] = None):
     await wsdict.add(websocket_id, websocket)
     try:
         while True:
             data = await websocket.receive_json()
-            pprint(data)
             wait_for_payment = parser(data, list[ReceiptElement])
-            pprint(wait_for_payment)
-            await wsdict.send(websocket_id, {"type": "paid"})
+            pay_use_cases.wait_for_payment(mesa, wait_for_payment, websocket_id, client_id)
+            #sleep(5);
+            await pay_use_cases.pay_from_waiting_for_payment(mesa, websocket_id)
     except WebSocketDisconnect:
         wsdict.remove(websocket_id)
+'''
     except Exception as error:
         await wsdict.send(websocket_id, {"type": "error", "message": str(error)})
         wsdict.remove(websocket_id)
+'''
