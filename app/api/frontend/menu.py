@@ -32,7 +32,7 @@ def get(request: Request, id: str):
 @router.get("/mesa/{id}/carta", response_class=HTMLResponse)
 def get(request: Request, id: str, error: Optional[str] = None, message: Optional[str] = None):
     if order_frontend.has_receipt(id):
-        return RedirectResponse(url=f"/mesa/{id}/recibo")
+        return RedirectResponse(url=f"/mesa/{id}/por_pagar")
     return templates.TemplateResponse("menu.html.j2", {
         "request": request,
         "url": config.url,

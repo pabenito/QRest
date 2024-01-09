@@ -33,4 +33,4 @@ class ReceiptUseCases:
         return receipt
 
     def has(self, order_id: str):
-        self.order_repository.has_receipt(order_id)
+        return self.order_repository.has_receipt(order_id)

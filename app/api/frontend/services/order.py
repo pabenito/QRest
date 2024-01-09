@@ -36,5 +36,5 @@ class OrderFrontend:
         current_command = self.get_current_command(order_id)
         return generate_extend_elements_with_images(sections, current_command)
 
-    def has_receipt(self, order_id: str):
+    def has_receipt(self, order_id: str) -> bool:
         return self.receipt_use_cases.has(order_id)
