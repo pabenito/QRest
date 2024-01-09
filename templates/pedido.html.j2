@@ -32,7 +32,7 @@
         var element_html_view = new OrderElementHTMLManager();
         var element_websocket_model = new WebSocketManager(`ws://{{ url }}{{ ws_path }}?mesa=${orderId}`);
         var client_controller = new ClientController("modalCliente", "client");
-        var element_controller = new OrderController(element_html_view, element_websocket_model, client_controller);
+        var element_controller = new OrderController(element_html_view, element_websocket_model, client_controller, "elementsForSuggestion");
 
         window.client_controller = client_controller;
         window.element_controller = element_controller;

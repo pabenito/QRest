@@ -2,6 +2,7 @@ import { Element } from './entities.js';
 import { WebSocketManager } from './model_websocket.js';
 import { ElementHTMLManager } from './view_interface.js';
 import { ClientController } from '../client/controller.js';
+import { LocalStorageListManager } from "../suggestion/localStorageListManager.js";
 
 export { OrderController };
 
@@ -12,10 +13,15 @@ class OrderController {
      * @param {WebSocketManager} model - WebSocket que actúa como modelo accediendo al backend.
      * @param {ClientController} clientController - Controlador de cliente.
      */
-    constructor(view, model, clientController) {
+    constructor(view, model, clientController, listElementsName){
         this.view = view;
         this.model = model;
         this.clientController = clientController;
+        this.localStorageListManager = undefined;
+        if (listElementsName) {
+            this.localStorageListManager = new LocalStorageListManager(listElementsName);
+        }
+        this.localStorageListManager = new LocalStorageListManager(listElementsName);
         this.model.setOnError((message) => this.view.showError(message));
         this.model.setOnMessage((element) => this.view.putElement(element));
     }
@@ -34,6 +40,9 @@ class OrderController {
     }
 
     increaseElementQuantityModel(id, section, element, variants, extras, ingredients) {
+        if (this.localStorageListManager && !this.localStorageListManager.hasElement(element)) {
+            this.localStorageListManager.addElement(element);
+        }
         if (this.clientController.hasClient())
         {
             this.#updateElementModel(id, section, element, this.clientController.getClient(), 1, variants, extras, ingredients);

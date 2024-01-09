@@ -27,8 +27,7 @@
         var element_html_view = new MenuElementHTMLManager();
         var element_websocket_model = new WebSocketManager(`ws://{{ url }}{{ ws_path }}?mesa=${orderId}`);
         var client_controller = new ClientController("modalCliente", "client");
-        var element_controller = new OrderController(element_html_view, element_websocket_model, client_controller);
-
+        var element_controller = new OrderController(element_html_view, element_websocket_model, client_controller, "elementsForSuggestion");
         window.client_controller = client_controller;
         window.element_controller = element_controller;
     </script>
@@ -99,8 +98,7 @@
                 </div>
                 {% endif %}
                 <div class="column">
-                {% if element.tags is defined%}
-                    <div class="tags m-0">
+                    <div id="tags_{{ element.name }}" class="tags m-0 {{ 'is-hidden' if not element.tags is defined }}">
                     {% for tag in element.tags %}
                         <span class="tag is-rounded">
                         {% if tag.icon is defined %}
@@ -112,7 +110,6 @@
                         </span>
                     {% endfor %}
                     </div>
-                {% endif %}
                     <p class="title is-size-5 m-0">{{ element.name }}</p>
                 {% if element.price is defined %}
                     <p class="subtitle is-size-5 m-0">{{ element.price }}€</p>
@@ -402,6 +399,16 @@
     showMessage("{{ message }}");
 </script>
 {% endif %}
+<script type="module">
+    import { SuggestionHTML } from '{{ url_for('static', path='/js/suggestion/view.js') }}';
+    import { LocalStorageListManager } from '{{ url_for('static', path='/js/suggestion/localStorageListManager.js') }}';
+    import { SuggestionController } from '{{ url_for('static', path='/js/suggestion/controller.js') }}';
+
+    var suggestion_html = new SuggestionHTML();
+    var suggestion_model = new LocalStorageListManager("elementsForSuggestion");
+    var suggestion_controller = new SuggestionController(suggestion_html, suggestion_model);
+    suggestion_controller.setSuggestions();
+</script>
 <script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
 <script src="{{ url_for('static', path='/js/showhide.js') }}"></script>
 <script src="{{ url_for('static', path='/js/modal.js') }}"></script>
