@@ -90,13 +90,12 @@
                 {% set element_is_complex = element.variants is defined or element.extras is defined or element.ingredients is defined %}
                 {% set modal_id = 'modal' ~ element.id %}
             <div class="columns m-0 is-mobile is-vcentered">
-                {% if element.image is defined %}
                 <div class="column is-narrow">
-                    <figure class="image is-96x96">
-                        <img class="has-rounded-border" src="{{ element.image }}">
+                    <figure class="image is-64x64">
+                        <img class="has-rounded-border"
+                            src="{{ element.image if element.image is defined else 'https://bulma.io/images/placeholders/64x64.png' }}" />
                     </figure>
                 </div>
-                {% endif %}
                 <div class="column">
                     <div id="tags_{{ element.name }}" class="tags m-0 {{ 'is-hidden' if not element.tags is defined }}">
                     {% for tag in element.tags %}
