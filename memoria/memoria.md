@@ -46,55 +46,33 @@ En resumen, aunque cada una de estas soluciones ofrece ventajas en ciertos aspec
 
 ### Motivación
 
-La motivación para el desarrollo del proyecto QRest tiene sus raíces en experiencias personales y en un interés técnico profundo. La idea surgió tras una experiencia en un restaurante llamado Yasaka. Allí, me encontré con un sistema de pedidos basado web y QRs generados para cada pedido, diseñado específicamente para ese establecimiento, pero con notables deficiencias: una interfaz de usuario poco atractiva, falta de sincronización de los pedidos y la ausencia de una opción para realizar pagos separados. Este encuentro me llevó a la reflexión y eventual decisión de explorar la posibilidad de desarrollar una solución aplicable a una gama más amplia de restaurantes. Desde enero de 2023, comencé a investigar las soluciones ya existentes en el mercado, notando una evolución constante y el surgimiento de nuevas opciones durante el año.
+La iniciativa para desarrollar QRest se originó a partir de experiencias personales significativas, complementadas por un fuerte interés en los desafíos técnicos. La concepción del proyecto surgió tras una visita al restaurante Yasaka, donde observé un sistema de pedidos basado en web y QR específico para el establecimiento, pero con claras deficiencias: una interfaz de usuario poco atractiva, falta de sincronización de pedidos y ausencia de funcionalidad para pagos individuales. Este escenario motivó una profunda reflexión y la decisión de investigar y desarrollar una solución más eficiente y adaptable para una variedad de restaurantes. Desde enero de 2023, he dedicado tiempo a explorar las soluciones existentes en el mercado, observando una evolución continua y la aparición de nuevas opciones a lo largo del año.
 
-En el plano personal, mi interés en el desarrollo web y el deseo de enfrentar un reto significativo en este ámbito fueron factores decisivos. La experiencia como cliente de restaurantes me proporcionó una perspectiva única sobre las necesidades y desafíos en este sector. La idea de llevar QRest más allá de un proyecto académico y convertirlo en un negocio viable también jugó un papel importante en mi decisión. Además, el proyecto representaba una oportunidad excepcional para aplicar los conocimientos adquiridos en la carrera de Ingeniería del Software en un contexto práctico y realista.
+A nivel personal, mi interés en el desarrollo web y el desafío de abordar un problema complejo y relevante fueron catalizadores cruciales. Mi experiencia como cliente frecuente en restaurantes proporcionó una perspectiva única sobre las necesidades y desafíos en este sector. Adicionalmente, la posibilidad de transformar QRest en un emprendimiento viable post-TFG resonó con mis aspiraciones profesionales. El proyecto también representó una oportunidad excepcional para aplicar de forma práctica los conocimientos adquiridos en mi formación en Ingeniería del Software.
 
-Desde un enfoque técnico, la reciente aparición de soluciones de gestión para restaurantes representó una oportunidad para la investigación y la innovación. La posibilidad de desarrollar una aplicación que pudiera escalar a diferentes tipos de restaurantes, especialmente aquellos de menor tamaño o recién inaugurados, era especialmente atractiva. El proyecto implicaba la integración de múltiples aspectos técnicos: desde transacciones en bases de datos y sincronización en tiempo real mediante websockets, hasta el uso de bases de datos NoSQL y la construcción de modelos de datos complejos capaces de reflejar la variedad de situaciones en un restaurante real. Además, se puso especial énfasis en la privacidad y seguridad de los datos, empleando técnicas como el almacenamiento local de datos del usuario.
+Técnicamente, la emergencia de soluciones de gestión para restaurantes en 2023 abrió un campo de investigación e innovación. La meta de desarrollar una aplicación escalable, capaz de resolver los problemas operativos de restaurantes de diferentes tamaños, en particular los más pequeños o recientemente inaugurados, era altamente atractiva. El proyecto requería la integración de varios aspectos técnicos complejos, incluyendo transacciones en bases de datos, sincronización en tiempo real con websockets, el uso de bases de datos NoSQL, y el desarrollo de modelos de datos complejos. Asimismo, se enfatizó en la privacidad y seguridad de los datos, implementando técnicas como el almacenamiento local en el navegador del usuario.
 
-A nivel de ingeniería del software, enfrentar el reto de desarrollar una aplicación en un área emergente con pocas referencias existentes fue una tarea significativa. Esto implicó la adopción de metodologías de desarrollo de software adecuadas, la definición de requisitos claros, la elaboración de casos de uso, la implementación de pruebas, y la aplicación de APIs, programación orientada a objetos en Python y JavaScript, y el uso de frameworks de desarrollo web. Además, la estructuración y refactorización de un proyecto de esta magnitud fueron componentes clave para su éxito.
+Desde la perspectiva de la ingeniería del software, el desafío de desarrollar una aplicación en un área naciente con limitadas referencias preexistentes fue una tarea considerable. Este proceso implicó adoptar metodologías adecuadas de desarrollo de software, definir requisitos claros, elaborar casos de uso y pruebas, y aplicar APIs y principios de programación orientada a objetos en Python y JavaScript, así como el uso de frameworks de desarrollo web. Además, la estructuración y el refactoring del proyecto fueron componentes clave para su éxito.
 
-En resumen, QRest es el resultado de una combinación de motivaciones personales y técnicas, representando tanto una solución innovadora para los desafíos en la industria de la restauración como un proyecto personal de crecimiento y aplicación práctica de habilidades y conocimientos en ingeniería del software.
+En conclusión, QRest es fruto de un equilibrio entre motivaciones personales y desafíos técnicos, resultando en una solución innovadora para los retos de la industria restaurantera y un proyecto de crecimiento personal y aplicación práctica de habilidades en ingeniería del software.
+
+---
 
 ### Objetivos
 
-En el desarrollo del proyecto QRest, he establecido una serie de objetivos divididos en tres categorías clave: personales, profesionales y del proyecto.
+Los objetivos del proyecto QRest se clasifican en tres categorías principales: personales, profesionales y específicos del proyecto, cada una contribuyendo al éxito y la realización integral del proyecto.
 
-#### Objetivos Personales
+**Objetivos Personales:**
+Mis metas personales se centran en el logro de un Trabajo de Fin de Grado que no solo me desafíe y emocione, sino que también represente un hito en mi desarrollo personal y profesional. Este proyecto es una plataforma para la realización de un emprendimiento post-TFG, ofreciendo una oportunidad única para aplicar y ampliar mi conocimiento en el desarrollo web y enriquecer mi portafolio profesional con una aplicación full-stack robusta y bien desarrollada.
 
-Los objetivos personales se centran en mi crecimiento y satisfacción a lo largo de este proyecto. Incluyen:
+**Objetivos Profesionales:**
+Desde un punto de vista profesional, los objetivos están alineados con el fortalecimiento y la expansión de habilidades técnicas específicas. Esto incluye mejorar en el desarrollo de frontend, particularmente en JavaScript y CSS; dominar la sincronización en tiempo real utilizando Websockets; profundizar en MongoDB; entender las transacciones en bases de datos; explorar la arquitectura de software en aplicaciones web; diseñar y desarrollar APIs eficientes; y reforzar la programación orientada a
 
-- Realizar un Trabajo de Fin de Grado que despierte un verdadero entusiasmo y compromiso personal.
-- Crear una base para el desarrollo de un negocio a partir del proyecto QRest.
-- Fomentar mi desarrollo personal y profesional a través de este desafío.
-- Adquirir conocimientos profundos en desarrollo web.
-- Desarrollar una aplicación full-stack que no solo cumpla con los requisitos del TFG, sino que también enriquezca mi portafolio profesional.
+ objetos en Python y JavaScript. Además, se busca implementar metodologías ágiles en un proyecto de esta envergadura.
 
-#### Objetivos Profesionales
+**Objetivos del Proyecto:**
+Los objetivos específicos del proyecto incluyen el desarrollo de una solución que supere las limitaciones de las soluciones existentes en el mercado. Entre estos se encuentran la implementación de una sincronización efectiva de pedidos, la facilitación de pagos individuales, y la creación de una carta digital flexible y dinámica. Además, se pretende desarrollar un sistema de sugerencias basado en preferencias y pedidos anteriores, garantizar la privacidad y seguridad de los datos de los clientes, y manejar eficientemente la diversidad de situaciones en un restaurante real. Otro aspecto importante es la propuesta de soluciones innovadoras para los problemas de los sistemas basados en QR estáticos y con contraseña, y la minimización de la necesidad de hardware especializado en los restaurantes.
 
-En el ámbito profesional, los objetivos se alinean con el desarrollo de habilidades y conocimientos específicos en áreas técnicas clave:
+Estos objetivos delinean un compromiso con el desarrollo de una solución integral que responda a las necesidades de los clientes y los restaurantes, utilizando los conocimientos y habilidades adquiridos en el campo del desarrollo de software.
 
-- Mejorar mis habilidades en frontend, especialmente en JavaScript y CSS.
-- Aprender y aplicar técnicas de sincronización en tiempo real usando Websockets.
-- Profundizar mi entendimiento y habilidad en el uso de MongoDB.
-- Desarrollar una comprensión integral de las transacciones en bases de datos.
-- Explorar y aplicar conceptos de arquitectura de software específicos para aplicaciones web.
-- Diseñar y desarrollar APIs funcionales y eficientes.
-- Reforzar mi conocimiento en programación orientada a objetos, tanto en Python como en JavaScript.
-- Implementar y seguir metodologías ágiles en el contexto de un proyecto de gran escala.
-
-#### Objetivos del Proyecto
-
-Los objetivos del proyecto QRest se centran en abordar y resolver los problemas identificados en las soluciones existentes en el mercado:
-
-- Asegurar una sincronización efectiva de los pedidos entre clientes.
-- Facilitar los pagos separados para mejorar la experiencia del usuario.
-- Crear una carta digital que sea flexible, dinámica y fácil de actualizar.
-- Implementar un sistema de sugerencias basado en preferencias y pedidos anteriores de los clientes.
-- Garantizar la privacidad y seguridad de los datos de los clientes.
-- Desarrollar un modelo de datos que pueda manejar toda la casuística de un restaurante real.
-- Ofrecer una gestión de comandas eficiente y flexible para el personal del restaurante.
-- Proponer soluciones innovadoras a los problemas de los sistemas basados en QR estáticos y con contraseña.
-- Minimizar la necesidad de hardware costoso o especializado por parte de los restaurantes.
-
-Estos objetivos reflejan un compromiso con el desarrollo de una solución integral que aborde las necesidades tanto de los clientes como de los restaurantes, utilizando los conocimientos y habilidades adquiridos en el campo del desarrollo de software.
+---
