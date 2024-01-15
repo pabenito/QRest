@@ -66,7 +66,7 @@ Las opciones presentes en el mercado suelen caer en las siquientes categorías, 
             - Tener que estar generando un QR nuevo por cada cliente (grupo de clientes) que entra.
             - Tener que atender a cada cliente que entra.
     - QR estático + contraseña:
-        - Ejemplo: Sushi Son
+        - Ejemplo: Sushi Som
         - Funcinamiento: Genera una contraseña diaria que el cliente tiene que usar.
         - Problemas:
             - Los mismos que los QR estático con la diferencia que el problema dura lo que dure la contraseña.
@@ -77,11 +77,12 @@ Como se puede observar no hay una solución lo suficientemente satisfactia que s
 
 Lista de opciones:
 
-- Servicio QbaR: https://www.servicioqbar.com/
-- PilarBox: https://pilarbox.com/
-- McDonalds: https://mcdonalds.es/
-- Yasaka: https://yasaka.es/
-- Qamarero: https://www.qamarero.com/
+- Servicio QbaR: servicioqbar
+- PilarBox: pilarbox.com
+- McDonalds: mcdonalds.es
+- Yasaka: yasaka.es
+- Qamarero: qamarero.com
+- SushiSom: sushisom.net
 
 ### Motivación
 
@@ -158,3 +159,93 @@ Objetivos del proyecto: Solucionar los problemas encontrados en las soluciones e
 - Crear una gestión de comandas por parte del personal del restaurante que sea flexible.
 - Proponer una solución a los QR estáticos y por contraseña.
 - Minimizar el hardware necesario por parte del restaurante. 
+
+### Solución buscada
+
+Se busca una solución que resuleva los siguientes problemas:
+
+Por parte del restaurante:
+
+- Errores al tomar comandas.
+- Tiempo de camareros destinado a tomar comandas.
+- Tiempo de camareros destinado a llevar la cuenta.
+- Tiempo de camareros destinado a cobrar a los clientes.
+- Errores en el flujo de trabajo no automatizado.
+- No disponer de web.
+- No carta de digitalizada.
+- Poca flexibilidad para modifcar la carta.
+- No se lleva registro informatizado de los pedidos.
+- Pedidos a domicilio por telefono.
+- Reserva de mesa por teléfono.
+- Dificultad para ver el estado de los pedidos de una mesa.
+
+Por parte del cliente:
+
+- Tiempo de espera para pedir comanda.
+- Tiempo de espera para pedir cuenta.
+- Tiempo de espera para pagar.
+- Llamar para pedir a domicilio.
+- Llamar para reservar mesa.
+- Malentendidos al pedir.
+- Dificultad para dividir la cuenta.
+- Dificultad para pagar por separado.
+- Dificultad para recordar el total de lo que se ha pedido y lo que no.
+- Dificultad para ver el estado del pedido.
+
+Requisitos de la solución buscada:
+
+Se busca una solución integral que pueda abordar todas estos problemas de una forma accesible económicamente, sobre todo sin una barrera de entrada inicial, de forma flexible y poco intrusiva.
+
+- Digitalización de carta flexible.
+- Pedidos por parte del cliente.
+- Sistema de gestión de comandas flexible. (De modo que el restaurante no tenga que adaptarse a un flujo concreto, sino que la solución se adapte al flujo de funcionamiento que ya tiene el restaurante).
+- Registro de todos los pedidos.
+- Página web.
+- Recomendaciones por parte del restaurante.
+- Recomendaciones al cliente para pedir lo que se ha pedido anteriormente.
+- Pagos por separado.
+- Pagos online.
+- Pagos en caja.
+- Reserva de mesa.
+- Pedidos online.
+- Sincronización de pedidos de clientes de la misma mesa.
+- Privacidad de datos del cliente.
+- Ver estado del pedido.
+- Pedidos flexibles.
+- Bajo coste.
+- Mínimo hardware.
+
+### Puntos fuertes QRest vs competidores
+
+Diseñado pero no implementado
+
+- Solución segura y cómoda de generación de pedidos con QR.
+- Flujo flexible de gestión de comandas del restaurante.
+- Conexión con la impesora de tickets con librería de JS.
+- Búsquedas en la carta, con filtros.
+- Frontend con elementos complejos.
+- Frontend para modificar la carta.
+- Llamar al camarero desde la app.
+- Sincronización de estado de servidores.
+
+Producto
+
+- Pedidos por parte de cliente.
+- Privacidad de datos de los clientes.
+- Recibos y pagos de forma individual o total.
+- Recomendaciones de repetir lo pedido anteriormente. 
+- Sugentencias del restaurante en base a etiquetas.
+- Pagos en caja con confirmación de pago.
+- Sincronización de pedido de clientes de la misma mesa. 
+- Flexibilidad para modificar la carta.
+- Seguridad de API. 
+- Mostrar alérgenos.
+
+Ingeniería
+
+- Arquitectura en capas al estilo clean Achitecture.
+- Tests de integración.
+- Estructura de datos capaz de representar toda la casuística de restaurantes.
+- Transacciones seguras de casos de uso.
+- Metodología ágil basada en sprints.
+- Uso de LocalStorage para guardar los datos del cliente sin que lleguen al servidor.
