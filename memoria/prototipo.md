@@ -249,3 +249,63 @@ Ingeniería
 - Transacciones seguras de casos de uso.
 - Metodología ágil basada en sprints.
 - Uso de LocalStorage para guardar los datos del cliente sin que lleguen al servidor.
+
+## Tecnología y herramientas
+
+### Lenguajes de programación
+
+- Python: Se ha utilizado para desarrollar todo el backend de la aplicación, desde desarrollo de la API, casos de uso, tests, hasta llamadas a la base de datos. 
+- JavaScript: Se ha utilizado para gestionar el HTML y CSS de la página web. También para hacer que la página sea interactiva con eventos, etc. Se han implementado patrones como Modelo-Vista-Controlador y POO en JS. 
+
+### Tecnologías de desarrollo web
+
+- HTML: Para generar las páginas de la web.
+- CSS: Para dar estilo a las páginas de la web.
+
+### Frameworks
+
+- BulmaCSS: Se ha usado como el framework de CSS usado para que la aplicación sea responsive y orientada a mobiles.
+- FastAPI: Se ha utilizado para definir la API de de la aplicación.
+- Pytest: Se ha utilizado para hacer los test de integración.
+- Jinja2: Se ha utilizado para la generación dinámica del HTML, CSS y JS.
+
+### Tecnologías de bases de datos
+
+- MongoDB: Se ha utilizado como base de datos No-SQL para persistir todos los datos del dominio de la aplicación.
+- LocalStorage: Se ha utilizado para almacenar los datos del cliente desde el JS sin que pasen por el servidor.
+
+### Herramientas de desarrollo
+
+- Visual Studio Code: Se ha utilizado principalmente para la documentación tanto para escribir como para visualizarla con sus extensiones. También generación y visualización de prototipos, de toda la parte web, HTML, CSS y JS. 
+- Pycharm: Se ha utilizado como la herramienta principal para desarrollar el código del backend en python. También para desarrollar y correr los tests. También para correr el servidor y debuguear. 
+
+### Herramientas de gestión
+
+- Git: Se ha utilizado para llevar el control de versiones de la aplicación y documentar los cambios. 
+- GitHub: Se ha utilizado como repositorio del proyecto.
+- Trello: Se ha utilizado para definir, documentar y cambiar de estado las tareas de los sprints.
+- MongoDB Atlas: Se ha utilizado como repositorio en la nube de nuestra base de datos mongoDB. Y para crear documentos, eliminarlos, modificarlos, etc.
+- Googel Meet: Para las reuniones online de seguimiento del TFG.
+- Cloudinary: Para guardar en la nube las imágenes que el proyecto ha necesitado. Como: imágenes de elementos de la carta, iconos de la aplicación (ej: alérgenos, secciones, etc.).
+- Pandoc: Se ha utilizado para generar PDFs a partir de los archivos Markdown.
+- Calendario a papel: Para organizar la semana y saber qué tarea hacer en cada momento.
+- Google Calendar: Para guardar las reuniones de seguimiento del TFG.
+- Miniconda: Para gestionar el entorno de python y sus librerías.
+- Heroku: Para desplegar la aplicación.
+- Zathura: Para visualizar los PDF.
+
+### Herramientas de documentación
+
+- Confluence: Para hacer los reportes de los sprints y otra documentación como investigaciones de competidores, análisis de posibles tecnología a usar.
+- Papel y boli: Mucha de la documentación, sobre todo la menos formal ha sido con papel y boli. Cada vez que trabajaba en el proyecto tenía papel y boli al lado e iba haciendo bocetos, lluvia de idea, definir los objetivos de los pomodoro, del día, etc.
+- Neovim: Como blog de notas de usar y tirar. También para escirbir los archivos markdown.
+
+### Herramientas de diseño
+
+- MermaidJS: Para definir textualmente todo tipo de diagramas de la aplicación. Compatible con Markdown. Y visualizarlo.
+- Bocetos y diagramas a papel: La mayor herramienta de diseño ha sido bocetos y diagramas de flujo en papel.
+
+### Recursos adicionales
+
+- Websockets: Es la forma de sincronizar el frontend con el backend y de sincronizar las vistas de los usuarios.  
+- Uvicorn: Es el servidor que se ha usado para correr la aplicación.
