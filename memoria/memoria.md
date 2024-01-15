@@ -143,4 +143,189 @@ QRest se distingue de sus competidores en el mercado de gestión de restaurantes
 
 En resumen, QRest se diferencia claramente de sus competidores a través de su enfoque en la seguridad, la flexibilidad, la experiencia del usuario y la robustez técnica. Estos puntos fuertes posicionan a QRest no solo como una solución efectiva para los desafíos actuales de los restaurantes, sino también como un sistema preparado para adaptarse y evolucionar con las tendencias futuras en la industria de la restauración.
 
+## Tecnología y herramientas
 
+### Lenguajes de programación
+
+#### Python
+
+Python es un lenguaje de programación de alto nivel, interpretado y con enfoque en la legibilidad del código. Soporta múltiples paradigmas de programación, incluyendo la orientada a objetos e imperativa. Es ampliamente utilizado en diversas áreas y cuenta con una extensa biblioteca de módulos y frameworks gracias a su vasta comunidad.
+
+En este proyecto, Python ha desempeñado un papel central en el desarrollo del backend de la aplicación. Se ha utilizado para una amplia gama de tareas que incluyen el desarrollo de la API, la implementación de casos de uso, la realización de pruebas y la gestión de interacciones con la base de datos. Esta elección se debe a la robustez, versatilidad y simplicidad del lenguaje, lo que lo hace ideal para una implementación rápida y eficiente del backend.
+
+#### JavaScript
+
+JavaScript es un lenguaje de programación interpretado, principalmente usado para scripts del lado del cliente en páginas web. Ha ganado popularidad en el desarrollo del lado del servidor, especialmente con Node.js. Es fundamental para el desarrollo web, permitiendo la creación de páginas interactivas y dinámicas, y cuenta con un rico ecosistema de frameworks y bibliotecas.
+
+JavaScript se ha empleado para manejar el front-end de la aplicación web, específicamente en la gestión del HTML y CSS. Ha jugado un papel crucial en la creación de una experiencia de usuario interactiva, permitiendo la implementación de eventos y dinamismo en la página web. Además, se ha utilizado para aplicar patrones de diseño como Modelo-Vista-Controlador (MVC) y Programación Orientada a Objetos (POO) en JavaScript, mejorando así la estructura y mantenibilidad del código en el lado del cliente.
+
+### Tecnologías de desarrollo web
+
+#### HTML
+
+HTML (Hypertext Markup Language) es el lenguaje de marcado estándar utilizado para crear y estructurar páginas web. Define la estructura y el contenido de una página web mediante etiquetas y atributos. HTML5, la última versión, incluye soporte para elementos multimedia como video, audio, y gráficos, además de mejoras en la semántica y la accesibilidad.
+
+En este proyecto, HTML ha sido utilizado específicamente para construir la estructura y el contenido de las páginas web. Se ha empleado para definir los elementos básicos de la interfaz de usuario, como encabezados, párrafos, enlaces y otros componentes esenciales de la página. La función principal de HTML aquí ha sido establecer la base sobre la cual se aplican los estilos y las funcionalidades interactivas.
+
+#### CSS
+
+CSS (Cascading Style Sheets) es un lenguaje de hojas de estilo utilizado para describir la presentación de un documento escrito en HTML o XML. CSS permite controlar el diseño, colores, fuentes, y el espaciado, entre otros aspectos visuales de las páginas web. Es fundamental para crear interfaces de usuario atractivas y responsivas, adaptándose a diferentes tamaños de pantalla y dispositivos.
+
+CSS, por su parte, ha tenido la función de dar estilo a las páginas web creadas con HTML. Se ha utilizado para controlar la presentación visual de la web, incluyendo aspectos como el diseño, colores, tipografías y la adaptabilidad a diferentes tamaños de pantalla. El uso de CSS ha sido esencial para asegurar que las páginas no solo estén bien estructuradas, sino también visualmente atractivas y coherentes con el diseño general de la aplicación.
+
+### Frameworks
+
+#### BulmaCSS
+
+BulmaCSS es un framework de CSS libre y de código abierto. Se caracteriza por su enfoque en la simplicidad y la facilidad de uso, con una sintaxis clara y concisa. Utiliza Flexbox para un diseño responsive y ofrece un conjunto de componentes reutilizables para la interfaz de usuario, como botones, formularios y tarjetas. No incluye JavaScript, lo que lo hace ligero y fácil de integrar con otros frameworks de JavaScript.
+
+En el proyecto, BulmaCSS se ha seleccionado como el framework de CSS principal debido a su enfoque en la responsividad y la facilidad de uso. Se ha utilizado para asegurar que la aplicación web sea completamente adaptable a dispositivos móviles y diferentes tamaños de pantalla. BulmaCSS ha facilitado la implementación de un diseño atractivo y funcional, sin la necesidad de escribir extenso código CSS personalizado.
+
+#### FastAPI
+
+FastAPI es un moderno framework de web para Python diseñado para crear APIs rápidas y eficientes. Se destaca por su alto rendimiento, comparable a NodeJS y Go, gracias a su uso de Starlette para el manejo de solicitudes y Pydantic para la validación de datos. FastAPI facilita la creación de APIs con documentación automática utilizando OpenAPI y soporta tanto solicitudes síncronas como asíncronas.
+
+FastAPI se ha empleado para desarrollar y definir la API de la aplicación. Este framework ha sido elegido por su rendimiento, facilidad de uso y capacidad para crear APIs robustas y bien documentadas rápidamente. Ha permitido la implementación de funcionalidades backend eficientes, con una atención particular a las operaciones asíncronas y la gestión eficiente de solicitudes.
+
+#### Pytest
+
+Pytest es un framework de pruebas para Python que es simple y escalable. Se utiliza para escribir pequeñas pruebas unitarias hasta pruebas funcionales complejas. Pytest hace fácil escribir pruebas con su sintaxis simple y la capacidad de correr pruebas en paralelo, lo que mejora la eficiencia. También soporta fixtures para una configuración reutilizable y tiene una gran variedad de plugins para extender su funcionalidad.
+
+Pytest se ha utilizado para realizar pruebas de integración en el proyecto. Este framework ha permitido escribir tests de manera sencilla y eficiente, facilitando la comprobación de que distintas partes del sistema trabajan conjuntamente como se espera. Su uso ha sido clave para mantener la calidad y la fiabilidad del software a lo largo del proceso de desarrollo.
+
+#### Jinja2
+
+Jinja2 es un motor de plantillas para Python, usado para crear archivos HTML u otros formatos de texto basados en plantillas. Es ampliamente utilizado en aplicaciones web para generar contenido dinámico. Su sintaxis es similar a Python, lo que lo hace intuitivo para desarrolladores de Python. Ofrece características como herencia de plantillas y filtros personalizables, lo que facilita la reutilización de código y la organización del contenido.
+
+Jinja2 ha sido implementado en el proyecto para la generación dinámica de contenido HTML, CSS y JavaScript. Este motor de plantillas se ha utilizado para crear páginas web que pueden variar su contenido en función de los datos proporcionados, permitiendo una mayor flexibilidad y personalización en la presentación de la información a los usuarios. Jinja2 ha sido esencial para separar la lógica de la presentación en la aplicación, haciendo el código más mantenible y legible.
+
+### Tecnologías de bases de datos
+
+#### MongoDB
+
+MongoDB es una base de datos NoSQL orientada a documentos. A diferencia de las bases de datos relacionales, utiliza documentos en un formato similar a JSON con esquema dinámico, lo que la hace muy flexible y adecuada para manejar grandes volúmenes de datos desestructurados y heterogéneos. Es escalable, permite realizar consultas complejas y es ampliamente utilizada en aplicaciones modernas de desarrollo web y móvil.
+
+En este proyecto, MongoDB se ha utilizado como la base de datos No-SQL principal para almacenar y gestionar todos los datos del dominio de la aplicación. Esta elección se debe a la flexibilidad y escalabilidad que ofrece MongoDB, permitiendo manejar grandes volúmenes de datos desestructurados y facilitando el desarrollo rápido gracias a su esquema dinámico.
+
+#### LocalStorage
+
+LocalStorage es una característica de almacenamiento web que permite a los sitios web y aplicaciones almacenar y acceder a datos directamente en el navegador del usuario. Proporciona una manera de guardar datos en pares clave-valor y es útil para guardar información como preferencias del usuario, datos de sesión, y otros datos que no necesitan ser enviados al servidor. LocalStorage es limitado a un dominio específico y los datos persisten incluso después de cerrar el navegador.
+
+LocalStorage ha sido empleado para almacenar datos en el lado del cliente, directamente desde JavaScript, sin la necesidad de interacción con el servidor. Esta tecnología se ha utilizado para guardar el nombre del usuario y los elementos de la carta que ha pedido, con fin de mejorar la experiencia del usuario sin comprometer su privacidad, además de reducir la carga en el servidor.
+
+### Herramientas de desarrollo
+
+#### Visual Studio Code
+
+Visual Studio Code (VS Code) es un editor de código fuente desarrollado por Microsoft. Es gratuito, de código abierto y disponible en múltiples plataformas. Ofrece soporte para una amplia gama de lenguajes de programación, depuración integrada, control de versiones Git, resaltado de sintaxis, autocompletado inteligente, y una extensa biblioteca de extensiones. Es popular entre los desarrolladores por su ligereza, personalización y funcionalidades robustas.
+
+Visual Studio Code ha sido la herramienta elegida para múltiples tareas en el proyecto, destacándose en la documentación y en la generación y visualización de prototipos. Su uso ha sido fundamental para escribir y visualizar documentación gracias a sus extensiones. Además, ha sido la herramienta principal para el desarrollo de la interfaz web, incluyendo la codificación de HTML, CSS y JavaScript, aprovechando sus características como resaltado de sintaxis, autocompletado y una amplia gama de extensiones útiles para el desarrollo web.
+
+#### Pycharm
+
+PyCharm es un entorno de desarrollo integrado (IDE) específicamente para Python, desarrollado por JetBrains. Viene en dos versiones: una versión comunitaria gratuita y una versión profesional de pago. PyCharm ofrece varias características para el desarrollo de Python, incluyendo análisis de código, depuración gráfica, un terminal integrado, integración con sistemas de control de versiones, y soporte para desarrollo web con Django. Es conocido por su potente autocompletado, su capacidad para manejar proyectos complejos y su integración con otras herramientas y frameworks de Python.
+
+Pycharm ha sido utilizado como el entorno de desarrollo integrado (IDE) principal para el desarrollo del código backend en Python. Esta herramienta ha sido esencial para escribir, desarrollar y ejecutar pruebas, así como para ejecutar y depurar el servidor. Su entorno integrado, que ofrece herramientas especializadas para Python, ha facilitado significativamente el desarrollo, la depuración y el testing del backend.
+
+### Herramientas de gestión
+
+#### Git
+Git es un sistema de control de versiones distribuido, diseñado para manejar desde proyectos pequeños hasta muy grandes con velocidad y eficiencia. Permite a los desarrolladores rastrear cambios en el código, colaborar con otros y revertir a versiones anteriores si es necesario. Es una herramienta esencial para la gestión moderna de código fuente.
+
+Git se ha utilizado como el sistema de control de versiones esencial para el proyecto. Ha permitido llevar un registro detallado de todos los cambios realizados en el código de la aplicación, facilitando el seguimiento de las diferentes etapas del desarrollo. La capacidad de Git para gestionar versiones ha sido fundamental para mantener la integridad y la continuidad del código a lo largo del tiempo.
+
+#### GitHub
+GitHub es una plataforma de alojamiento de código que utiliza Git para el control de versiones. Facilita la colaboración entre desarrolladores y ofrece características como el seguimiento de problemas, solicitudes de extracción y un wiki para cada repositorio. También proporciona integraciones con varias herramientas de desarrollo y alojamiento de páginas web.
+
+GitHub ha servido como la plataforma de alojamiento para el repositorio del proyecto. Ha proporcionado un espacio centralizado para almacenar el código, permitiendo el acceso y sincronización a pasar de haber utilizado distintos ordenarodres. Además, GitHub ha sido una herramienta clave para la revisión de código y seguimiento de problemas y despliegue continuo.
+
+#### Trello
+Trello es una aplicación de gestión de proyectos basada en la metodología Kanban. Permite a los usuarios crear tableros con listas y tarjetas para organizar tareas y proyectos. Las tarjetas se pueden mover entre listas para indicar el progreso, y se pueden añadir detalles como fechas de vencimiento, adjuntos y comentarios.
+
+Trello se ha utilizado para la gestión ágil del proyecto, específicamente en la definición, documentación y seguimiento del progreso de las tareas durante los sprints. Ha permitido organizar el flujo de trabajo de manera visual, facilitando la planificación y la ejecución eficiente de las tareas del proyecto.
+
+#### MongoDB Atlas
+MongoDB Atlas es un servicio de base de datos en la nube automatizado y completamente gestionado por MongoDB. Ofrece despliegue, configuración, mantenimiento y escalabilidad automáticos para bases de datos MongoDB en la nube, con soporte para AWS, Google Cloud y Azure.
+
+MongoDB Atlas ha sido utilizado como el servicio de alojamiento en la nube para la base de datos MongoDB del proyecto. Ha permitido gestionar y manipular documentos de la base de datos de forma remota, incluyendo la creación, eliminación y modificación de documentos, así como la gestión de la configuración.
+
+#### Google Meet
+Google Meet es una herramienta de videoconferencia desarrollada por Google. Permite realizar reuniones en línea con video y audio, compartir pantalla y realizar presentaciones, y es ampliamente utilizado para reuniones de trabajo, educación a distancia y eventos en línea.
+
+Google Meet ha sido la herramienta de comunicación elegida para las reuniones en línea de seguimiento del Trabajo de Fin de Grado (TFG). Ha permitido realizar reuniones virtuales efectivas, a pesar de las limitaciones de distancia o disponibilidad física.
+
+#### Cloudinary
+Cloudinary es una plataforma de gestión de activos multimedia en la nube. Proporciona soluciones para subir, almacenar, manipular y entregar imágenes y videos, optimizando archivos para diferentes dispositivos y resoluciones, lo que es esencial para el desarrollo web y móvil.
+
+Cloudinary ha sido utilizada para almacenar y gestionar los recursos de imagen del proyecto en la nube. Ha facilitado la carga y el almacenamiento eficiente de imágenes relacionadas con la aplicación, como elementos del menú, iconos y otros gráficos relevantes. Su uso ha sido clave para desacoplar las imágenes del código de la aplicación. También para facilitar la gestión de activos multimedia.
+
+#### Pandoc
+Pandoc es una herramienta de conversión de documentos que soporta una amplia variedad de formatos de archivo. Se utiliza para convertir archivos de texto entre formatos como Markdown, HTML, LaTeX y PDF. Es muy útil para autores, académicos y desarrolladores que necesitan manejar diferentes formatos de documentos.
+
+Pandoc se ha empleado para convertir archivos Markdown a PDF. Esta herramienta ha sido crucial para la generación de documentación y reportes en formato PDF, permitiendo una fácil distribución y presentación de la información generada durante el desarrollo del proyecto.
+
+#### Calendario a papel
+Un calendario de papel es una herramienta tradicional de gestión del tiempo. Aunque básico, es efectivo para planificar y visualizar eventos, plazos y tareas diarias, mensuales o anuales. No requiere de tecnología y es accesible en todo momento.
+
+El uso de un calendario de papel ha sido esencial para la organización personal y la planificación de tareas semanales. Ha proporcionado una forma simple y directa de visualizar las tareas pendientes, ayudando a mantener un enfoque claro y una gestión eficiente del tiempo.
+
+#### Google Calendar
+Google Calendar es una herramienta de gestión de tiempo y planificación de calendario en línea. Permite a los usuarios crear y editar eventos, configurar recordatorios, y compartir calendarios con otros. Es ampliamente utilizado en entornos personales y profesionales para organizar horarios, reuniones y eventos.
+
+Google Calendar se ha utilizado para programar y recordar las reuniones de seguimiento del TFG.
+
+#### Miniconda
+Miniconda es una distribución mínima del gestor de paquetes y sistema de gestión de entornos Conda. Está diseñado para Python y permite a los usuarios crear entornos virtuales para aislar diferentes proyectos y sus dependencias, facilitando la gestión de versiones y la reproducibilidad de proyectos.
+
+Miniconda ha sido empleado para gestionar los entornos de Python y sus librerías asociadas. Ha permitido crear entornos aislados para el proyecto, asegurando la compatibilidad y evitando conflictos entre diferentes dependencias y versiones de las librerías.
+
+#### Heroku
+Heroku es una plataforma como servicio (PaaS) que permite a los desarrolladores construir, ejecutar y operar aplicaciones en la nube. Es conocido por su facilidad de uso y por ofrecer una gama de servicios y herramientas integradas para desplegar y escalar aplicaciones web modernas.
+
+Heroku se ha utilizado para desplegar la aplicación en la nube. Ha ofrecido una plataforma simplificada para el despliegue, permitiendo que la aplicación sea accesible en línea sin la complejidad de gestionar la infraestructura de servidores. Además de desplegar de forma automatizada en base a los cambios en el repositorio.
+
+#### Zathura
+Zathura es un visor de documentos ligero con una interfaz minimalista. Principalmente se utiliza para ver PDF y otros formatos de documentos. Su diseño se centra en la simplicidad y la eficiencia, permitiendo a los usuarios personalizar la experiencia a través de plugins y atajos de teclado.
+
+Zathura ha sido la herramienta seleccionada para la visualización de documentos PDF. Su interfaz minimalista y la capacidad de gestionar eficientemente los documentos PDF han sido útiles para revisar documentación y reportes relacionados con el proyecto.
+
+### Herramientas de documentación
+
+#### Confluence
+Confluence es una herramienta de colaboración y gestión del conocimiento utilizada principalmente en el contexto empresarial. Ofrece funcionalidades para crear, compartir y organizar documentación de proyectos, wikis internos y páginas de colaboración. Es ampliamente utilizado para la documentación de proyectos de software, gestión de conocimientos corporativos y trabajo en equipo.
+
+Confluence ha sido utilizada para compilar y organizar la documentación formal del proyecto, como los reportes de sprints, análisis de competidores y evaluación de tecnologías potenciales. Ha permitido centralizar y compartir información clave del proyecto de manera estructurada, facilitando el acceso a la información desde distintos ordenadores.
+
+#### Papel y boli
+El papel y el bolígrafo son herramientas de documentación clásicas y fundamentales. A pesar de la prevalencia de las soluciones digitales, tomar notas o esbozar ideas en papel sigue siendo una práctica común. Es inmediato, flexible y no depende de la tecnología, lo que lo hace útil para lluvias de ideas, notas rápidas y esbozos.
+
+El papel y el boli han sido herramientas fundamentales para la documentación informal y la generación de ideas. Se han empleado constantemente para hacer bocetos, organizar lluvias de ideas, definir objetivos de trabajo y esquematizar tareas. Esta técnica tradicional ha sido esencial para la planificación rápida y la captura de ideas en el momento.
+
+#### Neovim
+Neovim es un editor de texto de código abierto, derivado de Vim. Está diseñado para la extensibilidad y la usabilidad, manteniendo la eficiencia de Vim. Es popular entre los desarrolladores por su enfoque en la experiencia del usuario, la mejora de la interfaz de usuario y la integración con herramientas modernas de desarrollo.
+
+Neovim ha funcionado como una herramienta de notas rápidas y edición de archivos Markdown. Se ha utilizado para escribir notas de uso temporal y para redactar documentación en formato Markdown, aprovechando su eficiencia y simplicidad.
+
+### Herramientas de diseño
+
+#### MermaidJS
+MermaidJS es una biblioteca de JavaScript que permite representar diagramas y gráficos definidos mediante un texto descriptivo. Es útil para generar diagramas de flujo, gráficos de Gantt, diagramas de secuencia, entre otros, directamente en páginas web. Facilita la creación de visualizaciones complejas sin necesidad de herramientas gráficas.
+
+MermaidJS se ha utilizado para crear y visualizar diagramas de la aplicación de forma textual, integrándose con Markdown. Ha sido una herramienta clave para definir y compartir diagramas de flujo, estructuras de datos y otros elementos visuales de diseño, facilitando la comprensión y la documentación del diseño del sistema.
+
+#### Bocetos y diagramas a papel
+Los bocetos y diagramas en papel son una forma básica pero efectiva de visualizar ideas, procesos o diseños. Esta técnica es utilizada por diseñadores, arquitectos y profesionales de diversas disciplinas para plasmar conceptos de manera rápida y flexible, facilitando la comprensión y la comunicación de ideas.
+
+Los bocetos y diagramas realizados a mano en papel han sido la principal herramienta de diseño. Se han utilizado para visualizar rápidamente ideas, crear diagramas de flujo y esquematizar interfaces de usuario, proporcionando una forma flexible y directa de experimentar con conceptos de diseño.
+
+### Recursos adicionales
+
+#### Websockets
+Websockets es una tecnología que proporciona canales de comunicación bidireccional y en tiempo real entre un navegador y un servidor. Es ampliamente utilizada para aplicaciones web que requieren interacciones en tiempo real como chats, juegos en línea y trading de acciones. A diferencia del HTTP tradicional, Websockets permite una comunicación continua sin la necesidad de hacer múltiples solicitudes.
+
+Websockets ha sido la tecnología clave para sincronizar en tiempo real el frontend con el backend, así como para mantener actualizadas las vistas entre diferentes usuarios. Esta tecnología ha permitido una interacción fluida y continua, crucial para las funcionalidades dinámicas y en tiempo real de la aplicación.
+
+#### Uvicorn
+Uvicorn es un servidor ASGI (Asynchronous Server Gateway Interface) ligero y de alto rendimiento para Python. Es especialmente diseñado para trabajar con frameworks asíncronos como Starlette y FastAPI, proporcionando un rendimiento óptimo en operaciones de I/O asíncronas. Uvicorn se destaca por su sencillez, velocidad y capacidad para manejar un gran número de conexiones simultáneas.
+
+Uvicorn, como servidor ASGI, ha sido la elección para ejecutar la aplicación. Ha proporcionado una plataforma eficiente y de alto rendimiento para alojar la aplicación, aprovechando su capacidad para manejar las operaciones asíncronas y una gran cantidad de conexiones simultáneas, lo que ha sido esencial para el funcionamiento óptimo de la aplicación.
