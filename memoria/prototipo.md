@@ -309,3 +309,38 @@ Ingeniería
 
 - Websockets: Es la forma de sincronizar el frontend con el backend y de sincronizar las vistas de los usuarios.  
 - Uvicorn: Es el servidor que se ha usado para correr la aplicación.
+
+## Metodología
+
+### Resumen de la Metodología
+
+- **Objetivo**: Definir y desarrollar el proyecto, establecer bases de actuación, y detallar decisiones tomadas.
+- **Enfoque**: Adaptación a cambios, actualizaciones, y variaciones de requisitos.
+
+### Metodología Ágil
+
+- **Selección de Metodología**: Uso de la metodología ágil Scrum para facilitar adaptaciones rápidas a cambios durante el desarrollo.
+  
+#### Características de Scrum en el Proyecto:
+  
+- **Roles**:
+    - Varios roles (documentalistas, diseñadores, analistas, desarrolladores, testers).
+    - En este proyecto, una única persona ocupa todos los roles excepto el de Product Owner (cubierto por el tutor).
+
+- **Iteraciones**:
+    - Duración de una o dos semanas.
+    - Flexibilidad en la duración, debido a inprevistos en el desarrollo y pausas entre iteraciones debido a causas externas.
+    - Iteraciones orientadas en funcionalidades concretas.
+
+- **Reuniones**:
+    - Post-iteración para discutir avances y planificar la siguiente.
+    - Otras reuniones según necesidad.
+
+### Sprints
+
+- Al principio se planificaron los sprints de los 3 primeros meses en detalle, definiendo lo que se iba a hacer cada semana. 
+    - Pero los siguientes factores lastraron muchísimo el desarrollo inicial rompiendo completamente con la planificación:
+      - No sabía mucho sobre las tecnologías a utilizar
+      - Se replanteaba continuamente las funcionalidades de la aplicación y el enfoque.
+      - Surgían errores y necesidades imprevistas. 
+    - Desde entonces lo que hicimos es definir las distintas funcionalidades del sistema y un orden de implementación, pero en vez de planificarlo a largo plazo, se iban definiendo a dos semanas vista.
