@@ -34,6 +34,27 @@ Del 26 de Octubre al 30 de Octubre: Implementar en capas menu, allergenos y pedi
 
 Del 1 de Noviembre al 5 de Noviembre: Los repositorios ya no son un simple CRUD. Se implementa MongoStandardRepository. Se implementa OCC y luego transacciones. Se crean los repositorios de pedidos, menu y alergenos. Se crean Excepiones como una Fábrica.
 
+Del 6 de Noviembre al 12 de Noviembre: Modifical los casos de uso de la carta y de los alérgenos. Se crean interfaces con ABC. Ahora todos los repositorios usan IStandardRepository (una interfaz que permite hacer un CRUD complejo) junto con MongoStandardRepository que es la clase que la implmenta con MongoDB. Se añaden manejadores de Excepciones a la aplicación de FastAPI. Se arreglan los tests de comandas. Se arregla a operación para actualizar el estado de los elementos de un pedido. Se pasan todos los tests de comandas. Frontend de carta y pedido funcionando. Se crea la capa services dentro de los casos de uso.
+
+Del 13 de Noviembre al 20 de Noviembre: 
+- Se crea un modelo de datos para el frontend con más información que los del dominio. 
+- Se actualiza el JS para gestionar los elementos. 
+- Se añaden los elementos del pedido a la carta.
+- Se sincronizan los elementos del pedido en la carta con websocket.
+
+Del 21 de Noviembre al 27 de Noviembre: 
+- Peidos sincronizados.
+- Mensajes de error en pedidos.
+
+Del 28 de Noviembre al 6 de Diciemnre:
+- Despliegue Heroku.
+- Mensajes de error en carta.
+- Redirección de rutas.
+- Soporte de mensajes y errores como query.
+- Gestión de errores en Websocket.
+- Fianalizar frontend de la carta sincronizada.
+
+Del 7 de Diciembre al _ de Diciembre:
 
 
 
