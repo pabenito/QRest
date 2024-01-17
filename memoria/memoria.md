@@ -329,3 +329,55 @@ Websockets ha sido la tecnología clave para sincronizar en tiempo real el front
 Uvicorn es un servidor ASGI (Asynchronous Server Gateway Interface) ligero y de alto rendimiento para Python. Es especialmente diseñado para trabajar con frameworks asíncronos como Starlette y FastAPI, proporcionando un rendimiento óptimo en operaciones de I/O asíncronas. Uvicorn se destaca por su sencillez, velocidad y capacidad para manejar un gran número de conexiones simultáneas.
 
 Uvicorn, como servidor ASGI, ha sido la elección para ejecutar la aplicación. Ha proporcionado una plataforma eficiente y de alto rendimiento para alojar la aplicación, aprovechando su capacidad para manejar las operaciones asíncronas y una gran cantidad de conexiones simultáneas, lo que ha sido esencial para el funcionamiento óptimo de la aplicación.
+
+### Metodología
+
+#### Resumen de la Metodología
+
+En el desarrollo de QRest, el objetivo principal ha sido definir y desarrollar el proyecto con claridad, estableciendo bases sólidas de actuación y detallando las decisiones tomadas a lo largo del proceso. Dada la naturaleza del proyecto, era esencial adoptar un enfoque que permitiera la adaptación a cambios, actualizaciones y variaciones en los requisitos. Esta necesidad de flexibilidad y adaptación ha sido un factor determinante en la elección de la metodología de trabajo.
+
+#### Metodología Ágil
+
+Para este proyecto, se ha elegido la metodología ágil Scrum, reconocida por su capacidad para facilitar adaptaciones rápidas a cambios durante el desarrollo del software. Esta metodología es particularmente adecuada para proyectos donde los requisitos pueden evolucionar o no están completamente definidos desde el inicio.
+
+##### Características de Scrum en el Proyecto
+
+- **Roles**: En el contexto de este proyecto, el estudiante, ha asumido la mayoría de los roles típicos en un equipo de desarrollo Scrum, incluyendo los de diseñador, analista, desarrollador y tester. La única excepción ha sido el rol de Product Owner, que ha sido desempeñado por mi tutor. Esta estructura de roles ha permitido una gran autonomía en el desarrollo, al mismo tiempo que garantiza una guía y dirección clara a través del tutor como Product Owner.
+
+- **Iteraciones**:
+    - **Duración**: Las iteraciones han tenido una duración de una o dos semanas. Esta flexibilidad en la duración se ha debido principalmente a imprevistos en el desarrollo y a pausas entre iteraciones por causas externas.
+    - **Enfoque**: Cada iteración se ha centrado en desarrollar funcionalidades concretas. Este enfoque ha permitido un avance sistemático y medible del proyecto, asegurando que cada funcionalidad se desarrolla y prueba adecuadamente antes de pasar a la siguiente.
+
+- **Reuniones**: Se han realizado reuniones tras cada iteración para discutir los avances y planificar la siguiente. Estas reuniones han sido fundamentales para evaluar el progreso del proyecto, identificar y resolver problemas, y ajustar los planes según sea necesario. También han servido como un espacio para la reflexión y el aprendizaje, permitiéndome mejorar continuamente el proceso de desarrollo.
+
+La adopción de la metodología Scrum ha resultado ser una decisión acertada para el proyecto QRest. Su flexibilidad y enfoque iterativo han permitido una adaptación efectiva a los desafíos y cambios que han surgido durante el desarrollo. Además, la estructura de Scrum ha fomentado un enfoque centrado en el usuario y ha permitido una retroalimentación continua, lo cual es crucial en el desarrollo de aplicaciones orientadas al cliente, como es el caso de una solución para la gestión de comandas en restaurantes.
+
+La implementación de esta metodología no solo ha facilitado la gestión del desarrollo del proyecto, sino que también ha proporcionado valiosas lecciones sobre la gestión de proyectos de software en un contexto real. La experiencia adquirida en la aplicación de Scrum, la resolución de problemas y la adaptación a las necesidades cambiantes será sin duda útil en futuras iniciativas profesionales y académicas. 
+
+En conclusión, la metodología ágil Scrum ha demostrado ser una herramienta eficaz para el desarrollo del proyecto QRest, contribuyendo significativamente a su éxito y ofreciendo un marco de trabajo adaptable y centrado en la entrega de valor en cada etapa del proyecto.
+
+### Planificación y gestión del proyecto
+
+La gestión efectiva del proyecto QRest ha requerido la implementación de una estrategia de planificación y seguimiento coherente y estructurada. Para ello, se han utilizado diversas herramientas y técnicas, cada una desempeñando un rol específico en el proceso de desarrollo.
+
+#### Herramientas y Técnicas Utilizadas
+
+1. **Confluence**: Se ha empleado Confluence para la documentación formal y la definición de objetivos de los sprints, incluyendo las funcionalidades específicas a desarrollar en cada uno. Esta herramienta ha sido esencial para mantener un registro organizado y accesible de la planificación y los avances del proyecto.
+
+2. **Trello**: Para la gestión de tareas dentro de cada sprint, se ha utilizado Trello. En esta plataforma, se crearon listas para cada sprint, donde las tareas se movían a través de las etapas de 'To Do', 'Doing' y 'Done'. Al finalizar cada sprint, las tareas completadas se trasladaban de nuevo a la tabla del sprint correspondiente. Esta metodología permitió un seguimiento claro del progreso y facilitó la organización del trabajo.
+
+3. **Estimación de Horas y Prioridades**: Cada tarea se evaluó en términos de horas necesarias para su realización y su prioridad relativa. Esta estimación fue crucial para una asignación de recursos eficiente y para asegurar que las tareas críticas recibieran la atención adecuada.
+
+4. **Planificación en Calendario de Papel**: Utilizando un calendario físico, se planificó semanalmente en base a la prioridad y duración estimada de las tareas. Esta técnica tradicional proporcionó una visión tangible y de fácil acceso del plan semanal.
+
+5. **Objetivos Diarios y Técnica Pomodoro en Papel**: Para una gestión del tiempo más efectiva, se establecieron objetivos diarios y se aplicó la técnica Pomodoro, anotando cada sesión y objetivo en papel. Esta práctica ayudó a mantener un enfoque constante y a gestionar mejor el tiempo de trabajo. Los pensamientos espontáneos, bocetos y notas se realizaron también en papel, aprovechando su comodidad y rapidez.
+
+#### Documentación y Seguimiento
+
+Los aspectos más importantes del proyecto se documentaron en Confluence, en las descripciones de tareas específicas en Trello, o directamente en el repositorio del proyecto. Este enfoque multifacético ha facilitado contar con documentación de lo importante y la velocidad para lo menos relevante.
+
+#### Evolución de la Metodología
+
+La metodología de trabajo se ha ido consolidando y perfeccionando a lo largo del desarrollo de la aplicación. Inicialmente, la implementación de esta metodología fue más flexible y menos estructurada. Sin embargo, en los últimos meses del proyecto, al seguir de manera más rigurosa la metodología descrita, se logró avanzar de manera más eficiente y rápida. El mayor impacto se observó al definir el calendario semanal y planificar objetivos específicos para cada sesión Pomodoro en papel. Esta práctica mejoró notablemente la productividad y el enfoque, permitiendo un avance más rápido y estructurado en el desarrollo de QRest.
+
+

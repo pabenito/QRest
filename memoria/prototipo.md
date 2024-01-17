@@ -314,27 +314,37 @@ Ingeniería
 
 ### Resumen de la Metodología
 
-- **Objetivo**: Definir y desarrollar el proyecto, establecer bases de actuación, y detallar decisiones tomadas.
-- **Enfoque**: Adaptación a cambios, actualizaciones, y variaciones de requisitos.
+- Objetivo: Definir y desarrollar el proyecto, establecer bases de actuación, y detallar decisiones tomadas.
+- Enfoque: Adaptación a cambios, actualizaciones, y variaciones de requisitos.
 
 ### Metodología Ágil
 
-- **Selección de Metodología**: Uso de la metodología ágil Scrum para facilitar adaptaciones rápidas a cambios durante el desarrollo.
-  
-#### Características de Scrum en el Proyecto:
-  
-- **Roles**:
-    - Varios roles (documentalistas, diseñadores, analistas, desarrolladores, testers).
-    - En este proyecto, una única persona ocupa todos los roles excepto el de Product Owner (cubierto por el tutor).
-
-- **Iteraciones**:
+- Uso de la metodología ágil Scrum para facilitar adaptaciones rápidas a cambios durante el desarrollo.
+- Roles: Yo, (el estudiante) ha tomado todos los roles: diseñadores, analistas, desarrolladores, testers; excepto el de Product Owner (cubierto por el tutor).
+- Iteraciones:
     - Duración de una o dos semanas.
     - Flexibilidad en la duración, debido a inprevistos en el desarrollo y pausas entre iteraciones debido a causas externas.
     - Iteraciones orientadas en funcionalidades concretas.
+- Reuniones: Tras cada iteración para discutir avances y planificar la siguiente.
 
-- **Reuniones**:
-    - Post-iteración para discutir avances y planificar la siguiente.
-    - Otras reuniones según necesidad.
+### Planificación y gestión del proyecto
+
+Se han usado las siguientes tecnologías y herramientas: Trello, Confluence, Calendario y papel y boli.
+
+1. La documentación formal y definición de objetivos de sprints con sus funcionalidades se definen en Confluence. 
+2. Luego para cada sprint se ha creado una lista en Trello con todas las tareas. Al iniciar el sprint se van pasando a To Do y siguen el flujo de To Do, Doing, Done. Y al finalizar el sprint todas las de Done se pasan a la tabla del sprint otra vez. 
+3. Luego se estiman las horas para cada tarea y las prioridades.
+4. Luego en base a la prioridad y el tiempo que consumen se planifica en un calendario a papel semanal.
+5. Luego dentro de cada día y con cada tarea concreta se establecen objetivos del día y objetivos para cada pomodoro a papel, que una vez completado se desecha. Los pensamientos, bocetos, etc. también a papel, por comodidad y rapidez.
+
+Nota: las cosas más importantes se han ido documentando en Confluence, en Trello en la descripción de tareas concretas, o en el propio repositorio.
+
+Esta metodología de trabajo se ha ido consolidando a lo largo del desarrollo de la aplicación. 
+
+Al principio esta metodología no se seguía tal y como se ha explicado, sino más bien de una forma un poco más laxa. En los últimos meses del proyecto al seguir esta metodología se ha avanzado mucho más rápido. 
+
+La mayor mejora se ha dado al definir el calendario semanal y planificar los objetivos de cada pomodoro a papel.
+
 
 ### Sprints
 

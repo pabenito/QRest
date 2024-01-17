@@ -882,7 +882,7 @@ ciones han tenido un poco más de duración, y ha habido pausas entre ellas debi
 externas.
 
 
-### 3.2. Planificación y gestión del proyecto
+### Planificación y gestión del proyecto
 
 La herramienta Trello ha ayudado al estudiante a gestionar inicialmente el proyecto y
 plantear una planificación tentativa, modificada posteriormente tras encontrar inconvenientes
