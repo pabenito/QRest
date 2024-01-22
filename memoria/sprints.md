@@ -54,7 +54,41 @@ Del 28 de Noviembre al 6 de Diciemnre:
 - Gestión de errores en Websocket.
 - Fianalizar frontend de la carta sincronizada.
 
-Del 7 de Diciembre al _ de Diciembre:
+Del 7 de Diciembre al 14 de Diciembre:
+- Arreglar función que compruba si un elemento está en el menu
+- API para mostrar todos los pedidos existentes
+- Arreglar CSS para que el mensaje apareza centrado en pantalla
+- Cambiar WS a WSS
+- Modelo Vista Controlador para pedir, consultar y persistir el nombre del cliente en LocalStorage
 
+Del 15 de Diciembre al 20 de Diciembre:
+- API / genera nuevo pedido y redirige a /{pedido}
+- Backend de generar recibo
+- Casos de prueba de generar recibo
+- Tests de generar recibo
+- Prototipo de generar recibo
+- Frontend de generar recibo
+
+Del 27 de Diciembre al 2 de Enero:
+- Casos de uso de pago
+- Casos de prueba de ver por pagar y pago
+- Test de ver por pagar
+- Bakend de ver por pagar
+- Bakend de pago
+- Por pagar y recibo deparados en por pagar individual y total
+- Prototipo y frontend de por pagar
+
+Del 3 de Enero al 9 de Enero:
+- API /{pedido} redirecciona a /{pedido}/carta
+- Arreglar problema con /carta
+- Añadir funcionalidad para solicitar pagar en caja.
+- Crear websocket para solicitar pagar en caja.
+- Crear backend para solicitar pagar en caja.
+- API /caja para ver lo que se está esperando a pagar en caja. (Parte del restaurante)
+- Prototipo /caja
+- Frontend /caja
+- Modelo-Vista-Controlador para esperar a pagar en caja.
+- Arreglar imágenes del Frontend
+- Añadir Modelo-Vista-Controlador para añadir sugerencias para volve a pedir un producto anterior. 
 
 
