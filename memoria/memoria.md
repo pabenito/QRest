@@ -78,6 +78,7 @@ Estos objetivos delinean un compromiso con el desarrollo de una solución integr
 El objetivo del proyecto QRest es desarrollar una solución integral que aborde eficientemente una amplia gama de problemas enfrentados tanto por los restaurantes como por sus clientes. La solución buscará resolver estos problemas de manera económica, flexible, y con una mínima intrusión en los flujos de trabajo existentes.
 
 **Problemas del Restaurante a Resolver:**
+
 1. **Errores en la Toma de Comandas:** Implementar un sistema que reduzca los errores humanos en la toma de pedidos.
 2. **Optimización del Tiempo del Personal:** Minimizar el tiempo dedicado por los camareros a tomar comandas, llevar la cuenta y cobrar, liberando así más tiempo para la atención al cliente y otras tareas.
 3. **Automatización del Flujo de Trabajo:** Reducir errores relacionados con procesos manuales mediante la automatización de tareas como la gestión de pedidos y reservas.
@@ -87,12 +88,14 @@ El objetivo del proyecto QRest es desarrollar una solución integral que aborde 
 7. **Gestión Efectiva de los Estados de los Pedidos:** Implementar un sistema que permita a los restaurantes y al personal ver y gestionar eficientemente el estado de los pedidos de cada mesa.
 
 **Problemas del Cliente a Resolver:**
+
 1. **Reducción de Tiempos de Espera:** Agilizar los procesos de pedir comandas, solicitar la cuenta y realizar el pago.
 2. **Facilitación de Pedidos y Reservas:** Permitir a los clientes realizar pedidos a domicilio y reservas de mesas de manera online y sencilla.
 3. **Prevención de Malentendidos y Facilidad en la División de Cuentas:** Ofrecer un sistema claro y preciso para evitar malentendidos en los pedidos y facilitar la división y el pago por separado de la cuenta.
 4. **Seguimiento del Pedido:** Proporcionar a los clientes la capacidad de ver el estado actual de su pedido.
 
 **Requisitos de la Solución Propuesta:**
+
 1. **Digitalización Flexible de la Carta:** Un sistema que permita a los restaurantes actualizar y modificar fácilmente su carta digital.
 2. **Pedidos Directos por Parte del Cliente:** Habilitar a los clientes para que realicen pedidos directamente desde sus dispositivos, mejorando la eficiencia y la experiencia del usuario.
 3. **Sistema de Gestión de Comandas Adaptable:** Desarrollar un sistema que se ajuste a los diferentes flujos de trabajo de cada restaurante, evitando la necesidad de adaptaciones significativas en sus operaciones actuales.
@@ -116,6 +119,7 @@ QRest se distingue de sus competidores en el mercado de gestión de restaurantes
 
 
 **Características del Producto:**
+
 1. **Pedidos Directos por Parte del Cliente:** Los clientes pueden realizar sus pedidos directamente, reduciendo errores y tiempos de espera.
 2. **Privacidad de Datos de los Clientes:** QRest pone un énfasis especial en la seguridad y privacidad de los datos del cliente.
 3. **Opciones de Recibo y Pago Individuales o Totales:** La solución ofrece flexibilidad en la facturación y el pago, adaptándose a las necesidades de diferentes grupos de clientes.
@@ -126,6 +130,7 @@ QRest se distingue de sus competidores en el mercado de gestión de restaurantes
 8. **Seguridad en la API:** QRest se compromete a mantener altos estándares de seguridad en su API, protegiendo tanto los datos del restaurante como los del cliente.
 
 **Aspectos de Ingeniería:**
+
 1. **Arquitectura en Capas al Estilo Clean Architecture:** Esta estructura asegura que el sistema sea escalable, mantenible y fácil de modificar, lo que es crucial para adaptarse a las necesidades cambiantes del mercado y de los clientes.
 2. **Tests de Integración:** Estos tests garantizan que todos los componentes del sistema funcionen juntos de manera efectiva y sin errores, lo que es vital para la fiabilidad del sistema.
 3. **Estructura de Datos para Toda la Casuística de Restaurantes:** La capacidad de QRest para manejar una amplia gama de situaciones en diferentes tipos de restaurantes lo distingue de otras soluciones más limitadas.
@@ -134,6 +139,7 @@ QRest se distingue de sus competidores en el mercado de gestión de restaurantes
 6. **Uso de LocalStorage para Datos del Cliente:** Mejora la privacidad del cliente al almacenar datos localmente sin enviarlos al servidor, un enfoque único que refuerza la seguridad de los datos.
 
 **Aspectos de deseables para la aplicación comercial (diseñados pero no implementados):**
+
 1. **Generación Segura y Cómoda de Pedidos con QR:** Ofrecer un sistema de pedidos basado en QR que es tanto seguro como fácil de usar, mejorando la experiencia del cliente y la eficiencia del restaurante.
 2. **Flujo Flexible de Gestión de Comandas:** El sistema permite a los restaurantes adaptar la gestión de comandas a sus flujos de trabajo específicos, proporcionando una mayor flexibilidad en comparación con sistemas más rígidos.
 3. **Conexión con la Impresora de Tickets mediante Librería JS:** Esta característica asegura una integración fluida con los sistemas de impresión existentes, facilitando la transición a QRest.
@@ -230,61 +236,73 @@ Pycharm ha sido utilizado como el entorno de desarrollo integrado (IDE) principa
 ### Herramientas de gestión
 
 #### Git
+
 Git es un sistema de control de versiones distribuido, diseñado para manejar desde proyectos pequeños hasta muy grandes con velocidad y eficiencia. Permite a los desarrolladores rastrear cambios en el código, colaborar con otros y revertir a versiones anteriores si es necesario. Es una herramienta esencial para la gestión moderna de código fuente.
 
 Git se ha utilizado como el sistema de control de versiones esencial para el proyecto. Ha permitido llevar un registro detallado de todos los cambios realizados en el código de la aplicación, facilitando el seguimiento de las diferentes etapas del desarrollo. La capacidad de Git para gestionar versiones ha sido fundamental para mantener la integridad y la continuidad del código a lo largo del tiempo.
 
 #### GitHub
+
 GitHub es una plataforma de alojamiento de código que utiliza Git para el control de versiones. Facilita la colaboración entre desarrolladores y ofrece características como el seguimiento de problemas, solicitudes de extracción y un wiki para cada repositorio. También proporciona integraciones con varias herramientas de desarrollo y alojamiento de páginas web.
 
 GitHub ha servido como la plataforma de alojamiento para el repositorio del proyecto. Ha proporcionado un espacio centralizado para almacenar el código, permitiendo el acceso y sincronización a pasar de haber utilizado distintos ordenarodres. Además, GitHub ha sido una herramienta clave para la revisión de código y seguimiento de problemas y despliegue continuo.
 
 #### Trello
+
 Trello es una aplicación de gestión de proyectos basada en la metodología Kanban. Permite a los usuarios crear tableros con listas y tarjetas para organizar tareas y proyectos. Las tarjetas se pueden mover entre listas para indicar el progreso, y se pueden añadir detalles como fechas de vencimiento, adjuntos y comentarios.
 
 Trello se ha utilizado para la gestión ágil del proyecto, específicamente en la definición, documentación y seguimiento del progreso de las tareas durante los sprints. Ha permitido organizar el flujo de trabajo de manera visual, facilitando la planificación y la ejecución eficiente de las tareas del proyecto.
 
 #### MongoDB Atlas
+
 MongoDB Atlas es un servicio de base de datos en la nube automatizado y completamente gestionado por MongoDB. Ofrece despliegue, configuración, mantenimiento y escalabilidad automáticos para bases de datos MongoDB en la nube, con soporte para AWS, Google Cloud y Azure.
 
 MongoDB Atlas ha sido utilizado como el servicio de alojamiento en la nube para la base de datos MongoDB del proyecto. Ha permitido gestionar y manipular documentos de la base de datos de forma remota, incluyendo la creación, eliminación y modificación de documentos, así como la gestión de la configuración.
 
 #### Google Meet
+
 Google Meet es una herramienta de videoconferencia desarrollada por Google. Permite realizar reuniones en línea con video y audio, compartir pantalla y realizar presentaciones, y es ampliamente utilizado para reuniones de trabajo, educación a distancia y eventos en línea.
 
 Google Meet ha sido la herramienta de comunicación elegida para las reuniones en línea de seguimiento del Trabajo de Fin de Grado (TFG). Ha permitido realizar reuniones virtuales efectivas, a pesar de las limitaciones de distancia o disponibilidad física.
 
 #### Cloudinary
+
 Cloudinary es una plataforma de gestión de activos multimedia en la nube. Proporciona soluciones para subir, almacenar, manipular y entregar imágenes y videos, optimizando archivos para diferentes dispositivos y resoluciones, lo que es esencial para el desarrollo web y móvil.
 
 Cloudinary ha sido utilizada para almacenar y gestionar los recursos de imagen del proyecto en la nube. Ha facilitado la carga y el almacenamiento eficiente de imágenes relacionadas con la aplicación, como elementos del menú, iconos y otros gráficos relevantes. Su uso ha sido clave para desacoplar las imágenes del código de la aplicación. También para facilitar la gestión de activos multimedia.
 
 #### Pandoc
+
 Pandoc es una herramienta de conversión de documentos que soporta una amplia variedad de formatos de archivo. Se utiliza para convertir archivos de texto entre formatos como Markdown, HTML, LaTeX y PDF. Es muy útil para autores, académicos y desarrolladores que necesitan manejar diferentes formatos de documentos.
 
 Pandoc se ha empleado para convertir archivos Markdown a PDF. Esta herramienta ha sido crucial para la generación de documentación y reportes en formato PDF, permitiendo una fácil distribución y presentación de la información generada durante el desarrollo del proyecto.
 
 #### Calendario a papel
+
 Un calendario de papel es una herramienta tradicional de gestión del tiempo. Aunque básico, es efectivo para planificar y visualizar eventos, plazos y tareas diarias, mensuales o anuales. No requiere de tecnología y es accesible en todo momento.
 
 El uso de un calendario de papel ha sido esencial para la organización personal y la planificación de tareas semanales. Ha proporcionado una forma simple y directa de visualizar las tareas pendientes, ayudando a mantener un enfoque claro y una gestión eficiente del tiempo.
 
 #### Google Calendar
+
 Google Calendar es una herramienta de gestión de tiempo y planificación de calendario en línea. Permite a los usuarios crear y editar eventos, configurar recordatorios, y compartir calendarios con otros. Es ampliamente utilizado en entornos personales y profesionales para organizar horarios, reuniones y eventos.
 
 Google Calendar se ha utilizado para programar y recordar las reuniones de seguimiento del TFG.
 
 #### Miniconda
+
 Miniconda es una distribución mínima del gestor de paquetes y sistema de gestión de entornos Conda. Está diseñado para Python y permite a los usuarios crear entornos virtuales para aislar diferentes proyectos y sus dependencias, facilitando la gestión de versiones y la reproducibilidad de proyectos.
 
 Miniconda ha sido empleado para gestionar los entornos de Python y sus librerías asociadas. Ha permitido crear entornos aislados para el proyecto, asegurando la compatibilidad y evitando conflictos entre diferentes dependencias y versiones de las librerías.
 
 #### Heroku
+
 Heroku es una plataforma como servicio (PaaS) que permite a los desarrolladores construir, ejecutar y operar aplicaciones en la nube. Es conocido por su facilidad de uso y por ofrecer una gama de servicios y herramientas integradas para desplegar y escalar aplicaciones web modernas.
 
 Heroku se ha utilizado para desplegar la aplicación en la nube. Ha ofrecido una plataforma simplificada para el despliegue, permitiendo que la aplicación sea accesible en línea sin la complejidad de gestionar la infraestructura de servidores. Además de desplegar de forma automatizada en base a los cambios en el repositorio.
 
 #### Zathura
+
 Zathura es un visor de documentos ligero con una interfaz minimalista. Principalmente se utiliza para ver PDF y otros formatos de documentos. Su diseño se centra en la simplicidad y la eficiencia, permitiendo a los usuarios personalizar la experiencia a través de plugins y atajos de teclado.
 
 Zathura ha sido la herramienta seleccionada para la visualización de documentos PDF. Su interfaz minimalista y la capacidad de gestionar eficientemente los documentos PDF han sido útiles para revisar documentación y reportes relacionados con el proyecto.
@@ -292,11 +310,13 @@ Zathura ha sido la herramienta seleccionada para la visualización de documentos
 ### Herramientas de documentación
 
 #### Confluence
+
 Confluence es una herramienta de colaboración y gestión del conocimiento utilizada principalmente en el contexto empresarial. Ofrece funcionalidades para crear, compartir y organizar documentación de proyectos, wikis internos y páginas de colaboración. Es ampliamente utilizado para la documentación de proyectos de software, gestión de conocimientos corporativos y trabajo en equipo.
 
 Confluence ha sido utilizada para compilar y organizar la documentación formal del proyecto, como los reportes de sprints, análisis de competidores y evaluación de tecnologías potenciales. Ha permitido centralizar y compartir información clave del proyecto de manera estructurada, facilitando el acceso a la información desde distintos ordenadores.
 
 #### Papel y boli
+
 El papel y el bolígrafo son herramientas de documentación clásicas y fundamentales. A pesar de la prevalencia de las soluciones digitales, tomar notas o esbozar ideas en papel sigue siendo una práctica común. Es inmediato, flexible y no depende de la tecnología, lo que lo hace útil para lluvias de ideas, notas rápidas y esbozos.
 
 El papel y el boli han sido herramientas fundamentales para la documentación informal y la generación de ideas. Se han empleado constantemente para hacer bocetos, organizar lluvias de ideas, definir objetivos de trabajo y esquematizar tareas. Esta técnica tradicional ha sido esencial para la planificación rápida y la captura de ideas en el momento.
@@ -309,11 +329,13 @@ Neovim ha funcionado como una herramienta de notas rápidas y edición de archiv
 ### Herramientas de diseño
 
 #### MermaidJS
+
 MermaidJS es una biblioteca de JavaScript que permite representar diagramas y gráficos definidos mediante un texto descriptivo. Es útil para generar diagramas de flujo, gráficos de Gantt, diagramas de secuencia, entre otros, directamente en páginas web. Facilita la creación de visualizaciones complejas sin necesidad de herramientas gráficas.
 
 MermaidJS se ha utilizado para crear y visualizar diagramas de la aplicación de forma textual, integrándose con Markdown. Ha sido una herramienta clave para definir y compartir diagramas de flujo, estructuras de datos y otros elementos visuales de diseño, facilitando la comprensión y la documentación del diseño del sistema.
 
 #### Bocetos y diagramas a papel
+
 Los bocetos y diagramas en papel son una forma básica pero efectiva de visualizar ideas, procesos o diseños. Esta técnica es utilizada por diseñadores, arquitectos y profesionales de diversas disciplinas para plasmar conceptos de manera rápida y flexible, facilitando la comprensión y la comunicación de ideas.
 
 Los bocetos y diagramas realizados a mano en papel han sido la principal herramienta de diseño. Se han utilizado para visualizar rápidamente ideas, crear diagramas de flujo y esquematizar interfaces de usuario, proporcionando una forma flexible y directa de experimentar con conceptos de diseño.
@@ -321,26 +343,28 @@ Los bocetos y diagramas realizados a mano en papel han sido la principal herrami
 ### Recursos adicionales
 
 #### Websockets
+
 Websockets es una tecnología que proporciona canales de comunicación bidireccional y en tiempo real entre un navegador y un servidor. Es ampliamente utilizada para aplicaciones web que requieren interacciones en tiempo real como chats, juegos en línea y trading de acciones. A diferencia del HTTP tradicional, Websockets permite una comunicación continua sin la necesidad de hacer múltiples solicitudes.
 
 Websockets ha sido la tecnología clave para sincronizar en tiempo real el frontend con el backend, así como para mantener actualizadas las vistas entre diferentes usuarios. Esta tecnología ha permitido una interacción fluida y continua, crucial para las funcionalidades dinámicas y en tiempo real de la aplicación.
 
 #### Uvicorn
+
 Uvicorn es un servidor ASGI (Asynchronous Server Gateway Interface) ligero y de alto rendimiento para Python. Es especialmente diseñado para trabajar con frameworks asíncronos como Starlette y FastAPI, proporcionando un rendimiento óptimo en operaciones de I/O asíncronas. Uvicorn se destaca por su sencillez, velocidad y capacidad para manejar un gran número de conexiones simultáneas.
 
 Uvicorn, como servidor ASGI, ha sido la elección para ejecutar la aplicación. Ha proporcionado una plataforma eficiente y de alto rendimiento para alojar la aplicación, aprovechando su capacidad para manejar las operaciones asíncronas y una gran cantidad de conexiones simultáneas, lo que ha sido esencial para el funcionamiento óptimo de la aplicación.
 
-### Metodología
+## Metodología
 
-#### Resumen de la Metodología
+### Resumen de la Metodología
 
 En el desarrollo de QRest, el objetivo principal ha sido definir y desarrollar el proyecto con claridad, estableciendo bases sólidas de actuación y detallando las decisiones tomadas a lo largo del proceso. Dada la naturaleza del proyecto, era esencial adoptar un enfoque que permitiera la adaptación a cambios, actualizaciones y variaciones en los requisitos. Esta necesidad de flexibilidad y adaptación ha sido un factor determinante en la elección de la metodología de trabajo.
 
-#### Metodología Ágil
+### Metodología Ágil
 
 Para este proyecto, se ha elegido la metodología ágil Scrum, reconocida por su capacidad para facilitar adaptaciones rápidas a cambios durante el desarrollo del software. Esta metodología es particularmente adecuada para proyectos donde los requisitos pueden evolucionar o no están completamente definidos desde el inicio.
 
-##### Características de Scrum en el Proyecto
+### Características de Scrum en el Proyecto
 
 - **Roles**: En el contexto de este proyecto, el estudiante, ha asumido la mayoría de los roles típicos en un equipo de desarrollo Scrum, incluyendo los de diseñador, analista, desarrollador y tester. La única excepción ha sido el rol de Product Owner, que ha sido desempeñado por mi tutor. Esta estructura de roles ha permitido una gran autonomía en el desarrollo, al mismo tiempo que garantiza una guía y dirección clara a través del tutor como Product Owner.
 
@@ -380,4 +404,237 @@ Los aspectos más importantes del proyecto se documentaron en Confluence, en las
 
 La metodología de trabajo se ha ido consolidando y perfeccionando a lo largo del desarrollo de la aplicación. Inicialmente, la implementación de esta metodología fue más flexible y menos estructurada. Sin embargo, en los últimos meses del proyecto, al seguir de manera más rigurosa la metodología descrita, se logró avanzar de manera más eficiente y rápida. El mayor impacto se observó al definir el calendario semanal y planificar objetivos específicos para cada sesión Pomodoro en papel. Esta práctica mejoró notablemente la productividad y el enfoque, permitiendo un avance más rápido y estructurado en el desarrollo de QRest.
 
+### Fases de desarrollo
+
+El desarrollo del proyecto QRest se ha estructurado en varias fases, reflejando un enfoque dinámico y adaptativo. A lo largo del proceso, se han enfrentado diversos desafíos y aprendizajes que han influido en la metodología de trabajo y en la planificación del proyecto.
+
+#### Planificación Inicial y Desafíos
+
+- **Planificación de Sprints Iniciales**: Al comienzo del proyecto, se planificaron detalladamente los sprints para los primeros tres meses, con una agenda específica de lo que se realizaría cada semana. Esta planificación inicial fue un intento de estructurar el proyecto y establecer un marco claro para su desarrollo.
+
+- **Desafíos Encarados**:
+    - **Falta de Conocimiento en Tecnologías**: Una de las primeras barreras fue la falta de familiaridad con las tecnologías necesarias para el desarrollo de QRest. Esto significó una curva de aprendizaje más pronunciada y un impacto en la velocidad inicial del proyecto.
+    - **Replanteamiento Continuo de Funcionalidades**: Durante las etapas iniciales, hubo una necesidad constante de reevaluar y ajustar las funcionalidades de la aplicación y su enfoque general. Esta reevaluación continua llevó a cambios en la planificación y el diseño del proyecto.
+    - **Errores y Necesidades Imprevistas**: Surgieron errores técnicos y necesidades no anticipadas durante el desarrollo, lo que obligó a realizar ajustes y replanteamientos en la planificación.
+
+- **Cambio en la Estrategia de Planificación**: Dada la volatilidad y los desafíos encontrados en los primeros sprints, se adoptó un enfoque más flexible. En lugar de planificar a largo plazo, se decidió definir las funcionalidades del sistema y un orden de implementación con una visión a corto plazo, planificando solo dos semanas por adelantado. Este enfoque permitió una mayor adaptabilidad a los cambios y a las necesidades emergentes del proyecto.
+
+#### Desarrollo Estructurado en Fases
+
+- **Total de Iteraciones**: A lo largo del proyecto, se han llevado a cabo un total de 23 iteraciones (sprints) de desarrollo, cada una con una duración de una o dos semanas. La duración media de estas iteraciones ha sido de aproximadamente 9.56 días, sin incluir el tiempo dedicado a la documentación de la memoria del proyecto.
+- **Agrupación en Fases de Desarrollo**: Para facilitar la comprensión y el análisis del proyecto, estas iteraciones se han agrupado en 18 fases de desarrollo. Cada fase representa un conjunto de sprints y encapsula un conjunto específico de tareas y objetivos alcanzados.
+
+##### Fase 1 - Inicio
+
+**Inicio:** 18 de Febrero  
+**Fin:** 24 de Febrero  
+**Actividades:**
+
+- Investigar competidores.
+- Pensar en soluciones a problemas existentes de los competidores.
+- Elegir un nombre para el proyecto.
+- Crear entidad: correo electrónico y dominio.
+
+##### Fase 2 - Análisis y Planificación
+
+**Inicio:** 20 de Febrero  
+**Fin:** 9 de Marzo  
+**Actividades:**
+
+- Definir funcionalidades deseables de la aplicación.
+- Crear un diagrama conceptual simple del sistema basado en funcionalidades.
+- Planificar los sprints basados en las funcionalidades.
+
+##### Fase 3 - Prototipo Carta
+
+**Inicio:** 24 de Febrero  
+**Fin:** 22 de Marzo  
+**Actividades:**
+
+- Definir y crear el entorno de desarrollo.
+- Diseñar modelo de datos de la carta (soportando elementos simples y complejos).
+- Diseñar prototipo de carta.
+- Crear HTML del prototipo de carta.
+- Añadir CSS con BulmaCSS.
+- Añadir funciones JS en el mismo documento HTML (principalmente basados en atributos HTML).
+
+##### Fase 4 - Backend Carta
+
+**Inicio:** 10 de Marzo  
+**Fin:** 16 de Abril  
+**Actividades:**
+
+- Implementar modelo de datos de la carta.
+- Desarrollar API CRUD de secciones de la carta.
+- Desarrollar API CRUD de elementos embebidos en las secciones de la carta.
+
+##### Fase 5 - Frontend Carta
+
+**Inicio:** 17 de Abril  
+**Fin:** 30 de Abril  
+**Actividades:**
+
+- Separar CSS en archivos individuales en `/static/css`.
+- Separar JS en archivos individuales en `/static/js`.
+- Frontend de la carta con Jinja2.
+
+##### Fase 6 - Carta V2
+
+**Inicio:** 1 de Mayo  
+**Fin:** 18 de Junio  
+**Actividades:**
+
+- Analizar competidor llamado Qamarero.
+- Decisión de cambiar el diseño actual al de Qamarero.
+- Diseñar un prototipo como el de Qamarero.
+- Implementar nuevo JS.
+- Nuevo Frontend de la carta V2 con Jinja2.
+
+##### Fase 7 - Subsecciones
+
+**Inicio:** 7 de Junio  
+**Fin:** 18 de Junio  
+**Actividades:**
+
+- Diseñar nuevo modelo de datos de carta para soportar subsecciones.
+- Implementar backend de subsecciones.
+
+##### Fase 8 - Tests de integración de la carta
+
+**Inicio:** 19 de Junio  
+**Fin:** 10 de Julio  
+**Actividades:**
+
+- Diseñar casos de uso de la carta.
+- Diseñar casos de prueba de la carta.
+- Desarrollar tests de integración de la carta.
+
+##### Fase 9 - Diseño de pedido
+
+**Inicio:** 26 de Septiembre  
+**Fin:** 25 de Octubre  
+**Actividades:**
+
+- Diseñar modelo de datos de pedidos.
+- Diseñar prototipo de pedidos.
+- Implementar backend de pedidos.
+- Frontend de pedidos con Jinja2.
+
+##### Fase 10 - Rediseño Clean Architecture
+
+**Inicio:** 8 de Octubre  
+**Fin:** 5 de Noviembre  
+**Actividades:**
+
+- Buscar solución para cambiar arquitectura monolítica a arquitectura en capas.
+- Aprender sobre Clean Architecture.
+- Diseñar la arquitectura en capas de la aplicación al estilo Clean Architecture.
+- Definir diagramas de flujo de las vistas de la aplicación.
+- Definir diagrama en capas de qué casos de uso puede ejecutar cada vista de la aplicación.
+- Definir diagrama de capas de qué llamadas a la capa de persistencia puede ejecutar cada caso de uso.
+- Re-planificar el proyecto (centrarse solo en la parte de los clientes del restaurante).
+- Eliminar la API CRUD monolítica para modificar las secciones de la carta.
+
+##### Fase 11 - Interfaz de persistencia
+
+**Inicio:** 1 de Noviembre  
+**Fin:** 12 de Noviembre  
+**Actividades:**
+
+- Diseñar una interfaz de persistencia con MongoDB.
+- Implementar una capa de persistencia que simplifique la interacción con MongoDB.
+- Analizar opciones para evitar colisiones en la base de datos.
+- Implementar Optimistic Concurrency Control en la capa de persistencia.
+- Implementar Transacciones con MongoDB.
+
+##### Fase 12 - Pedidos
+
+**Inicio:** 6 de Noviembre  
+**Fin:** 14 de Diciembre  
+**Actividades:**
+
+- Rehacer el backend de pedidos en base al nuevo diseño (en capas).
+- Rehacer el frontend de pedidos con FastAPI.
+- Diseñar casos de prueba de pedidos.
+- Implementar test de integración de pedidos.
+- Diseñar protocolo de sincronización de pedidos.
+- Diseñar modelo de datos de pedidos para soportar sincronización.
+- Re-implementar modelo de datos de pedidos.
+- Implementar el backend de Websockets de pedidos.
+- Crear Websockets en el JS de Jinja2.
+- Implementar Modelo-Vista-Controlador en JS para sincronización.
+
+##### Fase 13 - Cliente LocalStorage
+
+**Inicio:** 7 de Diciembre  
+**Fin:** 20 de Diciembre  
+**Actividades:**
+
+- Prueba de uso de LocalStorage.
+- Prototipo de vista de pedido para pedir cliente.
+- Actualizar frontend de pedido para pedir cliente.
+- Implementar Modelo-Vista-Controlador para guardar y consultar el cliente en LocalStorage.
+
+##### Fase 14 - Recibos
+
+**Inicio:** 15 de Diciembre  
+**Fin:** 2 de Enero  
+**Actividades:**
+
+- Diseñar solución para poder consultar el recibo total o individual.
+- Diseñar casos de prueba de recibo.
+- Implementar test de integración de recibo.
+- Implementar backend de recibo.
+- Diseñar prototipo de recibo.
+- Implementar frontend de recibo.
+
+##### Fase 15 - Por pagar
+
+**Inicio:** 27 de Diciembre  
+**Fin:** 2 de Enero  
+**Actividades:**
+
+- Diseñar solución para poder consultar por pagar total o individual.
+- Diseñar casos de prueba de por pagar.
+- Implementar test de integración de por pagar.
+- Implementar backend de por pagar.
+- Diseñar prototipo de por pagar.
+- Implementar frontend de por pagar.
+
+##### Fase 16 - Proteger rutas
+
+**Inicio:** 28 de Noviembre  
+**Fin:** 5 de Enero  
+**Actividades:**
+
+- Diseñar casos de error en cada vista del sistema.
+- Diseñar redirecciones en base al estado del pedido.
+- Diseñar redirecciones de nueva API.
+- Implementar errores y mensajes en cada vista del sistema (backend + frontend).
+- Añadir comprobación del estado del pedido para redireccionar automáticamente si es necesario.
+- Añadir nuevas rutas de la API para redireccionar automáticamente y facilitar la navegación.
+
+##### Fase 17 - Pago
+
+**Inicio:** 3 de Enero  
+**Fin:** 6 de Enero  
+**Actividades:**
+
+- Diseñar solución para solicitar pagar en caja y esperar confirmación.
+- Extender el modelo de datos de pedido para soportar pagos pendientes en caja.
+- Diseñar prototipo de pago en caja.
+- Implementar backend de pago.
+- Implementar frontend de pago en caja.
+- Implementar websocket con identificadores para sincronización de pago en caja.
+
+##### Fase 18 - Sugerencias
+
+**Inicio:** 7 de Enero  
+**Fin:** 9 de Enero  
+**Actividades:**
+
+- Analizar qué tipo de sugerencias era más conveniente.
+- Diseñar prototipo de sugerencias para volver a pedir elemento pedido anteriormente.
+- Implementar Modelo-Vista-Controlador en JS para persistir y consultar LocalStorage.
+- Implementar en el frontend con Jinja2.
 
