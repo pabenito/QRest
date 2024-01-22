@@ -91,4 +91,179 @@ Del 3 de Enero al 9 de Enero:
 - Arreglar imágenes del Frontend
 - Añadir Modelo-Vista-Controlador para añadir sugerencias para volve a pedir un producto anterior. 
 
+## Trello
+
+Sprint 1, 2 y 3:
+- Modelo conceptual del sistema
+- Planificar sprints
+- Preparar entorno de desarrollo
+- Prototipado
+- Coger entidad (correo y dominio)
+- Aprender pymongo a fondo
+- Modelo de datos de Carta y Pedidos
+
+Sprint 4:
+- Establecer Jinja2
+    1. Crear un HTML en la carpeta _static_.
+    2. Crear con FastAPI un endpoint que lo devuelva. 
+    3. Probar a añadirle un CSS o imágenes. 
+    4. Probar a añadirle variables.
+    5. Probar a añadirle código de Jinja2
+- Carta con Jinja2:
+    1. Devolver prototipo estático desde FastAPI
+    2. Devolverlo con Jinja2.
+    3. Recoger los datos de la base de datos. 
+    4. Mostrar alguna variable.
+    5. Integrar mostrar variable con código.
+    6. Mostrar imágenes. 
+    7. Mostrar todo.
+
+Sprint 5: 
+- Prototipo de carta V2 basada en Qamarero.
+- Javascript para la carta. Separar en documentos en /static/js
+- Extraer CSS a /static/css.
+
+Sprint 6: 
+- Añadir subsecciones al backend
+- Hacer tests de subsecciones
+- Independizar el la base de datos en un archivo aparta database.py
+- Jinja2 de Carta v2.
+
+Sprint 7:
+- Prototipo de pedido.
+- Modelo de datos de pedido
+- Reestructuración de modelo de datos de pedidos
+- Extraer modelos en carpeta independiente
+- Buscar solución para cambiar de un código monolítico a en capas. Principios SOLID y Clean Architecture.
+- Planear cómo resolver problema de volver a la carta desde la página del peido.
+- Diseño de solución para sincronizar los pedidos: Se eliminan requests, guardar en cada elemento los clientes que lo han pedido y actualizar directamente en la comanda actual cada vez que se hace un +/- en un elemento.
+
+## Hacer memoria para recordar todo lo que se ha hecho
+
+Fase 1 - Inicio:
+- Investigar competidores
+- Pensar en soluciones a problemas existentes en de los competidores
+- Elegir un nombre para el proyecto
+- Coger entidad: correo electrónico y dominio
+
+Fase 2 - Análisis y Planificación:
+- Definir funcionaliades deseables de la aplicación.
+- Diagrama conceptual simple del sistema basado en funcionaliades.
+- Planificar los sprints basados en las funcionalidades.
+
+Fase 3 - Prototipo Carta:
+- Definir y crear el entorno de desarrollo
+- Diseñar modelo de datos de la carta (soportando elementos simples y complejos).
+- Diseñar prototipo de carta.
+- Crear HTML del protitipo de carta.
+- Añadir CSS con BulmaCSS.
+- Añadir funciones JS en mismo documento HTML (pricipalmente basados en attributos HTML).
+
+Fase 4 - Backend Carta:
+- Implementar modelo de datos de la carta.
+- Desarrollar API CRUD de secciones de la carta.
+- Desarrollar API CRUD de elementos embebidos en las secciones de la carta.
+
+Fase 5 - Frontend Carta:
+- Separar CSS en archivos individuales en /static/css
+- Separar JS en archivos individuales en /static/js
+- Frontend de la carta con Jinja2.
+
+Fase 6 - Carta V2:
+- Analizar competidor llamado Qamarero.
+- Decisión de cambiar el diseño actual al de Qamarero.
+- Diseño un prototipo como el de Qamarero.
+- Implemento nuevo JS.
+- Nuevo Frontend de la carta V2 con Jinja2.
+
+Fase 7 - Subsecciones
+- Diseñar nuevo modelo de datos de carta para soportar subsecciones.
+- Implementar backend de subsecciones.
+
+Fase 8 - Tests de integración de la carta
+- Diseñar casos de uso de la carta.
+- Diseñar casos de pruaba de la carta.
+- Desarrollar tests de integración de la carta.
+
+Fase 9 - Diseño de pedido
+- Diseñar modelo de datos de pedidos.
+- Diseñar prototipo de pedidos.
+- Implementar backend de pedidos.
+- Frontend de pedidos con Jinja2.
+
+Fase 10 - Rediseño Clean Architecture
+- Buscar solución para cambiar arquitecturar monolítica a arquitectura en capas.
+- Aprender sobre Clean Architecture.
+- Diseñar la arquitectura en capas de la aplicación al estilo Clean Architecture.
+- Definir diagramas de flujo de las vistas de la aplicación (con los casos de uso que se pueden ejecutar como transiciones).
+- Definir diagrama en capas de qué casos de uso puede ejecutar cada vista de la aplicación.
+- Definir diagrama de capas de qué llamadas a la capa de persistencia puede ejecutar cada caso de uso.
+- Re-planificar el proyecto (centrarse solo en la parte de los clientes del restaurante).
+- Eliminar la API CRUD monolítica para modificar las secciones de la carta.
+
+Fase 11 - Interfaz de persistencia
+- Diseñar una interfaz de persistencia con MongoDB.
+- Implementar una capa de persistencia que simplifique la interacción con MongoDB.
+- Analizar opciones para evitar colisiones en la base de datos.
+- Implementar Optimistic Concurrency Control en la capa de persistencia.
+- Implementar Transacciones con MongoDB.
+
+Fase 11 - Pedidos:
+- Rehacer el backend de pedidos en base al nuevo diseño (en capas).
+- Rehacer el frontend de pedidos con FastAPI.
+- Diseñar casos de prueba de pedidos.
+- Implementar test de integración de pedidos.
+- Diseñar protocolo de sincronización de pedidos.
+- Diseñar modelo de datos de pedidos para soportar sincronización.
+- Re-implementar modelo de datos de pedidos.
+- Implementar el backend de Websockets de pedidos.
+- Crear Websockets en el JS de Jinja2.
+- Implementar Modelo-Vista-Controlador en JS para sincronización.
+
+Fase 12 - Cliente LocalStorage:
+- Prueba de uso de LocalStorage.
+- Prototipo de vista de pedido para pedir cliente.
+- Actualizar frontend de pedido para pedir cliente.
+- Implementar Modelo-Vista-Controlador para guardar y consultar el cliente en LocalStorage.
+
+Fase 13 - Recibos:
+- Diseñar solición para poder consultar el recibo total o indiviudal.
+- Diseñar casos de pureba de recibo.
+- Implementar test de integración de recibo.
+- Implementar backend de recibo.
+- Diseñar prototipo de recibo.
+- Implementar frontend de recibo.
+
+Fase 14 - Por pagar:
+- Diseñar solución para poder consultar por pagar tota o individual.
+- Diseñar casos de prueba de por pagar.
+- Implementar test de integración de por pagar.
+- Implementar backend de por pagar.
+- Diseñar prototipo de por pagar.
+- Implementar frontend de por pagar.
+
+Fase 15 - Proteger rutas:
+- Diseñar casos de error en cada vista del sistema.
+- Diseñar redirecciones en base al estado del pedido.
+- Diseñar redirecciones de nueva API.
+- Implementar errores y mensajes en cada vista del sistema (backend + frontend).
+- Añadir comprobación del estado del pedido para redireccionar automáticamente si es necesario.
+- Añadir nuevas rutas del la API para redireccionar automáticamente y facilitar la navegación.
+
+Fase 16 - Pago:
+- Diseñar solución para solicitar pagar en caja y esperar confirmación.
+- Extender el modelo de datos de pedido para soportar pagos pendientes en caja.
+- Diseñar prototipo de pago en caja.
+- Implementar backend de pago.
+- Implementar frontend de pago en caja.
+- Implementar websocket con identificadores para sicronización de pago en caja.
+
+Fase 17 - Sugerencias:
+- Analizar qué tipo de sugerencias era más conveniente.
+- Diseñar prototipo de sugerencias para volver a pedir elemento pedido anteriormente.
+- Implementar Modelo-Vista-Controlador en JS para persistir y consultar LocalStorage.
+- Implmentar en el frontend con Jinja2.
+
+
+
 
