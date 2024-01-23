@@ -424,7 +424,7 @@ El desarrollo del proyecto QRest se ha estructurado en varias fases, reflejando 
 - **Total de Iteraciones**: A lo largo del proyecto, se han llevado a cabo un total de 23 iteraciones (sprints) de desarrollo, cada una con una duración de una o dos semanas. La duración media de estas iteraciones ha sido de aproximadamente 9.56 días, sin incluir el tiempo dedicado a la documentación de la memoria del proyecto.
 - **Agrupación en Fases de Desarrollo**: Para facilitar la comprensión y el análisis del proyecto, estas iteraciones se han agrupado en 18 fases de desarrollo. Cada fase representa un conjunto de sprints y encapsula un conjunto específico de tareas y objetivos alcanzados.
 
-##### Fase 1 - Inicio
+##### Fase 1 - Inicial
 
 **Inicio:** 18 de Febrero  
 **Fin:** 24 de Febrero  
