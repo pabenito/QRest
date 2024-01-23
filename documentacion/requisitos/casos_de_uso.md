@@ -90,9 +90,9 @@ flowchart LR
 
 ### Carta
 
-Es la **pantalla inicial**. Se ven los elementos de la carta del restaurante y pueden añadir o eliminar unidades de cualquier elemento de la carta. Todos los comensales de una misma mesa están asociados al mismo pedido y ven en tiempo real cualquer actualización (añadir o eliminar unidades de algún elemento) que haga cualquier otro comensal de la misma mesa.
+Se ven los elementos de la carta del restaurante y pueden añadir o eliminar unidades de cualquier elemento de la carta. Todos los comensales de una misma mesa están asociados al mismo pedido y ven en tiempo real cualquer actualización (añadir o eliminar unidades de algún elemento) que haga cualquier otro comensal de la misma mesa.
 
-- **Ruta**: mesa/{Identificador de la mesa}
+- **Ruta**: /mesa/{Identificador de la mesa}/carta.
 - **Entrada**: QR, Pantalla Pedido.
 - **Salidas**: Pantalla Pedido, Pantalla Recibo Total.
 
@@ -100,7 +100,7 @@ Es la **pantalla inicial**. Se ven los elementos de la carta del restaurante y p
 
 Se ven todos los elementos que han pedido los comensales de la mesa. Esto incluye el elemento concreto; con sus variantes, extras, e ingredientes eliminados, en caso de elementos complejos; y la cantidad.
 
-- **Ruta**: mesa/{Identificador de la mesa}/pedido
+- **Ruta**: /mesa/{Identificador de la mesa}/pedido
 - **Entrada**: Pantalla Carta.
 - **Salidas**:
   - Carta.
@@ -110,28 +110,47 @@ Se ven todos los elementos que han pedido los comensales de la mesa. Esto incluy
 
 En esta pantalla se ve el recibo del pedido de toda la mesa en todas las comandas. Además del estdo de pago de cada elemento y quíen lo ha pedido.
 
-- **Ruta**: mesa/{Identificador de la mesa}/recibo
+- **Ruta**: /mesa/{Identificador de la mesa}/recibo/total
 - **Entrada**: Pantalla Carta.
 - **Salidas**:
   - Recibo Individual.
-  - Pago.
+  - Por Pagar Total
 
 ### Recibo Individual
 
 En esta pantalla se ve el recibo del total del comensal en todas las comandas. Además del estdo de pago de cada elemento y quíen lo ha pedido.
 
-- **Ruta**: mesa/{Identificador de la mesa}/recibo/{comensal}
-- **Entrada**: Pantalla Recibo total.
+- **Ruta**: /mesa/{Identificador de la mesa}/recibo/individual
+- **Entradas**: Pantalla Recibo total.
 - **Salidas**:
   - Recibo Total.
-  - Pago.
+  - Por Pagar Total.
 
-### Pago
+### Por Pagar Total
 
-En esta pantalla se tramita el pago.
+En esta pantall se ve lo que queda por pagar de todo el pedido de todos los comensales en todas las comandas.
 
-- **Ruta**: mesa/{Identificador de la mesa}/pago/{comensal}
-- **Entrada**: Pantalla Recibo total.
+- **Ruta**: /mesa/{Identificador de la mesa}/por_pagar/total
+- **Entradas**: 
+  - Pantalla Recibo Total.
+  - Pantalla Por Pagar Individual.
+  - Carta.
+- **Salida**: Por Pagar Individual
+
+### Por Pagar Individual
+
+En esta pantall se ve lo que queda por pagar de todo el pedido de todos los comensales en todas las comandas.
+
+- **Ruta**: /mesa/{Identificador de la mesa}/por_pagar/individual
+- **Entrada**: Pantalla Por Pagar Total.
+- **Salidas**: Por Pagar Total.
+
+### Pago Caja
+
+En esta pantalla es en el que el restaurante ve los pagos que se han solicitado pagar en caja. Se puede marcar como pagado un pedido.
+
+- **Ruta**: /mesa/{Identificador de la mesa}/caja
+- **Entrada**: Web del restaurante.
 - **Salida**: Recibo Total.
 
 

@@ -1,5 +1,89 @@
 # QRest
 
+## Glosario
+
+### Actores
+
+- **Empleado**: Entendido como una persona que opera el restaurante.
+- **Comensal**: Dicho de un cliente que está sentado en la mesa que. Comparte pedido con los comensales de la misma mesa.
+
+### Pantallas
+
+- **Entrada**: Métodos para acceder a la pantalla en cuestión. Puede ser otra pantalla u otro método.
+- **Salida**: Pantallas a las que se puede acceder desde la pantalla en cuestión.
+- **Ruta**: Punto de acceso en la API.
+
+### Carta
+
+**Elemento**: Cualquier bebida, entrante, plato, postre, etc. de la carta que puede añadirse al pedido.
+
+**Elemento simple**: Aquel que no hay que elegir nada. Es decir, no tiene variantes, ni extras opcionales, ni se le pueden quitar ingradientes. Ejemplo: Nestea.
+
+**Elemento complejo**: Aquel para el que hay que elegir algo. Tiene variantes o extras o se pueden eliminar ingredientes.
+
+## Pantallas
+
+```mermaid
+flowchart LR
+    carta[Carta]
+    pedido[Pedido]
+    recibo_total[Recibo Total]
+    recibo_individual[Recibo Individual]
+    pago[Pago]
+    carta --> pedido
+    pedido --> carta
+    carta --> recibo_total
+    recibo_total --> recibo_individual & pago
+    recibo_individual --> recibo_total & pago
+    pago --> recibo_total
+```
+
+### Carta
+
+Es la **pantalla inicial**. Se ven los elementos de la carta del restaurante y pueden añadir o eliminar unidades de cualquier elemento de la carta. Todos los comensales de una misma mesa están asociados al mismo pedido y ven en tiempo real cualquer actualización (añadir o eliminar unidades de algún elemento) que haga cualquier otro comensal de la misma mesa.
+
+- **Ruta**: mesa/{Identificador de la mesa}
+- **Entrada**: QR, Pantalla Pedido.
+- **Salidas**: Pantalla Pedido, Pantalla Recibo Total.
+
+### Pedido
+
+Se ven todos los elementos que han pedido los comensales de la mesa. Esto incluye el elemento concreto; con sus variantes, extras, e ingredientes eliminados, en caso de elementos complejos; y la cantidad.
+
+- **Ruta**: mesa/{Identificador de la mesa}/pedido
+- **Entrada**: Pantalla Carta.
+- **Salidas**:
+  - Carta.
+  - Pedido Confirmado.
+
+### Recibo Total
+
+En esta pantalla se ve el recibo del pedido de toda la mesa en todas las comandas. Además del estdo de pago de cada elemento y quíen lo ha pedido.
+
+- **Ruta**: mesa/{Identificador de la mesa}/recibo
+- **Entrada**: Pantalla Carta.
+- **Salidas**:
+  - Recibo Individual.
+  - Pago.
+
+### Recibo Individual
+
+En esta pantalla se ve el recibo del total del comensal en todas las comandas. Además del estdo de pago de cada elemento y quíen lo ha pedido.
+
+- **Ruta**: mesa/{Identificador de la mesa}/recibo/{comensal}
+- **Entrada**: Pantalla Recibo total.
+- **Salidas**:
+  - Recibo Total.
+  - Pago.
+
+### Pago
+
+En esta pantalla se tramita el pago.
+
+- **Ruta**: mesa/{Identificador de la mesa}/pago/{comensal}
+- **Entrada**: Pantalla Recibo total.
+- **Salida**: Recibo Total.
+
 ## Introducción
 
 ### Problemas del sector
@@ -579,3 +663,59 @@ Durante el proyecto se han realizado un total de 23 itereaciones (sprints) de de
 - El sistema tiene una arquitectura en capas.
 - El sistema usa transacciones para evitar conflictos en la base de datos.
 - El sistema proporciona una API.
+
+#### Identificadores de Categoría para Requisitos Funcionales
+1. **Gestión de la Carta**: `GC`
+2. **Gestión de Pedidos y Comandas**: `GPC`
+3. **Gestión de Pagos y Recibos**: `GPR`
+4. **Recomendaciones y Sincronización**: `RS`
+
+#### Identificadores de Requisitos Funcionales
+- **RF-GC-1**: Creación de Secciones de la Carta.
+- **RF-GC-2**: Creación de Subsecciones de la Carta.
+- **RF-GC-3**: Creación de Elementos Simples.
+- **RF-GC-4**: Creación de Elementos Complejos.
+- **RF-GC-5**: Modificación de Secciones de la Carta.
+- **RF-GC-6**: Modificación de Elementos de la Carta.
+- **RF-GC-7**: Ocultar y Mostrar Secciones.
+- **RF-GC-8**: Ocultar y Mostrar Elementos.
+
+- **RF-GPC-1**: Generación de Pedido al Sentarse en la Mesa.
+- **RF-GPC-2**: Compartir Pedido entre Comensales.
+- **RF-GPC-3**: Añadir Elementos a la Comanda.
+- **RF-GPC-4**: Eliminar Elementos de la Comanda.
+- **RF-GPC-5**: Consulta del Total de Elementos en la Comanda.
+- **RF-GPC-6**: Confirmación de la Comanda.
+
+- **RF-GPR-1**: Pedido de la Cuenta (Recibo).
+- **RF-GPR-2**: Visualización del Recibo Individual.
+- **RF-GPR-3**: Consulta del Recibo Total.
+- **RF-GPR-4**: Consulta de lo que Queda por Pagar Individualmente.
+- **RF-GPR-5**: Consulta del Total a Pagar.
+- **RF-GPR-6**: Solicitud de Pago en Caja Individual.
+- **RF-GPR-7**: Solicitud de Pago en Caja del Total.
+- **RF-GPR-8**: Marcar una Solicitud de Pago como Pagada.
+
+- **RF-RS-1**: Recomendaciones Basadas en Pedidos Anteriores.
+- **RF-RS-2**: Sincronización del Estado de la Comanda.
+
+#### Identificadores de Requisitos No Funcionales
+Dado que los requisitos no funcionales no se categorizan de la misma manera, los identificaremos secuencialmente sin un identificador de categoría.
+
+- **RNF-1**: Uso de Tecnología Web.
+- **RNF-2**: Interfaz Orientada a Móvil.
+- **RNF-3**: Manejo de Errores y Redirecciones.
+- **RNF-4**: Seguridad de Acceso a Pedidos.
+- **RNF-5**: Idioma del Contenido.
+- **RNF-6**: Idioma de Mensajes y Errores.
+- **RNF-7**: Almacenamiento de Datos del Cliente.
+- **RNF-8**: Uso de Base de Datos No Relacional.
+- **RNF-9**: Accesibilidad desde URL Pública.
+- **RNF-10**: Uso de Computación en la Nube Distribuida.
+- **RNF-11**: Arquitectura en Capas.
+- **RNF-12**: Uso de Transacciones para Evitar Conflictos.
+- **RNF-13**: Disponibilidad de una API.
+
+Esta estructura de identificación ayuda a organizar y referenciar los requisitos de manera más clara y estructurada, facilitando su gestión durante el desarrollo del proyecto.
+
+
