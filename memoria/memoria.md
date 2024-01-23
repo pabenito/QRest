@@ -689,9 +689,7 @@ Los requisitos en la categoría de Gestión de Pagos y Recibos se centran en el 
 
 La categoría Recomendaciones y Sincronización incluye requisitos destinados a mejorar la experiencia del cliente a través de recomendaciones personalizadas y a garantizar la consistencia y actualización de la información entre los comensales de una mesa. Estos requisitos son cruciales para ofrecer un servicio personalizado y eficiente, asegurando que todos los usuarios tengan acceso a la información más reciente sobre su pedido conjunto.
 
-1. _(RF-RS-1)_ **Recomendaciones Basadas en Pedidos Anteriores**: El sistema debe ser capaz de recomendar al cliente elementos basados en sus
-
- pedidos anteriores.
+1. _(RF-RS-1)_ **Recomendaciones Basadas en Pedidos Anteriores**: El sistema debe ser capaz de recomendar al cliente elementos basados en sus pedidos anteriores.
 2. _(RF-RS-2)_ **Sincronización del Estado de la Comanda**: El estado de la comanda entre los comensales debe estar siempre sincronizado.
 
 #### Requisitos No Funcionales
