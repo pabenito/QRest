@@ -642,9 +642,16 @@ El desarrollo del proyecto QRest se ha estructurado en varias fases, reflejando 
 
 ### Requisitos
 
+Un requisito en el contexto de la ingeniería de software y el desarrollo de sistemas es una condición o capacidad necesaria que un sistema debe cumplir o poseer para satisfacer un contrato, estándar, especificación u otro documento formalmente impuesto. Los requisitos son una descripción detallada de lo que el sistema debe hacer y las restricciones bajo las cuales debe operar. Estos se dividen principalmente en dos categorías: Requisitos funcionales y no funcionales.
+
 #### Requisitos Funcionales
 
+Los requisitos funcionales se refieren a las funciones específicas, comportamientos o capacidades que un sistema debe proporcionar. Estos requisitos definen lo que el sistema debe hacer en términos de tareas y servicios a realizar.
+
 ##### Gestión de la Carta _(GC)_
+
+La categoría de Gestión de la Carta engloba todos los requisitos relacionados con la creación, organización, y modificación de los elementos de la carta o menú del restaurante. Estos requisitos son fundamentales para garantizar que el menú sea flexible, actualizable y fácilmente administrable, permitiendo reflejar con precisión la oferta de alimentos y bebidas del establecimiento. Incluyen la capacidad de crear y modificar secciones y subsecciones, así como la gestión de los detalles de cada elemento del menú.
+
 1. _(RF-GC-1)_ **Creación de Secciones de la Carta**: El sistema debe permitir la creación de distintas secciones en la carta del restaurante, como "Entrantes", "Platos Principales", etc.
 2. _(RF-GC-2)_ **Creación de Subsecciones de la Carta**: Dentro de cada sección, el sistema debe permitir la creación de subsecciones para una mejor organización, como "Pizzas Vegetarianas" dentro de "Pizzas".
 3. _(RF-GC-3)_ **Creación de Elementos Simples**: El sistema debe permitir la creación de elementos básicos en la carta, incluyendo nombre, imagen, precio, ingredientes, alérgenos y etiquetas.
@@ -655,6 +662,9 @@ El desarrollo del proyecto QRest se ha estructurado en varias fases, reflejando 
 8. _(RF-GC-8)_ **Ocultar y Mostrar Elementos**: De forma similar a las secciones, los elementos individuales deben poder ser ocultados o mostrados en la carta.
 
 ##### Gestión de Pedidos y Comandas _(GPC)_
+
+La Gestión de Pedidos y Comandas abarca los requisitos enfocados en cómo los clientes interactúan con el sistema para seleccionar, personalizar y confirmar sus pedidos. Esta categoría es vital para la experiencia del cliente, ya que facilita la elección de platos, la personalización de los pedidos según sus preferencias, y la gestión de los pedidos en un entorno compartido, como es el caso de una mesa con varios comensales.
+
 1. _(RF-GPC-1)_ **Generación de Pedido al Sentarse en la Mesa**: Cuando un cliente se sienta en una mesa, debe poder generar un pedido.
 2. _(RF-GPC-2)_ **Compartir Pedido entre Comensales**: Los comensales en la misma mesa deben compartir un único pedido.
 3. _(RF-GPC-3)_ **Añadir Elementos a la Comanda**: Los comensales deben poder añadir elementos de la carta a la comanda.
@@ -663,6 +673,9 @@ El desarrollo del proyecto QRest se ha estructurado en varias fases, reflejando 
 6. _(RF-GPC-6)_ **Confirmación de la Comanda**: Los comensales deben tener la opción de confirmar la comanda para que sea procesada por el restaurante.
 
 ##### Gestión de Pagos y Recibos _(GPR)_
+
+Los requisitos en la categoría de Gestión de Pagos y Recibos se centran en el proceso de facturación y pago. Desde la solicitud de la cuenta hasta el manejo de pagos individuales y grupales, esta categoría cubre todas las funcionalidades necesarias para que los comensales puedan ver, dividir y pagar sus cuentas de manera eficiente y transparente, así como la capacidad del personal del restaurante para gestionar y confirmar los pagos.
+
 1. _(RF-GPR-1)_ **Pedido de la Cuenta (Recibo)**: Los comensales deben poder solicitar la cuenta para ver el total a pagar.
 2. _(RF-GPR-2)_ **Visualización del Recibo Individual**: Cada comensal debe poder ver el recibo individual, es decir, el total de lo que ha pedido personalmente.
 3. _(RF-GPR-3)_ **Consulta del Recibo Total**: Debe ser posible consultar el recibo que incluye todos los pedidos de la mesa.
@@ -673,12 +686,17 @@ El desarrollo del proyecto QRest se ha estructurado en varias fases, reflejando 
 8. _(RF-GPR-8)_ **Marcar una Solicitud de Pago como Pagada**: Un empleado del restaurante debe poder marcar una solicitud de pago en caja como pagada.
 
 ##### Recomendaciones y Sincronización _(RS)_
+
+La categoría Recomendaciones y Sincronización incluye requisitos destinados a mejorar la experiencia del cliente a través de recomendaciones personalizadas y a garantizar la consistencia y actualización de la información entre los comensales de una mesa. Estos requisitos son cruciales para ofrecer un servicio personalizado y eficiente, asegurando que todos los usuarios tengan acceso a la información más reciente sobre su pedido conjunto.
+
 1. _(RF-RS-1)_ **Recomendaciones Basadas en Pedidos Anteriores**: El sistema debe ser capaz de recomendar al cliente elementos basados en sus
 
  pedidos anteriores.
 2. _(RF-RS-2)_ **Sincronización del Estado de la Comanda**: El estado de la comanda entre los comensales debe estar siempre sincronizado.
 
 #### Requisitos No Funcionales
+
+Los requisitos no funcionales se centran en cómo el sistema realiza sus funciones, abarcando aspectos como la seguridad, la usabilidad, la confiabilidad y la performance. Estos requisitos no describen las actividades del sistema, sino sus propiedades o cualidades.
 
 1. _(RNF-1)_ **Uso de Tecnología Web**: El sistema debe estar basado en tecnologías web.
 2. _(RNF-2)_ **Interfaz Orientada a Móvil**: La interfaz de usuario debe estar optimizada para dispositivos móviles.
