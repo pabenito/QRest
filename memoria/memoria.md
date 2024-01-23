@@ -638,3 +638,58 @@ El desarrollo del proyecto QRest se ha estructurado en varias fases, reflejando 
 - Implementar Modelo-Vista-Controlador en JS para persistir y consultar LocalStorage.
 - Implementar en el frontend con Jinja2.
 
+## Análisis
+
+### Requisitos
+
+#### Requisitos Funcionales
+
+##### Gestión de la Carta _(GC)_
+1. _(RF-GC-1)_ **Creación de Secciones de la Carta**: El sistema debe permitir la creación de distintas secciones en la carta del restaurante, como "Entrantes", "Platos Principales", etc.
+2. _(RF-GC-2)_ **Creación de Subsecciones de la Carta**: Dentro de cada sección, el sistema debe permitir la creación de subsecciones para una mejor organización, como "Pizzas Vegetarianas" dentro de "Pizzas".
+3. _(RF-GC-3)_ **Creación de Elementos Simples**: El sistema debe permitir la creación de elementos básicos en la carta, incluyendo nombre, imagen, precio, ingredientes, alérgenos y etiquetas.
+4. _(RF-GC-4)_ **Creación de Elementos Complejos**: Además de los elementos simples, el sistema debe permitir la creación de elementos con opciones adicionales como variantes y extras.
+5. _(RF-GC-5)_ **Modificación de Secciones de la Carta**: Debe ser posible modificar las secciones ya creadas, ya sea cambiando el nombre, el orden o el contenido.
+6. _(RF-GC-6)_ **Modificación de Elementos de la Carta**: Similar a las secciones, los elementos individuales de la carta deben poder ser modificados.
+7. _(RF-GC-7)_ **Ocultar y Mostrar Secciones**: El sistema debe permitir ocultar o mostrar secciones de la carta, útil para elementos estacionales o fuera de stock.
+8. _(RF-GC-8)_ **Ocultar y Mostrar Elementos**: De forma similar a las secciones, los elementos individuales deben poder ser ocultados o mostrados en la carta.
+
+##### Gestión de Pedidos y Comandas _(GPC)_
+1. _(RF-GPC-1)_ **Generación de Pedido al Sentarse en la Mesa**: Cuando un cliente se sienta en una mesa, debe poder generar un pedido.
+2. _(RF-GPC-2)_ **Compartir Pedido entre Comensales**: Los comensales en la misma mesa deben compartir un único pedido.
+3. _(RF-GPC-3)_ **Añadir Elementos a la Comanda**: Los comensales deben poder añadir elementos de la carta a la comanda.
+4. _(RF-GPC-4)_ **Eliminar Elementos de la Comanda**: Un comensal debe poder eliminar un elemento que él mismo haya añadido previamente.
+5. _(RF-GPC-5)_ **Consulta del Total de Elementos en la Comanda**: Debe ser posible consultar el total de elementos que se han añadido a la comanda.
+6. _(RF-GPC-6)_ **Confirmación de la Comanda**: Los comensales deben tener la opción de confirmar la comanda para que sea procesada por el restaurante.
+
+##### Gestión de Pagos y Recibos _(GPR)_
+1. _(RF-GPR-1)_ **Pedido de la Cuenta (Recibo)**: Los comensales deben poder solicitar la cuenta para ver el total a pagar.
+2. _(RF-GPR-2)_ **Visualización del Recibo Individual**: Cada comensal debe poder ver el recibo individual, es decir, el total de lo que ha pedido personalmente.
+3. _(RF-GPR-3)_ **Consulta del Recibo Total**: Debe ser posible consultar el recibo que incluye todos los pedidos de la mesa.
+4. _(RF-GPR-4)_ **Consulta de lo que Queda por Pagar Individualmente**: Los comensales deben poder ver cuánto les queda por pagar individualmente.
+5. _(RF-GPR-5)_ **Consulta del Total a Pagar**: Debe ser posible consultar el total que queda por pagar de toda la mesa.
+6. _(RF-GPR-6)_ **Solicitud de Pago en Caja Individual**: Un comensal debe poder solicitar pagar en caja su parte del total.
+7. _(RF-GPR-7)_ **Solicitud de Pago en Caja del Total**: Debe ser posible solicitar el pago en caja del total de la mesa.
+8. _(RF-GPR-8)_ **Marcar una Solicitud de Pago como Pagada**: Un empleado del restaurante debe poder marcar una solicitud de pago en caja como pagada.
+
+##### Recomendaciones y Sincronización _(RS)_
+1. _(RF-RS-1)_ **Recomendaciones Basadas en Pedidos Anteriores**: El sistema debe ser capaz de recomendar al cliente elementos basados en sus
+
+ pedidos anteriores.
+2. _(RF-RS-2)_ **Sincronización del Estado de la Comanda**: El estado de la comanda entre los comensales debe estar siempre sincronizado.
+
+#### Requisitos No Funcionales
+
+1. _(RNF-1)_ **Uso de Tecnología Web**: El sistema debe estar basado en tecnologías web.
+2. _(RNF-2)_ **Interfaz Orientada a Móvil**: La interfaz de usuario debe estar optimizada para dispositivos móviles.
+3. _(RNF-3)_ **Manejo de Errores y Redirecciones**: El sistema debe manejar adecuadamente los errores y realizar redirecciones según el estado del pedido.
+4. _(RNF-4)_ **Seguridad de Acceso a Pedidos**: El sistema debe prevenir que clientes anteriores accedan a pedidos actuales de la misma mesa.
+5. _(RNF-5)_ **Idioma del Contenido**: Todo el contenido del sistema debe estar en español.
+6. _(RNF-6)_ **Idioma de Mensajes y Errores**: Todos los mensajes y errores deben mostrarse en español.
+7. _(RNF-7)_ **Almacenamiento de Datos del Cliente**: Los datos del cliente deben almacenarse en el LocalStorage del dispositivo del cliente, sin pasar por el servidor.
+8. _(RNF-8)_ **Uso de Base de Datos No Relacional**: Los datos deben almacenarse en una base de datos no relacional, como MongoDB.
+9. _(RNF-9)_ **Accesibilidad desde URL Pública**: El sistema debe estar disponible y ser accesible desde una URL pública.
+10. _(RNF-10)_ **Uso de Computación en la Nube Distribuida**: El sistema debe utilizar servicios de computación en la nube distribuida.
+11. _(RNF-11)_ **Arquitectura en Capas**: El sistema debe estar diseñado con una arquitectura en capas.
+12. _(RNF-12)_ **Uso de Transacciones para Evitar Conflictos**: Deben utilizarse transacciones en la base de datos para evitar conflictos de datos.
+13. _(RNF-13)_ **Disponibilidad de una API**: El sistema debe proporcionar una API para interactuar con él.
