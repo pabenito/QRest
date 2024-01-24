@@ -2,22 +2,15 @@
 
 ## Glosario
 
-### Actores
-
+- **Cliente**: Es un cliente del restaurante que todavía no tiene asignado un pedido.
 - **Empleado**: Entendido como una persona que opera el restaurante.
-- **Comensal**: Dicho de un cliente que está sentado en la mesa que. Comparte pedido con los comensales de la misma mesa.
-
-### Carta
-
-**Elemento**: Cualquier bebida, entrante, plato, postre, etc. de la carta que puede añadirse al pedido.
-
-**Elemento simple**: Aquel que no hay que elegir nada. Es decir, no tiene variantes, ni extras opcionales, ni se le pueden quitar ingredientes. Ejemplo: Nestea.
-
-**Elemento complejo**: Aquel para el que hay que elegir algo. Tiene variantes o extras o se pueden eliminar ingredientes.
-
-### Estado de la mesa
-
-- Pedido Activo: Pedido para el cual todavía no hay cuenta generada. Y por tanto se pueden seguir pidiendo comandas.
+- **Comensal**: Dicho de un cliente que el cual tiene asignado un pedido que con los clientes de la misma mesa.
+- **Comanda**: Conjunto de elementos que se piden en la misma ronda.
+- **Comanda actual**: Conjunto de elmento que se han seleccionado para pedir pero que todavía no se han confirmado.
+- **Comanda confirmada**: Conjundo elementos de una ronda que ya se confirmó y se mandó a cocina.
+- **Pedido**: Estructura de datos que guarda el estado de Comandas, Recibos y Pagos de una mesa de comensales.
+- **Elemento**: Cualquier bebida, entrante, plato, postre, etc. de la carta que puede añadirse al pedido.
+- **Pedido Activo**: Pedido para el cual todavía no hay cuenta generada. Y por tanto se pueden seguir pidiendo comandas.
 
 ## Listado de casos de uso
 
