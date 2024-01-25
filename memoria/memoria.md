@@ -720,6 +720,28 @@ Los casos de uso se presentan de forma secuencial y están interrelacionados, re
 
 En esta sección, cada caso de uso se describe detalladamente, con un identificador único, una descripción clara, las condiciones necesarias para su inicio y finalización, y los pasos específicos del proceso.
 
+Antes de adentrarnos en los casos de uso específicos, es esencial familiarizarse con algunos términos clave y los estados de la mesa que constituyen la columna vertebral del sistema: Glosario y Estados de la mesa.
+
+#### Glosario
+
+- **Cliente**: Persona que visita el restaurante pero todavía no tiene un pedido asignado.
+- **Empleado**: Individuo encargado de operar diversas funciones dentro del restaurante.
+- **Comensal**: Cliente con un pedido asignado, compartiendo mesa con otros clientes.
+- **Comanda**: Conjunto de elementos pedidos en una ronda.
+- **Comanda Actual**: Selección de elementos aún no confirmados para añadir al pedido.
+- **Comanda Confirmada**: Conjunto de elementos de una ronda que han sido confirmados y enviados a cocina.
+- **Pedido**: Estructura de datos que registra Comandas, Recibos y Pagos de una mesa de comensales.
+- **Elemento**: Cualquier ítem del menú (bebida, entrante, plato principal, postre) que puede añadirse al pedido.
+- **Pedido Activo**: Pedido que aún no ha generado una cuenta y puede recibir más comandas.
+
+#### Estados de la Mesa
+
+1. **Mesa sin Pedido Activo**: No existe ningún pedido activo en la mesa actualmente.
+2. **Sin Comandas Confirmadas**: La mesa tiene un pedido activo pero sin comandas confirmadas.
+3. **Con Comandas Confirmadas**: Al menos una comanda ha sido confirmada en la mesa.
+4. **Recibo Generado**: Se ha emitido el recibo para el pedido en la mesa.
+5. **Pedido Pagado**: El pedido de la mesa ha sido completamente pagado.
+
 #### Flujo de Uso Total
 
 - **Identificador**: CU-1
