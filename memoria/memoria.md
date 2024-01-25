@@ -709,3 +709,150 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 11. _(RNF-11)_ **Arquitectura en Capas**: El sistema debe estar diseñado con una arquitectura en capas.
 12. _(RNF-12)_ **Uso de Transacciones para Evitar Conflictos**: Deben utilizarse transacciones en la base de datos para evitar conflictos de datos.
 13. _(RNF-13)_ **Disponibilidad de una API**: El sistema debe proporcionar una API para interactuar con él.
+
+### Casos de uso
+
+#### Flujo de Uso Total
+
+- **Identificador**: CU-1
+- **Descripción**: Describe el proceso completo en un restaurante, desde que el cliente se sienta en la mesa hasta que se realiza el pago del pedido.
+- **Precondición**: No hay ningún pedido activo en la mesa.
+- **Postcondición**: El pedido ha sido pagado.
+
+**Escenario Principal**:
+
+1. El cliente se sienta en la mesa.
+2. El cliente crea un pedido [CU-2].
+3. Un comensal modifica la carta [CU-3].
+4. Un comensal confirma la comanda [CU-4].
+5. Uno de los comensales pide el recibo [CU-5].
+6. Los comensales pagan la cuenta [CU-6].
+
+**Escenarios Alternativos**:
+
+4a. Un comensal modifica la carta.
+    1. Vuelve al paso 3 [CU-3].
+
+5a. Los comensales piden otra comanda.
+    1. Vuelve al paso 3 [CU-3].
+
+#### Crear Pedido
+
+- **Identificador**: CU-2
+- **Descripción**: Proceso de creación de un nuevo pedido activo en la mesa por parte de un cliente.
+- **Precondición**: No hay ningún pedido activo en la mesa.
+- **Postcondición**: Un pedido activo es creado; los comensales pueden acceder a la carta.
+
+**Escenario Principal**:
+
+1. El cliente se sienta en la mesa.
+2. El cliente escanea el QR sobre la mesa.
+3. El sistema genera un nuevo pedido activo.
+4. El sistema muestra al cliente el QR del pedido.
+5. El cliente comparte el QR del pedido con los comensales.
+6. Los comensales acceden a la carta.
+
+#### Modificar Comanda
+
+- **Identificador**: CU-3
+- **Descripción**: Proceso en el que un comensal modifica una comanda actual, añadiendo o eliminando elementos.
+- **Precondiciones**: El pedido está activo y los comensales visualizan la carta.
+- **Postcondición**: La comanda actual es modificada.
+
+**Escenario Principal**:
+
+1. Un comensal navega por la carta.
+2. El comensal selecciona la opción de añadir o eliminar elementos de la carta.
+3. El sistema modifica el pedido.
+4. El sistema actualiza el estado del pedido para todos los comensales.
+
+**Escenario Alternativo**:
+
+3a. El elemento a eliminar no fue pedido por el cliente.
+    1. El elemento no ha sido pedido anteriormente por el cliente que solicita eliminarlo.
+    2. El sitema muestra un mensaje de error.
+    3. Vuelve al paso 1.   
+
+#### Confirmar Comanda
+
+- **Identificador**: CU-4
+- **Descripción**: Proceso donde un comensal confirma la comanda actual, enviándola a cocina.
+- **Precondiciones**: El pedido está activo y la comanda actual no es nula.
+- **Postcondición**: La comanda actual es confirmada y enviada a cocina.
+
+**Escenario Principal**:
+
+1. Un comensal visualiza el resumen de la comanda.
+2. El sistema verifica la existencia de elementos en la comanda.
+3. El sistema muestra el resumen.
+4. El comensal confirma la comanda.
+5. El sistema realiza una segunda verificación de elementos.
+6. El sistema marca la comanda como confirmada.
+7. El sistema muestra un mensaje de éxito y redirige a la carta.
+
+**Escenario Alternativo**:
+
+[2 ó 5]a. No hay elementos en la comanda.
+    1. El sistema no encuentra elementos en la comanda actual.
+    2. El sitema muestra un mensaje de error.
+    3. El sistema muestra la carta.
+
+4a. El comensal modifica la comanda.
+    1. El comensal añade o elimina elementos del pedido. [CU-3]
+    2. Vuelve al paso 2.
+
+#### Pedir Recibo
+
+- **Identificador**: CU-5
+- **Descripción**: Proceso en el cual un comensal solicita el recibo del pedido.
+- **Precondiciones**: El pedido está activo y hay al menos una comanda confirmada.
+- **Postcondición**: Se genera el recibo y el pedido deja de estar activo.
+
+**Escenario Principal**:
+
+1. Un comensal solicita el recibo.
+2. El sistema verifica si ya se generó un recibo.
+3. El sistema confirma la existencia de comandas confirmadas.
+4. El sistema verifica si hay comandas por confirmar.
+5. El sistema genera el recibo.
+6. El sistema muestra el recibo.
+
+**Escenarios Alternativos**:
+
+2a. Ya existe el recibo.
+    1. El sistema detecta que ya existe el recibo.
+    2. El sistema muestra el recibo.
+
+3a. No hay comandas confirmadas.
+    1. El sistema no encuentra ninguna comanda confirmada.
+    2. El sistema muestra un mensaje de error.
+
+4a. Hay elementos por confirmar.
+    1. El sistema detecta que hay elementos en la comanda por confirmar.
+    2. El sistema muestra un mensaje de error.
+
+#### Pagar
+
+- **Identificador**: CU-6
+- **Descripción**: Proceso de pago del pedido en el restaurante.
+- **Precondiciones**: Existe un recibo generado.
+- **Postcondición**: Se ha realizado el pago del pedido.
+
+**Escenario Principal**:
+
+1. El sistema muestra el recibo.
+2. Un comensal selecciona pagar.
+3. El sistema marca el recibo como pendiente de pago.
+4. El sistema indica al comensal dirigirse a caja para pagar.
+5. El sistema informa al empleado del restaurante del recibo pendiente.
+6. El comensal paga en caja.
+7. El empleado marca el recibo como pagado.
+8. El sistema confirma el pago.
+9. El sistema informa al comensal del éxito en el pago.
+10. El sistema muestra el monto pendiente por pagar.
+
+**Escenario Alternativo**:
+
+2a. Ver recibo individual.
+    1. El comensal visualiza su recibo individual.
+    2. Vuelve al paso 2.
