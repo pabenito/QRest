@@ -712,12 +712,28 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 
 ### Casos de uso
 
+La sección de casos de uso proporciona una estructura detallada y organizada de los distintos procesos y flujos de interacción en un sistema, en este caso, un sistema de gestión de pedidos en un restaurante. Los casos de uso son fundamentales para entender cómo interactúan los diferentes actores (clientes, empleados, comensales) con el sistema y entre sí, ofreciendo una visión clara de las funcionalidades requeridas y los posibles escenarios que pueden surgir durante su uso.
+
+Cada caso de uso se centra en un aspecto específico del sistema, detallando las acciones que se llevan a cabo desde el inicio hasta la conclusión de una tarea. Estos incluyen precondiciones que deben cumplirse para que el caso de uso comience, el flujo principal de eventos, escenarios alternativos que podrían surgir y las postcondiciones que indican el final exitoso del caso de uso.
+
+Los casos de uso se presentan de forma secuencial y están interrelacionados, reflejando cómo un proceso lleva al siguiente, creando un flujo de trabajo coherente y eficiente. Esta estructura no solo ayuda en el desarrollo y mejora del sistema, sino que también es una herramienta valiosa para la capacitación de nuevos usuarios y empleados, ya que proporciona un compendio claro y conciso de cómo se espera que interactúen con el sistema.
+
+En esta sección, cada caso de uso se describe detalladamente, con un identificador único, una descripción clara, las condiciones necesarias para su inicio y finalización, y los pasos específicos del proceso.
+
 #### Flujo de Uso Total
 
 - **Identificador**: CU-1
 - **Descripción**: Describe el proceso completo en un restaurante, desde que el cliente se sienta en la mesa hasta que se realiza el pago del pedido.
 - **Precondición**: No hay ningún pedido activo en la mesa.
 - **Postcondición**: El pedido ha sido pagado.
+- **Requisitos Asociados**:
+  - RF-GPC-1: Generación de Pedido al Sentarse en la Mesa.
+  - RF-GPC-3: Añadir Elementos a la Comanda.
+  - RF-GPC-4: Eliminar Elementos de la Comanda.
+  - RF-GPC-6: Confirmación de la Comanda.
+  - RF-GPR-1: Pedido de la Cuenta (Recibo).
+  - RF-GPR-6: Solicitud de Pago en Caja Individual.
+  - RF-GPR-7: Solicitud de Pago en Caja del Total.
 
 **Escenario Principal**:
 
@@ -731,10 +747,12 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 **Escenarios Alternativos**:
 
 4a. Un comensal modifica la carta.
-    1. Vuelve al paso 3 [CU-3].
+
+1. Vuelve al paso 3 [CU-3].
 
 5a. Los comensales piden otra comanda.
-    1. Vuelve al paso 3 [CU-3].
+
+1. Vuelve al paso 3 [CU-3].
 
 #### Crear Pedido
 
@@ -742,6 +760,9 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 - **Descripción**: Proceso de creación de un nuevo pedido activo en la mesa por parte de un cliente.
 - **Precondición**: No hay ningún pedido activo en la mesa.
 - **Postcondición**: Un pedido activo es creado; los comensales pueden acceder a la carta.
+- **Requisitos Asociados**:
+  - RF-GPC-1: Generación de Pedido al Sentarse en la Mesa.
+  - RF-GPC-2: Compartir Pedido entre Comensales.
 
 **Escenario Principal**:
 
@@ -758,6 +779,9 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 - **Descripción**: Proceso en el que un comensal modifica una comanda actual, añadiendo o eliminando elementos.
 - **Precondiciones**: El pedido está activo y los comensales visualizan la carta.
 - **Postcondición**: La comanda actual es modificada.
+- **Requisitos Asociados**:
+  - RF-GPC-3: Añadir Elementos a la Comanda.
+  - RF-GPC-4: Eliminar Elementos de la Comanda.
 
 **Escenario Principal**:
 
@@ -769,9 +793,10 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 **Escenario Alternativo**:
 
 3a. El elemento a eliminar no fue pedido por el cliente.
-    1. El elemento no ha sido pedido anteriormente por el cliente que solicita eliminarlo.
-    2. El sitema muestra un mensaje de error.
-    3. Vuelve al paso 1.   
+
+1. El elemento no ha sido pedido anteriormente por el cliente que solicita eliminarlo.
+2. El sitema muestra un mensaje de error.
+3. Vuelve al paso 1.   
 
 #### Confirmar Comanda
 
@@ -779,6 +804,9 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 - **Descripción**: Proceso donde un comensal confirma la comanda actual, enviándola a cocina.
 - **Precondiciones**: El pedido está activo y la comanda actual no es nula.
 - **Postcondición**: La comanda actual es confirmada y enviada a cocina.
+- **Requisitos Asociados**:
+  - RF-GPC-6: Confirmación de la Comanda.
+  - RF-RS-2: Sincronización del Estado de la Comanda.
 
 **Escenario Principal**:
 
@@ -793,13 +821,15 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 **Escenario Alternativo**:
 
 [2 ó 5]a. No hay elementos en la comanda.
-    1. El sistema no encuentra elementos en la comanda actual.
-    2. El sitema muestra un mensaje de error.
-    3. El sistema muestra la carta.
+
+1. El sistema no encuentra elementos en la comanda actual.
+2. El sitema muestra un mensaje de error.
+3. El sistema muestra la carta.
 
 4a. El comensal modifica la comanda.
-    1. El comensal añade o elimina elementos del pedido. [CU-3]
-    2. Vuelve al paso 2.
+
+1. El comensal añade o elimina elementos del pedido. [CU-3]
+2. Vuelve al paso 2.
 
 #### Pedir Recibo
 
@@ -807,6 +837,12 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 - **Descripción**: Proceso en el cual un comensal solicita el recibo del pedido.
 - **Precondiciones**: El pedido está activo y hay al menos una comanda confirmada.
 - **Postcondición**: Se genera el recibo y el pedido deja de estar activo.
+- **Requisitos Asociados**:
+  - RF-GPR-1: Pedido de la Cuenta (Recibo).
+  - RF-GPR-2: Visualización del Recibo Individual.
+  - RF-GPR-3: Consulta del Recibo Total.
+  - RF-GPR-4: Consulta de lo que Queda por Pagar Individualmente.
+  - RF-GPR-5: Consulta del Total a Pagar.
 
 **Escenario Principal**:
 
@@ -820,16 +856,19 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 **Escenarios Alternativos**:
 
 2a. Ya existe el recibo.
-    1. El sistema detecta que ya existe el recibo.
-    2. El sistema muestra el recibo.
+
+1. El sistema detecta que ya existe el recibo.
+2. El sistema muestra el recibo.
 
 3a. No hay comandas confirmadas.
-    1. El sistema no encuentra ninguna comanda confirmada.
-    2. El sistema muestra un mensaje de error.
+
+1. El sistema no encuentra ninguna comanda confirmada.
+2. El sistema muestra un mensaje de error.
 
 4a. Hay elementos por confirmar.
-    1. El sistema detecta que hay elementos en la comanda por confirmar.
-    2. El sistema muestra un mensaje de error.
+
+1. El sistema detecta que hay elementos en la comanda por confirmar.
+2. El sistema muestra un mensaje de error.
 
 #### Pagar
 
@@ -837,6 +876,10 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 - **Descripción**: Proceso de pago del pedido en el restaurante.
 - **Precondiciones**: Existe un recibo generado.
 - **Postcondición**: Se ha realizado el pago del pedido.
+- **Requisitos Asociados**:
+  - RF-GPR-6: Solicitud de Pago en Caja Individual.
+  - RF-GPR-7: Solicitud de Pago en Caja del Total.
+  - RF-GPR-8: Marcar una Solicitud de Pago como Pagada.
 
 **Escenario Principal**:
 
@@ -854,5 +897,6 @@ Los requisitos no funcionales se centran en cómo el sistema realiza sus funcion
 **Escenario Alternativo**:
 
 2a. Ver recibo individual.
-    1. El comensal visualiza su recibo individual.
-    2. Vuelve al paso 2.
+
+1. El comensal visualiza su recibo individual.
+2. Vuelve al paso 2.
