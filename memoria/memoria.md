@@ -922,3 +922,40 @@ Antes de adentrarnos en los casos de uso específicos, es esencial familiarizars
 
 1. El comensal visualiza su recibo individual.
 2. Vuelve al paso 2.
+
+## Modelado y Diseño
+
+### Arquitectura del proyecto
+
+#### Diagrama de Despliegue
+
+Texto.
+
+![](./img/arquitectura.png)
+
+El diagrama de despliegue para el proyecto QRest ilustra la arquitectura tecnológica y la interacción entre los diferentes componentes del sistema. Estos componentes son cruciales para el funcionamiento efectivo de la aplicación y se describen a continuación:
+
+- **Clientes del Restaurante**:
+    - **Dispositivo Móvil**: Los clientes utilizan sus dispositivos móviles para interactuar con la aplicación.
+    - **Dependencias**:
+        - **WiFi**: Esencial para la conexión a internet y el acceso a la aplicación.
+        - **Navegador**: Herramienta a través de la cual los clientes acceden a la interfaz de usuario de la aplicación.
+        - **Lector de QR**: Utilizado para escanear códigos QR que posiblemente redirigen al cliente a la carta o a funcionalidades específicas de la aplicación.
+
+- **Empleado del Restaurante**:
+    - **Dispositivo Móvil/Tablet**: Los empleados pueden usar tanto dispositivos móviles como tablets para gestionar las comandas.
+    - **Dependencias**:
+        - **WiFi**: Necesario para conectar el dispositivo del empleado con el servidor de la aplicación.
+        - **Navegador**: Permite al empleado acceder a la aplicación para realizar operaciones de gestión de pedidos y otras tareas administrativas.
+
+- **Aplicación**:
+    - **Tipo**: Servidor.
+    - **Plataforma**: Heroku, una plataforma de servicios en la nube que permite el despliegue y la operación eficiente de aplicaciones.
+    - **Características**: La aplicación se define como sin estado, distribuida y escalable, lo que permite manejar eficientemente un gran número de peticiones y adaptarse a la carga de trabajo mediante el escalado horizontal.
+
+- **Base de Datos**:
+    - **Tipo**: MongoDB, una base de datos NoSQL orientada a documentos.
+    - **Plataforma**: MongoDB Atlas, un servicio de base de datos en la nube totalmente gestionado que maneja las operaciones de MongoDB.
+    - **Características**: Distribuida y escalable, MongoDB Atlas proporciona una solución robusta para el manejo de grandes volúmenes de datos y peticiones con la capacidad de escalar según sea necesario.
+
+La arquitectura se basa en un modelo en el que múltiples clientes (usuarios y empleados) interactúan con la aplicación a través de la web, la cual se comunica con un backend desplegado en Heroku. Este backend se encarga de procesar las peticiones y comunicarse con la base de datos en MongoDB Atlas para realizar operaciones como consultar la carta y gestionar los pedidos. La escalabilidad horizontal tanto del servidor de la aplicación en Heroku como de la base de datos en MongoDB Atlas garantiza que el sistema pueda crecer y adaptarse a una mayor demanda sin que esto afecte al rendimiento o disponibilidad de la aplicación.

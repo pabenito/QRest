@@ -718,4 +718,49 @@ Dado que los requisitos no funcionales no se categorizan de la misma manera, los
 
 Esta estructura de identificación ayuda a organizar y referenciar los requisitos de manera más clara y estructurada, facilitando su gestión durante el desarrollo del proyecto.
 
+## Modelado y Diseño
 
+### Arquitectura del proyecto
+
+- Diagrama móvil
+- Arquitectura en capas aplicación
+- Arquitectura frontend
+
+#### Diagramad de despliegue
+
+Los compomentes principales son:
+
+- Clientes del restaurante:
+    - Dispositivo móvil
+    - Dependencias: WiFi, Navegador y Lector de QR
+- Empleado del restaurante:
+    - Dispositivo móvil o tablet
+    - Dependencias: WiFi, Navegador
+- Aplicación:
+    - Tipo: Servidor
+    - Plataforma: Heroku
+    - Característica: Sin estado, distribuido y escalable.
+- Base de datos:
+    - Tipo: MongoDB
+    - Plataforma: MongoDB Atlas
+    - Características: Distribuido y escalable.
+
+Los clientes (muchos) con sus dispositivos móviles, se conectan al servidor de la aplicación desplegado en Heroku. De igual forma lo hacen los empleados del restaurante (muchos) con sus dispositivos móviles o tablets. El servidor de Heroku escala horizontalmente (muchos servidores) cuando la carga del servidor es elevada. Es decir, a pesa de que en el diagrama se muestre un solo servidor, pueden estar varios servidores activos. Los servidores de Heroku se conectan con el servidor de MongoDB Atlas, usándolo como base de datos para consultar la carta y gestionar los pedidos. De igual forma MongoDB Atlas escala de forma horizontal, pero a nivel de usuario y de desarrollador el escalado horizontal del MongoDB Atlas es transparente (no afecta).
+
+### Modelo de datos
+
+- MongoDB BSON
+- Estructura de datos
+- Datos extendidos frontend
+- Comunicación websockets
+
+### Modelo de objetos
+
+- Explicar cómo se relacionan las clases de todas las capas.
+- Explicar los modelo-vista-controlador de frontend.
+
+### Proceso de diseño
+
+- V1
+- Qamarero como ejemplo
+- Diagrama de navegación
