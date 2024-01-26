@@ -747,6 +747,100 @@ Los compomentes principales son:
 
 Los clientes (muchos) con sus dispositivos móviles, se conectan al servidor de la aplicación desplegado en Heroku. De igual forma lo hacen los empleados del restaurante (muchos) con sus dispositivos móviles o tablets. El servidor de Heroku escala horizontalmente (muchos servidores) cuando la carga del servidor es elevada. Es decir, a pesa de que en el diagrama se muestre un solo servidor, pueden estar varios servidores activos. Los servidores de Heroku se conectan con el servidor de MongoDB Atlas, usándolo como base de datos para consultar la carta y gestionar los pedidos. De igual forma MongoDB Atlas escala de forma horizontal, pero a nivel de usuario y de desarrollador el escalado horizontal del MongoDB Atlas es transparente (no afecta).
 
+#### Arquitectura del servidor
+
+La aruitectura del backend se base en los principios de arquitectura limpia (Clean Architecture). Así pues vamos a comenzar por definirlo.
+
+##### Arquitectura limpia (Clean Architecture)
+
+![](./img/clean_architecture.jpg)
+
+La arquitectura limpia (Clean Architecture) es un conjunto de principios de diseño de software propuesto por Robert C. Martin (también conocido como "Uncle Bob"), con el objetivo de crear sistemas de software que sean independientes de frameworks, UI, bases de datos, y cualquier otra agencia externa. Se enfoca en permitir que un sistema sea fácil de mantener y evolucionar, especialmente en lo que respecta a las tecnologías subyacentes que pueden cambiar con el tiempo.
+
+La idea central es la separación de intereses, donde el código se divide en capas con responsabilidades bien definidas. Esto se visualiza a menudo en forma de círculos concéntricos, donde cada círculo representa una capa de la arquitectura:
+
+1. **Entidades (Entities)**: En el núcleo, encontramos las entidades, que son los objetos de negocio que representan las reglas de negocio más generales y de alto nivel. Estas reglas son las menos propensas a cambiar cuando algo externo al sistema cambia.
+
+2. **Casos de Uso (Use Cases)**: Rodeando a las entidades están los casos de uso, que contienen la lógica de aplicación específica. Estos casos de uso orquestan el flujo de datos hacia y desde las entidades, y pueden ser alterados con más frecuencia que las entidades, pero aún así son independientes de las capas exteriores.
+
+3. **Adaptadores de Interfaz (Interface Adapters)**: Esta capa contiene adaptadores que convierten datos en la forma más conveniente para los casos de uso y entidades, y para los agentes externos como la base de datos o la web. Incluye presentadores, vistas y controladores.
+
+4. **Frameworks y Drivers (Frameworks & Drivers)**: En la capa más externa están los frameworks y drivers, que incluyen la UI, bases de datos, servidores web, frameworks de aplicación, etc. Esta capa es la que cambia con más frecuencia y a la que el resto de la aplicación no debería estar acoplada.
+
+La arquitectura limpia también enfatiza el principio de inversión de dependencias, en el cual las capas internas definen interfaces, y las capas externas implementan estas interfaces. Esto permite que las capas internas sean independientes de las capas externas, facilitando la sustitución de una capa externa sin afectar las reglas de negocio.
+
+##### Implementación de la arquitectura
+
+![](./img/capas.png)
+
+Como podemos ver en el diagrama de capas de la aplicación en la parte del servidor, el flujo de llamadas es el siguiente:
+
+1. FastAPI (Externo) activa los Controladores web.
+2. Los Controladores web (Backend o Frontend) llaman a los Casos de uso necesarios, a través de una subcapa Services.
+3. Los Casos de uso llaman a la capa de Persistencia de las entidades pertinentes, a través de una subcapa Services.
+4. La capa de Persistencia de la entidad llama a un Proxy de Pymongo.
+5. El Proxy de Pymongo llama a Pymongo.
+6. Pymongo llama a MongoDB Atalas y genera una respuesta.
+7. La respuesta de Pymongo sube por todas las llamadas hasta el Caso de uso.
+8. El Caso de uso al finalizar devuelve una respuesta al Controlador web.
+9. El Controlador web al finalizar las interacciones con los casos de uso Generan una respuesta.
+    - Los controladores de la API del backend generan una respuesta JSON.
+    - Los controladores del frontend cargan una plantilla de Jinja2.
+
+Si todas estas llamadas se hiciesen sin usar un enfoque de arquitectura limpia, el código de las entidades llamaría directamente a pymongo, lo que resultaría en que el núcleo de la aplicación, las entidades, dependiesen diréctamente de la tecnología de base de datos que utiliza la aplicación. Lo que dificultaría la migración de la base de datos, la modificación de las entidades y el mantenimiento frente a cambios de versión.
+
+Así pues siguiendo las bases de arquitectura limpia, la implementación de la capa de persistencia con pymongo, es se inyecta a los Casos de uso desde los controladores mediante una interfaz que abstrae la tecnología de base de datos utilizada. Itulizando lo que se conoce como inversión de dependencias.
+
+Es decir, la implementación de la arquitectura limpia tiene dos principales ventajas: la arquitectura en capas y la inversión de dependencias. Lo que hace la aplicación muy mantenible, fácil de añadir nuevas funcionalidades y minimizando el acoplamiento y las depencias entre componentes. De hecho no fue hasta que se implementó esta arquitectura que pude empezar a desarrollar la aplicación mucho más rápido y fácil, permitiendo también cambiar de enfoques y corregir errores con gran flexibilidad.
+
+A continuación podemos ver el diagrama que muestra como encaja esta arquitectura en el patrón arquitectura limpia. Representando las capa en con círculos concéntricos. Siendo los circulos más internos el corazón de la apliación y lo que menos está sujeto a cambios; y las capas más externas las que dependen más de la tecnología y están más sujetas a cambios.
+
+![](./img/concentrico.png)
+
+#### Arquitectura del cliente
+
+Los detalles de arquitectura del lado de cliente son los siguientes.
+
+- Básicamente el HTML se genera con Jinja2 en el lado del servidor.
+- El documento HTML, define la estructura del documento y a nivel de diseño usa BulmaCSS, un framework CSS sin asociado.
+- Se importa BulmaCSS y FontAwesome con CDN en el header del HTML.
+- Se importa el código CSS y JS necesario en el header de la carpeta /static/css o /static/js.
+- El JS usa notación "module".
+- En JS hay tanto funciones normales como clases.
+- El código de inicialización y configuración necesario se hace directamente con un <script> de JS antes del body y/o después.
+- Para sincronizar el estado de las vistas de los comensales se usan Websocket con broadcast en el servidor.
+- También se utiliza el patrón de diseño Modelo-Vista-Controlador, pricipalmente para la sincronización e identificación de clientes, donde se usa el websocket como modelo.
+- También se hace un control de errores en el websocket, que muestra mensajes.
+- En algunos casos la redirección se hace de forma activa desde el JS, haciendo una llamada a la API del backend y redireccionando en función de la respuesta.
+
+---
+
+La arquitectura del lado del cliente en el proyecto QRest está diseñada para ser eficiente y funcional, utilizando una combinación de tecnologías y patrones de diseño. A continuación, se detalla la estructura y las herramientas implementadas:
+
+1. **Generación de HTML**: 
+   - El HTML se genera utilizando Jinja2 en el servidor. Este enfoque permite una integración eficiente entre el backend y el frontend.
+
+2. **Diseño y Estructura del Documento**:
+   - El documento HTML define la estructura básica y se apoya en BulmaCSS para el diseño. BulmaCSS es un framework CSS moderno y ligero que facilita la estilización.
+   - Se incorpora FontAwesome para los iconos, mejorando la interfaz de usuario.
+
+3. **Importaciones y Recursos Estáticos**:
+   - BulmaCSS y FontAwesome se importan a través de CDN en el encabezado del HTML.
+   - Los archivos CSS y JS necesarios se alojan en las carpetas `/static/css` y `/static/js`, respectivamente.
+
+4. **JavaScript y Estructura de Código**:
+   - El código JavaScript sigue la notación "module", proporcionando una estructura clara y mantenible.
+   - Se utilizan tanto funciones normales como clases para organizar el código de manera efectiva.
+   - El código de inicialización y configuración se ejecuta mediante etiquetas `<script>` ubicadas antes del cierre del `body` o en el `header`.
+
+5. **Comunicación y Sincronización**:
+   - Para la sincronización del estado de las vistas entre comensales, se utilizan WebSockets con broadcast en el servidor. Esto permite una actualización en tiempo real de la información en todos los clientes conectados.
+   - Se adopta el patrón Modelo-Vista-Controlador (MVC), principalmente para la sincronización e identificación de clientes, utilizando WebSockets como parte del modelo.
+
+6. **Gestión de Errores y Navegación**:
+   - Se implementa un control de errores en el WebSocket, mostrando mensajes relevantes al usuario en caso de problemas.
+   - En ciertos escenarios, la redirección se maneja activamente desde el JavaScript, realizando llamadas a la API del backend y redirigiendo según la respuesta obtenida.
+
 ### Modelo de datos
 
 - MongoDB BSON
