@@ -749,7 +749,7 @@ Los clientes (muchos) con sus dispositivos móviles, se conectan al servidor de 
 
 #### Arquitectura del servidor
 
-La aruitectura del backend se base en los principios de arquitectura limpia (Clean Architecture). Así pues vamos a comenzar por definirlo.
+La arquitectura del backend se base en los principios de arquitectura limpia (Clean Architecture). Así pues vamos a comenzar por definirlo.
 
 ##### Arquitectura limpia (Clean Architecture)
 

@@ -927,9 +927,9 @@ Antes de adentrarnos en los casos de uso específicos, es esencial familiarizars
 
 ### Arquitectura del proyecto
 
-#### Diagrama de Despliegue
+El proyecto QRest ha sido diseñado con una arquitectura de software robusta y escalable para proporcionar una solución integral en la gestión de comandas en restaurantes. Esta arquitectura se desglosa en un diagrama de despliegue que ilustra la configuración de la infraestructura y la arquitectura del servidor, donde se aplica el modelo de Clean Architecture para garantizar la independencia del código y la escalabilidad. Por otro lado, la arquitectura del cliente se centra en la experiencia del usuario, utilizando tecnologías web para proporcionar una interfaz intuitiva y reactiva. Juntas, estas dos facetas de la arquitectura trabajan para facilitar una solución robusta y mantenible.
 
-Texto.
+#### Diagrama de Despliegue
 
 ![](./img/arquitectura.png)
 
@@ -959,3 +959,81 @@ El diagrama de despliegue para el proyecto QRest ilustra la arquitectura tecnol�
     - **Características**: Distribuida y escalable, MongoDB Atlas proporciona una solución robusta para el manejo de grandes volúmenes de datos y peticiones con la capacidad de escalar según sea necesario.
 
 La arquitectura se basa en un modelo en el que múltiples clientes (usuarios y empleados) interactúan con la aplicación a través de la web, la cual se comunica con un backend desplegado en Heroku. Este backend se encarga de procesar las peticiones y comunicarse con la base de datos en MongoDB Atlas para realizar operaciones como consultar la carta y gestionar los pedidos. La escalabilidad horizontal tanto del servidor de la aplicación en Heroku como de la base de datos en MongoDB Atlas garantiza que el sistema pueda crecer y adaptarse a una mayor demanda sin que esto afecte al rendimiento o disponibilidad de la aplicación.
+
+#### Arquitectura del servidor
+
+##### Arquitectura limpia (Clean Architecture)
+
+![](./img/clean_architecture.jpg)
+
+La arquitectura limpia (Clean Architecture) es un marco de diseño de software enfocado en la organización del código de manera que promueva la separabilidad, la independencia de frameworks y la capacidad de adaptarse a cambios tecnológicos con mínimo esfuerzo. Fue propuesta por Robert C. Martin y es representativa de un enfoque de diseño que coloca las preocupaciones más fundamentales y estables del software en el centro del diseño.
+
+En la Clean Architecture, la organización del código se estructura en capas concéntricas, cada una con un nivel de responsabilidad específico:
+
+1. **Entidades (Entities)**: En el corazón de la arquitectura se encuentran las entidades. Estas son representaciones de los objetos de dominio, que encapsulan las reglas de negocio más generales y de alto nivel. Son agnósticas a cómo se presenta la información al usuario final o cómo se almacena en una base de datos.
+
+2. **Casos de Uso (Use Cases)**: Alrededor de las entidades se sitúan los casos de uso. Estos implementan la lógica de aplicación específica y actúan como intermediarios entre las entidades y los adaptadores de interfaz. Los casos de uso dictan cómo se deben usar las entidades para realizar operaciones específicas del dominio.
+
+3. **Adaptadores de Interfaz (Interface Adapters)**: Esta capa incluye presentadores, controladores y gateways. Se encarga de traducir los datos entre la forma más conveniente para los casos de uso y entidades, y la forma que puede ser presentada al usuario final o almacenada en una base de datos.
+
+4. **Frameworks y Drivers (Frameworks & Drivers)**: La capa más externa es donde residen la interfaz de usuario (UI), la base de datos, los agentes externos y los frameworks. Esta capa está diseñada para ser la más flexible y susceptible a cambios, permitiendo que la aplicación se adapte a nuevas tecnologías de presentación o persistencia de datos sin impactar las reglas de negocio.
+
+Las dependencias en Clean Architecture siempre apuntan hacia adentro. Las capas más externas pueden depender de las capas internas, pero nunca al revés. Esto se logra a través del principio de inversión de dependencias, el cual dicta que las abstracciones no deben depender de los detalles, sino que los detalles deben depender de abstracciones.
+
+Implementar la Clean Architecture en QRest significa que la aplicación está bien preparada para soportar tanto el crecimiento como los cambios tecnológicos, manteniendo las reglas de negocio del software protegidas de los cambios externos y facilitando las pruebas y el mantenimiento del sistema.
+
+##### Implementación de la arquitectura
+
+La implementación de la arquitectura limpia en el servidor de la aplicación QRest se ha diseñado meticulosamente para asegurar una estructura modular y flexible que permita un mantenimiento sencillo y la capacidad de adaptarse a cambios futuros sin grandes sobrecostes. La organización de la arquitectura en capas y la adopción del principio de inversión de dependencias son pilares fundamentales en este diseño. A continuación, se desglosa el flujo de llamadas dentro de esta arquitectura:
+
+1. **FastAPI**: Actúa como la puerta de entrada externa, recibiendo solicitudes y activando los controladores web correspondientes.
+   
+2. **Controladores Web**: Ubicados en el backend o frontend, invocan los casos de uso necesarios a través de una subcapa de servicios, actuando como intermediarios entre la solicitud entrante y la lógica de negocio.
+
+3. **Casos de Uso**: Procesan la lógica de negocio invocando la capa de persistencia para las entidades pertinentes, también a través de una subcapa de servicios.
+
+4. **Capa de Persistencia**: Interactúa con el Proxy de Pymongo para realizar operaciones de base de datos, manteniendo la independencia del código de las entidades respecto a la tecnología de base de datos específica.
+
+5. **Proxy de Pymongo**: Abstrae las llamadas específicas a Pymongo, permitiendo que los detalles de implementación de la base de datos permanezcan ocultos a las capas superiores.
+
+6. **Pymongo**: Es el driver de MongoDB utilizado para comunicarse con MongoDB Atlas, efectuando operaciones de base de datos y generando respuestas.
+
+7. **Respuesta de Pymongo**: La información procesada asciende a través de las capas hasta llegar a los casos de uso, que completan su lógica y devuelven una respuesta.
+
+8. **Respuesta del Controlador Web**: Después de finalizar las interacciones con los casos de uso, el controlador web genera una respuesta adecuada al tipo de solicitud:
+   - Para las solicitudes a la API del backend, se devuelve una respuesta en formato JSON.
+   - Para las solicitudes al frontend, se carga una plantilla de Jinja2 para la presentación al usuario.
+
+La implementación de la Clean Architecture garantiza que las entidades, que son el núcleo del sistema y representan las reglas de negocio, permanecen desacopladas de la tecnología de base de datos específica utilizada. Si se hubiera optado por un enfoque donde las entidades interactúan directamente con Pymongo, cualquier cambio en la tecnología de base de datos resultaría en una necesidad de modificar también las reglas de negocio centrales, lo que es altamente ineficiente y propenso a errores.
+
+Por consiguiente, la arquitectura en capas y la inversión de dependencias, principios esenciales de la arquitectura limpia, facilitan la escalabilidad, el mantenimiento y la introducción de nuevas funcionalidades, minimizando el acoplamiento y las dependencias entre componentes. La adopción de esta arquitectura ha permitido un desarrollo más rápido y flexible, facilitando cambios de enfoque y correcciones con gran agilidad.
+
+El diagrama que sigue muestra cómo esta estructura se alinea con los principios de la arquitectura limpia, presentando las capas en forma de círculos concéntricos donde el núcleo central está protegido de los cambios tecnológicos y las capas externas se adaptan a nuevas tecnologías y demandas del entorno.
+
+#### Arquitectura del Cliente en QRest
+
+##### Estructura y Diseño
+
+En la arquitectura del cliente de QRest, se utiliza Jinja2 para generar HTML en el servidor, configurando la estructura básica del documento. El diseño se apoya en BulmaCSS, un framework de CSS que no requiere JavaScript, proporcionando una estética coherente y moderna. Las bibliotecas externas como BulmaCSS y FontAwesome se incorporan mediante CDN en el encabezado del documento HTML.
+
+##### Gestión de Recursos Estáticos
+
+Los recursos estáticos como CSS y JavaScript se manejan desde las carpetas `/static/css` y `/static/js`, respectivamente. Esto facilita la organización y el mantenimiento del código necesario para la presentación y la interactividad del cliente.
+
+##### JavaScript y Modularidad
+
+El código JavaScript se estructura utilizando la notación "module", combinando tanto funciones normales como clases para una gestión eficaz. El código de inicialización y configuración se integra directamente en el documento HTML mediante etiquetas `<script>` ubicadas antes o después del cuerpo del documento.
+
+##### Comunicación y Sincronización
+
+Para la sincronización del estado de las vistas de los comensales, se emplean WebSockets con funcionalidad de broadcast desde el servidor. Este enfoque permite una actualización en tiempo real y una interacción fluida entre los clientes.
+
+##### Patrón Modelo-Vista-Controlador (MVC)
+
+Se aplica el patrón MVC, principalmente en la sincronización e identificación de los clientes, utilizando WebSockets como el modelo. Este patrón facilita la separación de la lógica de la interfaz de usuario, la lógica de negocio y la lógica de control, mejorando la organización y mantenibilidad del código.
+
+##### Gestión de Errores y Navegación
+
+El control de errores en WebSockets se maneja mostrando mensajes de error relevantes al usuario. Además, en ciertos casos, la navegación se controla activamente desde JavaScript, realizando llamadas a la API del backend y redireccionando según la respuesta, lo que mejora la experiencia del usuario y la eficiencia de la interacción.
+
+
