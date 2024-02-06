@@ -722,9 +722,9 @@ Esta estructura de identificación ayuda a organizar y referenciar los requisito
 
 ### Arquitectura del proyecto
 
-- Diagrama móvil
-- Arquitectura en capas aplicación
-- Arquitectura frontend
+- Diagrama de despliegue
+- Arquitectura del servidor
+- Arquitectura del cliente
 
 #### Diagramad de despliegue
 
@@ -815,31 +815,31 @@ Los detalles de arquitectura del lado de cliente son los siguientes.
 
 ---
 
-La arquitectura del lado del cliente en el proyecto QRest está diseñada para ser eficiente y funcional, utilizando una combinación de tecnologías y patrones de diseño. A continuación, se detalla la estructura y las herramientas implementadas:
+la arquitectura del lado del cliente en el proyecto qrest está diseñada para ser eficiente y funcional, utilizando una combinación de tecnologías y patrones de diseño. a continuación, se detalla la estructura y las herramientas implementadas:
 
-1. **Generación de HTML**: 
-   - El HTML se genera utilizando Jinja2 en el servidor. Este enfoque permite una integración eficiente entre el backend y el frontend.
+1. **generación de html**: 
+   - el html se genera utilizando jinja2 en el servidor. este enfoque permite una integración eficiente entre el backend y el frontend.
 
-2. **Diseño y Estructura del Documento**:
-   - El documento HTML define la estructura básica y se apoya en BulmaCSS para el diseño. BulmaCSS es un framework CSS moderno y ligero que facilita la estilización.
-   - Se incorpora FontAwesome para los iconos, mejorando la interfaz de usuario.
+2. **diseño y estructura del documento**:
+   - el documento html define la estructura básica y se apoya en bulmacss para el diseño. bulmacss es un framework css moderno y ligero que facilita la estilización.
+   - se incorpora fontawesome para los iconos, mejorando la interfaz de usuario.
 
-3. **Importaciones y Recursos Estáticos**:
-   - BulmaCSS y FontAwesome se importan a través de CDN en el encabezado del HTML.
-   - Los archivos CSS y JS necesarios se alojan en las carpetas `/static/css` y `/static/js`, respectivamente.
+3. **importaciones y recursos estáticos**:
+   - bulmacss y fontawesome se importan a través de cdn en el encabezado del html.
+   - los archivos css y js necesarios se alojan en las carpetas `/static/css` y `/static/js`, respectivamente.
 
-4. **JavaScript y Estructura de Código**:
-   - El código JavaScript sigue la notación "module", proporcionando una estructura clara y mantenible.
-   - Se utilizan tanto funciones normales como clases para organizar el código de manera efectiva.
-   - El código de inicialización y configuración se ejecuta mediante etiquetas `<script>` ubicadas antes del cierre del `body` o en el `header`.
+4. **javascript y estructura de código**:
+   - el código javascript sigue la notación "module", proporcionando una estructura clara y mantenible.
+   - se utilizan tanto funciones normales como clases para organizar el código de manera efectiva.
+   - el código de inicialización y configuración se ejecuta mediante etiquetas `<script>` ubicadas antes del cierre del `body` o en el `header`.
 
-5. **Comunicación y Sincronización**:
-   - Para la sincronización del estado de las vistas entre comensales, se utilizan WebSockets con broadcast en el servidor. Esto permite una actualización en tiempo real de la información en todos los clientes conectados.
-   - Se adopta el patrón Modelo-Vista-Controlador (MVC), principalmente para la sincronización e identificación de clientes, utilizando WebSockets como parte del modelo.
+5. **comunicación y sincronización**:
+   - para la sincronización del estado de las vistas entre comensales, se utilizan websockets con broadcast en el servidor. esto permite una actualización en tiempo real de la información en todos los clientes conectados.
+   - se adopta el patrón modelo-vista-controlador (mvc), principalmente para la sincronización e identificación de clientes, utilizando websockets como parte del modelo.
 
-6. **Gestión de Errores y Navegación**:
-   - Se implementa un control de errores en el WebSocket, mostrando mensajes relevantes al usuario en caso de problemas.
-   - En ciertos escenarios, la redirección se maneja activamente desde el JavaScript, realizando llamadas a la API del backend y redirigiendo según la respuesta obtenida.
+6. **gestión de errores y navegación**:
+   - se implementa un control de errores en el websocket, mostrando mensajes relevantes al usuario en caso de problemas.
+   - en ciertos escenarios, la redirección se maneja activamente desde el javascript, realizando llamadas a la api del backend y redirigiendo según la respuesta obtenida.
 
 ### Modelo de datos
 

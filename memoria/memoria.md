@@ -1036,4 +1036,20 @@ Se aplica el patrón MVC, principalmente en la sincronización e identificación
 
 El control de errores en WebSockets se maneja mostrando mensajes de error relevantes al usuario. Además, en ciertos casos, la navegación se controla activamente desde JavaScript, realizando llamadas a la API del backend y redireccionando según la respuesta, lo que mejora la experiencia del usuario y la eficiencia de la interacción.
 
+### Modelo de datos
 
+#### MongoDB BSON
+
+BSON, que significa "Binary JSON" (JSON Binario), es un formato de serialización binario que se utiliza para almacenar documentos y hacer llamadas remotas de procedimiento en MongoDB. BSON está diseñado para ser eficiente tanto en espacio como en velocidad, facilitando el almacenamiento rápido de documentos grandes y complejos, así como la manipulación de los mismos. A diferencia de JSON, que es puramente textual, BSON soporta tipos de datos adicionales, como `date` y `binary data`, además de los tipos de datos típicos de JSON como números, cadenas, booleanos, arrays y objetos.
+
+En MongoDB, BSON juega un papel crucial en varias áreas:
+
+1. **Almacenamiento**: MongoDB almacena documentos en colecciones utilizando BSON. Esto permite a MongoDB manejar eficientemente una amplia gama de tipos de datos, incluidos aquellos específicos de aplicaciones, como datos binarios o timestamps, algo que no sería posible con JSON puro.
+
+2. **Interfaz de programación de aplicaciones (API)**: Las API de MongoDB utilizan BSON para el intercambio de datos. Cuando realizas operaciones como insertar, actualizar o recuperar documentos desde y hacia una base de datos MongoDB, estos documentos están en formato BSON. Esto hace que las operaciones con los datos sean rápidas y eficientes, especialmente para documentos complejos o grandes.
+
+3. **Consulta y Agregación**: BSON facilita la creación de índices sobre los campos de los documentos, lo que mejora significativamente la velocidad de las operaciones de consulta. Además, el motor de agregación de MongoDB puede operar directamente sobre los datos almacenados en BSON, permitiendo realizar análisis y transformaciones complejas de los datos con alta eficiencia.
+
+MongoDB Atlas, la base de datos como servicio (DBaaS) de MongoDB alojada en la nube, utiliza BSON de la misma manera que lo haría una instancia de MongoDB autoalojada. Al trabajar con MongoDB Atlas, interactúas con tus datos utilizando BSON a través de diversas interfaces como el shell de MongoDB, los drivers de MongoDB para diferentes lenguajes de programación, como pymongo en este caso, o incluso herramientas visuales proporcionadas por MongoDB Atlas. Esto significa que, independientemente de la interfaz que elijas, tus documentos se almacenan en BSON, se indexan utilizando BSON y se consultan o se manipulan utilizando operaciones basadas en BSON.
+
+En resumen, BSON es un componente fundamental de cómo MongoDB, incluido MongoDB Atlas, almacena, manipula y recupera datos, proporcionando una forma eficiente y flexible de trabajar con información estructurada y semi-estructurada en aplicaciones modernas.
