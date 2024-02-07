@@ -1676,9 +1676,6 @@ Pedido pagado:
 }
 ```
 
-#### Datos extendidos frontend
-
-
 #### Comunicación websockets
 
 ### Modelo de objetos

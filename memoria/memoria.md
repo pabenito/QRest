@@ -1066,19 +1066,21 @@ La base de datos recoge la información de los 14 alérgenos de declaración obl
 
 El modelo de datos de Alérgenos se expone a continuación, con su correspondiente código en python:
 
-```
-[Código de Python de alérgenos]
+```python
+class Allergen(BaseModel):
+    name: str
+    icon: HttpUrl
 ```
 
 A continuación se muestra un ejemplo concreto en MongoDB, del alérgeno de gluten:
 
+```bson
+{
+    "_id": {"$oid":"644918ffe364e91b199bf987"},
+    "name":"gluten",
+    "icon":"https://res.cloudinary.com/dteqcnpp3/image/upload/v1682504398/allergens/gluten_c6tk3b.png"
+}
 ```
-[Código BSON del alérgeno glúten]
-```
-
-y un ejemplo de cómo se almacenan estos datos en MongoDB Atlas se puede encontrar en [Código BSON de alérgenos].
-
-En los siguientes mensajes, profundizaremos en la estructura de datos de la Carta y el Pedido, que son más complejas y encapsulan la funcionalidad central de la aplicación QRest.
 
 ##### Carta
 
