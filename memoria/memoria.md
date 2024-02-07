@@ -1053,3 +1053,858 @@ En MongoDB, BSON juega un papel crucial en varias áreas:
 MongoDB Atlas, la base de datos como servicio (DBaaS) de MongoDB alojada en la nube, utiliza BSON de la misma manera que lo haría una instancia de MongoDB autoalojada. Al trabajar con MongoDB Atlas, interactúas con tus datos utilizando BSON a través de diversas interfaces como el shell de MongoDB, los drivers de MongoDB para diferentes lenguajes de programación, como pymongo en este caso, o incluso herramientas visuales proporcionadas por MongoDB Atlas. Esto significa que, independientemente de la interfaz que elijas, tus documentos se almacenan en BSON, se indexan utilizando BSON y se consultan o se manipulan utilizando operaciones basadas en BSON.
 
 En resumen, BSON es un componente fundamental de cómo MongoDB, incluido MongoDB Atlas, almacena, manipula y recupera datos, proporcionando una forma eficiente y flexible de trabajar con información estructurada y semi-estructurada en aplicaciones modernas.
+
+### Estructura de Datos
+
+La implementación de las estructuras de datos en QRest es un componente esencial para el manejo eficiente de la información dentro de la aplicación. A través de la definición clara de las entidades, la aplicación puede gestionar y procesar datos de manera lógica y coherente, facilitando el desarrollo y la futura escalabilidad del sistema. A continuación, se describen las entidades principales que forman la base de datos de la aplicación.
+
+#### Alérgenos
+
+La representación de los alérgenos en QRest es una estructura simple pero fundamental que permite identificar posibles alérgenos presentes en los alimentos ofrecidos por el restaurante. Cada alérgeno está caracterizado por dos atributos esenciales: su nombre y un icono representativo. Esta estructura no solo facilita el reconocimiento visual para los usuarios finales, sino que también contribuye a la gestión adecuada de la información relacionada con los alérgenos en el backend de la aplicación.
+
+La base de datos recoge la información de los 14 alérgenos de declaración obligatoria, asegurando que el restaurante cumpla con las regulaciones pertinentes y proporcionando a los clientes la información necesaria para realizar elecciones seguras de alimentos.
+
+El modelo de datos de Alérgenos se expone a continuación, con su correspondiente código en python:
+
+```
+[Código de Python de alérgenos]
+```
+
+A continuación se muestra un ejemplo concreto en MongoDB, del alérgeno de gluten:
+
+```
+[Código BSON del alérgeno glúten]
+```
+
+y un ejemplo de cómo se almacenan estos datos en MongoDB Atlas se puede encontrar en [Código BSON de alérgenos].
+
+En los siguientes mensajes, profundizaremos en la estructura de datos de la Carta y el Pedido, que son más complejas y encapsulan la funcionalidad central de la aplicación QRest.
+
+##### Carta
+
+La carta es una representación detallada de los productos que ofrece el restaurante, donde cada elemento de la carta se ha modelado para capturar la variedad y complejidad de opciones disponibles en un entorno de restauración moderno. Esta estructura de datos está diseñada para ser extremadamente adaptable, capaz de representar la amplia gama de opciones que se pueden dar en los restaurantes, a excepción de los menús.
+
+El modelo de datos de la carta se compone principalmente de secciones y elementos. De forma que todos los elementos de la carta se agrupan en secciones de la carta. Y se trata de una estructura de datos estática, es decir, sin estado.
+
+A continuación se expone el modelo de datos de la carta con el código python de la aplicación:
+
+```python
+class Variant(ComplexModel):
+    name: str
+    image: Optional[HttpUrl] = None
+    price: Optional[float] = None
+
+
+class Variants(ComplexModel):
+    name: str
+    variants: list[Variant]
+
+
+class Extra(BaseModel):
+    name: str
+    price: Optional[float] = None
+
+
+class Tag(ComplexModel):
+    name: str
+    icon: Optional[HttpUrl] = None
+
+
+class Element(ComplexModel):
+    name: str
+    image: Optional[HttpUrl] = None
+    description: Optional[str] = None
+    price: Optional[float] = None
+    manager: str
+    visible: bool = True
+    ingredients: Optional[list[str]] = None
+    allergens: Optional[list[str]] = None
+    variants: Optional[list[Variants]] = None
+    extras: Optional[list[Extra]] = None
+    tags: Optional[list[Tag]] = None
+
+
+class Section(ComplexModel):
+    name: str
+    visible: bool = True
+    parent: Optional[str] = None
+    elements: Optional[list[Element]] = None
+```
+
+Las Secciones de la carta funcionan como categorías que agrupan los elementos relacionados, como bebidas, entrantes, platos principales y postres. Cada sección puede contener subsecciones, permitiendo una organización más precisa y una navegación intuitiva para los usuarios. Los atributos de visibilidad y parentesco de las secciones facilitan tanto la presentación jerárquica de la carta como la posibilidad de ocultar temporalmente ciertas opciones.
+
+Los atributos de las secciones `Section` se explican a continuación:
+
+- `name`: El nombre de la sección.
+- `visible`: Un booleano que indica si la sección es visible para el cliente en la interfaz de usuario.
+- `parent`: Un identificador opcional que, de estar presente, indica que la sección es una subsección de otra.
+- `elements`: Una lista opcional de elementos (`Element`) que pertenecen a la sección.
+
+Dentro de las secciones, encontramos los Elementos de la carta, que son la representación individual de cada plato, bebida o producto disponible. Estos elementos están definidos por una serie de atributos esenciales que incluyen nombre, imagen, descripción, precio y gestión de la visibilidad. Este modelo permite a los encargados del restaurante detallar cada elemento con información sobre ingredientes, posibles alérgenos y extras disponibles para personalizar la orden. Las variantes de cada elemento permiten a los clientes seleccionar opciones específicas, como el tamaño o la temperatura de una bebida.
+
+Los atributos de los elementos `Element` se explican a continuación:
+
+- `name`: El nombre del elemento.
+- `image`: Una URL opcional de una imagen del elemento.
+- `description`: Una descripción opcional del elemento.
+- `price`: Un precio opcional del elemento.
+- `manager`: El rol del empleado responsable de la preparación del elemento.
+- `visible`: Un booleano que indica si el elemento está actualmente disponible para ser pedido.
+- `ingredients`: Una lista opcional de ingredientes que el cliente puede elegir excluir.
+- `allergens`: Una lista opcional de alérgenos asociados con el elemento.
+- `variants`: Una lista opcional de variantes de tipo `Variants`.
+- `extras`: Una lista opcional de extras disponibles para el elemento.
+- `tags`: Una lista opcional de etiquetas que describen características del elemento, como "picante", "vegano", etc.
+
+Las Variantes (`Variants`) y sus Variantes individuales (`Variant`) permiten representar diferentes opciones o modificaciones que los clientes pueden seleccionar para personalizar su pedido. Por ejemplo, diferentes tamaños de una pizza.
+
+Atributos de las variantes `Variants` y sus variantes individuales `Variant`:
+
+- `Variants`:
+  - `name`: El nombre que identifica el grupo de variantes, como "Tamaño" o "Temperatura".
+  - `variants`: Una lista de objetos `Variant` que representan las opciones específicas dentro del grupo.
+
+- `Variant`:
+  - `name`: El nombre de la opción de variante específica, como "500mL" o "Fría".
+  - `image`: Una URL opcional para una imagen que representa la variante.
+  - `price`: Un precio opcional que se añade al coste base del elemento al seleccionar esta variante.
+
+Los Extras (`Extra`) son adiciones opcionales que los clientes pueden añadir a su pedido, permitiendo una mayor personalización de los elementos.
+
+Atributos de los extras `Extra`:
+
+- `name`: El nombre del extra, como "Champiñones" o "Piñones".
+- `price`: Un precio opcional que se añade al coste base del elemento al seleccionar este extra.
+
+Las Etiquetas (`Tag`) sirven para proporcionar información adicional sobre los elementos de la carta, como si son recomendados, picantes, aptos para vegetarianos, etc.
+
+Atributos de las etiquetas `Tag`:
+
+- `name`: El nombre de la etiqueta.
+- `icon`: Una URL opcional para un icono que representa visualmente la etiqueta.
+
+Para mayor entendimiento de la estrucutura de datos de la carta, se expone un ejemplo a continuación:
+
+```json
+[
+    {
+        "name": "bebidas",
+        "elements": [
+            {
+                "name": "agua",
+                "image": "https://a0.soysuper.com/2e2183403b25e1e3f6ae43b77f5a3829.1500.0.0.0.wmark.9a7d5cd2.jpg"
+                "description": "Agua Bezolla"
+                "manager": "camareros",
+                "variants": [
+                    {
+                        "name": "tamaño",
+                        "variants": [
+                            {
+                                "name": "500mL",
+                                "price": 1
+                            },
+                            {
+                                "name": "1L",
+                                "price": 1.5
+                            }
+                        ]
+                    },
+                    {
+                        "name": "temperatura",
+                        "variants": [
+                            {
+                                "name": "del tiempo"
+                            },
+                            {
+                                "name": "fría"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "vinos",
+        "visible": false,
+        "parent": "bebidas",
+        "elements": [
+            {
+                "name": "rioja reserva",
+                "image": "https://www.tusvinosonline.com/media/rioja-vega-reserva.png"
+                "description": "un clásico vino tinto de Rioja, con cuerpo y notas de frutos rojos y especias.",
+                "price": 17.5,
+                "manager": "camareros",
+                "tags": [
+                    {
+                        "name": "recomendado"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "pizzas",
+        "elements": [
+            {
+                "name": "margarita",
+                "image": "https://cdn.loveandlemons.com/wp-content/uploads/2019/09/margherita-pizza-1080x1080.jpg",
+                "manager": "cocina",
+                "allergens": "lacteos"
+                "ingredients": [
+                    "mozzarella",
+                    "tomate",
+                    "albahaca"
+                ],
+                "variants": [
+                    {
+                        "name": "tamaño",
+                        "variants":
+                            {
+                                "name": "pequeña",
+                                "price": 8
+                            },
+                            {
+                                "name": "mediana",
+                                "price": 12,
+                            },
+                            {
+                                "name": "familiar",
+                                "price": 15
+                            }
+                    }
+                ],
+                "extras": [
+                    {
+                        "name": "champiñones",
+                        "price": 1.5,
+                    },
+                    {
+                        "name": "piñones",
+                        "price": 2
+                    }                    
+                ],
+                "tags": [
+                    {
+                        "name": "vegetariano",
+                        "icon": "https://res.cloudinary.com/dteqcnpp3/image/upload/v1682613571/tags/vegetarian_f5xmq9.png"
+                    }
+                ]
+            }
+        ]
+    }
+]
+```
+
+##### Pedido
+
+El proceso de pedido en QRest es un componente crítico diseñado para reflejar la dinámica de un restaurante real, manejando desde la selección inicial de elementos por parte de los clientes hasta el pago final de la cuenta.
+
+La estructura de datos para gestionar los pedidos es dinámica, adaptándose a los distintos estados que un pedido puede atravesar a lo largo de su ciclo de vida. Estos estados son:
+
+- **Nuevo Pedido**: El pedido ha sido creado, pero aún no contiene elementos confirmados.
+- **Primera Comanda sin Confirmar**: Los elementos se han agregado a la comanda actual, pero aún no se han confirmado.
+- **Alguna Comanda Confirmada**: Al menos una comanda ha sido confirmada y está pendiente de servicio o ya ha sido servida.
+- **Pedido Cerrado**: El recibo del pedido ha sido solicitado, aunque el pago aún no se ha realizado.
+- **Pedido a Medio Pagar**: Parte del recibo ha sido pagada.
+- **Pedido Pagado**: El total del recibo ha sido pagado.
+
+La arquitectura del pedido se ha diseñado para reflejar la instanciación dinámica de la carta del restaurante, permitiendo la incorporación, modificación y eliminación de elementos por parte de los clientes en tiempo real. A continuación se detalla el flujo del pedido:
+
+1. **Comanda Actual (current_command)**: Los clientes pueden añadir, modificar o eliminar elementos en la comanda actual, que aún no ha sido confirmada o enviada a cocina.
+2. **Confirmación de Comandas (commands)**: Al confirmar la comanda, la comanda actual se añade a la lista de comandas confirmadas, que han sido enviadas a cocina para su preparación.
+3. **Generación del Recibo (receipt)**: Una vez solicitado el recibo, se genera a partir de las comandas confirmadas. Los elementos de este recibo se copian a la lista de elementos pendientes de pago (`to_be_paid`).
+4. **Solicitud de Pago (waiting_for_payment)**: Los elementos que los clientes desean pagar se mueven a la lista de espera para el pago, indicando que se ha solicitado su pago en caja.
+5. **Gestión del Pago**: Al pagar, los elementos se marcan como pagados, retirándose de las listas `to_be_paid` y `waiting_for_payment` y añadiéndose a la lista de elementos pagados (`paid`).
+
+A continuación se presenta el modelo de datos para los pedidos, ilustrando cómo se implementan en el código Python de la aplicación:
+
+```python
+class Variant(BaseModel):
+    name: str
+    value: str
+
+
+class BasicElement(BaseModel):
+    section: str
+    element: str
+    variants: Optional[list[Variant]] = None
+    extras: Optional[list[str]] = None
+    ingredients: Optional[list[str]] = None
+
+
+class Element(BasicElement):
+    quantity: int
+    clients: list[str]
+
+
+class ReceiptElement(Element):
+    price: float
+    total: float
+
+
+class Command(BaseModel):
+    timestamp: datetime
+    elements: list[Element]
+
+
+class OrderPost(BaseModel):
+    zone: Optional[str] = None
+    table: Optional[str] = None
+
+
+class OrderNew(OrderPost):
+    date: datetime = Field(default_factory=datetime.now)
+
+
+class WaitingForPayment(BaseModel):
+    websocket: str
+    client: Optional[str] = None
+    elements: Optional[list[ReceiptElement]] = None
+
+
+class Order(OrderNew, Id):
+    current_command: Optional[list[Element]] = None
+    commands: Optional[list[Command]] = None
+    receipt: Optional[list[ReceiptElement]] = None
+    to_be_paid: Optional[list[ReceiptElement]] = None
+    waiting_for_payment: Optional[list[WaitingForPayment]] = None
+    paid: Optional[bool] = None
+```
+
+Los pedidos `Order` son la entidad central que encapsula toda la información relacionada con las órdenes realizadas por los clientes. Esta entidad extiende las propiedades de `OrderPost` y `OrderNew`, incorporando atributos adicionales que permiten una gestión eficaz de comandas y pagos.
+
+Atributos de los pedidos `Order`:
+
+- `zone`: Heredado de `OrderPost`. Define la zona específica del restaurante donde se encuentra la mesa de los comensales.
+- `table`: Heredado de `OrderPost`. El número o identificador único de la mesa ocupada por los clientes.
+- `date`: Heredado de `OrderNew`. La fecha y hora exactas cuando se inició el pedido.
+- `current_command`: Lista opcional de elementos (`Element`) que representa la comanda actual que aún no ha sido confirmada ni enviada a la cocina.
+- `commands`: Lista opcional de todas las comandas (`Command`) que han sido confirmadas y están en proceso de preparación o ya han sido servidas.
+- `receipt`: Lista opcional de elementos (`ReceiptElement`) que forman el recibo final del pedido.
+- `to_be_paid`: Elementos que están pendientes de pago.
+- `waiting_for_payment`: Información sobre las solicitudes de pago en caja, representadas por la entidad `WaitingForPayment`.
+- `paid`: Indica si el pedido ha sido completamente pagado.
+
+`WaitingForPayment` se refiere a los elementos que un cliente ha solicitado pagar en la caja, permitiendo al personal del restaurante gestionar estos pagos de manera eficiente.
+
+Atributos de `WaitingForPayment`:
+
+- `websocket`: Identificador de la conexión WebSocket del cliente, que permite la comunicación en tiempo real para notificar el estado del pago.
+- `client`: Identificador opcional del cliente que ha solicitado pagar.
+- `elements`: Lista opcional de elementos (`ReceiptElement`) que el cliente desea pagar.
+
+Las comandas `Command` representan grupos de elementos que han sido confirmados por los clientes y enviados a la cocina para su preparación.
+
+Atributos de `Command`:
+
+- `timestamp`: Marca temporal que indica el momento en que la comanda fue confirmada.
+- `elements`: Lista de elementos (`Element`) incluidos en la comanda.
+
+Los elementos `Element` extienden la funcionalidad de `BasicElement`, añadiendo detalles específicos requeridos para gestionar los pedidos de manera eficaz.
+
+Atributos de `Element` y `BasicElement`:
+
+- `section`: Sección del menú en la que se encuentra el elemento, proporcionando una organización clara de la carta.
+- `element`: Nombre del elemento pedido.
+- `variants`: Lista opcional de variantes (`Variant`) seleccionadas para el elemento.
+- `extras`: Lista opcional de extras seleccionados para añadir al elemento.
+- `ingredients`: Lista opcional de ingredientes que se desean excluir del elemento.
+- `quantity`: (Solo en `Element`) Cantidad del elemento pedido.
+- `clients`: (Solo en `Element`) Lista de identificadores de los clientes que han ordenado el elemento.
+
+Las variantes permiten a los clientes personalizar los elementos de su pedido seleccionando diferentes opciones disponibles.
+
+Atributos de `Variant`:
+
+- `name`: El nombre descriptivo de la variante.
+- `value`: El valor específico de la variante escogida.
+
+`ReceiptElement` extiende la entidad `Element`, añadiendo información financiera necesaria para la facturación y el pago.
+
+Atributos de `ReceiptElement`:
+
+- `price`: Precio unitario del elemento, calculado en base al precio base más las variantes y extras.
+- `total`: Precio total a pagar por el elemento, basado en la cantidad pedida multiplicada por el precio unitario.
+
+Vamos a mostra a continucación ejemplos de pedidos en función del estado el pedido.
+
+Nuevo pedido: Se crea un pedido en la mesa 1 de la terraza.
+
+```json
+{
+    "_id": ObjectId('659d0d8787900bdd5a7883c2'),
+    "zone": "terraza",
+    "table": "1",
+}
+```
+
+Primera comanda sin confirmar:
+
+- Pedro pide una botella de rioja reserva.
+- Lucía pide una botella de rioja reserva.
+- Pedro pide una pizza margarita familiar, sin tomate y con extra de piñones.
+
+```json
+{
+    "_id": ObjectId('659d0d8787900bdd5a7883c2'),
+    "zone": "terraza",
+    "table": "1",
+    "current_command": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 2,
+            "clients": [
+                "pedro",
+                "lucía"
+            ]
+        },
+        {
+            "section": "pizzas",
+            "element": "margarita",
+            "variants": [
+                {
+                    "name": "tamaño",
+                    "value": "familiar"
+                }
+            ],
+            "extras": [
+                "piñones"
+            ],
+            "ingredients": [
+                "tomate"
+            ],
+            "quantity": 1,
+            "clients": [
+                "pedro"
+            ]
+        }
+    ]
+}
+```
+
+Alguna comanda confirmada: Pedro o Lucía confirman la comanda.
+
+```json
+{
+    "_id": ObjectId('659d0d8787900bdd5a7883c2'),
+    "zone": "terraza",
+    "table": "1",
+    "commands": [
+        {
+            "timestamp": "2024-01-09t10:12:01.589303",
+            "elements": [
+                {
+                    "section": "vinos",
+                    "element": "rioja reserva"
+                    "quantity": 2,
+                    "clients": [
+                        "pedro",
+                        "lucía"
+                    ]
+                },
+                {
+                    "section": "pizzas",
+                    "element": "margarita",
+                    "variants": [
+                        {
+                            "name": "tamaño",
+                            "value": "familiar"
+                        }
+                    ],
+                    "extras": [
+                        "piñones"
+                    ],
+                    "ingredients": [
+                        "tomate"
+                    ],
+                    "quantity": 1,
+                    "clients": [
+                        "pedro"
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+Pedido cerrado: Pedro o Lucía piden el recibo (la cuenta).
+
+```json
+{
+    "_id": ObjectId('659d0d8787900bdd5a7883c2'),
+    "zone": "terraza",
+    "table": "1",
+    "commands": [
+        {
+            "timestamp": "2024-01-09t10:12:01.589303",
+            "elements": [
+                {
+                    "section": "vinos",
+                    "element": "rioja reserva"
+                    "quantity": 2,
+                    "clients": [
+                        "pedro",
+                        "lucía"
+                    ]
+                },
+                {
+                    "section": "pizzas",
+                    "element": "margarita",
+                    "variants": [
+                        {
+                            "name": "tamaño",
+                            "value": "familiar"
+                        }
+                    ],
+                    "extras": [
+                        "piñones"
+                    ],
+                    "ingredients": [
+                        "tomate"
+                    ],
+                    "quantity": 1,
+                    "clients": [
+                        "pedro"
+                    ]
+                }
+            ]
+        }
+    ],
+    "receipt": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 2,
+            "clients": [
+                "pedro",
+                "lucía"
+            ],
+            "price": 17.5,
+            "total": 35
+        },
+        {
+            "section": "pizzas",
+            "element": "margarita",
+            "variants": [
+                {
+                    "name": "tamaño",
+                    "value": "familiar"
+                }
+            ],
+            "extras": [
+                "piñones"
+            ],
+            "ingredients": [
+                "tomate"
+            ],
+            "quantity": 1,
+            "clients": [
+                "pedro"
+            ],
+            "price": 15,
+            "total": 15
+        }
+    ],
+    "to_be_paid": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 2,
+            "clients": [
+                "pedro",
+                "lucía"
+            ],
+            "price": 17.5,
+            "total": 35
+        },
+        {
+            "section": "pizzas",
+            "element": "margarita",
+            "variants": [
+                {
+                    "name": "tamaño",
+                    "value": "familiar"
+                }
+            ],
+            "extras": [
+                "piñones"
+            ],
+            "ingredients": [
+                "tomate"
+            ],
+            "quantity": 1,
+            "clients": [
+                "pedro"
+            ],
+            "price": 15,
+            "total": 15
+        }
+    ]
+}
+```
+
+Pedido a medio pagar:
+
+1. Pedro solicita pagar su parte.
+2. Pedro paga su parte en caja.
+3. El restaurante marca como pagado el recibo de Pedro.
+4. Lucía solicita pagar su parte.
+
+```json
+{
+    "_id": ObjectId('659d0d8787900bdd5a7883c2'),
+    "zone": "terraza",
+    "table": "1",
+    "commands": [
+        {
+            "timestamp": "2024-01-09t10:12:01.589303",
+            "elements": [
+                {
+                    "section": "vinos",
+                    "element": "rioja reserva"
+                    "quantity": 2,
+                    "clients": [
+                        "pedro",
+                        "lucía"
+                    ]
+                },
+                {
+                    "section": "pizzas",
+                    "element": "margarita",
+                    "variants": [
+                        {
+                            "name": "tamaño",
+                            "value": "familiar"
+                        }
+                    ],
+                    "extras": [
+                        "piñones"
+                    ],
+                    "ingredients": [
+                        "tomate"
+                    ],
+                    "quantity": 1,
+                    "clients": [
+                        "pedro"
+                    ]
+                }
+            ]
+        }
+    ],
+    "receipt": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 2,
+            "clients": [
+                "pedro",
+                "lucía"
+            ],
+            "price": 17.5,
+            "total": 35
+        },
+        {
+            "section": "pizzas",
+            "element": "margarita",
+            "variants": [
+                {
+                    "name": "tamaño",
+                    "value": "familiar"
+                }
+            ],
+            "extras": [
+                "piñones"
+            ],
+            "ingredients": [
+                "tomate"
+            ],
+            "quantity": 1,
+            "clients": [
+                "pedro"
+            ],
+            "price": 15,
+            "total": 15
+        }
+    ],
+    "to_be_paid": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 1,
+            "clients": [
+                "lucía"
+            ],
+            "price": 17.5,
+            "total": 17.5
+        }
+    ],
+    "waiting_for_payment": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 1,
+            "clients": [
+                "lucía"
+            ],
+            "price": 17.5,
+            "total": 17.5
+        }
+    ],
+    "paid": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 1,
+            "clients": [
+                "pedro"
+            ],
+            "price": 17.5,
+            "total": 17.5
+        },
+        {
+            "section": "pizzas",
+            "element": "margarita",
+            "variants": [
+                {
+                    "name": "tamaño",
+                    "value": "familiar"
+                }
+            ],
+            "extras": [
+                "piñones"
+            ],
+            "ingredients": [
+                "tomate"
+            ],
+            "quantity": 1,
+            "clients": [
+                "pedro"
+            ],
+            "price": 15,
+            "total": 15
+        }
+    ]
+}
+```
+
+Pedido pagado: 
+
+1. Lucía paga su parte en caja.
+2. El restaurante marca como pagado el recibo de Lucía.
+
+```json
+{
+    "_id": ObjectId('659d0d8787900bdd5a7883c2'),
+    "zone": "terraza",
+    "table": "1",
+    "commands": [
+        {
+            "timestamp": "2024-01-09t10:12:01.589303",
+            "elements": [
+                {
+                    "section": "vinos",
+                    "element": "rioja reserva"
+                    "quantity": 2,
+                    "clients": [
+                        "pedro",
+                        "lucía"
+                    ]
+                },
+                {
+                    "section": "pizzas",
+                    "element": "margarita",
+                    "variants": [
+                        {
+                            "name": "tamaño",
+                            "value": "familiar"
+                        }
+                    ],
+                    "extras": [
+                        "piñones"
+                    ],
+                    "ingredients": [
+                        "tomate"
+                    ],
+                    "quantity": 1,
+                    "clients": [
+                        "pedro"
+                    ]
+                }
+            ]
+        }
+    ],
+    "receipt": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 2,
+            "clients": [
+                "pedro",
+                "lucía"
+            ],
+            "price": 17.5,
+            "total": 35
+        },
+        {
+            "section": "pizzas",
+            "element": "margarita",
+            "variants": [
+                {
+                    "name": "tamaño",
+                    "value": "familiar"
+                }
+            ],
+            "extras": [
+                "piñones"
+            ],
+            "ingredients": [
+                "tomate"
+            ],
+            "quantity": 1,
+            "clients": [
+                "pedro"
+            ],
+            "price": 15,
+            "total": 15
+        }
+    ],
+    "paid": [
+        {
+            "section": "vinos",
+            "element": "rioja reserva"
+            "quantity": 2,
+            "clients": [
+                "pedro",
+                "lucía"
+            ],
+            "price": 17.5,
+            "total": 35
+        },
+        {
+            "section": "pizzas",
+            "element": "margarita",
+            "variants": [
+                {
+                    "name": "tamaño",
+                    "value": "familiar"
+                }
+            ],
+            "extras": [
+                "piñones"
+            ],
+            "ingredients": [
+                "tomate"
+            ],
+            "quantity": 1,
+            "clients": [
+                "pedro"
+            ],
+            "price": 15,
+            "total": 15
+        }
+    ]
+}
+```

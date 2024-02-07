@@ -37,7 +37,6 @@ class OrderPost(BaseModel):
     zone: Optional[str] = None
     table: Optional[str] = None
 
-
 class OrderNew(OrderPost):
     date: datetime = Field(default_factory=datetime.now)
 
