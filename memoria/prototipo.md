@@ -1999,4 +1999,184 @@ La interacción entre las pantallas es la siguiente:
     - Cancelar: Se cierra el modal y se queda en la página de Pendiente de pago total/indiviudal.
     - [Al pagar en caja]: Se redirige a ver pago total.
 
+## Iteraciones realizadas
 
+### Fase 1 - Inicio
+**Inicio:** 18 de Febrero  
+**Fin:** 24 de Febrero  
+**Actividades:**
+- Investigar competidores.
+- Pensar en soluciones a problemas existentes de los competidores.
+- Elegir un nombre para el proyecto.
+- Crear entidad: correo electrónico y dominio.
+
+### Fase 2 - Análisis y Planificación
+**Inicio:** 20 de Febrero  
+**Fin:** 9 de Marzo  
+**Actividades:**
+- Definir funcionalidades deseables de la aplicación.
+- Crear un diagrama conceptual simple del sistema basado en funcionalidades.
+- Planificar los sprints basados en las funcionalidades.
+
+### Fase 3 - Prototipo Carta
+**Inicio:** 24 de Febrero  
+**Fin:** 22 de Marzo  
+**Actividades:**
+- Definir y crear el entorno de desarrollo.
+- Diseñar modelo de datos de la carta (soportando elementos simples y complejos).
+- Diseñar prototipo de carta.
+- Crear HTML del prototipo de carta.
+- Añadir CSS con BulmaCSS.
+- Añadir funciones JS en el mismo documento HTML (principalmente basados en atributos HTML).
+
+### Fase 4 - Backend Carta
+**Inicio:** 10 de Marzo  
+**Fin:** 16 de Abril  
+**Actividades:**
+- Implementar modelo de datos de la carta.
+- Desarrollar API CRUD de secciones de la carta.
+- Desarrollar API CRUD de elementos embebidos en las secciones de la carta.
+
+### Fase 5 - Frontend Carta
+**Inicio:** 17 de Abril  
+**Fin:** 30 de Abril  
+**Actividades:**
+- Separar CSS en archivos individuales en `/static/css`.
+- Separar JS en archivos individuales en `/static/js`.
+- Frontend de la carta con Jinja2.
+
+### Fase 6 - Carta V2
+**Inicio:** 1 de Mayo  
+**Fin:** 18 de Junio  
+**Actividades:**
+- Analizar competidor llamado Qamarero.
+- Decisión de cambiar el diseño actual al de Qamarero.
+- Diseñar un prototipo como el de Qamarero.
+- Implementar nuevo JS.
+- Nuevo Frontend de la carta V2 con Jinja2.
+
+### Fase 7 - Subsecciones
+**Inicio:** 7 de Junio  
+**Fin:** 18 de Junio  
+**Actividades:**
+- Diseñar nuevo modelo de datos de carta para soportar subsecciones.
+- Implementar backend de subsecciones.
+
+### Fase 8 - Tests de integración de la carta
+**Inicio:** 19 de Junio  
+**Fin:** 10 de Julio  
+**Actividades:**
+- Diseñar casos de uso de la carta.
+- Diseñar casos de prueba de la carta.
+- Desarrollar tests de integración de la carta.
+
+### Fase 9 - Diseño de pedido
+**Inicio:** 26 de Septiembre  
+**Fin:** 25 de Octubre  
+**Actividades:**
+- Diseñar modelo de datos de pedidos.
+- Diseñar prototipo de pedidos.
+- Implementar backend de pedidos.
+- Frontend de pedidos con Jinja2.
+
+### Fase 10 - Rediseño Clean Architecture
+**Inicio:** 8 de Octubre  
+**Fin:** 5 de Noviembre  
+**Actividades:**
+- Buscar solución para cambiar arquitectura monolítica a arquitectura en capas.
+- Aprender sobre Clean Architecture.
+- Diseñar la arquitectura en capas de la aplicación al estilo Clean Architecture.
+- Definir diagramas de flujo de las vistas de la aplicación.
+- Definir diagrama en capas de qué casos de uso puede ejecutar cada vista de la aplicación.
+- Definir diagrama de capas de qué llamadas a la capa de persistencia puede ejecutar cada caso de uso.
+- Re-planificar el proyecto (centrarse solo en la parte de los clientes del restaurante).
+- Eliminar la API CRUD monolítica para modificar las secciones de la carta.
+
+### Fase 11 - Interfaz de persistencia
+**Inicio:** 1 de Noviembre  
+**Fin:** 12 de Noviembre  
+**Actividades:**
+- Diseñar una interfaz de persistencia con MongoDB.
+- Implementar una capa de persistencia que simplifique la
+
+ interacción con MongoDB.
+- Analizar opciones para evitar colisiones en la base de datos.
+- Implementar Optimistic Concurrency Control en la capa de persistencia.
+- Implementar Transacciones con MongoDB.
+
+### Fase 12 - Pedidos
+**Inicio:** 6 de Noviembre  
+**Fin:** 14 de Diciembre  
+**Actividades:**
+- Rehacer el backend de pedidos en base al nuevo diseño (en capas).
+- Rehacer el frontend de pedidos con FastAPI.
+- Diseñar casos de prueba de pedidos.
+- Implementar test de integración de pedidos.
+- Diseñar protocolo de sincronización de pedidos.
+- Diseñar modelo de datos de pedidos para soportar sincronización.
+- Re-implementar modelo de datos de pedidos.
+- Implementar el backend de Websockets de pedidos.
+- Crear Websockets en el JS de Jinja2.
+- Implementar Modelo-Vista-Controlador en JS para sincronización.
+
+### Fase 13 - Cliente LocalStorage
+**Inicio:** 7 de Diciembre  
+**Fin:** 20 de Diciembre  
+**Actividades:**
+- Prueba de uso de LocalStorage.
+- Prototipo de vista de pedido para pedir cliente.
+- Actualizar frontend de pedido para pedir cliente.
+- Implementar Modelo-Vista-Controlador para guardar y consultar el cliente en LocalStorage.
+
+### Fase 14 - Recibos
+**Inicio:** 15 de Diciembre  
+**Fin:** 2 de Enero  
+**Actividades:**
+- Diseñar solución para poder consultar el recibo total o individual.
+- Diseñar casos de prueba de recibo.
+- Implementar test de integración de recibo.
+- Implementar backend de recibo.
+- Diseñar prototipo de recibo.
+- Implementar frontend de recibo.
+
+### Fase 15 - Por pagar
+**Inicio:** 27 de Diciembre  
+**Fin:** 2 de Enero  
+**Actividades:**
+- Diseñar solución para poder consultar por pagar total o individual.
+- Diseñar casos de prueba de por pagar.
+- Implementar test de integración de por pagar.
+- Implementar backend de por pagar.
+- Diseñar prototipo de por pagar.
+- Implementar frontend de por pagar.
+
+### Fase 16 - Proteger rutas
+**Inicio:** 28 de Noviembre  
+**Fin:** 5 de Enero  
+**Actividades:**
+- Diseñar casos de error en cada vista del sistema.
+- Diseñar redirecciones en base al estado del pedido.
+- Diseñar redirecciones de nueva API.
+- Implementar errores y mensajes en cada vista del sistema (backend + frontend).
+- Añadir comprobación del estado del pedido para redireccionar automáticamente si es necesario.
+- Añadir nuevas rutas de la API para redireccionar automáticamente y facilitar la navegación.
+
+### Fase 17 - Pago
+**Inicio:** 3 de Enero  
+**Fin:** 6 de Enero  
+**Actividades:**
+- Diseñar solución para solicitar pagar en caja y esperar confirmación.
+- Extender el modelo de datos de pedido para soportar pagos pendientes en caja.
+- Diseñar prototipo de pago en caja.
+- Implementar backend de pago.
+- Implementar frontend de pago en caja.
+- Implementar websocket con identificadores para sincronización de pago en caja.
+
+### Fase 18 - Sugerencias
+**Inicio:** 7 de Enero  
+**Fin:** 9 de Enero  
+**Actividades:**
+- Analizar qué tipo de sugerencias era más conveniente.
+- Diseñar prototipo de sugerencias para volver a pedir elemento pedido anteriormente.
+- Implementar Modelo-Vista-Controlador en JS para persistir y consultar LocalStorage.
+- Implementar en el frontend con Jinja2.
