@@ -1924,10 +1924,79 @@ Ejemplo de URLs generadas:
 
 #### Versiones de diseño
 
-QRest ha pasado por dos principales diseños, una primera versión (V1) que se empezó a diseñar sin tener ningún modelo de referencia. Y una segunda versión tomando como referencia el diseño de Qamarero.
+QRest ha pasado por dos principales diseños, una primera versión (V1) que se empezó a diseñar sin tener ningún modelo de referencia. Y una segunda versión tomando como referencia el diseño de Qamarero, que tras muchas mejoras ha llegado a ser el diseño final.
 
-Vamos a mostrar un ejemplo e
+Para mostar el diseño vamos a centrarnos en la pantalla de Carta por ser el corazón de la aplicación. Para ver el resto de pantallas de la aplicación diríjase al manual de usuario de QRest.
 
-- V1
-- Qamarero como ejemplo
-- Diagrama de navegación
+##### Privera versión V1
+
+La primera versión trataba de mostrar toda la información del los elementos: nombre, descripción, imagen, ingredientes, variantes y extras. Pero este diseño tení el problema de que ocupaba demasiado espacio en pantalla, un solo elemento ocupaba casi toda la pantalla.
+
+Vemos el ejemplo a continucación:
+
+![Prototipo V1](./img/prototipo_v1.png)
+
+Teniendo en cuenta este problema se empezó a buscar otra solución.
+
+##### Quamarero
+
+Se empezó a investigar a los competidores cómo lo habían hecho, cual era el diseño que tenían. Y entre todos los competidores, se escogió Qamarero por su diseño sencillo e intuitivo.
+
+Así pues se hizo un análisis de Qamarero, que se podrá encontrar en los anexos. Y se tomo como referencia, lo que obligó a empezar de cero el diseño, cambiando todo el frontend y ligeramente el modelo de datos para soportar subsecciones.
+
+Se muestra a continuación el ejemplo de carta de Qamarero:
+
+![Carta Qamarero](./img/qamarero.png)
+
+##### Diseño final
+
+Tomando como referencia el diseño Qamarero inicialmente, se creo una segunda versión de la carta V2, que tras muchas iteraciones de mejoras del diseño han llegado a ser la versión final.
+
+A diferencia de Qamarero, soporta elementos complejos y muestra de una forma más simple e intuitiva el estado de la carta sin necesitar de tantos modales como usa Qamarero.
+
+A continucación se muestra la versión final:
+
+![Diseño final](./img/carta_v2.png)
+
+El resto de las pantallas de la aplicación siguien un diseño similar. Aunque sin tomar ya como referencia a Qamarero, ya que Qamarero no tiene tantas funcionaliades como QRest.
+
+### Diagrama de navegación
+
+Vamos a explicar el diagrama de navegación de la aplicación de QRest.
+
+![Diagrama de navegación](./img/diagrama_de_navegacion.png)
+
+Como podemos ver en el diagrama de navegación están las siguientes pantallas:
+
+- Carta: Muestra la carta del restaurante y el estado del pedido.
+- Pedido: Muestra el estado del pedido a modo de resumen.
+- Recibo total/indiviudal: Muestra el recibo total/indiviudal tras pedir la cuenta en el restaunrante.
+- Por pagar total/indiviudal: Muestra lo que queda por pagar de la cuenta en total/individual.
+- Espera de pago: Pagina de espera hasta que se haya pagado lo que se ha solicitado pagar.
+- Pagos en caja: Página del restaurante donde se muestran los pagos pendientes en caja.
+
+La interacción entre las pantallas es la siguiente:
+
+- Carta
+    - Ver pedido: Al seleccinar esta opción se redirige a la página de Pedido.
+    - Pedir cuenta: Al seleccionar esta opción se pide la cuenta y se redirige al Por pagar total.
+- Pedido
+    - Pedir: Al seleccionar esta opción se confirma la comanda actual y se redirige a la página de Carta.
+    - Volver a la Carta: Al seleccionar esta opción se redirige a la página de Carta.
+- Recibo total:
+    - Ver pendiente de pago: Al seleccionar esta opción se redirige a la página Pendiente de pago total.
+    - Ver recibo individual: Al seleccionar esta opción se redirige a la página de Recibo individual.
+- Recibo indiviudal:
+    - Ver pendiente de pago: Al seleccionar esta opción se redirige a la página Pendiente de pago individual.
+    - Ver recibo total: Al seleccionar esta opción se redirige a la página de Recibo total.
+- Pendiente de pago total:
+    - Pagar: Al seleccionar esta opción se marca todo lo que queda por pagar a espera de pago en caja y se muestra el modal de la página Espera de pago.
+    - Ver pendiente de pago individual: Al seleccionar esta opción se redirige a la página de Ver pendiente de pago individual.
+- Pendiente de pago total:
+    - Pagar: Al seleccionar esta opción se marca todo lo que queda por pagar a espera de pago en caja y se muestra el modal de la página Espera de pago.
+    - Ver pendiente de pago individual: Al seleccionar esta opción se redirige a la página de Ver pendiente de pago individual.
+- Espera de pago:
+    - Cancelar: Se cierra el modal y se queda en la página de Pendiente de pago total/indiviudal.
+    - [Al pagar en caja]: Se redirige a ver pago total.
+
+

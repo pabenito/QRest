@@ -50,6 +50,11 @@
 </nav>
 <nav class="navbar is-fixed-bottom is-transparent is-block">
     <div class="columns is-multiline p-5">
+        <div class="column is-full p-0 pt-2">
+            <button class="button is-fullwidth is-black" onclick='controller.waitForPayment({{ elements | tojson | safe }})'>
+                <p class="is-size-5">Pagar</p>
+            </button>
+        </div>
         {% if individual is defined %}
         <div class="column is-full p-0 pt-2">
             <a class="button is-fullwidth" href="/mesa/{{ order_id }}/por_pagar/total{{ '?cliente=' + client if client }}">
@@ -63,11 +68,6 @@
             </a>
         </div>
         {% endif %}
-        <div class="column is-full p-0 pt-2">
-            <button class="button is-fullwidth is-black" onclick='controller.waitForPayment({{ elements | tojson | safe }})'>
-                <p class="is-size-5">Pagar</p>
-            </button>
-        </div>
     </div>
 </nav>
 <main>

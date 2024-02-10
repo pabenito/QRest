@@ -59,7 +59,7 @@ class ClientController {
         return this.client !== undefined;
     }
 
-    5() {
+    getClient() {
         return this.client;
     }
 
