@@ -1910,3 +1910,326 @@ Pedido pagado:
     ]
 }
 ```
+
+#### Comunicación websockets
+
+### Modelo de objetos
+
+#### Diagrama de clases
+
+Como pudimos ver en el diagrama en la sección de arquitectura, QRest está dividido en capas. Estas capas contienen clases con responsabilidades bien definidas. Para ver un ejemplo concreto de las clases que se usan en la aplicación, se muestra a continuación un diagrama simplificado de las clases implicadas en la API de Pedidos `Order`. De igual forma ocurre con las APIs de la Carta, Alérgenos, Comandas, Pagos, Recibos y Pendiente de pago.
+
+![](./img/clases.png)
+
+Como se muestra en el diagrama, tenemos las siguientes clases asociadas a las capas indicadas:
+
+1. Controladores Web: OrderAPI
+2. Casos de Uso: OrderUseCases
+3. Persistencia:
+    1. Repositorios de entidades: IOrderRepository y MongoOrderRepository
+    2. Proxy de Pymongo: IStandardRepository y MongoStandardRepository
+
+- Cada capa contiene una instancia de la clase de la capa inferior, así se realizan las llamadas de capa en capa.
+- Cada clases tiene una responsabilidad concreta en función de la capa en la que está, de forma que cada función es clara y concisa, haciendo uso de las capas inferiores y a veces también de una subcapa intermedia Services que aísla la lógica compleja de las capas, para simplificar las funciones. 
+- En el diagrama mostrado de las clases de Pedido no están las subcapas Services porque sus llamadas son muy simples y no requieren de esa subcapa, pero en Carta, Comandas, Pagos, Recibos y Pendiente de pago sí se utilizan.
+- La capa de Proxy de Pymongo es compartida para todos los repositorios de entidades.
+
+### modelo-vista-controlador de frontend
+
+En el lado del cliente, para manejar la sincronización, comunicación con el servidor mediante websockets, almacenar datos en LocalStorage y actualización de las vistas, se ha utilizado el patron de diseño Modelo-Vista-Controlador para: 
+
+- Pagos: Solicitar los pagos en caja y que cuando el personal del restaurante lo marque como pagado que al cliente le muestre una nofificación de éxito y redirija lo que queda por pagar total.
+- Cliente: Para pedir el nombre del cliente, almacenarlo en LocalStorage y conlultarlo.
+- Sugerencias: Conultar y mostrar como recomendación de volver a pedir un elemento que ya haya pedido el cliente anteriormente. Almacenando en LocalStorage cada vez que el cliente pide un elemento de la carta.
+- Estado del pedido: Enviar al servidor cada vez que un cliente añade o elimina un elemento a la comanda actual y restransmitir desde el servidor a los comensales de la misma mesa para mantener sincronizado el estado del pedido.
+
+Vamos a mostrar un diagrama de clases simplificado del Modelo-Vista-Controlador implementado en JS para la sincronización del Estado del pedido, ya que es el más fundamental del sistema.
+
+![](./img/frontend_mvc.png)
+
+Como podemos observar en el diagrama tenemos las siguientes clases con sus correspondientes roles:
+
+- Modelo (WebsocketManager): Actúa como modelo comunicándose mediante websocket con el servidor. Enviando y recibiendo el nuevo estado de los elementos que se añaden y eliminan. Haciendo también uso de las funciones de la Vista para mostrar mensajes y errores.
+- Vista (ElementHTMLManager): Se ha definido como intefaz, cuyas implementaciones son MenuElementHTMLManager y OrderElementHTMLManager, para la pantalla de la Carta y la del Pedido, respectivamente. Su funcionalidad es mostrar mensajes y crear y actualizar los elementos del HTML.
+- Controlador (OrderController): Actúa como controlador, recibiendo los eventos desde el HTML y actuando en el modelo y en la vista. Además es el responsable de inicializar correctamente el modelo y la vista, sincronizar sus funciones para que cuando el modelo cambie o genere un error, llame a las funciones de la vista sin ser conocedor de esta.
+
+### Proceso de diseño
+
+El diseño de QRest se ha hecho con BulmaCSS como framework de CSS. 
+
+Vamos a diferenciar en las fases que se han realizado en el diseño y los distintos diseños por los que ha pasado la aplicación.
+
+#### Fases de diseño
+
+Las fases de diseño que se han seguido para QRest son: 
+
+1. Bocetos a papel.
+2. Esqueleto HTML + CSS.
+3. Añadir contenido.
+4. Crear JS.
+5. Generar template Jinja2.
+
+Vamos a definir y mostrar un ejemplo de cada uno de las fases.
+
+##### Bocetos a papel
+
+Los bocetos a papel son una forma rápida de plantear distintas alternativas.
+
+![Bocetos a papel](./img/boceto_prototipo.jpeg)
+
+##### Esqueleto HTML + CSS
+
+El esquelete del HTML + CSS se hace sin contendido. Indicando qué contenido poner en cada lugar.
+
+![Esqueleto HTML + CSS](./img/esqueleto_html_css.png)
+
+##### Añadir contenido
+
+Se añade contenido para ver cómo debería quedar en la aplicación real.
+
+![Añadir contenido](./img/prototipo_contenido.png)
+
+##### Crear JS
+
+En esta fase se añade el código JS necesario para que funcione el la página según la funcionalidad deseada.
+
+Para ello se añaden eventos desde el HTML, se añaden los scripts correspondientes y se inicalizan las variables necesarias.
+
+Ejemplo de eventos desde el HTML:
+
+```html
+<div class="column is-narrow">
+  <button id="addElement" class="button" onclick="incrementValue(event); hide(event); show(event)"
+    to="cantidadSeccion" show="counterSeccion" hide="addElement">
+    <span class="icon">
+      <i class="fas fa-plus"></i>
+    </span>
+  </button>
+  <div id="counterSeccion" class="field has-addons is-hidden">
+    <div class="control">
+      <button class="button is-danger" onclick="decrementValue(event)" to="cantidadSeccion" show="addElement"
+        hide="counterSeccion">
+        <span class="icon">
+          <i class="fas fa-minus"></i>
+        </span>
+      </button>
+    </div>
+    <div class="control">
+      <input id="cantidadSeccion" class="input" type="number" min="0" value="0" readonly>
+    </div>
+    <div class="control">
+      <button class="button is-success" onclick="incrementValue(event)" to="cantidadSeccion">
+        <span class="icon">
+          <i class="fas fa-plus"></i>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+```
+
+Ejemplo de importar Scripts:
+
+```html
+<script src="/static/js/counter.js"></script>
+<script src="/static/js/scroll.js"></script>
+<script src="/static/js/modal.js"></script>
+<script src="/static/js/sections.js"></script>
+<script src="/static/js/showhide.js"></script>
+```
+
+Ejemplo de inicialzar clases:
+
+```html
+<script type="module">
+    import { SuggestionHTML } from 'http://127.0.0.1:8000/static/js/suggestion/view.js';
+    import { LocalStorageListManager } from 'http://127.0.0.1:8000/static/js/suggestion/localStorageListManager.js';
+    import { SuggestionController } from 'http://127.0.0.1:8000/static/js/suggestion/controller.js';
+
+    var suggestion_html = new SuggestionHTML();
+    var suggestion_model = new LocalStorageListManager("elementsForSuggestion");
+    var suggestion_controller = new SuggestionController(suggestion_html, suggestion_model);
+    suggestion_controller.setSuggestions();
+</script>
+```
+
+##### Generar template Jinja2
+
+Finalmente, sabiendo el resultado que se busca obtener, se crea un template (plantilla) de Jinja2.
+
+Para ello: 
+
+- Se sustituyen los valores con variables.
+- Se cran variables de Jinja2.
+- Se crean condicionales y bucles.
+- Se remplazan URLs estáticas por generadas.
+
+Ejemplo:
+
+```html
+<div class="containter p-2">
+{% for element in section.elements %}
+    {% if not element.visible is defined %}
+        {% set element_command_id = "command_" ~ element.id %}
+        {% set element_is_complex = element.variants is defined or element.extras is defined or element.ingredients is defined %}
+        {% set modal_id = 'modal' ~ element.id %}
+    <div class="columns m-0 is-mobile is-vcentered">
+        <div class="column is-narrow">
+            <figure class="image is-64x64">
+                <img class="has-rounded-border"
+                    src="{{ element.image if element.image is defined else 'https://bulma.io/images/placeholders/64x64.png' }}" />
+            </figure>
+        </div>
+        <div class="column">
+            <div id="tags_{{ element.name }}" class="tags m-0 {{ 'is-hidden' if not element.tags is defined }}">
+            {% for tag in element.tags %}
+                <span class="tag is-rounded">
+                {% if tag.icon is defined %}
+                    <span class="icon">
+                        <img src="{{ tag.icon }}" />
+                    </span>
+                {% endif %}
+                    <span class="is-size-7 is-capitalized ml-1">{{ tag.name }}</span>
+                </span>
+            {% endfor %}
+            </div>
+            <p class="title is-size-5 m-0">{{ element.name }}</p>
+        {% if element.price is defined %}
+            <p class="subtitle is-size-5 m-0">{{ element.price }}€</p>
+        {% endif %}
+        </div>
+        {% if element_is_complex %}
+        <div class="column is-narrow">
+            <button id="{{ element.id ~ '_add_btn' }}" class="button"
+                onclick="{{ modal_id }}.open()">
+                <span class="icon">
+                    <i class="fas fa-square-plus"></i>
+                </span>
+            </button>
+        </div>
+        {% else %}
+            {% set element_quantity_id = "quantity_" ~ element.id %}
+        <div class="column column is-narrow">
+            <div class="field has-addons">
+                <div class="control">
+                    <button class="button is-danger"
+                        onclick='element_controller.decreaseElementQuantityModel("{{ element.id }}", "{{ section.name }}", "{{ element.name }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
+                        <span class="icon">
+                            <i class="fas fa-minus"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="control">
+                    <input id="{{ element_quantity_id }}" class="input" type="number" min="0"
+                        value="{{ element.quantity }}" />
+                </div>
+                <div class="control">
+                    <button class="button is-success"
+                        onclick='element_controller.increaseElementQuantityModel("{{ element.id }}", "{{ section.name }}", "{{ element.name }}", {{ element.variants | tojson if element.variants is defined else 'undefined' }}, {{ element.extras | tojson if element.extras is defined else 'undefined' }}, {{ element.ingredients | tojson if element.ingredients is defined else 'undefined' }})'>
+                        <span class="icon">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+        {% endif %}
+</div>
+        {% if element_is_complex %}
+<div id="{{ element_command_id }}" class="container is-hidden"></div>
+        {% endif %}
+</div>
+        {% if not loop.last %}
+<hr class="m-2" />
+        {% endif %}
+    {% endif %}
+{% endfor %}
+</div>
+```
+
+Ejemplo de URLs generadas: 
+
+```html
+<script src="{{ url_for('static', path='/js/scroll.js') }}"></script>
+<script src="{{ url_for('static', path='/js/showhide.js') }}"></script>
+<script src="{{ url_for('static', path='/js/modal.js') }}"></script>
+<script src="{{ url_for('static', path='/js/sections.js') }}"></script>
+```
+
+#### Versiones de diseño
+
+QRest ha pasado por dos principales diseños, una primera versión (V1) que se empezó a diseñar sin tener ningún modelo de referencia. Y una segunda versión tomando como referencia el diseño de Qamarero, que tras muchas mejoras ha llegado a ser el diseño final.
+
+Para mostar el diseño vamos a centrarnos en la pantalla de Carta por ser el corazón de la aplicación. Para ver el resto de pantallas de la aplicación diríjase al manual de usuario de QRest.
+
+##### Privera versión V1
+
+La primera versión trataba de mostrar toda la información del los elementos: nombre, descripción, imagen, ingredientes, variantes y extras. Pero este diseño tení el problema de que ocupaba demasiado espacio en pantalla, un solo elemento ocupaba casi toda la pantalla.
+
+Vemos el ejemplo a continucación:
+
+![Prototipo V1](./img/prototipo_v1.png)
+
+Teniendo en cuenta este problema se empezó a buscar otra solución.
+
+##### Quamarero
+
+Se empezó a investigar a los competidores cómo lo habían hecho, cual era el diseño que tenían. Y entre todos los competidores, se escogió Qamarero por su diseño sencillo e intuitivo.
+
+Así pues se hizo un análisis de Qamarero, que se podrá encontrar en los anexos. Y se tomo como referencia, lo que obligó a empezar de cero el diseño, cambiando todo el frontend y ligeramente el modelo de datos para soportar subsecciones.
+
+Se muestra a continuación el ejemplo de carta de Qamarero:
+
+![Carta Qamarero](./img/qamarero.png)
+
+##### Diseño final
+
+Tomando como referencia el diseño Qamarero inicialmente, se creo una segunda versión de la carta V2, que tras muchas iteraciones de mejoras del diseño han llegado a ser la versión final.
+
+A diferencia de Qamarero, soporta elementos complejos y muestra de una forma más simple e intuitiva el estado de la carta sin necesitar de tantos modales como usa Qamarero.
+
+A continucación se muestra la versión final:
+
+![Diseño final](./img/carta_v2.png)
+
+El resto de las pantallas de la aplicación siguien un diseño similar. Aunque sin tomar ya como referencia a Qamarero, ya que Qamarero no tiene tantas funcionaliades como QRest.
+
+### Diagrama de navegación
+
+Vamos a explicar el diagrama de navegación de la aplicación de QRest.
+
+![Diagrama de navegación](./img/diagrama_de_navegacion.png)
+
+Como podemos ver en el diagrama de navegación están las siguientes pantallas:
+
+- Carta: Muestra la carta del restaurante y el estado del pedido.
+- Pedido: Muestra el estado del pedido a modo de resumen.
+- Recibo total/indiviudal: Muestra el recibo total/indiviudal tras pedir la cuenta en el restaunrante.
+- Por pagar total/indiviudal: Muestra lo que queda por pagar de la cuenta en total/individual.
+- Espera de pago: Pagina de espera hasta que se haya pagado lo que se ha solicitado pagar.
+- Pagos en caja: Página del restaurante donde se muestran los pagos pendientes en caja.
+
+La interacción entre las pantallas es la siguiente:
+
+- Carta
+    - Ver pedido: Al seleccinar esta opción se redirige a la página de Pedido.
+    - Pedir cuenta: Al seleccionar esta opción se pide la cuenta y se redirige al Por pagar total.
+- Pedido
+    - Pedir: Al seleccionar esta opción se confirma la comanda actual y se redirige a la página de Carta.
+    - Volver a la Carta: Al seleccionar esta opción se redirige a la página de Carta.
+- Recibo total:
+    - Ver pendiente de pago: Al seleccionar esta opción se redirige a la página Pendiente de pago total.
+    - Ver recibo individual: Al seleccionar esta opción se redirige a la página de Recibo individual.
+- Recibo indiviudal:
+    - Ver pendiente de pago: Al seleccionar esta opción se redirige a la página Pendiente de pago individual.
+    - Ver recibo total: Al seleccionar esta opción se redirige a la página de Recibo total.
+- Pendiente de pago total:
+    - Pagar: Al seleccionar esta opción se marca todo lo que queda por pagar a espera de pago en caja y se muestra el modal de la página Espera de pago.
+    - Ver pendiente de pago individual: Al seleccionar esta opción se redirige a la página de Ver pendiente de pago individual.
+- Pendiente de pago total:
+    - Pagar: Al seleccionar esta opción se marca todo lo que queda por pagar a espera de pago en caja y se muestra el modal de la página Espera de pago.
+    - Ver pendiente de pago individual: Al seleccionar esta opción se redirige a la página de Ver pendiente de pago individual.
+- Espera de pago:
+    - Cancelar: Se cierra el modal y se queda en la página de Pendiente de pago total/indiviudal.
+    - [Al pagar en caja]: Se redirige a ver pago total.
