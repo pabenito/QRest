@@ -2012,8 +2012,8 @@ La interacción entre las pantallas es la siguiente:
 
 #### Empresa
 
-QRest surgió como una idea de emprendimiento, un proyecto personal a llevar a cabo. Que el estudiante decidió llevar como TFG.
+QRest surgió como una idea de emprendimiento, un proyecto personal a llevar a cabo. Que el estudiante decidió llevar como TFG. Y ese sigue siendo el objetivo, llevar a cabo el proyecto como y sacarlo al mercado como una opción económica, segura, fácil de usar y completa.
 
 #### Objetivos
 
-Los objetivos de este proyecto eran muy ambiciosos, ya que se bus
+Los objetivos de este proyecto eran muy ambiciosos, ya que se buscaba implementar una gran cantidad.
