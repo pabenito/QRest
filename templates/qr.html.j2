@@ -65,7 +65,7 @@
 <script>
     var baseUrl = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
     const qrcode = new QRCode(document.getElementById('qrcode'), {
-      text: baseUrl + '/mesa/{{ order_id }}/carta',
+      text: baseUrl + '/mesa/{{ order_id }}/qr',
       width: 128,
       height: 128,
       colorDark : '#000',
