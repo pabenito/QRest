@@ -18,7 +18,12 @@ templates = Jinja2Templates(directory="templates")
 
 order_frontend = OrderFrontend()
 
-
+@router.get("/mesa/{id}/qr")
+def get(request: Request, id: str):
+    return templates.TemplateResponse("qr.html.j2", {
+        "request": request,
+        "url": config.url,
+        "order_id": id})
 @router.get("/mesa/{id}/pedido")
 def get(request: Request, id: str, error: Optional[str] = None, message: Optional[str] = None):
     elements = order_frontend.encode(order_frontend.get_current_command_with_extended_elements(id))

@@ -23,7 +23,7 @@ order_frontend = OrderFrontend()
 @router.get("/carta")
 def redirect_new_order_carta():
     order_id = menu_frontend.create_order()
-    return RedirectResponse(url=f"/mesa/{order_id}/carta")
+    return RedirectResponse(url=f"/mesa/{order_id}/qr")
 
 @router.get("/mesa/{id}")
 def get(request: Request, id: str):

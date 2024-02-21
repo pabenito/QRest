@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>QRest | Recibo</title>
+    <link rel="icon" href="{{ url_for('static', path='/img/icon.png') }}" type="image/icon type">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/body.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/bulma.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/css/form.css') }}">
+    <script src="{{ url_for('static', path='/js/bulmajs-0.10.4/bulma.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="has-navbar-fixed-top">
+<nav class="navbar is-fixed-top has-background-black">
+    <div class="columns is-mobile is-vcentered p-2">
+        <div class="column is-full">
+            <h1 class="title is-size-4 has-text-white ml-3">
+                Sincroniza tu pedido con el código QR
+            </h1>
+        </div>
+    </div>
+</nav>
+<nav class="navbar is-fixed-bottom is-transparent is-block">
+    <div class="columns is-multiline p-5">
+        <div class="column is-full p-0 pt-2">
+            <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/carta">
+                <p class="is-size-5">Ir a la carta</p>
+            </a>
+        </div>
+    </div>
+</nav>
+<section class="hero is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="box" id="qrcode"></div>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    var baseUrl = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+    const qrcode = new QRCode(document.getElementById('qrcode'), {
+      text: baseUrl + '/mesa/{{ order_id }}/carta',
+      width: 128,
+      height: 128,
+      colorDark : '#000',
+      colorLight : '#fff',
+      correctLevel : QRCode.CorrectLevel.H
+    });
+</script>
+</html>
