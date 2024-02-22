@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, Field
 
-from app.extra.entities import Id
+from app.entities import Id
 
 
 class Variant(BaseModel):

@@ -1,5 +1,5 @@
-from app.extra.entities.menu import Section
-from app.core.services.menu import MenuServices
+from app.entities.menu import Section
+from app.use_cases.services.menu import MenuServices
 from app.db.repositories.interfaces.menu import IMenuRepository
 
 

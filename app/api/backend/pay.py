@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
-from app.extra.entities.order import ReceiptElement
-from app.core.pay import PayUseCases
+from app.entities.order import ReceiptElement
+from app.use_cases.pay import PayUseCases
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 
 router = APIRouter()

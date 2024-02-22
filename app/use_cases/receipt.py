@@ -1,7 +1,7 @@
 from typing import Optional
 
-from app.extra.entities.order import ReceiptElement
-from app.core.services.receipt import ReceiptServices
+from app.entities.order import ReceiptElement
+from app.use_cases.services.receipt import ReceiptServices
 from app.db.exceptions import PersistenceExceptionFactory
 from app.db.repositories.interfaces.menu import IMenuRepository
 from app.db.repositories.interfaces.order import IOrderRepository

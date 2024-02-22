@@ -1,6 +1,6 @@
 from typing import Optional
 
-from app.extra.entities.order import OrderPost
+from app.entities.order import OrderPost
 from app.db.repositories.interfaces.order import IOrderRepository
 
 

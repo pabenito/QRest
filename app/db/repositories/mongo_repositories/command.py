@@ -2,7 +2,7 @@ from typing import Optional
 
 from pymongo.client_session import ClientSession
 
-from app.extra.entities.order import Element, BasicElement
+from app.entities.order import Element, BasicElement
 from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.command import ICommandRepository
 from app.db.repositories.mongo_repositories import MongoStandardRepository

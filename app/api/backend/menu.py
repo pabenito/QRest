@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from app.extra.entities.menu import Section
-from app.core.menu import MenuUseCases
+from app.entities.menu import Section
+from app.use_cases.menu import MenuUseCases
 from app.db.repositories.mongo_repositories.menu import MongoMenuRepository
 
 router = APIRouter()

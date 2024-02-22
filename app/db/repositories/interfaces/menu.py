@@ -2,7 +2,7 @@ from typing import Optional
 from abc import ABC, abstractmethod
 from pymongo.client_session import ClientSession
 
-from app.extra.entities.menu import Section
+from app.entities.menu import Section
 
 
 class IMenuRepository(ABC):

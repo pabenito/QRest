@@ -2,7 +2,7 @@ from typing import Optional
 from abc import ABC, abstractmethod
 from pymongo.client_session import ClientSession
 
-from app.extra.entities.order import Element, BasicElement
+from app.entities.order import Element, BasicElement
 
 
 class ICommandRepository(ABC):

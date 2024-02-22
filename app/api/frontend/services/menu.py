@@ -1,14 +1,14 @@
 from typing import Any
 
-from app.extra.entities.frontend.menu import ExtendedSection, ExtendedElement
+from app.entities.frontend.menu import ExtendedSection, ExtendedElement
 from app.api.services.extend_elment import generate_element_id_from_names
-from app.extra.entities.allergens import Allergen
-from app.extra.entities.menu import Section
-from app.extra.entities.order import Element
-from app.core.command import CommandUseCases
-from app.core.menu import MenuUseCases
-from app.core.allergens import AllergensUseCases
-from app.core.order import OrderUseCases
+from app.entities.allergens import Allergen
+from app.entities.menu import Section
+from app.entities.order import Element
+from app.use_cases.command import CommandUseCases
+from app.use_cases.menu import MenuUseCases
+from app.use_cases.allergens import AllergensUseCases
+from app.use_cases.order import OrderUseCases
 from app.db.repositories.mongo_repositories.allergens import MongoAllergensRepository
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
 from app.db.repositories.mongo_repositories.menu import MongoMenuRepository

@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel, HttpUrl
 
-from app.extra.entities import ComplexModel
+from app.entities import ComplexModel
 
 
 # Carta

@@ -1,15 +1,13 @@
-from pprint import pprint
-from time import sleep
 from typing import Optional
 
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter
 from starlette.templating import Jinja2Templates
 
-from app.core.pay import PayUseCases
+from app.use_cases.pay import PayUseCases
 from app.extra.exceptions import InvalidInputException
 from app.api.services.extend_elment import extend_element
-from app.extra.entities.order import Element, ReceiptElement
-from app.core.command import CommandUseCases
+from app.entities.order import Element, ReceiptElement
+from app.use_cases.command import CommandUseCases
 from app.db.repositories.mongo_repositories.command import MongoCommandRepository
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 from app.extra.utils import json_lower_encoder, parse_object

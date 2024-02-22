@@ -2,7 +2,7 @@ from collections import Counter
 
 from app.db.exceptions import NotFoundException
 from app.extra.exceptions import InvalidInputException
-from app.extra.entities.order import Element, BasicElement
+from app.entities.order import Element, BasicElement
 from app.db.repositories.interfaces.menu import IMenuRepository
 from app.db.repositories.mongo_repositories.menu import MongoMenuRepository
 

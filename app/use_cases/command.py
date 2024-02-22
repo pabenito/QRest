@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from app.extra.entities.order import Command, Element
-from app.core.services.command import CommandServices
+from app.entities.order import Command, Element
+from app.use_cases.services.command import CommandServices
 from app.db.exceptions import PersistenceExceptionFactory
 from app.db.repositories.interfaces.command import ICommandRepository
 from app.db.repositories.interfaces.order import IOrderRepository

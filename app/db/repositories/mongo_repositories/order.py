@@ -1,7 +1,7 @@
 from typing import Optional
 from pymongo.client_session import ClientSession
 
-from app.extra.entities.order import OrderPost, Element, Command, ReceiptElement, Order, WaitingForPayment
+from app.entities.order import OrderPost, Element, Command, ReceiptElement, Order, WaitingForPayment
 from app.db.exceptions import FieldNotFoundException
 from app.db.repositories.interfaces import IStandardRepository
 from app.db.repositories.interfaces.order import IOrderRepository

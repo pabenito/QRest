@@ -1,7 +1,7 @@
 from typing import Optional
 
-from app.extra.entities.order import ReceiptElement, WaitingForPayment
-from app.core.services.pay import PayServices
+from app.entities.order import ReceiptElement, WaitingForPayment
+from app.use_cases.services.pay import PayServices
 from app.db.exceptions import PersistenceExceptionFactory
 from app.db.repositories.interfaces.order import IOrderRepository
 from app.db.repositories.mongo_repositories import MongoTransactionManager

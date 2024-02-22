@@ -1,7 +1,7 @@
 from typing import Any, Optional
 
-from app.extra.entities.order import ReceiptElement
-from app.core.to_be_paid import ToBePaidUseCases
+from app.entities.order import ReceiptElement
+from app.use_cases.to_be_paid import ToBePaidUseCases
 from app.db.repositories.mongo_repositories.order import MongoOrderRepository
 from app.extra.utils import json_lower_encoder
 

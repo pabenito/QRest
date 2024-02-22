@@ -1,9 +1,9 @@
 import hashlib
 import json
 
-from app.extra.entities.frontend.order import ExtendedElement
-from app.extra.entities.menu import Section
-from app.extra.entities.order import Element, BasicElement
+from app.entities.frontend.order import ExtendedElement
+from app.entities.menu import Section
+from app.entities.order import Element, BasicElement
 from app.extra.utils import json_lower_encoder
 
 
