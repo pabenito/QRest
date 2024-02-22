@@ -2003,17 +2003,81 @@ La interacción entre las pantallas es la siguiente:
 
 ### Conclusiones
 
-- Empresa
-- Objetivos
-- Errores
-- Aprendizajes
-- Ingeniería
-- Tutor
-
 #### Empresa
 
 QRest surgió como una idea de emprendimiento, un proyecto personal a llevar a cabo. Que el estudiante decidió llevar como TFG. Y ese sigue siendo el objetivo, llevar a cabo el proyecto como y sacarlo al mercado como una opción económica, segura, fácil de usar y completa.
 
 #### Objetivos
 
-Los objetivos de este proyecto eran muy ambiciosos, ya que se buscaba implementar una gran cantidad.
+Los objetivos de este proyecto eran muy ambiciosos, ya que se buscaba implementar una gran cantidad de funcionalidades listas para lanzar al mercado al terminar el TFG. Los obstáculos con los que nos hemos encontrado son el tamaño de la aplicación, la falta de conocimientos de tecnologías frontend, la poca información de soluciones similares y una patente.
+
+#### Errores
+
+Los principales errores han sido:
+
+- No dedicar el suficiente tiempo a aprender a fondo las tecnologías a utilizar.
+- Partir con una mala arquitectura.
+- No utilizar tecnologías de desarrollo frontend por desconocerlas.
+- Intentar implementar demasiadas funcionalidades juntas, en vez de poco a poco.
+- No desarrollar lo suficiente al principio la documentación de requisitos, casos de uso, y análisis.
+- Ser muy perfeccionista a veces con pequeños detalles.
+- Dedicar mucho tiempo a repensar el diseño y las funcionalidades en vez de seguir para adelante con lo que se había propuesto inicialmente.
+- No usar tecnologías de apoyo que aceleren el proceso de programación como GitHub Copilot.
+- No hacer un core del sistema con métodos para interactuar con las clases de una forma más naturar, en vez de usarlas simplemente como CRUD.
+- No utilizar inicialmente POO en JavaScript.
+
+#### Aprendizajes
+
+- A mayor es el proyecto más importente es dedicarle el suficiente tiempo a la parte de documentar, analizar y diseñar la ingeniería de la aplicación, arquitectura, patrones de diseño, etc.
+- Para proyectos grandes es conveniente trabajar en equipo.
+- Es crucial analizar elegir la tecnología más adecuada antes de empezar a desarrollar la aplicación con lo que ya sabes.
+- Es importante dedicerle tiempo a aprender la tecnología que vas a utilizar.
+- Es muy importante aprender a separar las funcionalidades del sistema e ir implementando una a una de más fácil a más complejo.
+- Es de mucha ayuda preguntar a expertos cuando tengas dudas de arquitectura, tecnolodía, enfoque, etc.
+- Es muy importante hacer un diario de lo que se va haciendo cada día o semana en la aplicación.
+- Es importante hacer bien los commits, con mensajes adecuados y con los archivos adecuados, no solo `git add .`.
+- Es muy importante hacer tests, ya que ahorran mucho tiempo a la hora de detectar y corregir errores.
+- Hay que gestionar el tiempo de desarrollo tanto de forma optimista como pesimista.
+- Es crucial seguir una buena metodología de desarrollo web.
+- Definir una buena arquitectura para la aplicación es crucial.
+- A pesar de que sea una aplicación web hay que implementar un backend muy robusto y usable. No solo como CRUD.
+- Usar una buena arquitectura en capas simplifica mucho la aplicación.
+- Diseñar una buena escructura de datos es crucial para que sea fácil de implmentar la apliación.
+- Para llevar una aplicación al mercado hace falta un equipo, hay mucho campo que cubrir.
+
+### Lineas futuras
+
+#### Funcionalidades 
+
+Se busca implementar las siguientes funcionalidades:
+
+- Solución segura y cómoda de generación de pedidos con QR.
+- Flujo flexible de gestión de comandas del restaurante.
+- Conexión con la impesora de tickets con librería de JS.
+- Búsquedas en la carta, con filtros.
+- Frontend con elementos complejos.
+- Frontend para modificar la carta.
+- Llamar al camarero desde la app.
+- Sincronización de estado de servidores.
+- Pagos online por pasarela de pagos.
+
+#### Tecnología
+
+A nivel de tecnología se busca:
+
+- Mover parte de la lógica de los casos de uso a las entidades para que tengan más funcionalidades y poder interactura con los objetos de forma más natural en vez de como simples repositorios.
+- Independizar el frontend de la aplicación del backend, usando una tecnología frontend en base a React o similar.
+- Conseguir la sincronización de servidores mediante RabbitMQ o bien hacer que los servidores sean 100% stateless. Ya que ahoramismo el servidor guarda los Websockets para la sincronización.
+
+##### Negocio
+
+A nivel de negocio:
+
+- Se busca formar un pequeño equipo multidisciplinar para llevar a mercado la aplicación.
+- Sacar funcionalidades poco a poco de forma que se vaya mejorando y ampliando los servicios de la aplicación asegurando la máxima calidad en todo momento.
+- Se quiere definir el modelo de negocio. Ej: membresía.
+- Se buscan colaboraciones.
+- Se quiere definir el método de marketing.
+- Desarrollar un business plan.
+- Desarrollar un Roadmap.
+

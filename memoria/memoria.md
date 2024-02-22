@@ -2233,3 +2233,88 @@ La interacción entre las pantallas es la siguiente:
 - Espera de pago:
     - Cancelar: Se cierra el modal y se queda en la página de Pendiente de pago total/indiviudal.
     - [Al pagar en caja]: Se redirige a ver pago total.
+
+## Conclusiones y Líneas Futuras para QRest
+
+### Conclusiones
+
+#### Empresa
+
+QRest emergió de una visión emprendedora, concebida como una solución integral, económica y accesible para optimizar la gestión de comandas en la industria restaurantera. Desarrollada inicialmente como un Trabajo de Fin de Grado (TFG), QRest aspira a posicionarse en el mercado como una herramienta indispensable para el sector de la restauración.
+
+#### Objetivos
+
+Los objetivos establecidos para QRest eran de gran alcance, proponiendo el lanzamiento de una solución con un espectro completo de funcionalidades al mercado al finalizar el TFG. Nos enfrentamos a múltiples desafíos, incluyendo limitaciones en el tamaño de la aplicación, el aprendizaje de nuevas tecnologías, la exploración de soluciones existentes y la consideración de aspectos legales como patentes.
+
+#### Errores
+
+A lo largo del desarrollo, se reconocieron varios errores:
+
+- Tiempo insuficiente dedicado al dominio de las tecnologías empleadas.
+- Selección inicial de una arquitectura que no era la más adecuada.
+- Omisión del uso de tecnologías avanzadas de frontend por desconocimiento.
+- Intento de implementar una gama demasiado amplia de funcionalidades de manera simultánea.
+- Documentación inicial limitada, careciendo de un análisis y requisitos detallados.
+- Foco excesivo en detalles menores, desviando la atención de los objetivos principales.
+- Rediseño y reevaluación constantes en lugar de progresar con lo ya establecido.
+- Falta de utilización de herramientas de apoyo tecnológico.
+- Ausencia de una estructura de sistema central que facilitase una interacción más eficiente con las clases.
+- Inicial reticencia a adoptar la Programación Orientada a Objetos (POO) en JavaScript.
+
+#### Aprendizajes
+
+El desarrollo de QRest ha proporcionado lecciones valiosas:
+
+- La crucial importancia de la documentación y el diseño preliminar en proyectos de envergadura.
+- Los beneficios de un trabajo colaborativo en iniciativas ambiciosas.
+- La necesidad de una elección tecnológica informada antes del inicio del desarrollo.
+- El valor de una introducción gradual de funcionalidades, desde las más básicas hasta las más complejas.
+- La eficacia de la consulta con expertos para resolver dudas.
+- La importancia de mantener un seguimiento constante del progreso.
+- La conveniencia de realizar pruebas y commits regulares para facilitar la detección y corrección de errores.
+- La relevancia de una metodología de desarrollo estructurada, la definición de una arquitectura robusta, y la implementación de un backend sólido.
+
+### Líneas Futuras
+
+#### Funcionalidades
+
+QRest planea incorporar:
+
+- Creación de pedidos mediante códigos QR de manera segura y eficiente.
+- Gestión avanzada y flexible de comandas.
+- Integración con impresoras de tickets a través de librerías JavaScript.
+- Implementación de filtros y búsquedas dinámicas en la carta.
+- Desarrollo de una interfaz de usuario compleja para la edición de la carta.
+- Opción para solicitar la atención del camarero directamente desde la aplicación.
+- Sincronización en tiempo real del estado de los pedidos.
+- Introducción de pagos online mediante una pasarela de pago segura.
+
+#### Tecnología
+
+En términos tecnológicos, se contempla:
+
+- Desplazar la lógica de negocio hacia las entidades.
+- Separar completamente el frontend del backend, considerando el uso de React.
+- Mejorar la sincronización entre servidores empleando RabbitMQ o alcanzar un diseño 100% sin estado.
+
+#### Aspecto Empresarial
+
+Desde la perspectiva empresarial, se busca:
+
+- Constituir un equipo multidisciplinario para el lanzamiento comercial de la aplicación.
+- Liberar funcionalidades de manera gradual, garantizando su calidad.
+- Definir un modelo de negocio claro, establecer colaboraciones estratégicas, y elaborar un plan de negocio y un roadmap detallado.
+
+Estas conclusiones y líneas futuras marcan el cierre de una etapa de aprendizaje y el comienzo de un futuro prometedor para QRest, con un camino claro hacia la innovación y el éxito en el mercado de la restauración.
+
+---
+
+Recuerda.
+
+Equivalencias:
+
+## -> \chapter
+### -> \section
+#### -> \subsection
+##### -> \subsubsection
+###### -> \subsubsubsection
