@@ -2306,15 +2306,3 @@ Desde la perspectiva empresarial, se busca:
 - Definir un modelo de negocio claro, establecer colaboraciones estratégicas, y elaborar un plan de negocio y un roadmap detallado.
 
 Estas conclusiones y líneas futuras marcan el cierre de una etapa de aprendizaje y el comienzo de un futuro prometedor para QRest, con un camino claro hacia la innovación y el éxito en el mercado de la restauración.
-
----
-
-Recuerda.
-
-Equivalencias:
-
-## -> \chapter
-### -> \section
-#### -> \subsection
-##### -> \subsubsection
-###### -> \subsubsubsection

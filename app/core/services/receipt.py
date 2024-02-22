@@ -30,6 +30,7 @@ class ReceiptServices:
         for element in receipt:
             if client in element.clients:
                 element_for_client = element.model_copy(update={
+                    "quantity": element.clients.count(client),
                     "clients": [client] * element.clients.count(client),
                     "total": element.price * element.clients.count(client)})
                 receipt_for_client.append(element_for_client)

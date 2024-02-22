@@ -7,6 +7,7 @@ class ToBePaidServices:
         for element in to_be_paid:
             if client in element.clients:
                 element_for_client = element.model_copy(update={
+                    "quantity": element.clients.count(client),
                     "clients": [client] * element.clients.count(client),
                     "total": element.price * element.clients.count(client)})
                 to_be_paid_for_client.append(element_for_client)
