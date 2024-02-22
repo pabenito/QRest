@@ -2261,6 +2261,23 @@ A lo largo del desarrollo, se reconocieron varios errores:
 - Ausencia de una estructura de sistema central que facilitase una interacción más eficiente con las clases.
 - Inicial reticencia a adoptar la Programación Orientada a Objetos (POO) en JavaScript.
 
+- No dedicar tiempor a aprender: 
+    - Error: Tiempo insuficiente dedicado al dominio de las tecnologías empleadas.
+    Mitigación: 
+        - Consultar ejemplos de uso de las tecnologías empleadas para extrapolar a mi solución.
+        - Usar Cheat Sheets a modo de guía.
+- Mala arquitectura inicial:
+    - Error: Selección inicial de una arquitectura que no era la más adecuada.
+    - Mitigación: Refactorizar la aplicación en mitad del desarrollo a una arquitectura estilo Clean Architecture.
+- Implementar mucho a la vez: 
+    - Error: Intento de implementar una gama demasiado amplia de funcionalidades de manera simultánea.
+    - Mitigación: 
+        - Ordernar las funcionalidades por prioridad e intentar centrarse en una sola funcionalidad en cada iteración. 
+        - Mejorar la metodología de organización para cada iteración.
+- Falta de documentación inicial:
+    - Error: Documentación inicial limitada, careciendo de un análisis y requisitos detallados.
+    - Mitigación: Detener el desarrollo temporalmente a mitad del proyecto para centrarse definir la documentación de ingeniería necesaria para refactorizar el proyecto, definir lor requisitos, casos de uso, diagramas, principios SOLID y responsabilidades.
+
 #### Aprendizajes
 
 El desarrollo de QRest ha proporcionado lecciones valiosas:
