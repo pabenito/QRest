@@ -157,6 +157,18 @@
         </div>
     </div>
         {% endif %}
+        {% if element.allergens is defined %}
+    <div class="block">
+        <p class="has-text-justified ml-2">
+          <span class="icon-text is-size-5">
+          {% for allergen in element.allergens %}
+            <span class="icon is-medium">
+              <img src="{{ url_for('static', path='/img/alergenos/' ~ allergen ~ '.png') }}"/>
+            </span>
+          {% endfor %}
+        </p>
+      </div>
+        {% endif %}
 </div>
         {% if element_is_complex %}
 <div id="{{ element_command_id }}" class="container is-hidden"></div>
