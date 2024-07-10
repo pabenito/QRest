@@ -38,15 +38,15 @@
     <nav class="navbar is-fixed-top has-background-black">
         <div class="columns is-mobile is-vcentered p-2">
             <div class="column is-narrow">
-                <button class="button" onclick="modalSecciones.open()">
+                <button class="button" onclick="modalSeccionesOpen()">
                     <span class="icon">
                         <i class="fas fa-bars"></i>
                     </span>
                 </button>
             </div>
             <div class="column">
-                <h2 id="section" class="title is-size-5 has-text-white"></h2>
-                <h3 id="subsection" class="subtitle is-size-6 has-text-white"></h3>
+                <h2 id="section" class="title is-size-5 has-text-white is-capitalized"></h2>
+                <h3 id="subsection" class="subtitle is-size-6 has-text-white is-capitalized"></h3>
             </div>
         </div>
     </nav>
@@ -55,7 +55,7 @@
         <div class="columns is-multiline p-5">
             <div class="column is-full p-0">
                 <a class="button is-fullwidth is-black" href="/mesa/{{ order_id }}/pedido">
-                    <p class="is-size-5"> Ver pedido</p>
+                    <p class="is-size-5">Ver pedido</p>
                 </a>
             </div>
             <div class="column is-full p-0 pt-2">
@@ -69,17 +69,18 @@
     <main>
 {% for section in sections %}
     {% if not section.visible is defined%}
-        {% set section_index = loop.index %}
+        {% set section_index = loop.index0 %}
         {% set is_subsection = section.parent is defined %}
+        {% set section_id = "section" ~ section_index %}
         {% if is_subsection %}
-        <section id="{{ section.id }}" title="{{ section.parent }}" subtitle="{{ section.name }}"
+        <section id="{{ section_id }}" title="{{ section.parent }}" subtitle="{{ section.name }}"
             class="p-3 has-background-light">
-            <p class="title is-size-5">{{ section.parent }}</p>
-            <p class="subtitle is-size-6">{{ section.name }}</p>
+            <p class="title is-size-5 is-capitalized">{{ section.parent }}</p>
+            <p class="subtitle is-size-6 is-capitalized">{{ section.name }}</p>
         </section>
         {% else %}
-        <section id="{{ section.id }}" title="{{ section.name }}" class="p-3 has-background-light">
-            <p class="title is-size-5">{{ section.name }}</p>
+        <section id="{{ section_id }}" title="{{ section.name }}" class="p-3 has-background-light">
+            <p class="title is-size-5 is-capitalized">{{ section.name }}</p>
         </section>
         {% endif %}
 
@@ -90,12 +91,14 @@
         {% set element_is_complex = element.variants is defined or element.extras is defined or element.ingredients is defined %}
         {% set modal_id = 'modal' ~ element.id %}
     <div class="columns m-0 is-mobile is-vcentered">
+        {% if element.image is defined %}
         <div class="column is-narrow">
             <figure class="image is-64x64">
                 <img class="has-rounded-border"
                     src="{{ element.image if element.image is defined else 'https://bulma.io/images/placeholders/64x64.png' }}" />
             </figure>
         </div>
+        {% endif %}
         <div class="column">
             <div id="tags_{{ element.name }}" class="tags m-0 {{ 'is-hidden' if not element.tags is defined }}">
             {% for tag in element.tags %}
@@ -109,7 +112,10 @@
                 </span>
             {% endfor %}
             </div>
-            <p class="title is-size-5 m-0">{{ element.name }}</p>
+            <p class="title is-size-5 m-0 is-capitalized">{{ element.name }}</p>
+        {% if element.description is defined %}
+            <p class="subtitle is-size-5 m-0 is-capitalized">{{ element.description }}</p>
+        {% endif %}
         {% if element.price is defined %}
             <p class="subtitle is-size-5 m-0">{{ element.price }}€</p>
         {% endif %}
@@ -165,53 +171,6 @@
     {% endif %}
 {% endfor %}
     </main>
-    <div id="modalSecciones" class="modal p-4">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Secciones</p>
-                <button class="delete" aria-label="close"></button>
-            </header>
-            <nav class="modal-card-body p-5">
-{% for section in sections %}
-    {% if not section.visible is defined %}
-        {% set section_index = loop.index0 %}
-        {% set is_subsection = section.parent is defined %}
-        {% if not loop.last %}
-            {% set next_section = sections[section_index + 1] %}
-            {% set next_is_subsection = next_section.parent is defined %}
-        {% endif %}
-        {% if not is_subsection %}
-                <a class="is-size-4 has-text-black" onclick="doScroll(event)" to="{{ section.id }}">
-                    {{ section.name }}
-                </a>
-            {% if not loop.last %}
-                <hr class="m-2">
-                {% if next_is_subsection %}
-                <div class="pl-6">
-                {% endif %}
-            {% endif %}
-        {% else %}
-                    <a class="is-size-5 has-text-black" onclick="doScroll(event)" to="{{ section.id }}">
-                        {{ section.name }}
-                    </a>
-            {% if not loop.last %}
-                {% if next_is_subsection %}
-                    <hr class="m-2">
-                {% else %}
-                </div>
-                <hr class="m-2">
-                {% endif %}
-            {% endif %}
-        {% endif %}
-    {% endif %}
-{% endfor %}
-            </nav>
-            <footer class="modal-card-foot">
-                <button class="button is-fullwidth" onclick="modalSecciones.close()">Cerrar</button>
-            </footer>
-        </div>
-    </div>
 {% for section in sections %}
     {% if not section.visible is defined %}
         {% set section_index = loop.index %}
@@ -369,6 +328,54 @@
         {% endfor %}
     {% endif %}
 {% endfor %}
+    <div id="modalSecciones" class="modal is-active is-hidden p-4">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Secciones</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <nav class="modal-card-body p-5">
+{% for section in sections %}
+    {% if not section.visible is defined %}
+        {% set section_index = loop.index0 %}
+        {% set section_id = "section" ~ section_index %}
+        {% set is_subsection = section.parent is defined %}
+        {% if not loop.last %}
+            {% set next_section = sections[section_index + 1] %}
+            {% set next_is_subsection = next_section.parent is defined %}
+        {% endif %}
+        {% if not is_subsection %}
+                <a class="is-size-4 has-text-black is-capitalized" onclick="doScroll(event)" to="{{ section_id }}">
+                    {{ section.name }}
+                </a>
+            {% if not loop.last %}
+                <hr class="m-2">
+                {% if next_is_subsection %}
+                <div class="pl-6">
+                {% endif %}
+            {% endif %}
+        {% else %}
+                    <a class="is-size-5 has-text-black is-capitalized" onclick="doScroll(event)" to="{{ section_id }}">
+                        {{ section.name }}
+                    </a>
+            {% if not loop.last %}
+                {% if next_is_subsection %}
+                    <hr class="m-2">
+                {% else %}
+                </div>
+                <hr class="m-2">
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+            </nav>
+            <footer class="modal-card-foot">
+                <button class="button is-fullwidth" onclick="modalSeccionesClose()">Cerrar</button>
+            </footer>
+        </div>
+    </div>
     <div id="modalCliente" class="modal is-active is-hidden p-4">
         <div class="modal-background"></div>
         <div class="modal-card">
@@ -386,6 +393,18 @@
         </div>
     </div>
 </body>
+<script>
+    function modalSeccionesOpen(){
+        var modal = document.getElementById("modalSecciones");
+        console.log("hey");
+        modal.classList.remove("is-hidden");
+        console.log("show");
+    }
+    function modalSeccionesClose(){
+        var modal = document.getElementById("modalSecciones");
+        modal.classList.add("is-hidden");
+    }
+</script>
 {% if error is defined and error is not none %}
 <script type="module">
     import { showError } from '{{ url_for('static', path='/js/utils/errorHandler.js') }}';

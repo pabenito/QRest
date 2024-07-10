@@ -1,4 +1,5 @@
 from copy import deepcopy
+from pprint import pprint
 
 import pytest
 from fastapi import status
@@ -150,7 +151,8 @@ def test_get_to_be_paid_total__when_order_exists_and_one_confirmed_order_exists_
     response = _generate_receipt(api, order_id)
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
-    response = _pay(api, order_id, [elements[0]])
+    pprint(response.json()[0])
+    response = _pay(api, order_id, [response.json()[0]])
     _print_response(response)
     assert response.status_code == status.HTTP_200_OK, response.text
     response = _get_to_be_paid(api, order_id)
