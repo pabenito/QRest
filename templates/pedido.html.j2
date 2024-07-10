@@ -72,12 +72,14 @@
             {% set element_index = loop.index %}
             {% set element_quantity_id = "quantity_" ~ element.id %}
             <div id="{{ element.id }}" class="columns is-multiline m-0 is-mobile is-vcentered">
+                {% if element.image is defined %}
                 <div class="column is-narrow">
                     <figure class="image is-64x64">
                         <img class="has-rounded-border"
                             src="{{ element.image if element.image is defined else 'https://bulma.io/images/placeholders/64x64.png' }}" />
                     </figure>
                 </div>
+                {% endif %}
                 <div class="column">
                     <p class="title is-size-5 m-0 is-underlined is-word-unbreakable has-text-centered">
                         {{ element.element }}
